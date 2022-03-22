@@ -1,0 +1,43 @@
+<%- include("partials/header.ejs") %>
+
+<section>
+  <div class="container center-content">
+    <div class="subcontainer">
+      <form action="/auth/login" id="login-form" method="POST">
+        <div id="title">
+          <h1 style="font-size: 2.5rem;"><a href="/">Needa</a></h1>
+        </div>
+        <div>
+          <input type="text" id="email" name="email" placeholder="Email" required>
+        </div>
+        <div id="password-container">
+          <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+        <div id="show-password-container">
+          <div>
+            <input type="checkbox" id="show-password">
+            <label for="show-password">Show password</label>
+          </div>
+          <div id="forgot-password">
+            <a href="/password-reset">Forgot Password?</a>
+          </div>
+        </div>
+        <div>
+          <button id="login-btn">Let's go</button>
+        </div>
+        <div id="register-account">
+          <p>Not a member?<a href="/register"> Register</a></p>
+        </div>
+        <% if(typeof success != "undefined" && !success) { %>
+          <div class="alert-message">
+            <%= message %>
+          </div>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="/js/script.js"></script>
+
+<%- include("partials/footer.ejs") %>
