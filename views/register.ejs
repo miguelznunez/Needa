@@ -1,5 +1,13 @@
 <%- include("partials/header.ejs") %>
 
+<div class="container">
+  <div class="subcontainer">
+    <div class="breadcrumbs">
+      <a href="/">Home</a> / <p>Register</p>
+    </div>
+  </div>
+</div>
+
 <section>
   <div class="container center-content">
     <div class="subcontainer">
@@ -36,7 +44,7 @@
         <div>
           <button id="account-btn">Create Account</button>
         </div>
-        <div id="login-account">
+        <div>
           <p>Already a member? <a href="/login">Login</a></p>
         </div>
         <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
