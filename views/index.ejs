@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <link rel="stylesheet" href="/css/style.css">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-  <title>
-    <%= title %>
-  </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
+
+  <title> <%= title %> </title>
 </head>
 
 <body>
@@ -29,29 +29,75 @@
     </div>
   </section>
 
-<div id="carousel">
-  <div class="container">
-      <div class="subcontainer">
-        <header id="header" style="background-color: transparent;">
+  <div id="carousel">
+    <header id="header" style="background-color: transparent;border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+      <div class="container">
+        <div class="subcontainer">
           <nav>
             <div class="navbar">
               <a href="/" class="nav-branding">
                 <h1>Needa</h1>
               </a>
               <ul class="nav-menu">
-                <% if (typeof user !="undefined" && user) { %>
+                <% if (typeof user != "undefined" && user) { %>
                   <li class="nav-item">
-                    <a href="/profile" class="nav-link">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/auth/logout" class="nav-link">Logout</a>
+                    <div class="dropdown" data-dropdown>
+                      <div class="user-icon link" data-dropdown-button>
+                        <% if(typeof user.profile_photo != "undefined" && user.profile_photo) { %>
+                          <style>
+                            .user-icon{
+                              background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                            }
+                          </style>
+                        <% } else { %>
+                          <i class="fas fa-user link" data-dropdown-button></i>
+                        <% } %>
+                      </div>
+                      <div class="dropdown-menu">
+                        <a href="/profile">
+                          <div class="dropdown-links top-link">
+                            <div class="user-icon" data-dropdown-button>
+                              <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
+                                <style>
+                                  .user-icon {
+                                    background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                                  }
+                                </style>
+                              <% } else { %>
+                                <i class="fas fa-user link" data-dropdown-button></i>
+                              <% } %>
+                            </div>
+                            <h3><%= user.first_name %> <%= user.last_name%> </h3>
+                          </div>
+                        </a>
+                        <a href="/">
+                          <div class="dropdown-links">
+                            <i class="fas fa-home"></i>
+                            <h3>Home</h3>
+                          </div>
+                        </a>
+                        <a href="/settings">
+                          <div class="dropdown-links">
+                            <i class="fas fa-user-circle"></i>
+                            <h3>Account Settings</h3>
+                          </div>
+                        </a>
+                        <a href="/auth/logout">
+                          <div class="dropdown-links bottom-link">
+                            <i class="fas fa-sign-out"></i>
+                            <h3>Logout</h3>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
                   </li>
                 <% } else { %>
                   <li class="nav-item">
                     <a href="/login" class="nav-link">Log in</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;">Register</button></a>
+                    <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                        id="register-user-btn">Register</button></a>
                   </li>
                 <% } %>
               </ul>
@@ -62,12 +108,17 @@
               </div>
             </div>
           </nav>
-        </header>
+        </div>
+      </div>
+    </header>
 
+    <div class="container">
+      <div class="subcontainer">
         <div class="showcase fade">
           <div>
             <h1>Needa connects you with working professionals in your area.</h1>
-            <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your dog? No problem. Search for professionals of any trade in your area today.</p>
+            <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
+              dog? No problem. Search for professionals of any trade in your area today.</p>
           </div>
           <div class="showcase-search">
             <input type="text" placeholder="Carpenter..."><button>SEARCH</button>
@@ -75,235 +126,153 @@
           </div>
         </div>
       </div>
-  </div>
-</div>
-
-<section>
-  <div class="container">
-    <div class="subcontainer">
-      <div class="recommended">
-        <div class="controller">
-          <div>
-            <h3>Popular Searches</h3>
-          </div>
-          <div id="controls_1">
-            <button class="previous_1"><i class="fas fa-angle-left"></i></button>
-            <button class="next_1"><i class="fas fa-angle-right"></i></button>
-          </div>
-        </div>
-        <div class="my-slider-1">
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_1">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Mechanics</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_2">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Tutors</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_3">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Personal Trainers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_4">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Landscapers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_5">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Movers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_6">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Carpenters</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_7">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Cleaners</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_8">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Caterers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_9">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>DJ's</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_10">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Plumbers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_11">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Barbers</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-1_12">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Security</h3>
-                <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: gold;"></i></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-</section>
 
-<section>
-  <div class="container">
-    <div class="subcontainer">
-      <div class="recommended">
-        <div class="controller">
-          <div>
-            <h3>Top Rated Members</h3>
-          </div>
-          <div id="controls_2">
-            <button class="previous_2"><i class="fas fa-angle-left"></i></button>
-            <button class="next_2"><i class="fas fa-angle-right"></i></button>
-          </div>
-        </div>
-        <div class="my-slider-2">
-          <div>
-            <div class="slide">
-              <div class="slide-img img-2_1">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <p>Electrician</p>
-                <h3>Dirrel Smith</h3>
-                <p>Chicago, IL</p>
-              </div>
+  <section>
+    <div class="container">
+      <div class="subcontainer">
+        <div class="recommended">
+          <div class="controller">
+            <div>
+              <h3>Popular Searches</h3>
+            </div>
+            <div id="controls_1">
+              <button class="previous_1"><i class="fas fa-angle-left"></i></button>
+              <button class="next_1"><i class="fas fa-angle-right"></i></button>
             </div>
           </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-2">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <p>Electrician</p>
-                <h3>Angel Velez</h3>
-                <p>Atlanta, GA</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-3">
-                <p>Learn More</p>
-              </div>
-              <div>
-                <p>Electrician</p>
-                <h3>Angel Velez</h3>
-                <p>Los Angeles, CA</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-4">
+          <div class="my-slider-1">
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_1">
                   <p>Learn More</p>
-              </div>
-              <div>
-                <h3>Angel Velez</h3>
-                <div class="location">
-                  <p>Electrician</p>
-                  <p>Little Rock, AR</p>
+                </div>
+                <div>
+                  <h3>Mechanics</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <div class="slide">
-              <div class="slide-img img-5">
-                <p>Learn More</p>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_2">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Tutors</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
               </div>
-              <div>
-                <h3>Angel Velez</h3>
-                <div class="location">
-                  <p>Electrician</p>
+            </div>
+
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_3">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Personal Trainers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_4">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Landscapers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_5">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Movers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_6">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Carpenters</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_7">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Cleaners</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_8">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Caterers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_9">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>DJ's</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_10">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Plumbers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_11">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Barbers</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-1_12">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Security</h3>
+                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
                 </div>
               </div>
             </div>
@@ -311,19 +280,101 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="workers">
-  <div class="container">
-    <div class="subcontainer">
-      <div class="workers">
-        <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
-        <a href="/register"><button style="padding: 8px 12px 8px 12px;">Sign up</button></a>
+  <section>
+    <div class="container">
+      <div class="subcontainer">
+        <div class="recommended">
+          <div class="controller">
+            <div>
+              <h3>Top Rated Members</h3>
+            </div>
+            <div id="controls_2">
+              <button class="previous_2"><i class="fas fa-angle-left"></i></button>
+              <button class="next_2"><i class="fas fa-angle-right"></i></button>
+            </div>
+          </div>
+          <div class="my-slider-2">
+            <div>
+              <div class="slide">
+                <div class="slide-img img-2_1">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <p>Electrician</p>
+                  <h3>Dirrel Smith</h3>
+                  <p>Chicago, IL</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-2">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <p>Electrician</p>
+                  <h3>Angel Velez</h3>
+                  <p>Atlanta, GA</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-3">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <p>Electrician</p>
+                  <h3>Angel Velez</h3>
+                  <p>Los Angeles, CA</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-4">
+                    <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Angel Velez</h3>
+                  <div class="location">
+                    <p>Electrician</p>
+                    <p>Little Rock, AR</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="slide">
+                <div class="slide-img img-5">
+                  <p>Learn More</p>
+                </div>
+                <div>
+                  <h3>Angel Velez</h3>
+                  <div class="location">
+                    <p>Electrician</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="workers">
+    <div class="container">
+      <div class="subcontainer">
+        <div class="workers">
+          <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
+          <a href="/register"><button style="padding: 8px 12px 8px 12px;">Sign up</button></a>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <script src="/js/script.js"></script>  
 

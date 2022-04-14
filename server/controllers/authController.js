@@ -4,18 +4,26 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const mail = require("../../mail.js");
-const {promisify} = require("util");
 const {validationResult} = require("express-validator");
 var randomstring = require("randomstring");
+const s3 = require("../../s3.js");
+
+const fs = require("fs");
+const util = require("util");
+const {promisify} = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+
 require("dotenv").config();
 
+// HELPER FUNCTIONS -----------------------------------------------
+
+// GRAB THE CURRENT DATE
 function get_date(){
   let yourDate = new Date()
   const offset = yourDate.getTimezoneOffset();
   yourDate = new Date(yourDate.getTime() - (offset*60*1000));
   return yourDate.toISOString().split('T')[0]
 }
-
 
 // REGISTER -------------------------------------------------------
 
@@ -115,27 +123,6 @@ exports.login = async (req, res) => {
   });
 }
 
-// IS USER LOGGED IN? -------------------------------------------------------
-
-
-exports.isLoggedIn = async (req, res, next) => {
-  if(req.cookies.jwt){
-    try{
-      //1) verify the token
-      const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
-      //2.) check if the user still exists
-      db.query("SELECT * FROM user WHERE id = ?", [decoded.id], (err, result) => {
-        if(!result){
-          return next();
-        }
-        req.user = result[0];
-        return next();
-      })
-    }catch(err){
-      return next();
-    }
-  }else{ next(); }
-}
 
 
 // LOGOUT -------------------------------------------------------
@@ -150,13 +137,51 @@ exports.logout = async (req, res) => {
 }
 
 
+// UPDATE PASSWORD -------------------------------------------------------
+
+
+exports.updatePassword = (req, res) => {
+  const { id, token, token_expires, password } = req.body;
+
+  // CHECK THAT TOKEN IS NOT EXPIRED
+  if(token_expires > Date.now()){
+    // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
+    const errors = validationResult(req);
+    // STRINGIFY TO PARSE THE DATA
+    var allErrors = JSON.stringify(errors);
+    var allParsedErrors = JSON.parse(allErrors);
+     // OUTPUT VALIDATION ERRORS IF ANY
+    if(!errors.isEmpty()){
+      return res.render("password-reset-update", {
+        title: "Password Reset Update",
+        allParsedErrors: allParsedErrors,
+        token: token,
+        token_expires: token_expires,
+        id: id,
+        token_success: true
+      })
+    }
+    // UPDATE THE PASSWORD
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      var data = { token: null, token_expires: null, password: hash};
+      db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, result) => {
+        if(!err) return res.render("password-reset-success", {title: "Password Reset Success"});
+        else console.log(err.message);
+      });
+    });
+  } else {
+    return res.render("password-reset-update", {title: "Password Reset Update", token_success: false, message: "Password reset token is invalid or has expired" });
+  }
+}
+
+
+
 // PASSWORD RESET -------------------------------------------------------
 
 
 exports.passwordReset = (req, res) => {
   var email = req.body.email;
   const pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
-
   // CHECK FOR EMAIL VALIDATION
   if(
     email === undefined ||
@@ -199,42 +224,200 @@ exports.passwordReset = (req, res) => {
 }
 
 
-// UPDATE PASSWORD -------------------------------------------------------
+exports.settings = async (req, res) => {
+  const {profile_photo, cover_photo, work_photos} = req.files;
 
+  console.log(work_photos)
 
-exports.updatePassword = (req, res) => {
-  const { id, token, token_expires, password } = req.body;
+  // GRAB ERRORS FROM EXPRESS VALIDATOR
+  const errors = validationResult(req);
+  // STRINGIFY TO PARSE THE DATA
+  const allErrors = JSON.stringify(errors);
+  const allParsedErrors = JSON.parse(allErrors);
 
-  // CHECK THAT TOKEN IS NOT EXPIRED
-  if(token_expires > Date.now()){
-    // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
-    const errors = validationResult(req);
-    // STRINGIFY TO PARSE THE DATA
-    var allErrors = JSON.stringify(errors);
-    var allParsedErrors = JSON.parse(allErrors);
-     // OUTPUT VALIDATION ERRORS IF ANY
-    if(!errors.isEmpty()){
-      return res.render("password-reset-update", {
-        title: "Password Reset Update",
-        allParsedErrors: allParsedErrors,
-        token: token,
-        token_expires: token_expires,
-        id: id,
-        token_success: true
-      })
-    }
-    // UPDATE THE PASSWORD
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      var data = { token: null, token_expires: null, password: hash};
-      db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, result) => {
-        if(!err) return res.render("password-reset-success", {title: "Password Reset Success"});
-        else console.log(err.message);
-      });
-    });
-  } else {
-    return res.render("password-reset-update", {title: "Password Reset Update", token_success: false, message: "Password reset token is invalid or has expired" });
+   // OUTPUT VALIDATION ERRORS ( IF ANY )
+  if(!errors.isEmpty()){
+    if(typeof req.files["profile_photo"] !== "undefined")
+      await unlinkFile(profile_photo[0].path);
+    if(typeof req.files["cover_photo"] !== "undefined")
+      await unlinkFile(cover_photo[0].path);
+    return res.render("Settings", {
+      title: "Settings | Needa",
+      allParsedErrors: allParsedErrors,
+      user: req.user
+    })
+  }
+
+  if(typeof req.files["profile_photo"] !== "undefined" && typeof req.files["cover_photo"] !== "undefined"){
+    uploadProfileCoverPhotos(req.user, res, profile_photo[0], cover_photo[0], req.body);
+  }else if(typeof req.files["profile_photo"] !== "undefined" && typeof req.files["cover_photo"] === "undefined"){
+    uploadProfilePhoto(req.user, res, profile_photo[0], req.body);
+  }else if(typeof req.files["profile_photo"] === "undefined" && typeof req.files["cover_photo"] !== "undefined"){
+    uploadCoverPhoto(req.user, res, cover_photo[0], req.body);
+  }else if(req.body.deleteAwsProPhoto === "delete" && req.body.deleteAwsCovPhoto === "delete"){
+    deleteProfileCoverPhotos(req.user, res, req.body);
+  }else if(req.body.deleteAwsProPhoto === "delete" && req.body.deleteAwsCovPhoto === ""){
+    deleteProfilePhoto(req.user, res, req.body);
+  }else if(req.body.deleteAwsProPhoto === "" && req.body.deleteAwsCovPhoto === "delete"){
+    deleteCoverPhoto(req.user, res, req.body);
+  } else{
+    noUploadedPhotos(req.user, res, req.body);
   }
 }
+
+// USER UPLOADED A PROFILE AND A COVER PHOTO
+
+async function uploadProfileCoverPhotos(user, res, profilePhotoObject, coverPhotoObject, update){
+  await s3.uploadImage(user.id, profilePhotoObject);
+  await s3.uploadImage(user.id, coverPhotoObject);
+  await unlinkFile(profilePhotoObject.path);
+  await unlinkFile(coverPhotoObject.path);
+
+  if(user.profile_photo != null)
+    await s3.deleteImage(user.id, user.profile_photo);
+  if(user.cover_photo != null)
+    await s3.deleteImage(user.id, user.cover_photo);
+
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+    if(!err) return res.redirect("/settings");
+    else console.log(err.message);
+  });
+}
+
+// USER UPLOADED A PROFILE PHOTO ONLY
+
+async function uploadProfilePhoto(user, res, profilePhotoObject, update){
+  await s3.uploadImage(user.id, profilePhotoObject);
+  await unlinkFile(profilePhotoObject.path);
+
+  if(user.profile_photo != null)
+    await s3.deleteImage(user.id, user.profile_photo);
+
+  if(update.deleteAwsCovPhoto === "delete"){
+    await s3.deleteImage(user.id, user.cover_photo);
+    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+      if(!err) return res.redirect("/settings");
+      else console.log(err.message);
+    });
+  } else {
+    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+      if(!err) return res.redirect("/settings");
+      else console.log(err.message);
+    });
+  }
+}
+
+// USER UPLOADED A COVER PHOTO ONLY
+
+async function uploadCoverPhoto(user, res, coverPhotoObject, update){
+  await s3.uploadImage(user.id, coverPhotoObject);
+  await unlinkFile(coverPhotoObject.path);
+
+  if(user.cover_photo != null)
+    await s3.deleteImage(user.id, user.cover_photo);
+
+  if(update.deleteAwsProPhoto === "delete"){ 
+    await s3.deleteImage(user.id, user.profile_photo);
+    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+      if(!err) return res.redirect("/settings");
+      else console.log(err.message);
+    });
+  }else{
+    const data = { first_name:update.first_name, last_name:update.last_name, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+      if(!err) return res.redirect("/settings");
+      else console.log(err.message);
+    });
+  }
+}
+
+// USER DELETED PROFILE AND COVER PHOTOS
+
+async function deleteProfileCoverPhotos(user, res, update){
+  if(user.profile_photo != null)
+    await s3.deleteImage(user.id, user.profile_photo);
+
+  if(user.cover_photo != null)
+    await s3.deleteImage(user.id, user.cover_photo);
+
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+    if(!err) return res.redirect("/settings");
+    else console.log(err.message);
+  });
+}
+
+// USER DELETED PROFILE PHOTO ONLY
+
+async function deleteProfilePhoto(user, res, update){
+  if(user.profile_photo != null)
+    await s3.deleteImage(user.id, user.profile_photo);
+
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+    if(!err) return res.redirect("/settings");
+    else console.log(err.message);
+  });
+}
+
+// USER DELETED COVER PHOTO ONLY
+
+async function deleteCoverPhoto(user, res, update){
+  if(user.cover_photo != null)
+    await s3.deleteImage(user.id, user.cover_photo);
+
+  const data = { first_name:update.first_name, last_name:update.last_name, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+    if(!err) return res.redirect("/settings");
+    else console.log(err.message);
+  });
+}
+
+// USER DID NOT UPLOAD OR DELETE ANY PHOTOS
+
+function noUploadedPhotos(user, res, update){
+  const data = { first_name:update.first_name, last_name:update.last_name, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+
+  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+    if(!err) return res.redirect("/settings");
+    else console.log(err.message);
+  }); 
+}
+
+// IS USER LOGGED IN? -------------------------------------------------------
+
+
+exports.isLoggedIn = async (req, res, next) => {
+  if(req.cookies.jwt){
+    try{
+      //1) verify the token
+      const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+      //2.) check if the user still exists
+      db.query("SELECT * FROM user WHERE id = ?", [decoded.id], (err, result) => {
+        if(!result){
+          return next();
+        }
+        req.user = result[0];
+        return next();
+      })
+    }catch(err){
+      return next();
+    }
+  }else{ next(); }
+}
+
 
 
 // ADMIN CRUD SYSTEM ======================================================================================

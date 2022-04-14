@@ -1,15 +1,144 @@
 <%- include("partials/header.ejs") %>
 
+<section id="profile-cover-photo"></section>
+
 <section>
-  <div class="container">
+  <div class="container" style="padding-bottom: 20px;">
     <div class="subcontainer">
-      <div id="title">
-        <h1>Hello, <%= user.email %></h1>
+      <div class="profile-wrapper">
+        <div class="profile-col-1">
+          
+          <div class="profile-photo">
+              <i class="fas fa-user" id="fa-user"></i>
+          </div>
+
+          <div class="profile-identity flex-5">
+              <h1>
+                <%= user.first_name%>
+                  <%= user.last_name%>
+              </h1>
+              <h2>
+                <%= user.profession%>
+              </h2>
+            <% if(user.city && user.state) { %>
+              <h3>
+                <i class="fas fa-map-marker-alt"></i> 
+                <%= user.city %>, <%= user.state%></h3>
+            <% } else { %>
+              <h3>
+                <i class="fas fa-map-marker-alt"></i>
+                <%= user.city %> <%= user.state%>
+              </h3>
+            <% } %>
+          </div>
+
+          <div class="profile-social">
+            <% if(user.twitter_profile) { %>
+              <a href="<%= user.twitter_profile %>" target="_blank"><i class="fab fa-twitter"></i></a>
+            <% } %>
+            <% if(user.instagram_profile) { %>
+              <a href="<%= user.instagram_profile %>" target="_blank"><i class="fab fa-instagram"></i></a>
+            <% } %>
+            <% if(user.facebook_profile) { %>
+              <a href="<%= user.facebook_profile %>" target="_blank"><i class="fab fa-facebook"></i></a>
+            <% } %>
+            <% if(user.linkedin_url) { %>
+              <a href="<%= user.linkedin_url %>" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <% } %>
+            <% if(user.website_url) { %>
+              <a href="<%= user.website_url %>" target="_blank"><i class="fas fa-link"></i></a>
+            <% } %>
+          </div>
+
+          <div class="profile-about flex-3">
+            <div class="flex-5">
+              <div>
+                <h3>About</h3>
+              </div>
+              <div>
+                <p>
+                  <%= user.about %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="profile-col-2">
+
+          <div class="profile-edit">
+            <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
+          </div>
+
+          <div class="profile-services flex-5">
+            <h3>Service</h3>
+            <p><%= user.specialty %></p>
+          </div>
+
+          <div class="profile-skills flex-5">
+            <h3>Skills</h3>
+            <p><%= user.skills %></p>
+          </div>
+
+          <div class="profile-work-images flex-5">
+            <div>
+              <h3>Images</h3>
+            </div>
+            <div class="profile-work-images-wrapper">
+              <div class="profile-work-image img1"></div>
+              <div class="profile-work-image img2"></div>
+              <div class="profile-work-image img3"></div>
+              <div class="profile-work-image img4"></div>
+            </div>
+          </div>
+
+          <div class="profile-following">
+            <div>
+              <h3>Following</h3>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<div id="overlay">
+  <i class="fas fa-times-circle" id="close-modal-btn"></i>
+  <div id="modal"></div>
+</div>
+
 <script src="/js/script.js"></script>
+
+<script>
+
+  const overlay = document.querySelector("#overlay");
+  const images = ["https://images.pexels.com/photos/3637837/pexels-photo-3637837.jpeg?cs=srgb&dl=pexels-cleyder-duque-3637837.jpg&fm=jpg", "https://images.pexels.com/photos/2398375/pexels-photo-2398375.jpeg?cs=srgb&dl=pexels-diego-%F0%9F%9A%80-2398375.jpg&fm=jpg", "ttps://images.pexels.com/photos/94865/pexels-photo-94865.jpeg?cs=srgb&dl=pexels-photomix-company-94865.jpg&fm=jpg", "https://images.pexels.com/photos/4491846/pexels-photo-4491846.jpeg?cs=srgb&dl=pexels-ivan-samkov-4491846.jpg&fm=jpg"];
+  let i = 0;
+
+  document.querySelectorAll(".profile-work-image").forEach(n => {
+    n.addEventListener("click", () => {
+      console.log(i++)
+      // n.style.backgroundImage = `url(${images[0]})`;
+      overlay.style.display = "block";
+    })
+  })
+
+  document.querySelector("#close-modal-btn").addEventListener("click", () => {
+    overlay.style.display = "none";
+  })
+
+  const cover = "<%= user.cover_photo %>";
+  const profile = "<%= user.profile_photo %>";
+  if(cover)
+    document.querySelector("#profile-cover-photo").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+
+  if(profile){
+    document.querySelector("#fa-user").style.opacity = 0;
+    document.querySelector(".profile-photo").style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+  }
+  
+</script>
 
 <%- include("partials/footer.ejs") %>

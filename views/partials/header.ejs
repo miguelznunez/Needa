@@ -5,11 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
+
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
   <title><%= title %></title>
 </head>
 
@@ -26,10 +29,66 @@
             <ul class="nav-menu">
               <% if (typeof user !="undefined" && user) { %>
                 <li class="nav-item">
-                  <a href="/profile" class="nav-link">Profile</a>
+                  <div class="dropdown" data-dropdown>
+                    <div class="user-icon link" data-dropdown-button>
+                      <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
+                        <style>
+                          .user-icon {
+                            background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                          }
+                        </style>
+                      <% } else { %>
+                        <i class="fas fa-user link" data-dropdown-button></i>
+                      <% } %>
+                    </div>
+                    <div class="dropdown-menu">
+                      <a href="/profile">
+                        <div class="dropdown-links top-link">
+                          <div class="user-icon">
+                            <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
+                              <style>
+                                .user-icon {
+                                  background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                                }
+                              </style>
+                            <% } else { %>
+                              <i class="fas fa-user link" data-dropdown-button></i>
+                            <% } %>
+                          </div>
+                          <h3>
+                            <%= user.first_name %>
+                              <%= user.last_name%>
+                          </h3>
+                        </div>
+                      </a>
+                      <a href="/">
+                        <div class="dropdown-links">
+                          <i class="fas fa-home"></i>
+                          <h3>Home</h3>
+                        </div>
+                      </a>
+                      <a href="/settings">
+                        <div class="dropdown-links">
+                          <i class="fas fa-user-circle"></i>
+                          <h3>Account Settings</h3>
+                        </div>
+                      </a>
+                      <a href="/auth/logout">
+                        <div class="dropdown-links bottom-link">
+                          <i class="fas fa-sign-out"></i>
+                          <h3>Logout</h3>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              <% } else { %>
+                <li class="nav-item">
+                  <a href="/login" class="nav-link">Log in</a>
                 </li>
                 <li class="nav-item">
-                  <a href="/auth/logout" class="nav-link">Logout</a>
+                  <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                      id="register-user-btn">Register</button></a>
                 </li>
               <% } %>
             </ul>
@@ -50,7 +109,7 @@
         <div class="cookies">
           <p>This website uses cookies to ensure you get the best experience on our website. <a href=""
               id="more-info-link">More info.</a></p>
-          <button id="cookies-btn" style="padding: 8px 12px 8px 12px;">I agree</button>
+          <button id="cookies-btn" style="padding: 8px 12px 8px 12px;">That's fine</button>
         </div>
       </div>
     </div>

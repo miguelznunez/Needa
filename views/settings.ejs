@@ -1,0 +1,450 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container" style="padding: 20px 0;">
+  <div class="subcontainer">
+    <div class="settings-wrapper">
+
+
+      <div class="settings-col-1">
+        <div class="settings-col-1-child-1">
+          <h2>User Settings</h2>
+        </div>
+        <div class="settings-col-1-child-2">
+          <div class="settings-col-1-link">
+            <a href="/settings" style="color:#009999;">
+              <div class="flex">
+                <i class="fas fa-user-circle"></i>
+                <p>PROFILE</p>
+              </div>
+            </a>
+          </div>
+          <div class="settings-col-1-link">
+            <a href="/settings/account">
+              <div class="flex">
+                <i class="fas fa-cog"></i>
+                <p>ACCOUNT</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <form action="/auth/settings" method="POST" class="settings-col-2" enctype="multipart/form-data">
+        <div class="settings-col-2-wrapper">
+          <div class="settings-col-2-child">
+
+
+            <!-- BASIC INFO  -->
+
+
+            <h3>Basic Info</h3>
+
+            <!-- PROFILE PHOTO UPLOAD -->
+
+            <div class="user-input">
+              <% if(typeof user.profile_photo != "undefined" && user.profile_photo) { %>
+                <div class="flex-4">
+                  <label>Profile Photo</label>
+                  <i class="far fa-trash-alt" id="deleteAwsProfilePhoto"></i>
+                  <input type="hidden" name="deleteAwsProPhoto" id="deleteAwsProPhoto">
+                </div>
+                <div class="aws-profile-photo-container-1"></div>
+                <div class="aws-profile-photo-container-2">
+                  <div class="flex-2">
+                    <i class="fas fa-cloud-upload"></i>
+                    <p>Upload Photo</p>
+                    <input type="file" id="awsProfilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
+                  </div>
+                </div>
+              <%} else { %>
+                <div class="flex-4">
+                  <label>Profile Photo</label>
+                  <i class="far fa-trash-alt" id="deleteDummyProfilePhoto"></i>
+                  <input type="hidden" name="deleteAwsProPhoto" id="deleteAwsProPhoto">
+                </div>
+                <div class="dummy-profile-photo-container-1">
+                  <div class="flex-2">
+                    <i class="fas fa-cloud-upload"></i>
+                    <p>Upload Photo</p>
+                    <input type="file" id="dummyProfilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
+                  </div>
+                </div>
+                <div class="dummy-profile-photo-container-2"></div>
+              <% } %>
+            </div>
+
+            <!-- COVER PHOTO UPLOAD -->
+
+            <div class="user-input">
+
+              <% if(typeof user.cover_photo !="undefined" && user.cover_photo) { %>
+                <div class="flex-4">
+                  <label>Cover Image</label>
+                  <i class="far fa-trash-alt" id="deleteAwsCoverPhoto"></i>
+                  <input type="hidden" name="deleteAwsCovPhoto" id="deleteAwsCovPhoto">
+                </div>
+                <div class="aws-cover-photo-container-1"></div>
+                <div class="aws-cover-photo-container-2">
+                  <div class="flex-2">
+                    <i class="fas fa-cloud-upload"></i>
+                    <p>Upload Photo</p>
+                    <input type="file" id="awsCoverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
+                  </div>
+                </div>
+              <%} else { %>
+                <div class="flex-4">
+                  <label>Cover Photo</label>
+                  <i class="far fa-trash-alt" id="deleteDummyCoverPhoto"></i>
+                  <input type="hidden" name="deleteAwsCovPhoto" id="deleteAwsCovPhoto">
+                </div>
+                <div class="dummy-cover-photo-container-1">
+                  <div class="flex-2">
+                    <i class="fas fa-cloud-upload"></i>
+                    <p>Upload Photo</p>
+                    <input type="file" id="dummyCoverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
+                  </div>
+                </div>
+                <div class="dummy-cover-photo-container-2"></div>
+              <% } %>
+            </div>
+            <div class="user-input">
+              <label for="first_name">First name</label>
+              <input type="text" name="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
+            </div>
+            <div class="user-input">
+              <label for="last_name">Last name</label>
+              <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>" maxlength="30">
+            </div>
+            <div class="user-input">
+              <label for="city">City</label>
+              <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
+            </div>
+            <div class="user-input">
+              <label for="state">State</label>
+              <select name="state" id="state">
+                <option value="<%= user.state %>"> <%= user.state %> </option>
+              </select>
+            </div>
+            <div class="user-input">
+              <% if(user.gender === "M") { %>
+                <label for="gender">Gender</label>
+                <div class="flex" style="width: 60px;">
+                  <input type="radio" name="gender" value="M" checked>
+                  <label for="M">Male</label>
+                </div>
+                <div class="flex" style="width: 78px;">
+                  <input type="radio" name="gender" value="F">
+                  <label for="F">Female</label>
+                </div>
+              <% } else if (user.gender === "F") { %>
+                <label for="gender">Gender</label>
+                <div class="flex" style="width: 60px;">
+                  <input type="radio" name="gender" value="M">
+                  <label for="M">Male</label>
+                </div>
+                <div class="flex" style="width: 78px;">
+                  <input type="radio" name="gender" value="F" checked>
+                  <label for="F">Female</label>
+                </div>
+              <% } else { %>
+                <label for="gender">Gender</label>
+                <div class="flex" style="width: 60px;">
+                  <input type="radio" name="gender" value="M">
+                  <label for="M">Male</label>
+                </div>
+                <div class="flex" style="width: 78px;">
+                  <input type="radio" name="gender" value="F">
+                  <label for="F">Female</label>
+                </div>
+              <% } %>
+            </div>
+
+            
+            <!-- ABOUT YOU  -->
+
+            <br>
+
+            <h3>About You</h3>
+            <div class="user-input">
+              <label for="profession">Profession</label>
+              <input type="text" name="profession" placeholder="e.g. Electrician" value="<%= user.profession %>" maxlength="50">
+            </div>
+            <div class="user-input">
+              <label for="specialty">Services</label>
+              <textarea name="specialty" id="" placeholder="I specialize in..." maxlength="140"><%= user.specialty %></textarea>
+            </div>
+            <div class="user-input">
+              <label for="about">About you</label>
+              <textarea name="about" placeholder="I have 10 year experience..." maxlength="1000"><%= user.about %></textarea>
+            </div>
+            <div class="user-input">
+              <label for="skills">Skills</label>
+              <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>" maxlength="1000">
+            </div>
+          </div>
+
+
+          <!-- SOCIAL  -->
+
+
+          <div class="settings-col-2-child">
+            <h3>Social</h3>
+            <div class="user-input">
+              <label for="twitter_profile">Twitter profile</label>
+              <input type="text" name="twitter_profile" placeholder="https://twitter.com/johndoe" value="<%= user.twitter_profile %>"  maxlength="255">
+            </div>
+            <div class="user-input">
+              <label for="instagram_profile">Instagram profile</label>
+              <input type="text" name="instagram_profile" placeholder="https://instagram.com/johndoe" value="<%= user.instagram_profile %>" maxlength="255">
+            </div>
+            <div class="user-input">
+              <label for="facebook_profile">Facebook profile</label>
+              <input type="text" name="facebook_profile" placeholder="https://facebook.com/johndoe" value="<%= user.facebook_profile %>" maxlength="255">
+            </div>
+            <div class="user-input">
+              <label for="linkedin_url">LinkedIn URL</label>
+              <input type="text" name="linkedin_url" placeholder="https://www.linkedin.com/in/johndoe" value="<%= user.linkedin_url %>"maxlength="255">
+            </div>
+            <div class="user-input">
+              <label for="website_url">Website URL</label>
+              <input type="text" name="website_url" placeholder="https://johndoe.com" value="<%= user.website_url %>" maxlength="255">
+            </div>
+
+            
+            <!-- PROFILE IDENTITY  -->
+            
+            <br>
+
+            <h3>Profile identity</h3>          
+            <div class="user-input">
+              <input type="phone" name="phone" placeholder="Enter your phone number" value="<%= user.phone %>" maxlength="11">
+            </div>
+            <div class="flex">
+              <% if(user.display_phone === "yes" ) { %>
+                <input type="checkbox" value="yes" name="display_phone" checked>
+                <label for="display_phone">Display my phone number on profile page</label>
+              <% } else { %>
+                <input type="checkbox" value="yes" name="display_phone">
+                <label for="display_phone">Display my phone number on profile page</label>
+              <% } %>
+            </div>  
+            <div class="user-input">
+              <input type="email" name="email" placeholder="<%= user.email %>" disabled>
+            </div>
+            <div class="flex">
+              <% if(user.display_email === "yes" ) { %>
+                <input type="checkbox" value="yes" name="display_email" checked>
+                <label for="display_email">Display my email on profile page</label>
+              <% } else { %>
+                <input type="checkbox" value="yes" name="display_email">
+                <label for="display_email">Display my email on profile page</label>
+              <% } %>
+            </div>
+            <!-- <div>
+              <button type="submit" id="update-profile-btn">Update</button>
+            </div> -->
+
+
+            <!-- PROFILE WORK IMAGES  -->
+            
+            <br>
+            
+            <h3>Work images</h3>
+
+            <div class="dummy-cover-photo-container-1">
+              <div class="flex-2">
+                <i class="fas fa-cloud-upload"></i>
+                <p>Upload Photo</p>
+                <input type="file" id="files" name="work_photos" multiple="multiple" accept="image/jpeg, image/png, image/jpg">
+              </div>
+            </div>
+            <output id="result" />
+
+            <div>
+              <button type="submit">Update</button>
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <!-- VALIDATION ERRORS -->
+
+
+        <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
+          <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
+            <div class="alert-message">
+              <%= (allParsedErrors.errors[i].msg) %>
+            </div>
+          <% } %>
+        <% } %>
+        <% if(typeof success !="undefined" && success) { %>
+          <div class="alert-message success">
+            <%= message %>
+          </div>
+         <% } %>
+        <% if(typeof success !="undefined" && !success) { %>
+          <div class="alert-message">
+            <%= message %>
+          </div>
+        <% } %>
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/script.js"></script>
+
+<script>
+
+  document.querySelector("#files").addEventListener("change", (e) => { //CHANGE EVENT FOR UPLOADING PHOTOS
+    if (window.File && window.FileList && window.FileReader) { //CHECK IF FILE API IS SUPPORTED
+      const files = e.target.files; //FILE LIST OBJECT CONTAINING UPLOADED FILES
+      const output = document.querySelector("#result");
+      for (let i = 0; i < files.length; i++) { // LOOP THROUGH THE FILE LIST OBJECT
+        if (!files[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
+        const picReader = new FileReader(); // RETRIEVE DATA URI 
+        picReader.addEventListener("load", function (event) { // LOAD EVENT FOR DISPLAYING PHOTOS
+          const picFile = event.target;
+          const div = document.createElement("div");
+          div.innerHTML = `<img class="thumbnail" src="${picFile.result}" title="${picFile.name}"/>`;
+          output.appendChild(div);
+        });
+        picReader.readAsDataURL(files[i]); //READ THE IMAGE
+      }
+    } else {
+      alert("Your browser does not support File API");
+    }
+  });
+
+  const profile = "<%= user.profile_photo %>";
+  const cover = "<%= user.cover_photo %>";
+
+  if (profile)
+    document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+
+  if (cover)
+    document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+
+  const dummy_profile_photo = document.querySelector("#dummyProfilePhoto");
+  const aws_profile_photo = document.querySelector("#awsProfilePhoto");
+  const dummy_cover_photo = document.querySelector("#dummyCoverPhoto");
+  const aws_cover_photo = document.querySelector("#awsCoverPhoto");
+
+  // DUMMY PROFILE PHOTO
+
+  if (dummy_profile_photo) {
+
+    dummy_profile_photo.addEventListener('change', function () {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        displayDummyProfilePhoto(reader.result);
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+
+    function displayDummyProfilePhoto(uploaded_photo) {
+      document.querySelector(".dummy-profile-photo-container-1").style.display = "none";
+      document.querySelector(".dummy-profile-photo-container-2").style.display = "block";
+      document.querySelector(".dummy-profile-photo-container-2").style.backgroundImage = `url(${uploaded_photo})`;
+    }
+
+    document.querySelector("#deleteDummyProfilePhoto").addEventListener("click", () => {
+      document.querySelector(".dummy-profile-photo-container-2").style.display = "none";
+      document.querySelector(".dummy-profile-photo-container-1").style.display = "block";
+    })
+
+  }
+
+
+  // AWS PROFILE PHOTO
+
+
+  if (aws_profile_photo) {
+
+    aws_profile_photo.addEventListener('change', function () {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        displayAwsProfilePhoto(reader.result);
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+
+    function displayAwsProfilePhoto(uploaded_photo) {
+      document.querySelector(".aws-profile-photo-container-2").style.display = "none";
+      document.querySelector(".aws-profile-photo-container-1").style.display = "block";
+      document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = `url(${uploaded_photo})`;
+    }
+
+    document.querySelector("#deleteAwsProfilePhoto").addEventListener("click", () => {
+      document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = "none";
+      document.querySelector(".aws-profile-photo-container-1").style.display = "none";
+      document.querySelector(".aws-profile-photo-container-2").style.display = "block";
+      document.querySelector("#deleteAwsProPhoto").value = "delete";
+    })
+  }
+
+
+  // DUMMY COVER PHOTO
+
+
+  if (dummy_cover_photo) {
+
+    dummy_cover_photo.addEventListener('change', function () {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        displayDummyCoverPhoto(reader.result);
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+
+    function displayDummyCoverPhoto(uploaded_photo) {
+      document.querySelector(".dummy-cover-photo-container-1").style.display = "none";
+      document.querySelector(".dummy-cover-photo-container-2").style.display = "block";
+      document.querySelector(".dummy-cover-photo-container-2").style.backgroundImage = `url(${uploaded_photo})`;
+    }
+
+    document.querySelector("#deleteDummyCoverPhoto").addEventListener("click", () => {
+      document.querySelector(".dummy-cover-photo-container-2").style.display = "none";
+      document.querySelector(".dummy-cover-photo-container-1").style.display = "block";
+    })
+
+  }
+
+
+  // AWS COVER PHOTO
+
+
+  if (aws_cover_photo) {
+
+    aws_cover_photo.addEventListener('change', function () {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        displayAwsCoverPhoto(reader.result);
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+
+    function displayAwsCoverPhoto(uploaded_photo) {
+      document.querySelector(".aws-cover-photo-container-2").style.display = "none";
+      document.querySelector(".aws-cover-photo-container-1").style.display = "block";
+      document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = `url(${uploaded_photo})`;
+    }
+
+    document.querySelector("#deleteAwsCoverPhoto").addEventListener("click", () => {
+      document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = "none";
+      document.querySelector(".aws-cover-photo-container-1").style.display = "none";
+      document.querySelector(".aws-cover-photo-container-2").style.display = "block";
+      document.querySelector("#deleteAwsCovPhoto").value = "delete";
+    })
+  }
+
+</script>
+
+<%- include("partials/footer.ejs") %>

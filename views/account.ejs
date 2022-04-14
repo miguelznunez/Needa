@@ -1,0 +1,48 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container" style="padding: 20px 0;">
+  <div class="subcontainer">
+    <div class="settings-wrapper">
+      <div class="settings-col-1">
+        <div class="settings-col-1-child-1">
+          <h2>Account Settings</h2>
+        </div>
+        <div class="settings-col-1-child-2">
+          <div class="settings-col-1-link">
+            <a href="/settings">
+              <div class="flex">
+                <i class="fas fa-user-circle"></i>
+                <p>PROFILE</p>
+              </div>
+            </a>
+          </div>
+          <div class="settings-col-1-link">
+            <a href="/settings/account" style="color:#009999;">
+              <div class="flex">
+                <i class="fas fa-cog"></i>
+                <p>ACCOUNT</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <form class="account-col-2">
+        <div class="account-col-2-child flex-3">
+          <h2>Delete Account</h2>
+          <p>Your personal data will be deleted permanently when you delete your account on Needa. This action is irreversible.
+          </p>
+          <div>
+            <button type="submit" id="delete-account-btn">Delete my account</button>
+          </div>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+</div>
+
+
+<script src="/js/script.js"></script>
+
+<%- include("partials/footer.ejs") %>

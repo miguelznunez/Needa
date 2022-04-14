@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../../db.js");
+const s3 = require("../../s3.js");
 const authController = require("../controllers/authController")
 
 const router = express.Router();
@@ -25,29 +26,29 @@ function checkBrowser(headers){
 
 router.get("/", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers))
-    return res.render("index", {title: "Home", user : req.user} );
+    return res.render("index", {title: "Needa | Home", user : req.user} );
   else
-    return res.render("unsupported", {title: "Home", user : req.user});
+    return res.render("unsupported", {title: "Needa | Home", user : req.user});
 });
 
 router.get("/register", authController.isLoggedIn, (req, res) => {
   // If user IS NOT logged in show the page otherwise redirect to the home page
   if(!req.user && !checkBrowser(req.headers))
-    res.render("register", {title: "Register", user : req.user});
+    res.render("register", {title: "Needa | Register", user : req.user});
   else
     res.redirect("/");
 });
 
 router.get("/login", authController.isLoggedIn, (req, res) => {
   if(!req.user && !checkBrowser(req.headers))
-    return res.render("login", {title: "Login", user : req.user});
+    return res.render("login", {title: "Needa | Login", user : req.user});
   else
     return res.redirect("/");
 });
 
 router.get("/password-reset", authController.isLoggedIn, (req, res) => {
   if(!req.user && !checkBrowser(req.headers))
-    return res.render("password-reset", {title: "Password Reset", user : req.user} );
+    return res.render("password-reset", {title: "Needa | Password Reset", user : req.user} );
   else
     return res.redirect("/");
 });
@@ -60,14 +61,14 @@ router.get("/account-verification-message/:id:token", authController.isLoggedIn,
         if( req.params.token === results[0].token.toString()) {
           db.query("UPDATE user SET token = ?, status = ? WHERE id = ?", [null, "Active", results[0].id],
           async (err, result) => {
-            if(!err) return res.render("account-verification-message", {title: "Account Verification Message", user : req.user, success: true, message: "Account has been successfully verified."} );
+            if(!err) return res.render("account-verification-message", {title: "Needa | Account Verification Message", user : req.user, success: true, message: "Account has been successfully verified."} );
             else console.log(err.message)
           });
         } else {
-           return res.render("account-verification-message", {title: "Account Verification Message", user : req.user, message: "Authentication token is invalid or has expired."} );
+           return res.render("account-verification-message", {title: "Needa | Account Verification Message", user : req.user, message: "Authentication token is invalid or has expired."} );
         }
       } else{
-        return res.render("account-verification-message", {title: "Account Verification Message", user : req.user, message: "Your account is already active please login."} );
+        return res.render("account-verification-message", {title: "Needa | Account Verification Message", user : req.user, message: "Your account is already active please login."} );
       } 
     });
   // Log the user out for security reasons
@@ -85,9 +86,9 @@ router.get("/password-reset-update/:id:token", authController.isLoggedIn, async 
     db.query("SELECT * FROM user WHERE id = ?", [req.params.id], async (err, results) => { 
       if((results != "") && (results[0].token != null) && (results[0].token_expires > Date.now()) ) {
         if (req.params.token === results[0].token.toString() )
-          return res.render("password-reset-update", {title: "Password Reset Update", user : req.user, id: req.params.id, token: req.params.token, token_expires: results[0].token_expires, token_success: true} );
+          return res.render("password-reset-update", {title: "Needa |  Password Reset Update", user : req.user, id: req.params.id, token: req.params.token, token_expires: results[0].token_expires, token_success: true} );
       } else{
-        return res.render("password-reset-update", {title: "Password Link Expired", user : req.user, token_success: false, message: "Password reset token is invalid or has expired."} );
+        return res.render("password-reset-update", {title: "Needa |  Password Link Expired", user : req.user, token_success: false, message: "Password reset token is invalid or has expired."} );
       } 
     });
   // Log the user out for security reasons
@@ -105,11 +106,42 @@ router.get("/password-reset-update/:id:token", authController.isLoggedIn, async 
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) 
-    return res.render("profile", {title: "Profile", user : req.user} );
+    return res.render("profile", {title: "Needa | Profile", user : req.user} );
   else 
     return res.redirect("/login");
 });
 
+router.get("/settings", authController.isLoggedIn, (req, res) => {
+  // If user IS logged in show the page otherwise redirect to the home page
+  if(req.user && !checkBrowser(req.headers)) 
+    return res.render("settings", {title: "Needa | Settings", user : req.user} );
+  else 
+    return res.redirect("/login");
+});
+
+router.get("/settings/account", authController.isLoggedIn, (req, res) => {
+  // If user IS logged in show the page otherwise redirect to the home page
+  if(req.user && !checkBrowser(req.headers)) 
+    return res.render("account", {title: "Needa | Account Settings", user : req.user} );
+  else 
+    return res.redirect("/login");
+});
+
+router.get("/profile-photo/:key", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.user.id, req.user.profile_photo);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
+
+router.get("/cover-photo/:key", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.user.id, req.user.cover_photo);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
 
 // ADMIN CRUD SYSTEM =======================================================================
 
@@ -118,7 +150,7 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
 router.get("/admin", authController.isLoggedIn, (req, res) => {
   if(req.user.admin === "Yes" && !checkBrowser(req.headers)) {
     db.query("SELECT * FROM user WHERE status != 'Deleted'", (err, rows) => {
-      if(!err) return res.render("admin", {title: "Admin" , user : req.user, rows: rows});
+      if(!err) return res.render("admin", {title: "Needa | Admin" , user : req.user, rows: rows});
       else console.log(err);
     });
   }
@@ -127,7 +159,7 @@ router.get("/admin", authController.isLoggedIn, (req, res) => {
 
 router.get("/add-user", authController.isLoggedIn, (req, res) => {
   if(req.user.admin === "Yes" && !checkBrowser(req.headers))
-    return res.render("add-user", {title : "Add User", user : req.user } );
+    return res.render("add-user", {title : "Needa | Add User", user : req.user } );
   else 
     return res.redirect("/login");
 });
@@ -135,7 +167,7 @@ router.get("/add-user", authController.isLoggedIn, (req, res) => {
 router.get("/edit-user/:id", authController.isLoggedIn, (req, res) => {
   if(req.user.admin === "Yes" && !checkBrowser(req.headers)) {
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      if(!err) return res.render("edit-user", {title: "Edit User" , user : req.user, rows: rows});
+      if(!err) return res.render("edit-user", {title: "Needa | Edit User" , user : req.user, rows: rows});
       else console.log(err);
     });
   }
@@ -145,7 +177,7 @@ router.get("/edit-user/:id", authController.isLoggedIn, (req, res) => {
 router.get("/view-user/:id", authController.isLoggedIn, (req, res) => {
   if(req.user.admin === "Yes" && !checkBrowser(req.headers)){
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      if(!err) return res.render("view-user", {title: "View User" , user : req.user, rows: rows})
+      if(!err) return res.render("view-user", {title: "Needa | View User" , user : req.user, rows: rows})
       else console.log(err);
     });
   }
