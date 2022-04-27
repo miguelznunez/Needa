@@ -4,7 +4,7 @@ const {check} = require("express-validator");
 const multer  = require('multer');
 const upload = multer({ 
   dest: "uploads/"
-}).fields([{name: "profile_photo"}, {name: "cover_photo"}, {name: "work_photos"}]);
+}).fields([{name: "profile_photo"}, {name: "cover_photo"}, {name: "photo_0"}]);
 
 const router = express.Router();
 

@@ -43,71 +43,39 @@
             <!-- PROFILE PHOTO UPLOAD -->
 
             <div class="user-input">
-              <% if(typeof user.profile_photo != "undefined" && user.profile_photo) { %>
-                <div class="flex-4">
-                  <label>Profile Photo</label>
-                  <i class="far fa-trash-alt" id="deleteAwsProfilePhoto"></i>
-                  <input type="hidden" name="deleteAwsProPhoto" id="deleteAwsProPhoto">
-                </div>
-                <div class="aws-profile-photo-container-1"></div>
-                <div class="aws-profile-photo-container-2">
-                  <div class="flex-2">
-                    <i class="fas fa-cloud-upload"></i>
-                    <p>Upload Photo</p>
-                    <input type="file" id="awsProfilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-                </div>
-              <%} else { %>
-                <div class="flex-4">
-                  <label>Profile Photo</label>
-                  <i class="far fa-trash-alt" id="deleteDummyProfilePhoto"></i>
-                  <input type="hidden" name="deleteAwsProPhoto" id="deleteAwsProPhoto">
-                </div>
-                <div class="dummy-profile-photo-container-1">
-                  <div class="flex-2">
-                    <i class="fas fa-cloud-upload"></i>
-                    <p>Upload Photo</p>
-                    <input type="file" id="dummyProfilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-                </div>
-                <div class="dummy-profile-photo-container-2"></div>
-              <% } %>
+
+              <div class="flex-4">
+                <label>Profile Photo</label>
+                <i class="far fa-trash-alt" id="trashProfilePhoto"></i>
+                <input type="hidden" name="deleteProfilePhoto" id="delProPhoto">
+              </div>
+
+              <div class="profile-photo-container flex-2">
+                <i class="fas fa-cloud-upload" id="uploadCloudPro"></i>
+                <input type="file" id="profilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
+              </div>
+
             </div>
 
             <!-- COVER PHOTO UPLOAD -->
 
             <div class="user-input">
 
-              <% if(typeof user.cover_photo !="undefined" && user.cover_photo) { %>
-                <div class="flex-4">
-                  <label>Cover Image</label>
-                  <i class="far fa-trash-alt" id="deleteAwsCoverPhoto"></i>
-                  <input type="hidden" name="deleteAwsCovPhoto" id="deleteAwsCovPhoto">
-                </div>
-                <div class="aws-cover-photo-container-1"></div>
-                <div class="aws-cover-photo-container-2">
-                  <div class="flex-2">
-                    <i class="fas fa-cloud-upload"></i>
-                    <p>Upload Photo</p>
-                    <input type="file" id="awsCoverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-                </div>
-              <%} else { %>
-                <div class="flex-4">
-                  <label>Cover Photo</label>
-                  <i class="far fa-trash-alt" id="deleteDummyCoverPhoto"></i>
-                  <input type="hidden" name="deleteAwsCovPhoto" id="deleteAwsCovPhoto">
-                </div>
-                <div class="dummy-cover-photo-container-1">
-                  <div class="flex-2">
-                    <i class="fas fa-cloud-upload"></i>
-                    <p>Upload Photo</p>
-                    <input type="file" id="dummyCoverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-                </div>
-                <div class="dummy-cover-photo-container-2"></div>
-              <% } %>
+              <div class="flex-4">
+                <label>Cover Image</label>
+                <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
+                <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
+              </div>
+
+              <div class="cover-photo-container flex-2">
+                <i class="fas fa-cloud-upload" id="uploadCloudCov"></i>
+                <input type="file" id="coverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
+              </div>
+
             </div>
+
+            <!--  -->
+            
             <div class="user-input">
               <label for="first_name">First name</label>
               <input type="text" name="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
@@ -241,39 +209,47 @@
                 <label for="display_email">Display my email on profile page</label>
               <% } %>
             </div>
-            <!-- <div>
-              <button type="submit" id="update-profile-btn">Update</button>
-            </div> -->
 
 
             <!-- PROFILE WORK IMAGES  -->
             
             <br>
             
-            <h3>Work images</h3>
+            <!-- <h3>Work images</h3>
 
-            <div class="dummy-cover-photo-container-1">
-              <div class="flex-2">
-                <i class="fas fa-cloud-upload"></i>
-                <p>Upload Photo</p>
-                <input type="file" id="files" name="work_photos" multiple="multiple" accept="image/jpeg, image/png, image/jpg">
+            <div class="flex-10">
+
+              <i class="far fa-trash-alt trash" id="trash0"></i>
+              <div class="work-photo flex-2">
+                <i class="fas fa-plus" id="plus0"></i>
+                <input type="file" id="photo0" name="photo_0" accept="image/jpeg, image/png, image/jpg">
               </div>
-            </div>
-            <output id="result" />
 
+              <i class="far fa-trash-alt trash" id="trash1"></i>
+              <div class="work-photo flex-2">
+                <i class="fas fa-plus" id="plus1"></i>
+                <input type="file" id="photo1" accept="image/jpeg, image/png, image/jpg">
+              </div>
+
+              <i class="far fa-trash-alt trash" id="trash2"></i>
+              <div class="work-photo flex-2">
+                <i class="fas fa-plus" id="plus2"></i>
+                <input type="file" id="photo2" accept="image/jpeg, image/png, image/jpg">
+              </div>
+
+              <i class="far fa-trash-alt trash" id="trash3"></i>
+              <div class="work-photo flex-2">
+                <i class="fas fa-plus" id="plus3"></i>
+                <input type="file" id="photo3" accept="image/jpeg, image/png, image/jpg">
+              </div>
+              
+            </div> -->
             <div>
-              <button type="submit">Update</button>
+              <button type="submit" id="update-profile-btn">Update</button>
             </div>
-
-
           </div>
-
         </div>
-
-
         <!-- VALIDATION ERRORS -->
-
-
         <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
           <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
             <div class="alert-message">
@@ -285,15 +261,12 @@
           <div class="alert-message success">
             <%= message %>
           </div>
-         <% } %>
+        <% } %>
         <% if(typeof success !="undefined" && !success) { %>
           <div class="alert-message">
             <%= message %>
           </div>
         <% } %>
-
-
-
       </form>
     </div>
   </div>
@@ -303,147 +276,108 @@
 
 <script>
 
-  document.querySelector("#files").addEventListener("change", (e) => { //CHANGE EVENT FOR UPLOADING PHOTOS
-    if (window.File && window.FileList && window.FileReader) { //CHECK IF FILE API IS SUPPORTED
-      const files = e.target.files; //FILE LIST OBJECT CONTAINING UPLOADED FILES
-      const output = document.querySelector("#result");
-      for (let i = 0; i < files.length; i++) { // LOOP THROUGH THE FILE LIST OBJECT
-        if (!files[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
-        const picReader = new FileReader(); // RETRIEVE DATA URI 
-        picReader.addEventListener("load", function (event) { // LOAD EVENT FOR DISPLAYING PHOTOS
-          const picFile = event.target;
-          const div = document.createElement("div");
-          div.innerHTML = `<img class="thumbnail" src="${picFile.result}" title="${picFile.name}"/>`;
-          output.appendChild(div);
-        });
-        picReader.readAsDataURL(files[i]); //READ THE IMAGE
-      }
-    } else {
-      alert("Your browser does not support File API");
-    }
+  // WORK PHOTOS ==================================
+
+  const photos = document.querySelectorAll(".work-photo");
+  const trash = document.querySelectorAll(".trash");
+  const plus = document.querySelectorAll(".fa-plus");
+
+
+  // EVENTS TO TRASH THE UPLOADED PICTURES
+
+  for (let i = 0; i < trash.length; i++) {
+    document.querySelector(`#${trash[i].id}`).addEventListener("click", function () {
+      document.querySelector(`#${photos[i].lastElementChild.id}`).value = "";
+      photos[i].style.backgroundImage = "none";
+      document.querySelector(`#${plus[i].id}`).style.opacity = "1";
+    });
+  }
+
+  // EVENTS TO UPLOAD & DISPLAY THE WORK PICTURES
+  for (let i = 0; i < photos.length; i++) {
+    document.querySelector(`#${photos[i].lastElementChild.id}`).addEventListener("change", function () {
+      document.querySelector(`#${plus[i].id}`).style.opacity = "0";
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        photos[i].style.backgroundImage = `url(${reader.result})`;
+      });
+      reader.readAsDataURL(this.files[0]);    
+    });
+  }    
+
+  // PROFILE PHOTO ==================================
+
+  const profilePhoto = document.querySelector("#profilePhoto");
+  const profilePhotoContainer = document.querySelector(".profile-photo-container")
+  const profile = "<%= user.profile_photo %>";
+  const uploadCloudPro = document.querySelector("#uploadCloudPro");
+
+  // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
+
+  if(profile) {
+    uploadCloudPro.style.opacity = "0";
+    // profilePhoto.style.visibility = "hidden";
+    profilePhotoContainer.style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+  }
+
+  // IF THE USER DELETES THEIR PROFILE PHOTO DO THIS
+
+  document.querySelector("#trashProfilePhoto").addEventListener("click", () => {
+    profilePhoto.value = "";
+    // profilePhoto.style.visibility = "visible";
+    profilePhotoContainer.style.backgroundImage = "none";
+    uploadCloudPro.style.opacity = "1";
+    document.querySelector("#delProPhoto").value = "delete";
+  })
+
+  // IF THE USER UPLOADS A NEW PHOTO DO THIS
+
+  profilePhoto.addEventListener('change', function () {
+    uploadCloudPro.style.opacity = "0";
+    // profilePhoto.style.visibility = "hidden";
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      profilePhotoContainer.style.backgroundImage = `url(${reader.result})`;
+    });
+    reader.readAsDataURL(this.files[0]);
   });
 
-  const profile = "<%= user.profile_photo %>";
+  // COVER PHOTO ==================================
+
+  const coverPhoto = document.querySelector("#coverPhoto");
+  const coverPhotoContainer = document.querySelector(".cover-photo-container")
   const cover = "<%= user.cover_photo %>";
+  const uploadCloudCov = document.querySelector("#uploadCloudCov");
 
-  if (profile)
-    document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+  // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
 
-  if (cover)
-    document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
-
-  const dummy_profile_photo = document.querySelector("#dummyProfilePhoto");
-  const aws_profile_photo = document.querySelector("#awsProfilePhoto");
-  const dummy_cover_photo = document.querySelector("#dummyCoverPhoto");
-  const aws_cover_photo = document.querySelector("#awsCoverPhoto");
-
-  // DUMMY PROFILE PHOTO
-
-  if (dummy_profile_photo) {
-
-    dummy_profile_photo.addEventListener('change', function () {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        displayDummyProfilePhoto(reader.result);
-      });
-      reader.readAsDataURL(this.files[0]);
-    });
-
-    function displayDummyProfilePhoto(uploaded_photo) {
-      document.querySelector(".dummy-profile-photo-container-1").style.display = "none";
-      document.querySelector(".dummy-profile-photo-container-2").style.display = "block";
-      document.querySelector(".dummy-profile-photo-container-2").style.backgroundImage = `url(${uploaded_photo})`;
-    }
-
-    document.querySelector("#deleteDummyProfilePhoto").addEventListener("click", () => {
-      document.querySelector(".dummy-profile-photo-container-2").style.display = "none";
-      document.querySelector(".dummy-profile-photo-container-1").style.display = "block";
-    })
-
+  if (cover) {
+    uploadCloudCov.style.opacity = "0";
+    // coverPhoto.style.visibility = "hidden";
+    coverPhotoContainer.style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
   }
 
+  // IF THE USER DELETES THEIR COVER PHOTO DO THIS
 
-  // AWS PROFILE PHOTO
+  document.querySelector("#trashCoverPhoto").addEventListener("click", () => {
+    coverPhoto.value = "";
+    // coverPhoto.style.visibility = "visible";
+    coverPhotoContainer.style.backgroundImage = "none";
+    uploadCloudCov.style.opacity = "1";
+    document.querySelector("#delCovPhoto").value = "delete";
+  })
 
+  // IF THE USER UPLOADS A NEW PHOTO DO THIS
 
-  if (aws_profile_photo) {
-
-    aws_profile_photo.addEventListener('change', function () {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        displayAwsProfilePhoto(reader.result);
-      });
-      reader.readAsDataURL(this.files[0]);
+  coverPhoto.addEventListener('change', function () {
+    uploadCloudCov.style.opacity = "0";
+    // coverPhoto.style.visibility = "hidden";
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      coverPhotoContainer.style.backgroundImage = `url(${reader.result})`;
     });
-
-    function displayAwsProfilePhoto(uploaded_photo) {
-      document.querySelector(".aws-profile-photo-container-2").style.display = "none";
-      document.querySelector(".aws-profile-photo-container-1").style.display = "block";
-      document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = `url(${uploaded_photo})`;
-    }
-
-    document.querySelector("#deleteAwsProfilePhoto").addEventListener("click", () => {
-      document.querySelector(".aws-profile-photo-container-1").style.backgroundImage = "none";
-      document.querySelector(".aws-profile-photo-container-1").style.display = "none";
-      document.querySelector(".aws-profile-photo-container-2").style.display = "block";
-      document.querySelector("#deleteAwsProPhoto").value = "delete";
-    })
-  }
-
-
-  // DUMMY COVER PHOTO
-
-
-  if (dummy_cover_photo) {
-
-    dummy_cover_photo.addEventListener('change', function () {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        displayDummyCoverPhoto(reader.result);
-      });
-      reader.readAsDataURL(this.files[0]);
-    });
-
-    function displayDummyCoverPhoto(uploaded_photo) {
-      document.querySelector(".dummy-cover-photo-container-1").style.display = "none";
-      document.querySelector(".dummy-cover-photo-container-2").style.display = "block";
-      document.querySelector(".dummy-cover-photo-container-2").style.backgroundImage = `url(${uploaded_photo})`;
-    }
-
-    document.querySelector("#deleteDummyCoverPhoto").addEventListener("click", () => {
-      document.querySelector(".dummy-cover-photo-container-2").style.display = "none";
-      document.querySelector(".dummy-cover-photo-container-1").style.display = "block";
-    })
-
-  }
-
-
-  // AWS COVER PHOTO
-
-
-  if (aws_cover_photo) {
-
-    aws_cover_photo.addEventListener('change', function () {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        displayAwsCoverPhoto(reader.result);
-      });
-      reader.readAsDataURL(this.files[0]);
-    });
-
-    function displayAwsCoverPhoto(uploaded_photo) {
-      document.querySelector(".aws-cover-photo-container-2").style.display = "none";
-      document.querySelector(".aws-cover-photo-container-1").style.display = "block";
-      document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = `url(${uploaded_photo})`;
-    }
-
-    document.querySelector("#deleteAwsCoverPhoto").addEventListener("click", () => {
-      document.querySelector(".aws-cover-photo-container-1").style.backgroundImage = "none";
-      document.querySelector(".aws-cover-photo-container-1").style.display = "none";
-      document.querySelector(".aws-cover-photo-container-2").style.display = "block";
-      document.querySelector("#deleteAwsCovPhoto").value = "delete";
-    })
-  }
+    reader.readAsDataURL(this.files[0]);
+  });
 
 </script>
 

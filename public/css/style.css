@@ -102,8 +102,14 @@ button{
   flex-direction: column;
 }
 
+.flex-10{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .container{
-  width: 1600px;
+  width: 1800px;
   margin: auto;
 }
 
@@ -608,10 +614,7 @@ button{
 }
 
 /* PROFILE PICTURE */
-.aws-profile-photo-container-1,
-.aws-profile-photo-container-2,
-.dummy-profile-photo-container-1,
-.dummy-profile-photo-container-2{
+.profile-photo-container{
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -619,33 +622,13 @@ button{
   border: 1px solid lightgray;
   background-position: center;
   background-size: cover;
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
-  transition: all 0.30s ease-in-out;
-
 }
 
-.aws-profile-photo-container-1:hover,
-.aws-profile-photo-container-2:hover,
-.dummy-profile-photo-container-1:hover,
-.dummy-profile-photo-container-2:hover{
-  box-shadow: 0 0 5px black;
-  border: 1px solid black;
-}
-
-.aws-profile-photo-container-1 img,
-.dummy-profile-photo-container-2 img { 
+.profile-photo-container img { 
   width: 100%;
 }
 
-.aws-profile-photo-container-2, 
-.dummy-profile-photo-container-2 { 
-  display: none;
-}
-
-#awsProfilePhoto, #dummyProfilePhoto{
+#profilePhoto{
   width: 150px;
   height: 150px;
   opacity: 0;
@@ -654,10 +637,7 @@ button{
 }
 
 /* COVER PICTURE */
-.aws-cover-photo-container-1,
-.aws-cover-photo-container-2,
-.dummy-cover-photo-container-1,
-.dummy-cover-photo-container-2{
+.cover-photo-container{
   width: 100%;
   height: 192px;
   border-radius: 5px;
@@ -665,56 +645,70 @@ button{
   border: 1px solid lightgray;
   background-position: center;
   background-size: cover;
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
-  transition: all 0.30s ease-in-out;
+  position: relative;
 }
 
-.aws-cover-photo-container-1:hover,
-.aws-cover-photo-container-2:hover,
-.dummy-cover-photo-container-1:hover,
-.dummy-cover-photo-container-2:hover{
-  box-shadow: 0 0 5px black;
-  border: 1px solid black;
-}
-
-.aws-cover-photo-container-1 img,
-.dummy-cover-photo-container-2 img {
+.cover-photo-container img{
   width: 100%;
 }
 
-.aws-cover-photo-container-2,
-.dummy-cover-photo-container-2 {
-  display: none;
-}
-
-#awsCoverPhoto,
-#dummyCoverPhoto{
-  max-width: 350px;
-  height: 192px;
+#coverPhoto{
+  width: 100%;
   opacity: 0;
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   cursor: pointer;
 }
 
 .fa-cloud-upload{ font-size: 1.4rem;}
 
-#update-profile-btn{
-  color: white;
-  border: 2px solid white;
-  background-color: #009999;
+/* WORK PHOTOS */
+
+.work-photo{
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid lightgray;
+  position: relative;
+}
+
+.work-photo input[type="file"] {
+  width: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
 }
 
 #result {
   display: flex;
   gap: 10px;
+  flex-direction: column;
   padding: 10px 0;
 }
 
 .thumbnail {
   height: 192px;
+}
+
+.fa-plus {
+  font-size: 2rem;
+}
+
+/* UPDATE BUTTON */
+
+#update-profile-btn {
+  color: white;
+  border: 2px solid white;
+  background-color: #009999;
 }
 
 /* SETTINGS/ACCOUNT.EJS */
@@ -1150,7 +1144,7 @@ input[type="checkbox"]{
   transition: 0.3s ease-out;
 }
 
-@media(max-width:1600px){
+@media(max-width:1800px){
   .container{
     width: 100%;
   }

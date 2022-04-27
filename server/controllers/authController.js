@@ -225,9 +225,7 @@ exports.passwordReset = (req, res) => {
 
 
 exports.settings = async (req, res) => {
-  const {profile_photo, cover_photo, work_photos} = req.files;
-
-  console.log(work_photos)
+  const {profile_photo, cover_photo} = req.files;
 
   // GRAB ERRORS FROM EXPRESS VALIDATOR
   const errors = validationResult(req);
@@ -248,153 +246,115 @@ exports.settings = async (req, res) => {
     })
   }
 
-  if(typeof req.files["profile_photo"] !== "undefined" && typeof req.files["cover_photo"] !== "undefined"){
-    uploadProfileCoverPhotos(req.user, res, profile_photo[0], cover_photo[0], req.body);
-  }else if(typeof req.files["profile_photo"] !== "undefined" && typeof req.files["cover_photo"] === "undefined"){
-    uploadProfilePhoto(req.user, res, profile_photo[0], req.body);
-  }else if(typeof req.files["profile_photo"] === "undefined" && typeof req.files["cover_photo"] !== "undefined"){
-    uploadCoverPhoto(req.user, res, cover_photo[0], req.body);
-  }else if(req.body.deleteAwsProPhoto === "delete" && req.body.deleteAwsCovPhoto === "delete"){
-    deleteProfileCoverPhotos(req.user, res, req.body);
-  }else if(req.body.deleteAwsProPhoto === "delete" && req.body.deleteAwsCovPhoto === ""){
-    deleteProfilePhoto(req.user, res, req.body);
-  }else if(req.body.deleteAwsProPhoto === "" && req.body.deleteAwsCovPhoto === "delete"){
-    deleteCoverPhoto(req.user, res, req.body);
-  } else{
-    noUploadedPhotos(req.user, res, req.body);
-  }
-}
-
-// USER UPLOADED A PROFILE AND A COVER PHOTO
-
-async function uploadProfileCoverPhotos(user, res, profilePhotoObject, coverPhotoObject, update){
-  await s3.uploadImage(user.id, profilePhotoObject);
-  await s3.uploadImage(user.id, coverPhotoObject);
-  await unlinkFile(profilePhotoObject.path);
-  await unlinkFile(coverPhotoObject.path);
-
-  if(user.profile_photo != null)
-    await s3.deleteImage(user.id, user.profile_photo);
-  if(user.cover_photo != null)
-    await s3.deleteImage(user.id, user.cover_photo);
-
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-    if(!err) return res.redirect("/settings");
-    else console.log(err.message);
-  });
-}
-
-// USER UPLOADED A PROFILE PHOTO ONLY
-
-async function uploadProfilePhoto(user, res, profilePhotoObject, update){
-  await s3.uploadImage(user.id, profilePhotoObject);
-  await unlinkFile(profilePhotoObject.path);
-
-  if(user.profile_photo != null)
-    await s3.deleteImage(user.id, user.profile_photo);
-
-  if(update.deleteAwsCovPhoto === "delete"){
-    await s3.deleteImage(user.id, user.cover_photo);
-    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-      if(!err) return res.redirect("/settings");
-      else console.log(err.message);
-    });
+  if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
+    uploadPhotos(req.user, res, profile_photo[0], cover_photo[0], req.body);
+  } else if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo === "undefined"){
+    uploadProfilePhotoOnly(req.user, res, profile_photo[0], req.user.cover_photo, req.body.deleteCoverPhoto, req.body);
+  } else if(typeof req.files.profile_photo === "undefined" && typeof req.files.cover_photo !== "undefined"){
+    uploadCoverPhotoOnly(req.user, res, req.user.profile_photo, cover_photo[0], req.body.deleteProfilePhoto, req.body);
   } else {
-    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profilePhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-      if(!err) return res.redirect("/settings");
-      else console.log(err.message);
-    });
+    noUploadedPhotos(req.user, res, req.body.deleteProfilePhoto, req.body.deleteCoverPhoto, req.body);
   }
+
 }
 
-// USER UPLOADED A COVER PHOTO ONLY
+// UPLOAD PROFILE AND COVER PHOTOS
 
-async function uploadCoverPhoto(user, res, coverPhotoObject, update){
-  await s3.uploadImage(user.id, coverPhotoObject);
-  await unlinkFile(coverPhotoObject.path);
-
+async function uploadPhotos(user, res, profile_data, cover_data, update){
+  // UPLOAD IMAGES TO S3
+  await s3.uploadImage(user.id, profile_data);
+  await s3.uploadImage(user.id, cover_data);
+  // UNLINK FILES FROM UPLOADS FOLDER
+  await unlinkFile(profile_data.path);
+  await unlinkFile(cover_data.path);
+  // DELETE OLD PROFILE IMAGE FROM S3 (IF ANY)
+  if(user.profile_photo != null)
+    await s3.deleteImage(user.id, user.profile_photo);
+  // DELETE OLD COVER IMAGE FROM S3 (IF ANY)
   if(user.cover_photo != null)
     await s3.deleteImage(user.id, user.cover_photo);
 
-  if(update.deleteAwsProPhoto === "delete"){ 
-    await s3.deleteImage(user.id, user.profile_photo);
-    const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-      if(!err) return res.redirect("/settings");
-      else console.log(err.message);
-    });
-  }else{
-    const data = { first_name:update.first_name, last_name:update.last_name, cover_photo:coverPhotoObject.filename, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-    db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-      if(!err) return res.redirect("/settings");
-      else console.log(err.message);
-    });
-  }
+  console.log("Uploaded profile and cover")
+  databaseQuery(res, profile_data.filename, cover_data.filename, update, user.id);
 }
 
-// USER DELETED PROFILE AND COVER PHOTOS
+// UPLOAD PROFILE PHOTO (DELETE COVER PHOTO IF NEEDED)
 
-async function deleteProfileCoverPhotos(user, res, update){
+async function uploadProfilePhotoOnly(user, res, profile_data, cover_data, cover_outcome, update){
+  // UPLOAD IMAGE TO S3
+  await s3.uploadImage(user.id, profile_data);
+  // UNLINK FILE FROM UPLOADS FOLDER
+  await unlinkFile(profile_data.path);
+  // DELETE OLD PROFILE PHOTO FROM S3 (IF ANY)
   if(user.profile_photo != null)
     await s3.deleteImage(user.id, user.profile_photo);
 
+  if(cover_outcome === "delete" && user.cover_photo != null){
+    console.log("Uploaded profile and deleted cover")
+    await s3.deleteImage(user.id, user.cover_photo);
+    databaseQuery(res, profile_data.filename, null, update, user.id);
+  } else {
+    console.log("Uploaded profile only")
+    databaseQuery(res, profile_data.filename, user.cover_photo, update, user.id);
+  }
+  
+}
+
+// UPLOAD COVER PHOTO (DELETE PROFILE PHOTO IF NEEDED)
+
+async function uploadCoverPhotoOnly(user, res, profile_data, cover_data, profile_outcome, update){
+  // UPLOAD IMAGE TO S3
+  await s3.uploadImage(user.id, cover_data);
+  // UNLINK FILE FROM UPLOADS FOLDER
+  await unlinkFile(cover_data.path);
+  // DELETE OLD COVER PHOTO FROM S3 (IF ANY)
   if(user.cover_photo != null)
     await s3.deleteImage(user.id, user.cover_photo);
 
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-    if(!err) return res.redirect("/settings");
-    else console.log(err.message);
-  });
-}
-
-// USER DELETED PROFILE PHOTO ONLY
-
-async function deleteProfilePhoto(user, res, update){
-  if(user.profile_photo != null)
+  if(profile_outcome === "delete" && user.profile_photo != null){
+    console.log("Uploaded cover and deleted profile")
     await s3.deleteImage(user.id, user.profile_photo);
-
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-    if(!err) return res.redirect("/settings");
-    else console.log(err.message);
-  });
+    databaseQuery(res, null, cover_data.filename, update, user.id);
+  } else {
+    console.log("Uploaded cover only")
+    databaseQuery(res, user.profile_photo, cover_data.filename, update, user.id);
+  }
+  
 }
 
-// USER DELETED COVER PHOTO ONLY
+// NO PHOTOS UPLOADED (DELETE PROFILE AND COVER PHOTOS IF NEEDED)
 
-async function deleteCoverPhoto(user, res, update){
-  if(user.cover_photo != null)
+async function noUploadedPhotos(user, res, profile_outcome, cover_outcome, update){
+  if(profile_outcome === "delete" && user.profile_photo != null && cover_outcome === "delete" && user.cover_photo != null){
+    console.log("Profile and cover deleted")
+    await s3.deleteImage(user.id, user.profile_photo);
     await s3.deleteImage(user.id, user.cover_photo);
+    databaseQuery(res, null, null, update, user.id);
+  } else if(profile_outcome === "delete" && user.profile_photo != null) {
+    console.log("Profile deleted")
+    await s3.deleteImage(user.id, user.profile_photo);
+    databaseQuery(res, null, user.cover_photo, update, user.id);
+  } else if(cover_outcome === "delete" && user.cover_photo != null) {
+    console.log("Cover deleted")
+    await s3.deleteImage(user.id, user.cover_photo);
+    databaseQuery(res, user.profile_photo, null, update, user.id);
+  } else {
+    console.log("Nothing uploaded or deleted")
+    databaseQuery(res, user.profile_photo, user.cover_photo, update, user.id);
+  }
+} 
 
-  const data = { first_name:update.first_name, last_name:update.last_name, cover_photo:null, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+// UPDATE DATABASE
+function databaseQuery(res, profile_photo, cover_photo, update, id){
 
-  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
-    if(!err) return res.redirect("/settings");
-    else console.log(err.message);
-  });
-}
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
 
-// USER DID NOT UPLOAD OR DELETE ANY PHOTOS
-
-function noUploadedPhotos(user, res, update){
-  const data = { first_name:update.first_name, last_name:update.last_name, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
-
-  db.query("UPDATE user SET ? WHERE id = ?", [data, user.id], (err, results) => {
+  db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) return res.redirect("/settings");
     else console.log(err.message);
   }); 
 }
+
 
 // IS USER LOGGED IN? -------------------------------------------------------
 
