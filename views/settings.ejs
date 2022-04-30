@@ -1,8 +1,9 @@
 <%- include("partials/header.ejs") %>
 
-<div class="container" style="padding: 20px 0;">
+<div class="container">
   <div class="subcontainer">
-    <div class="settings-wrapper">
+ 
+    <div class="settings-wrapper" style="margin: 20px 0;">
 
 
       <div class="settings-col-1">
@@ -30,7 +31,8 @@
       </div>
 
 
-      <form action="/auth/settings" method="POST" class="settings-col-2" enctype="multipart/form-data">
+      <form id="settingsForm" class="settings-col-2">
+
         <div class="settings-col-2-wrapper">
           <div class="settings-col-2-child">
 
@@ -78,7 +80,7 @@
             
             <div class="user-input">
               <label for="first_name">First name</label>
-              <input type="text" name="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
+              <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
             </div>
             <div class="user-input">
               <label for="last_name">Last name</label>
@@ -140,10 +142,10 @@
             </div>
             <div class="user-input">
               <label for="specialty">Services</label>
-              <textarea name="specialty" id="" placeholder="I specialize in..." maxlength="140"><%= user.specialty %></textarea>
+              <textarea name="specialty" id="" placeholder="I specialize in..." maxlength="255"><%= user.specialty %></textarea>
             </div>
             <div class="user-input">
-              <label for="about">About you</label>
+              <label for="about">About</label>
               <textarea name="about" placeholder="I have 10 year experience..." maxlength="1000"><%= user.about %></textarea>
             </div>
             <div class="user-input">
@@ -215,95 +217,32 @@
             
             <br>
             
-            <!-- <h3>Work images</h3>
+            <h3>Work Photos</h3>
 
             <div class="flex-10">
-
-              <i class="far fa-trash-alt trash" id="trash0"></i>
-              <div class="work-photo flex-2">
-                <i class="fas fa-plus" id="plus0"></i>
-                <input type="file" id="photo0" name="photo_0" accept="image/jpeg, image/png, image/jpg">
+              <div class="work-photos flex-2">
+                <span class="inner">Drag & drop images here or <span class="select">Browse</span></span>
+                <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"/>
               </div>
+              <div class="images-container"></div>
+            </div>
 
-              <i class="far fa-trash-alt trash" id="trash1"></i>
-              <div class="work-photo flex-2">
-                <i class="fas fa-plus" id="plus1"></i>
-                <input type="file" id="photo1" accept="image/jpeg, image/png, image/jpg">
-              </div>
-
-              <i class="far fa-trash-alt trash" id="trash2"></i>
-              <div class="work-photo flex-2">
-                <i class="fas fa-plus" id="plus2"></i>
-                <input type="file" id="photo2" accept="image/jpeg, image/png, image/jpg">
-              </div>
-
-              <i class="far fa-trash-alt trash" id="trash3"></i>
-              <div class="work-photo flex-2">
-                <i class="fas fa-plus" id="plus3"></i>
-                <input type="file" id="photo3" accept="image/jpeg, image/png, image/jpg">
-              </div>
-              
-            </div> -->
             <div>
               <button type="submit" id="update-profile-btn">Update</button>
             </div>
+
           </div>
         </div>
-        <!-- VALIDATION ERRORS -->
-        <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
-          <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
-            <div class="alert-message">
-              <%= (allParsedErrors.errors[i].msg) %>
-            </div>
-          <% } %>
-        <% } %>
-        <% if(typeof success !="undefined" && success) { %>
-          <div class="alert-message success">
-            <%= message %>
-          </div>
-        <% } %>
-        <% if(typeof success !="undefined" && !success) { %>
-          <div class="alert-message">
-            <%= message %>
-          </div>
-        <% } %>
+
       </form>
+      
     </div>
   </div>
 </div>
 
 <script src="/js/script.js"></script>
 
-<script>
-
-  // WORK PHOTOS ==================================
-
-  const photos = document.querySelectorAll(".work-photo");
-  const trash = document.querySelectorAll(".trash");
-  const plus = document.querySelectorAll(".fa-plus");
-
-
-  // EVENTS TO TRASH THE UPLOADED PICTURES
-
-  for (let i = 0; i < trash.length; i++) {
-    document.querySelector(`#${trash[i].id}`).addEventListener("click", function () {
-      document.querySelector(`#${photos[i].lastElementChild.id}`).value = "";
-      photos[i].style.backgroundImage = "none";
-      document.querySelector(`#${plus[i].id}`).style.opacity = "1";
-    });
-  }
-
-  // EVENTS TO UPLOAD & DISPLAY THE WORK PICTURES
-  for (let i = 0; i < photos.length; i++) {
-    document.querySelector(`#${photos[i].lastElementChild.id}`).addEventListener("change", function () {
-      document.querySelector(`#${plus[i].id}`).style.opacity = "0";
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        photos[i].style.backgroundImage = `url(${reader.result})`;
-      });
-      reader.readAsDataURL(this.files[0]);    
-    });
-  }    
+<script>  
 
   // PROFILE PHOTO ==================================
 
@@ -316,7 +255,7 @@
 
   if(profile) {
     uploadCloudPro.style.opacity = "0";
-    // profilePhoto.style.visibility = "hidden";
+    profilePhoto.style.visibility = "hidden";
     profilePhotoContainer.style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
   }
 
@@ -324,7 +263,7 @@
 
   document.querySelector("#trashProfilePhoto").addEventListener("click", () => {
     profilePhoto.value = "";
-    // profilePhoto.style.visibility = "visible";
+    profilePhoto.style.visibility = "visible";
     profilePhotoContainer.style.backgroundImage = "none";
     uploadCloudPro.style.opacity = "1";
     document.querySelector("#delProPhoto").value = "delete";
@@ -334,7 +273,7 @@
 
   profilePhoto.addEventListener('change', function () {
     uploadCloudPro.style.opacity = "0";
-    // profilePhoto.style.visibility = "hidden";
+    profilePhoto.style.visibility = "hidden";
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       profilePhotoContainer.style.backgroundImage = `url(${reader.result})`;
@@ -353,7 +292,7 @@
 
   if (cover) {
     uploadCloudCov.style.opacity = "0";
-    // coverPhoto.style.visibility = "hidden";
+    coverPhoto.style.visibility = "hidden";
     coverPhotoContainer.style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
   }
 
@@ -361,7 +300,7 @@
 
   document.querySelector("#trashCoverPhoto").addEventListener("click", () => {
     coverPhoto.value = "";
-    // coverPhoto.style.visibility = "visible";
+    coverPhoto.style.visibility = "visible";
     coverPhotoContainer.style.backgroundImage = "none";
     uploadCloudCov.style.opacity = "1";
     document.querySelector("#delCovPhoto").value = "delete";
@@ -371,7 +310,7 @@
 
   coverPhoto.addEventListener('change', function () {
     uploadCloudCov.style.opacity = "0";
-    // coverPhoto.style.visibility = "hidden";
+    coverPhoto.style.visibility = "hidden";
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       coverPhotoContainer.style.backgroundImage = `url(${reader.result})`;

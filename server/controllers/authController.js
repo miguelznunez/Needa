@@ -239,28 +239,24 @@ exports.settings = async (req, res) => {
       await unlinkFile(profile_photo[0].path);
     if(typeof req.files["cover_photo"] !== "undefined")
       await unlinkFile(cover_photo[0].path);
-    return res.render("Settings", {
-      title: "Settings | Needa",
-      allParsedErrors: allParsedErrors,
-      user: req.user
-    })
+    return res.json({success : false, allParsedErrors: allParsedErrors})
   }
 
   if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
-    uploadPhotos(req.user, res, profile_photo[0], cover_photo[0], req.body);
+    uploadPhotos(req.user, req, res, profile_photo[0], cover_photo[0], req.body);
   } else if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo === "undefined"){
-    uploadProfilePhotoOnly(req.user, res, profile_photo[0], req.user.cover_photo, req.body.deleteCoverPhoto, req.body);
+    uploadProfilePhotoOnly(req.user, req, res, profile_photo[0], req.user.cover_photo, req.body.deleteCoverPhoto, req.body);
   } else if(typeof req.files.profile_photo === "undefined" && typeof req.files.cover_photo !== "undefined"){
-    uploadCoverPhotoOnly(req.user, res, req.user.profile_photo, cover_photo[0], req.body.deleteProfilePhoto, req.body);
+    uploadCoverPhotoOnly(req.user, req, res, req.user.profile_photo, cover_photo[0], req.body.deleteProfilePhoto, req.body);
   } else {
-    noUploadedPhotos(req.user, res, req.body.deleteProfilePhoto, req.body.deleteCoverPhoto, req.body);
+    noUploadedPhotos(req.user, req, res, req.body.deleteProfilePhoto, req.body.deleteCoverPhoto, req.body);
   }
 
 }
 
 // UPLOAD PROFILE AND COVER PHOTOS
 
-async function uploadPhotos(user, res, profile_data, cover_data, update){
+async function uploadPhotos(user, req, res, profile_data, cover_data, update){
   // UPLOAD IMAGES TO S3
   await s3.uploadImage(user.id, profile_data);
   await s3.uploadImage(user.id, cover_data);
@@ -275,12 +271,12 @@ async function uploadPhotos(user, res, profile_data, cover_data, update){
     await s3.deleteImage(user.id, user.cover_photo);
 
   console.log("Uploaded profile and cover")
-  databaseQuery(res, profile_data.filename, cover_data.filename, update, user.id);
+  databaseQuery(req, res, profile_data.filename, cover_data.filename, update, user.id);
 }
 
 // UPLOAD PROFILE PHOTO (DELETE COVER PHOTO IF NEEDED)
 
-async function uploadProfilePhotoOnly(user, res, profile_data, cover_data, cover_outcome, update){
+async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, cover_outcome, update){
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, profile_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -292,17 +288,17 @@ async function uploadProfilePhotoOnly(user, res, profile_data, cover_data, cover
   if(cover_outcome === "delete" && user.cover_photo != null){
     console.log("Uploaded profile and deleted cover")
     await s3.deleteImage(user.id, user.cover_photo);
-    databaseQuery(res, profile_data.filename, null, update, user.id);
+    databaseQuery(req, res, profile_data.filename, null, update, user.id);
   } else {
     console.log("Uploaded profile only")
-    databaseQuery(res, profile_data.filename, user.cover_photo, update, user.id);
+    databaseQuery(req, res, profile_data.filename, user.cover_photo, update, user.id);
   }
   
 }
 
 // UPLOAD COVER PHOTO (DELETE PROFILE PHOTO IF NEEDED)
 
-async function uploadCoverPhotoOnly(user, res, profile_data, cover_data, profile_outcome, update){
+async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, profile_outcome, update){
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, cover_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -314,43 +310,43 @@ async function uploadCoverPhotoOnly(user, res, profile_data, cover_data, profile
   if(profile_outcome === "delete" && user.profile_photo != null){
     console.log("Uploaded cover and deleted profile")
     await s3.deleteImage(user.id, user.profile_photo);
-    databaseQuery(res, null, cover_data.filename, update, user.id);
+    databaseQuery(req, res, null, cover_data.filename, update, user.id);
   } else {
     console.log("Uploaded cover only")
-    databaseQuery(res, user.profile_photo, cover_data.filename, update, user.id);
+    databaseQuery(req, res, user.profile_photo, cover_data.filename, update, user.id);
   }
   
 }
 
 // NO PHOTOS UPLOADED (DELETE PROFILE AND COVER PHOTOS IF NEEDED)
 
-async function noUploadedPhotos(user, res, profile_outcome, cover_outcome, update){
+async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, update){
   if(profile_outcome === "delete" && user.profile_photo != null && cover_outcome === "delete" && user.cover_photo != null){
     console.log("Profile and cover deleted")
     await s3.deleteImage(user.id, user.profile_photo);
     await s3.deleteImage(user.id, user.cover_photo);
-    databaseQuery(res, null, null, update, user.id);
+    databaseQuery(req, res, null, null, update, user.id);
   } else if(profile_outcome === "delete" && user.profile_photo != null) {
     console.log("Profile deleted")
     await s3.deleteImage(user.id, user.profile_photo);
-    databaseQuery(res, null, user.cover_photo, update, user.id);
+    databaseQuery(req, res, null, user.cover_photo, update, user.id);
   } else if(cover_outcome === "delete" && user.cover_photo != null) {
     console.log("Cover deleted")
     await s3.deleteImage(user.id, user.cover_photo);
-    databaseQuery(res, user.profile_photo, null, update, user.id);
+    databaseQuery(req, res, user.profile_photo, null, update, user.id);
   } else {
     console.log("Nothing uploaded or deleted")
-    databaseQuery(res, user.profile_photo, user.cover_photo, update, user.id);
+    databaseQuery(req, res, user.profile_photo, user.cover_photo, update, user.id);
   }
 } 
 
 // UPDATE DATABASE
-function databaseQuery(res, profile_photo, cover_photo, update, id){
+function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
   const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
-    if(!err) return res.redirect("/settings");
+    if(!err) return res.json({success : true, message: "Profile was updated"});
     else console.log(err.message);
   }); 
 }

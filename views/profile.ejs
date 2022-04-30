@@ -6,13 +6,16 @@
   <div class="container" style="padding-bottom: 20px;">
     <div class="subcontainer">
       <div class="profile-wrapper">
-        <div class="profile-col-1">
-          
-          <div class="profile-photo">
-              <i class="fas fa-user" id="fa-user"></i>
-          </div>
 
-          <div class="profile-identity flex-5">
+
+        <div class="profile-col-1-wrapper">
+          
+          <div class="profile-col">
+            <div class="profile-photo">
+              <i class="fas fa-user" id="fa-user"></i>
+            </div>
+            
+            <div class="profile-identity flex-10">
               <h1>
                 <%= user.first_name%>
                   <%= user.last_name%>
@@ -20,50 +23,27 @@
               <h2>
                 <%= user.profession%>
               </h2>
-            <% if(user.city && user.state) { %>
-              <h3>
-                <i class="fas fa-map-marker-alt"></i> 
-                <%= user.city %>, <%= user.state%></h3>
-            <% } else { %>
-              <h3>
-                <i class="fas fa-map-marker-alt"></i>
-                <%= user.city %> <%= user.state%>
-              </h3>
-            <% } %>
+              <% if(user.city && user.state) { %>
+                <h3>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <%= user.city %>, <%= user.state%>
+                </h3>
+              <% } else { %>
+                <h3>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <%= user.city %>
+                    <%= user.state%>
+                </h3>
+              <% } %>
+              </div>
           </div>
 
-          <div class="profile-social">
-            <% if(user.twitter_profile) { %>
-              <a href="<%= user.twitter_profile %>" target="_blank"><i class="fab fa-twitter"></i></a>
-            <% } %>
-            <% if(user.instagram_profile) { %>
-              <a href="<%= user.instagram_profile %>" target="_blank"><i class="fab fa-instagram"></i></a>
-            <% } %>
-            <% if(user.facebook_profile) { %>
-              <a href="<%= user.facebook_profile %>" target="_blank"><i class="fab fa-facebook"></i></a>
-            <% } %>
-            <% if(user.linkedin_url) { %>
-              <a href="<%= user.linkedin_url %>" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <% } %>
-            <% if(user.website_url) { %>
-              <a href="<%= user.website_url %>" target="_blank"><i class="fas fa-link"></i></a>
-            <% } %>
-          </div>
+          <div class="profile-col"></div>
 
-          <div class="profile-about flex-3">
-            <div class="flex-5">
-              <div>
-                <h3>About</h3>
-              </div>
-              <div>
-                <p>
-                  <%= user.about %>
-                </p>
-              </div>
-            </div>
-          </div>
+
 
         </div>
+
         <div class="profile-col-2">
 
           <div class="profile-edit">
@@ -71,7 +51,7 @@
           </div>
 
           <div class="profile-services flex-5">
-            <h3>Service</h3>
+            <h3>Services</h3>
             <p><%= user.specialty %></p>
           </div>
 

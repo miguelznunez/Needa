@@ -18,7 +18,7 @@ let slider_1 = tns({
   container: '.my-slider-1',
   animateIn: "jello",
   animateOut: "rollOut",
-  slideBy: '1',
+  slideBy: 1,
   speed: 400,
   nav: false,
   swipeAngle: false,
@@ -28,6 +28,10 @@ let slider_1 = tns({
   prevButton: '.previous_1',
   nextButton: '.next_1',
   responsive: {
+    1800: {
+      items: 5,
+      gutter: 20
+    },
     1600: {
       items: 4,
       gutter: 20
@@ -60,6 +64,10 @@ let slider_2 = tns({
   prevButton: '.previous_2',
   nextButton: '.next_2',
   responsive: {
+    1800: {
+      items: 5,
+      gutter: 20
+    },
     1600: {
       items: 4,
       gutter: 20

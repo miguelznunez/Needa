@@ -4,7 +4,14 @@ const {check} = require("express-validator");
 const multer  = require('multer');
 const upload = multer({ 
   dest: "uploads/"
-}).fields([{name: "profile_photo"}, {name: "cover_photo"}, {name: "photo_0"}]);
+}).fields([{name: "profile_photo"}, 
+           {name: "cover_photo"},
+           {name: "file[0]"},
+           {name: "file[1]"},
+           {name: "file[2]"},
+           {name: "file[3]"},
+           {name: "file[4]"},
+           {name: "file[5]"}]);
 
 const router = express.Router();
 
@@ -59,7 +66,7 @@ router.post("/settings",
   check("state", "State must be 2 characters max.").isLength({max:2}),
   check("gender", "Gender must be 2 characters max.").isLength({max:2}),
   check("profession", "Profession must be 50 characters max.").isLength({max:50}),
-  check("specialty", "Specialty must be 140 characters max.").isLength({max:140}),
+  check("specialty", "Specialty must be 255 characters max.").isLength({max:255}),
   check("about", "About must be 1000 characters max.").isLength({max:1000}),
   check("skills", "Skills must be 1000 characters max.").isLength({max:1000}),
   check("twitter_profile", "Twitter profile must be 255 characters max.").isLength({max:255}),

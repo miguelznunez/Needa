@@ -10,6 +10,7 @@
 body{
   overflow-x: hidden ;
   font-family: 'Roboto', sans-serif;
+  background-color: #e9e9e9;
 }
 
 form{
@@ -40,6 +41,7 @@ textarea{
   transition: all 0.30s ease-in-out;
   border: 1px solid lightgray;
   font-family: inherit;
+  background-color: #f9f9f9;
 }
 
 input:focus,
@@ -109,7 +111,7 @@ button{
 }
 
 .container{
-  width: 1800px;
+  width: 1700px;
   margin: auto;
 }
 
@@ -145,7 +147,7 @@ button{
 
 .alert-message{
   width: 100%;
-  margin: auto;
+  margin-top: 20px;
   height: auto;
   padding: 12px;
   background-color: #ffe6e6;
@@ -343,25 +345,39 @@ button{
   height: 300px;
   background-position: center;
   background-size: cover;
-  background-color: lightgray;
+  background-image: url(/images/default_cover_img.jpg);
 }
 
 .profile-wrapper {
   display: grid;
   grid-template-columns: 30% 70%;
   gap: 2%;
+  padding: 25px 0;
 }
 
-.profile-col-1{
-  max-height: 800px;
-  padding: 20px 30px;
-  background-color: whitesmoke;
+.profile-col-1-wrapper{
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  gap: 20px;
+
+  background-color: #e9e9e9;
+  color: #262626;
+
+}
+
+.profile-col{
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 20px;
-  color: #262626;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+
 }
 
 .profile-col-2 {
@@ -374,6 +390,11 @@ button{
   align-items: center;
   gap: 20px;
   color: #262626;
+
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .profile-col-1 h2,
@@ -386,15 +407,18 @@ button{
   width: 250px;
   height: 250px;
   border-radius: 50%;
-  margin-top: -140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-size: cover;
   background-position: center;
-  background-color: white;
-  box-shadow: 0 0 5px 2px #282a2d;
+  background-color: #f9f9f9;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .profile-photo i{
-  color: #009999;
+  color: #262626;
   font-size: 7rem;
 }
 
@@ -435,16 +459,21 @@ button{
 
 #profile-edit {
   color: white;
-  background-color: black;
+  background-color: #009999;
   border: 3px solid lightgray;
 }
 
 .profile-services h3, .profile-skills h3, .profile-work-images h3{
   color: #262626;
 }
+
+.profile-services, .profile-skills{
+  min-height: 75px;
+}
+
 .profile-edit, .profile-services, .profile-skills, .profile-following{
   width: 100%;
-  padding: 10px 0;
+  /* padding: 10px 0; */
 }
 
 .profile-work-images{
@@ -539,16 +568,20 @@ button{
 
 .settings-col-1-child-1{
   padding: 14px;
-  border: 1px solid lightgray;
   border-radius: 5px;
   color:#262626;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .settings-col-1-child-2{
-  border: 1px solid lightgray;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .settings-col-1-link{
@@ -574,6 +607,8 @@ button{
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 0;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .settings-col-2-wrapper{
@@ -619,9 +654,10 @@ button{
   height: 150px;
   border-radius: 50%;
   color: #262626;
-  border: 1px solid lightgray;
+  border: 3px dotted lightgray;
   background-position: center;
   background-size: cover;
+  background-color: #f9f9f9;
 }
 
 .profile-photo-container img { 
@@ -642,10 +678,11 @@ button{
   height: 192px;
   border-radius: 5px;
   color: #262626;
-  border: 1px solid lightgray;
+  border: 3px dotted lightgray;
   background-position: center;
   background-size: cover;
   position: relative;
+  background-color: #f9f9f9;
 }
 
 .cover-photo-container img{
@@ -667,41 +704,82 @@ button{
 
 /* WORK PHOTOS */
 
-.work-photo{
+.work-photos{
   width: 100%;
-  height: 250px;
+  height: 200px;
   border-radius: 5px;
   background-position: center;
   background-size: cover;
-  border: 1px solid lightgray;
+  border: 3px dotted lightgray;
+  position: relative;
+  background-color: #f9f9f9;
+  font-style: italic;
+  color: gray;
+}
+
+.work-photos .select {
+  margin-left: 7px;
+  cursor: pointer;
+  color: #009999;
+  font-weight: bold;
+}
+
+.work-photos input {
+  display: none;
+}
+
+.work-photos .dragover {
+  border-style: solid;
+  font-size: 2rem;
+  color: #c8c9dd;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.34);
+}
+
+.images-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  flex-wrap: wrap;
+  position: relative;
+  height: auto;
+  margin-top: 20px;
+}
+
+.images-container .image {
+  height: 150px;
+  /* width: 125px; */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
   position: relative;
 }
 
-.work-photo input[type="file"] {
+.images-container .image:nth-child(4n) {
+  margin-right: 0;
+}
+
+.images-container .image img {
+  height: 100%;
   width: 100%;
-  opacity: 0;
+}
+
+
+.images-container .image span {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: -4px;
+  right: 5px;
   cursor: pointer;
+  font-size: 22px;
+  color: #fff;
 }
 
-#result {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  padding: 10px 0;
+.images-container .image span:hover {
+  opacity: 0.8;
 }
 
-.thumbnail {
-  height: 192px;
-}
-
-.fa-plus {
-  font-size: 2rem;
-}
 
 /* UPDATE BUTTON */
 
@@ -709,6 +787,7 @@ button{
   color: white;
   border: 2px solid white;
   background-color: #009999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 /* SETTINGS/ACCOUNT.EJS */
@@ -1144,7 +1223,7 @@ input[type="checkbox"]{
   transition: 0.3s ease-out;
 }
 
-@media(max-width:1800px){
+@media(max-width:1700px){
   .container{
     width: 100%;
   }
