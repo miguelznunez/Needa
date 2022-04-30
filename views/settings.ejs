@@ -64,7 +64,7 @@
             <div class="user-input">
 
               <div class="flex-4">
-                <label>Cover Image</label>
+                <label>Cover Photo</label>
                 <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
                 <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
               </div>
@@ -161,6 +161,11 @@
           <div class="settings-col-2-child">
             <h3>Social</h3>
             <div class="user-input">
+              <label for="website_url">Website URL</label>
+              <input type="text" name="website_url" placeholder="https://johndoe.com" value="<%= user.website_url %>"
+                maxlength="255">
+            </div>
+            <div class="user-input">
               <label for="twitter_profile">Twitter profile</label>
               <input type="text" name="twitter_profile" placeholder="https://twitter.com/johndoe" value="<%= user.twitter_profile %>"  maxlength="255">
             </div>
@@ -175,10 +180,6 @@
             <div class="user-input">
               <label for="linkedin_url">LinkedIn URL</label>
               <input type="text" name="linkedin_url" placeholder="https://www.linkedin.com/in/johndoe" value="<%= user.linkedin_url %>"maxlength="255">
-            </div>
-            <div class="user-input">
-              <label for="website_url">Website URL</label>
-              <input type="text" name="website_url" placeholder="https://johndoe.com" value="<%= user.website_url %>" maxlength="255">
             </div>
 
             
@@ -217,11 +218,11 @@
             
             <br>
             
-            <h3>Work Photos</h3>
+            <h3>Showcase photos</h3>
 
             <div class="flex-10">
               <div class="work-photos flex-2">
-                <span class="inner">Drag & drop images here or <span class="select">Browse</span></span>
+                <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
                 <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"/>
               </div>
               <div class="images-container"></div>

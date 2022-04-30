@@ -10,7 +10,9 @@
 
         <div class="profile-col-1-wrapper">
           
-          <div class="profile-col">
+          <!-- PROFILE PHOTO, FULL NAME, PROFESSION, CITY, STATE -->
+
+          <div class="profile-col-1">
             <div class="profile-photo">
               <i class="fas fa-user" id="fa-user"></i>
             </div>
@@ -32,19 +34,79 @@
                 <h3>
                   <i class="fas fa-map-marker-alt"></i>
                   <%= user.city %>
-                    <%= user.state%>
+                  <%= user.state%>
                 </h3>
               <% } %>
               </div>
           </div>
 
-          <div class="profile-col"></div>
+          <!-- PROFILE SOCIAL MEDIA  -->
 
+        <% if(user.website_url || user.twitter_profile || user.instagram_profile || user.facebook_profile || user.linkedin_url) { %>
+          <div class="profile-col-2">
 
+            <% if(user.website_url) { %>
+              <div class="profile-social-link">
+                <a href="<%= user.website_url %>" target="_blank">
+                  <div class="flex">
+                    <i class="fas fa-desktop"></i>
+                    <p>Website</p>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+
+            <% if(user.twitter_profile) { %>
+              <div class="profile-social-link">
+                <a href="<%= user.twitter_profile %>" target="_blank">
+                  <div class="flex">
+                    <i class="fab fa-twitter"></i>
+                    <p>Twitter</p>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+
+            <% if(user.instagram_profile) { %>
+              <div class="profile-social-link">
+                <a href="<%= user.instagram_profile %>" target="_blank">
+                  <div class="flex">
+                    <i class="fab fa-instagram"></i>
+                    <p>Instagram</p>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+
+            <% if(user.facebook_profile) { %>
+              <div class="profile-social-link">
+                <a href="<%= user.facebook_profile %>" target="_blank">
+                  <div class="flex">
+                    <i class="fab fa-facebook"></i>
+                    <p>Facebook</p>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+
+            <% if(user.linkedin_url) { %>
+              <div class="profile-social-link">
+                <a href="<%= user.linkedin_url %>" target="_blank">
+                  <div class="flex">
+                    <i class="fab fa-linkedin"></i>
+                    <p>LinkedIn</p>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+
+          </div>
+
+        <% } %>
 
         </div>
 
-        <div class="profile-col-2">
+        <div class="profile-col-2-wrapper">
 
           <div class="profile-edit">
             <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
@@ -60,15 +122,9 @@
             <p><%= user.skills %></p>
           </div>
 
-          <div class="profile-work-images flex-5">
+          <div class="profile-showcase-photos flex-5">
             <div>
-              <h3>Images</h3>
-            </div>
-            <div class="profile-work-images-wrapper">
-              <div class="profile-work-image img1"></div>
-              <div class="profile-work-image img2"></div>
-              <div class="profile-work-image img3"></div>
-              <div class="profile-work-image img4"></div>
+              <h3>Showcase</h3>
             </div>
           </div>
 

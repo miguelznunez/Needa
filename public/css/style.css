@@ -116,7 +116,7 @@ button{
 }
 
 .subcontainer{
-  width: 85%;
+  width: 90%;
   margin: auto;
 }
 
@@ -340,7 +340,8 @@ button{
   color: white;
 }
 
-/* PROFILE.EJS */
+/* PROFILE.EJS =========================*/
+
 #profile-cover-photo{
   height: 300px;
   background-position: center;
@@ -355,6 +356,8 @@ button{
   padding: 25px 0;
 }
 
+/* PROFILE COLUMN 1 WRAPPER */
+
 .profile-col-1-wrapper{
   height: auto;
   display: flex;
@@ -366,7 +369,7 @@ button{
 
 }
 
-.profile-col{
+.profile-col-1{
   height: 450px;
   display: flex;
   flex-direction: column;
@@ -378,23 +381,6 @@ button{
   border: 1px solid lightgray;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 
-}
-
-.profile-col-2 {
-  width: 100%;
-  min-height: 700px;
-  padding: 20px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-  color: #262626;
-
-  border-radius: 5px;
-  border: 1px solid lightgray;
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .profile-col-1 h2,
@@ -432,30 +418,83 @@ button{
   font-weight: bold;
 }
 
-.profile-social{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.profile-identity h3{
+  color: gray;
 }
 
-.fa-twitter,
-.fa-instagram,
-.fa-facebook,
-.fa-linkedin,
-.fa-link{
+.profile-col-2 {
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.profile-social-link {
+  padding: 28px;
+  transition: 0.2s ease;
+}
+
+.profile-social-link p{
+  font-size: 1.2rem;
+}
+
+.profile-social-link a {
+  text-decoration: none;
+  color: #262626;
+}
+
+.profile-social-link:hover {
+  background-color: #e1e1e1;
+}
+
+.profile-social-link .fa-desktop,
+.profile-social-link .fa-twitter,
+.profile-social-link .fa-instagram,
+.profile-social-link .fa-facebook,
+.profile-social-link .fa-linkedin,
+.profile-social-link .fa-link {
   font-size: 1.5rem;
   cursor: pointer;
   color: #262626;
 }
 
-.profile-about{
-  width: 100%;
-  line-height: 1.5;
-  text-align: center;
+.profile-social-link .fa-twitter{
+  color: #1DA1F2;
 }
 
-/* COL 2 */
+.profile-social-link .fa-instagram{
+  color: #fb3958;
+}
+
+.profile-social-link .fa-facebook{
+  color: #4267B2;
+}
+
+.profile-social-link .fa-linkedin{
+  color: #0e76a8;
+}
+
+/* PROFILE COLUMN 2 WRAPPER */
+
+.profile-col-2-wrapper {
+  width: 100%;
+  height: fit-content;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  color: #262626;
+
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
 
 #profile-edit {
   color: white;
@@ -467,57 +506,16 @@ button{
   color: #262626;
 }
 
-.profile-services, .profile-skills{
-  min-height: 75px;
-}
-
 .profile-edit, .profile-services, .profile-skills, .profile-following{
   width: 100%;
   /* padding: 10px 0; */
 }
 
-.profile-work-images{
+.profile-showcase-photos{
   width: 100%;
 }
 
-.profile-work-images-wrapper{
-  display: grid;
-  grid-template-columns: 49% 49%;
-  grid-gap: 20px;
-
-}
-
-.profile-work-image{
-  width: 100%;
-  height: 239px;
-  cursor: pointer;
-  border-radius: 5px;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  transition: 0.3s ease-in;
-}
-
-.profile-work-image:hover{
-  filter: brightness(50%);
-}
-
-.img1{
-  background-image: url(https://images.pexels.com/photos/3637837/pexels-photo-3637837.jpeg?cs=srgb&dl=pexels-cleyder-duque-3637837.jpg&fm=jpg);
-}
-
-.img2{
-  background-image: url(https://images.pexels.com/photos/2398375/pexels-photo-2398375.jpeg?cs=srgb&dl=pexels-diego-%F0%9F%9A%80-2398375.jpg&fm=jpg);
-}
-
-.img3{
-  background-image: url(https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg?cs=srgb&dl=pexels-photomix-company-94865.jpg&fm=jpg);
-}
-
-.img4{
-  background-image: url(https://images.pexels.com/photos/4491846/pexels-photo-4491846.jpeg?cs=srgb&dl=pexels-ivan-samkov-4491846.jpg&fm=jpg);
-}
-
+/* ADJUST WIDTH & HEIGHT */
 #overlay {
   display: none;
   position: fixed;
@@ -529,7 +527,6 @@ button{
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* ADJUST WIDTH & HEIGHT */
 #modal {
   max-width: 850px;
   height: 478px;
@@ -551,6 +548,7 @@ button{
 }
 
 /* SETTINGS.EJS */
+
 .settings-wrapper{
   display: grid;
   grid-template-columns: 24% 74%;
