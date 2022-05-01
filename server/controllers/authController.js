@@ -257,6 +257,8 @@ exports.settings = async (req, res) => {
 // UPLOAD PROFILE AND COVER PHOTOS
 
 async function uploadPhotos(user, req, res, profile_data, cover_data, update){
+  // UNLINK SHOWCASE PHOTOS
+  unlinkShowcasePhotos(req);
   // UPLOAD IMAGES TO S3
   await s3.uploadImage(user.id, profile_data);
   await s3.uploadImage(user.id, cover_data);
@@ -277,6 +279,8 @@ async function uploadPhotos(user, req, res, profile_data, cover_data, update){
 // UPLOAD PROFILE PHOTO (DELETE COVER PHOTO IF NEEDED)
 
 async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, cover_outcome, update){
+  // UNLINK SHOWCASE PHOTOS
+  unlinkShowcasePhotos(req);
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, profile_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -299,6 +303,8 @@ async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, 
 // UPLOAD COVER PHOTO (DELETE PROFILE PHOTO IF NEEDED)
 
 async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, profile_outcome, update){
+  // UNLINK SHOWCASE PHOTOS
+  unlinkShowcasePhotos(req);
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, cover_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -321,6 +327,8 @@ async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, pr
 // NO PHOTOS UPLOADED (DELETE PROFILE AND COVER PHOTOS IF NEEDED)
 
 async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, update){
+  // UNLINK SHOWCASE PHOTOS
+  unlinkShowcasePhotos(req);
   if(profile_outcome === "delete" && user.profile_photo != null && cover_outcome === "delete" && user.cover_photo != null){
     console.log("Profile and cover deleted")
     await s3.deleteImage(user.id, user.profile_photo);
@@ -343,12 +351,28 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 // UPDATE DATABASE
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter_profile:update.twitter_profile, instagram_profile:update.instagram_profile, facebook_profile:update.facebook_profile, linkedin_url:update.linkedin_url, website_url:update.website_url, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) return res.json({success : true, message: "Profile was updated"});
     else console.log(err.message);
   }); 
+}
+
+async function unlinkShowcasePhotos(req){
+
+  if(typeof req.files["file[0]"] !== "undefined"){ 
+    const filesArray = Object.keys(req.files);
+    const filteredArray = filesArray.filter(function(e) { return e !== "profile_photo" && e !== "cover_photo" })
+    const count = filteredArray.length;
+    if(count > 0){
+      for(let i = 0;i < count;i++){
+        await unlinkFile(req.files[`file[${i}]`][0].path);
+      }
+    }
+  } else {
+    console.log("No showcase photos uploaded");
+  }
 }
 
 

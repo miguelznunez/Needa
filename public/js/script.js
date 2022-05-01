@@ -127,6 +127,7 @@ cookieMessage = () => {
 window.addEventListener("load", cookieMessage);
 
 // HIDE NAVIGATION MENU ON SCROLL
+
 window.addEventListener('scroll', () => {
 	hamburger.classList.remove("active");
 	navMenu.classList.remove("active");

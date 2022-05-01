@@ -15,11 +15,12 @@ async function loadStates(){
 // UPLOAD WORK PHOTOS
 
 let files = [], // STORE THE PHOTOS
-form = document.querySelector('.work-photos'), // form ( drag area )
+settingsForm = document.querySelector("#settingsForm"),
+form = document.querySelector('.showcase-photos'), // form ( drag area )
 container = document.querySelector('.images-container'), // container in which image will be insert
 text = document.querySelector('.inner'), // inner text of form
 browse = document.querySelector('.select'), // text option to run input
-input = document.querySelector('.work-photos input'); // file input
+input = document.querySelector('.showcase-photos input'); // file input
 
 browse.addEventListener('click', () => input.click());
 
@@ -32,6 +33,7 @@ input.addEventListener('change', () => {
 	}
 
 	input.value = "";
+  settingsForm.reset();
 	showImages();
 })
 
@@ -84,8 +86,6 @@ form.addEventListener('drop', e => {
 
 // SUBMIT REQUEST WITH FETCH
 
-const settingsForm = document.querySelector("#settingsForm");
-
 settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -113,7 +113,7 @@ settingsForm.addEventListener("submit", (e) => {
         const div = document.createElement("div");
         div.className = "alert-message";
         div.innerHTML = data.allParsedErrors.errors[i].msg;
-        document.querySelectorAll(".subcontainer")[2].prepend(div);
+        document.querySelector(".alert-message-wrapper").append(div);
       }
 
     } else {
@@ -123,7 +123,7 @@ settingsForm.addEventListener("submit", (e) => {
       const div = document.createElement("div");
       div.className = "alert-message success";
       div.innerHTML = data.message;
-      document.querySelectorAll(".subcontainer")[2].prepend(div);
+      document.querySelector(".alert-message-wrapper").append(div);
 
       let clearTime = setInterval(() => {
         removeElementsByClass("success");

@@ -10,7 +10,7 @@
 body{
   overflow-x: hidden ;
   font-family: 'Roboto', sans-serif;
-  background-color: #e9e9e9;
+  background-color: white;
 }
 
 form{
@@ -145,10 +145,11 @@ button{
   color: black;
 }
 
+.alert-message-wrapper{
+  padding-top: 15px;
+}
 .alert-message{
   width: 100%;
-  margin-top: 20px;
-  height: auto;
   padding: 12px;
   background-color: #ffe6e6;
   color: red;
@@ -255,15 +256,17 @@ button{
   top: calc(100% + .70rem);
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
-  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
   z-index: 1;
-  width: 300px;
+  width: 350px;
   display: flex;
   flex-direction: column;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  transition: opacity 150ms ease-in-out,
+  transform 150ms ease-in-out;
 }
 
 .dropdown-menu a{
@@ -273,7 +276,7 @@ button{
 
 .dropdown-menu a:hover{
   border-radius: .25rem;
-  background-color: #f2f2f2;
+  background-color: #e1e1e1;
 }
 
 .dropdown.active > .link + .dropdown-menu {
@@ -310,6 +313,8 @@ button{
 }
 
 .top-link{
+  display: flex;
+  gap: 15px;
   border-bottom: 1px solid lightgray;
 }
 
@@ -363,7 +368,6 @@ button{
   display: flex;
   flex-direction: column;
   gap: 20px;
-
   background-color: #e9e9e9;
   color: #262626;
 
@@ -553,6 +557,8 @@ button{
   display: grid;
   grid-template-columns: 24% 74%;
   gap: 2%;
+  padding-top: 15px;
+  padding-bottom: 30px;
 }
 
 .settings-col-1{
@@ -592,7 +598,7 @@ button{
 }
 
 .settings-col-1-link:hover{
-  background-color: whitesmoke;
+  background-color: #e1e1e1;
 }
 
 .settings-col-1-link .fa-user-circle,
@@ -700,9 +706,9 @@ button{
 
 .fa-cloud-upload{ font-size: 1.4rem;}
 
-/* WORK PHOTOS */
+/* SHOWCASE PHOTOS */
 
-.work-photos{
+.showcase-photos{
   width: 100%;
   height: 200px;
   border-radius: 5px;
@@ -715,18 +721,18 @@ button{
   color: gray;
 }
 
-.work-photos .select {
+.showcase-photos .select {
   margin-left: 7px;
   cursor: pointer;
   color: #009999;
   font-weight: bold;
 }
 
-.work-photos input {
+.showcase-photos input {
   display: none;
 }
 
-.work-photos .dragover {
+.showcase-photos .dragover {
   border-style: solid;
   font-size: 2rem;
   color: #c8c9dd;
@@ -1208,6 +1214,10 @@ input[type="checkbox"]{
 
 #forgot-password a{
   text-decoration: underline;
+  color: #009999;
+}
+
+#register, #login{
   color: #009999;
 }
 

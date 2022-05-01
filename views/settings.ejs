@@ -1,245 +1,254 @@
 <%- include("partials/header.ejs") %>
 
-<div class="container">
-  <div class="subcontainer">
- 
-    <div class="settings-wrapper" style="margin: 20px 0;">
+<style>
+  body{
+    background-color: #e9e9e9;
+  }
+</style>
+
+  <div class="container">
+    <div class="subcontainer">
+
+      <div class="alert-message-wrapper"></div>
+  
+      <div class="settings-wrapper">
 
 
-      <div class="settings-col-1">
-        <div class="settings-col-1-child-1">
-          <h2>User Settings</h2>
-        </div>
-        <div class="settings-col-1-child-2">
-          <div class="settings-col-1-link">
-            <a href="/settings" style="color:#009999;">
-              <div class="flex">
-                <i class="fas fa-user-circle"></i>
-                <p>PROFILE</p>
-              </div>
-            </a>
+        <div class="settings-col-1">
+          <div class="settings-col-1-child-1">
+            <h2>User Settings</h2>
           </div>
-          <div class="settings-col-1-link">
-            <a href="/settings/account">
-              <div class="flex">
-                <i class="fas fa-cog"></i>
-                <p>ACCOUNT</p>
-              </div>
-            </a>
+          <div class="settings-col-1-child-2">
+            <div class="settings-col-1-link">
+              <a href="/settings" style="color:#009999;">
+                <div class="flex">
+                  <i class="fas fa-user-circle"></i>
+                  <p>PROFILE</p>
+                </div>
+              </a>
+            </div>
+            <div class="settings-col-1-link">
+              <a href="/settings/account">
+                <div class="flex">
+                  <i class="fas fa-cog"></i>
+                  <p>ACCOUNT</p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
+
+
+        <form id="settingsForm" class="settings-col-2">
+
+          <div class="settings-col-2-wrapper">
+            <div class="settings-col-2-child">
+
+
+              <!-- BASIC INFO  -->
+
+
+              <h3>Basic Info</h3>
+
+              <!-- PROFILE PHOTO UPLOAD -->
+
+              <div class="user-input">
+
+                <div class="flex-4">
+                  <label>Profile Photo</label>
+                  <i class="far fa-trash-alt" id="trashProfilePhoto"></i>
+                  <input type="hidden" name="deleteProfilePhoto" id="delProPhoto">
+                </div>
+
+                <div class="profile-photo-container flex-2">
+                  <i class="fas fa-cloud-upload" id="uploadCloudPro"></i>
+                  <input type="file" id="profilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
+                </div>
+
+              </div>
+
+              <!-- COVER PHOTO UPLOAD -->
+
+              <div class="user-input">
+
+                <div class="flex-4">
+                  <label>Cover Photo</label>
+                  <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
+                  <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
+                </div>
+
+                <div class="cover-photo-container flex-2">
+                  <i class="fas fa-cloud-upload" id="uploadCloudCov"></i>
+                  <input type="file" id="coverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
+                </div>
+
+              </div>
+
+              <!--  -->
+              
+              <div class="user-input">
+                <label for="first_name">First name</label>
+                <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
+              </div>
+              <div class="user-input">
+                <label for="last_name">Last name</label>
+                <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>" maxlength="30">
+              </div>
+              <div class="user-input">
+                <label for="city">City</label>
+                <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
+              </div>
+              <div class="user-input">
+                <label for="state">State</label>
+                <select name="state" id="state">
+                  <option value="<%= user.state %>"> <%= user.state %> </option>
+                </select>
+              </div>
+              <div class="user-input">
+                <% if(user.gender === "M") { %>
+                  <label for="gender">Gender</label>
+                  <div class="flex" style="width: 60px;">
+                    <input type="radio" name="gender" value="M" checked>
+                    <label for="M">Male</label>
+                  </div>
+                  <div class="flex" style="width: 78px;">
+                    <input type="radio" name="gender" value="F">
+                    <label for="F">Female</label>
+                  </div>
+                <% } else if (user.gender === "F") { %>
+                  <label for="gender">Gender</label>
+                  <div class="flex" style="width: 60px;">
+                    <input type="radio" name="gender" value="M">
+                    <label for="M">Male</label>
+                  </div>
+                  <div class="flex" style="width: 78px;">
+                    <input type="radio" name="gender" value="F" checked>
+                    <label for="F">Female</label>
+                  </div>
+                <% } else { %>
+                  <label for="gender">Gender</label>
+                  <div class="flex" style="width: 60px;">
+                    <input type="radio" name="gender" value="M">
+                    <label for="M">Male</label>
+                  </div>
+                  <div class="flex" style="width: 78px;">
+                    <input type="radio" name="gender" value="F">
+                    <label for="F">Female</label>
+                  </div>
+                <% } %>
+              </div>
+
+              
+              <!-- ABOUT YOU  -->
+
+              <br>
+
+              <h3>About You</h3>
+              <div class="user-input">
+                <label for="profession">Profession</label>
+                <input type="text" name="profession" placeholder="e.g. Electrician" value="<%= user.profession %>" maxlength="50">
+              </div>
+              <div class="user-input">
+                <label for="specialty">Services</label>
+                <textarea name="specialty" id="" placeholder="I specialize in..." maxlength="255"><%= user.specialty %></textarea>
+              </div>
+              <div class="user-input">
+                <label for="about">About</label>
+                <textarea name="about" placeholder="I have 10 year experience..." maxlength="1000"><%= user.about %></textarea>
+              </div>
+              <div class="user-input">
+                <label for="skills">Skills</label>
+                <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>" maxlength="1000">
+              </div>
+            </div>
+
+
+            <!-- SOCIAL  -->
+
+
+            <div class="settings-col-2-child">
+              <h3>Social</h3>
+              <div class="user-input">
+                <label for="website">Website</label>
+                <input type="text" name="website" placeholder="https://johndoe.com" value="<%= user.website %>"
+                  maxlength="255">
+              </div>
+              <div class="user-input">
+                <label for="twitter">Twitter</label>
+                <input type="text" name="twitter" placeholder="https://twitter.com/johndoe" value="<%= user.twitter %>"  maxlength="255">
+              </div>
+              <div class="user-input">
+                <label for="instagram">Instagram</label>
+                <input type="text" name="instagram" placeholder="https://instagram.com/johndoe" value="<%= user.instagram %>" maxlength="255">
+              </div>
+              <div class="user-input">
+                <label for="facebook">Facebook</label>
+                <input type="text" name="facebook" placeholder="https://facebook.com/johndoe" value="<%= user.facebook %>" maxlength="255">
+              </div>
+              <div class="user-input">
+                <label for="linkedin">LinkedIn</label>
+                <input type="text" name="linkedin" placeholder="https://www.linkedin.com/in/johndoe" value="<%= user.linkedin %>"maxlength="255">
+              </div>
+
+              
+              <!-- PROFILE IDENTITY  -->
+              
+              <br>
+
+              <h3>Profile identity</h3>          
+              <div class="user-input">
+                <input type="phone" name="phone" placeholder="Enter your phone number" value="<%= user.phone %>" maxlength="11">
+              </div>
+              <div class="flex">
+                <% if(user.display_phone === "yes" ) { %>
+                  <input type="checkbox" value="yes" name="display_phone" checked>
+                  <label for="display_phone">Display my phone number on profile page</label>
+                <% } else { %>
+                  <input type="checkbox" value="yes" name="display_phone">
+                  <label for="display_phone">Display my phone number on profile page</label>
+                <% } %>
+              </div>  
+              <div class="user-input">
+                <input type="email" name="email" placeholder="<%= user.email %>" disabled>
+              </div>
+              <div class="flex">
+                <% if(user.display_email === "yes" ) { %>
+                  <input type="checkbox" value="yes" name="display_email" checked>
+                  <label for="display_email">Display my email on profile page</label>
+                <% } else { %>
+                  <input type="checkbox" value="yes" name="display_email">
+                  <label for="display_email">Display my email on profile page</label>
+                <% } %>
+              </div>
+
+
+              <!-- PROFILE WORK IMAGES  -->
+              
+              <br>
+              
+              <h3>Showcase photos</h3>
+
+              <div class="flex-10">
+                <div class="showcase-photos flex-2">
+                  <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
+                  <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"/>
+                </div>
+                <div class="images-container"></div>
+              </div>
+
+              <div>
+                <button type="submit" id="update-profile-btn">Update</button>
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+        
       </div>
-
-
-      <form id="settingsForm" class="settings-col-2">
-
-        <div class="settings-col-2-wrapper">
-          <div class="settings-col-2-child">
-
-
-            <!-- BASIC INFO  -->
-
-
-            <h3>Basic Info</h3>
-
-            <!-- PROFILE PHOTO UPLOAD -->
-
-            <div class="user-input">
-
-              <div class="flex-4">
-                <label>Profile Photo</label>
-                <i class="far fa-trash-alt" id="trashProfilePhoto"></i>
-                <input type="hidden" name="deleteProfilePhoto" id="delProPhoto">
-              </div>
-
-              <div class="profile-photo-container flex-2">
-                <i class="fas fa-cloud-upload" id="uploadCloudPro"></i>
-                <input type="file" id="profilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
-              </div>
-
-            </div>
-
-            <!-- COVER PHOTO UPLOAD -->
-
-            <div class="user-input">
-
-              <div class="flex-4">
-                <label>Cover Photo</label>
-                <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
-                <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
-              </div>
-
-              <div class="cover-photo-container flex-2">
-                <i class="fas fa-cloud-upload" id="uploadCloudCov"></i>
-                <input type="file" id="coverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
-              </div>
-
-            </div>
-
-            <!--  -->
-            
-            <div class="user-input">
-              <label for="first_name">First name</label>
-              <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" value="<%= user.first_name %>" maxlength="30">
-            </div>
-            <div class="user-input">
-              <label for="last_name">Last name</label>
-              <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>" maxlength="30">
-            </div>
-            <div class="user-input">
-              <label for="city">City</label>
-              <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
-            </div>
-            <div class="user-input">
-              <label for="state">State</label>
-              <select name="state" id="state">
-                <option value="<%= user.state %>"> <%= user.state %> </option>
-              </select>
-            </div>
-            <div class="user-input">
-              <% if(user.gender === "M") { %>
-                <label for="gender">Gender</label>
-                <div class="flex" style="width: 60px;">
-                  <input type="radio" name="gender" value="M" checked>
-                  <label for="M">Male</label>
-                </div>
-                <div class="flex" style="width: 78px;">
-                  <input type="radio" name="gender" value="F">
-                  <label for="F">Female</label>
-                </div>
-              <% } else if (user.gender === "F") { %>
-                <label for="gender">Gender</label>
-                <div class="flex" style="width: 60px;">
-                  <input type="radio" name="gender" value="M">
-                  <label for="M">Male</label>
-                </div>
-                <div class="flex" style="width: 78px;">
-                  <input type="radio" name="gender" value="F" checked>
-                  <label for="F">Female</label>
-                </div>
-              <% } else { %>
-                <label for="gender">Gender</label>
-                <div class="flex" style="width: 60px;">
-                  <input type="radio" name="gender" value="M">
-                  <label for="M">Male</label>
-                </div>
-                <div class="flex" style="width: 78px;">
-                  <input type="radio" name="gender" value="F">
-                  <label for="F">Female</label>
-                </div>
-              <% } %>
-            </div>
-
-            
-            <!-- ABOUT YOU  -->
-
-            <br>
-
-            <h3>About You</h3>
-            <div class="user-input">
-              <label for="profession">Profession</label>
-              <input type="text" name="profession" placeholder="e.g. Electrician" value="<%= user.profession %>" maxlength="50">
-            </div>
-            <div class="user-input">
-              <label for="specialty">Services</label>
-              <textarea name="specialty" id="" placeholder="I specialize in..." maxlength="255"><%= user.specialty %></textarea>
-            </div>
-            <div class="user-input">
-              <label for="about">About</label>
-              <textarea name="about" placeholder="I have 10 year experience..." maxlength="1000"><%= user.about %></textarea>
-            </div>
-            <div class="user-input">
-              <label for="skills">Skills</label>
-              <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>" maxlength="1000">
-            </div>
-          </div>
-
-
-          <!-- SOCIAL  -->
-
-
-          <div class="settings-col-2-child">
-            <h3>Social</h3>
-            <div class="user-input">
-              <label for="website_url">Website URL</label>
-              <input type="text" name="website_url" placeholder="https://johndoe.com" value="<%= user.website_url %>"
-                maxlength="255">
-            </div>
-            <div class="user-input">
-              <label for="twitter_profile">Twitter profile</label>
-              <input type="text" name="twitter_profile" placeholder="https://twitter.com/johndoe" value="<%= user.twitter_profile %>"  maxlength="255">
-            </div>
-            <div class="user-input">
-              <label for="instagram_profile">Instagram profile</label>
-              <input type="text" name="instagram_profile" placeholder="https://instagram.com/johndoe" value="<%= user.instagram_profile %>" maxlength="255">
-            </div>
-            <div class="user-input">
-              <label for="facebook_profile">Facebook profile</label>
-              <input type="text" name="facebook_profile" placeholder="https://facebook.com/johndoe" value="<%= user.facebook_profile %>" maxlength="255">
-            </div>
-            <div class="user-input">
-              <label for="linkedin_url">LinkedIn URL</label>
-              <input type="text" name="linkedin_url" placeholder="https://www.linkedin.com/in/johndoe" value="<%= user.linkedin_url %>"maxlength="255">
-            </div>
-
-            
-            <!-- PROFILE IDENTITY  -->
-            
-            <br>
-
-            <h3>Profile identity</h3>          
-            <div class="user-input">
-              <input type="phone" name="phone" placeholder="Enter your phone number" value="<%= user.phone %>" maxlength="11">
-            </div>
-            <div class="flex">
-              <% if(user.display_phone === "yes" ) { %>
-                <input type="checkbox" value="yes" name="display_phone" checked>
-                <label for="display_phone">Display my phone number on profile page</label>
-              <% } else { %>
-                <input type="checkbox" value="yes" name="display_phone">
-                <label for="display_phone">Display my phone number on profile page</label>
-              <% } %>
-            </div>  
-            <div class="user-input">
-              <input type="email" name="email" placeholder="<%= user.email %>" disabled>
-            </div>
-            <div class="flex">
-              <% if(user.display_email === "yes" ) { %>
-                <input type="checkbox" value="yes" name="display_email" checked>
-                <label for="display_email">Display my email on profile page</label>
-              <% } else { %>
-                <input type="checkbox" value="yes" name="display_email">
-                <label for="display_email">Display my email on profile page</label>
-              <% } %>
-            </div>
-
-
-            <!-- PROFILE WORK IMAGES  -->
-            
-            <br>
-            
-            <h3>Showcase photos</h3>
-
-            <div class="flex-10">
-              <div class="work-photos flex-2">
-                <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
-                <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"/>
-              </div>
-              <div class="images-container"></div>
-            </div>
-
-            <div>
-              <button type="submit" id="update-profile-btn">Update</button>
-            </div>
-
-          </div>
-        </div>
-
-      </form>
-      
     </div>
   </div>
-</div>
+
 
 <script src="/js/script.js"></script>
 

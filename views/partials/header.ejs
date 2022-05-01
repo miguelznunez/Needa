@@ -27,10 +27,16 @@
               <h1>Needa</h1>
             </a>
             <ul class="nav-menu">
+
+              <!-- IF USER IS LOGGED IN -->
+
               <% if (typeof user !="undefined" && user) { %>
                 <li class="nav-item">
                   <div class="dropdown" data-dropdown>
                     <div class="user-icon link" data-dropdown-button>
+
+                      <!-- IF USER HAS A PROFILE PICTURE -->
+
                       <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
                         <style>
                           .user-icon {
@@ -40,11 +46,16 @@
                       <% } else { %>
                         <i class="fas fa-user link" data-dropdown-button></i>
                       <% } %>
+
+
                     </div>
                     <div class="dropdown-menu">
                       <a href="/profile">
                         <div class="dropdown-links top-link">
                           <div class="user-icon">
+
+                            <!-- IF USER HAS A PROFILE PHOTO ( DROP DOWN MENU ) -->
+
                             <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
                               <style>
                                 .user-icon {
@@ -82,15 +93,41 @@
                     </div>
                   </div>
                 </li>
+
+                <!-- ELSE USER IS NOT LOGGED IN -->
+
+
               <% } else { %>
-                <li class="nav-item">
-                  <a href="/login" class="nav-link">Log in</a>
-                </li>
-                <li class="nav-item">
-                  <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                      id="register-user-btn">Register</button></a>
-                </li>
+
+                <!-- IF USER IS IN LOGIN PAGE -->
+
+                <% if(title === "Needa | Login") { %>
+                  <li class="nav-item">
+                    <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                        id="register-user-btn">Register</button></a>
+                  </li>
+
+                <!-- ELSE IF USER IS IN REGISTER PAGE -->
+
+                <% } else if(title === "Needa | Register") { %>
+                  <li class="nav-item">
+                    <a href="/login" class="nav-link">Log in</a>
+                  </li>
+
+                <!-- ELSE ANY OTHER PAGE -->
+
+                <% } else { %>
+                    <li class="nav-item">
+                      <a href="/login" class="nav-link">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                          id="register-user-btn">Register</button></a>
+                    </li>
+                <% } %>
+
               <% } %>
+
             </ul>
             <div class="hamburger">
               <span class="bar"></span>

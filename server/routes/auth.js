@@ -11,7 +11,9 @@ const upload = multer({
            {name: "file[2]"},
            {name: "file[3]"},
            {name: "file[4]"},
-           {name: "file[5]"}]);
+           {name: "file[5]"},
+           {name: "file[6]"},
+           {name: "file[7]"}]);
 
 const router = express.Router();
 
@@ -69,11 +71,11 @@ router.post("/settings",
   check("specialty", "Specialty must be 255 characters max.").isLength({max:255}),
   check("about", "About must be 1000 characters max.").isLength({max:1000}),
   check("skills", "Skills must be 1000 characters max.").isLength({max:1000}),
-  check("twitter_profile", "Twitter profile must be 255 characters max.").isLength({max:255}),
-  check("instagram_profile", "Instagram profile must be 255 characters max.").isLength({max:255}),
-  check("facebook_profile", "Facebook profile must be 255 characters max.").isLength({max:255}),
-  check("linkedin_url", "LinkedIn URL must be 255 characters max.").isLength({max:255}),
-  check("website_url", "Website URL must be 255 characters max.").isLength({max:255}),
+  check("twitter", "Twitter profile must be 255 characters max.").isLength({max:255}),
+  check("instagram", "Instagram profile must be 255 characters max.").isLength({max:255}),
+  check("facebook", "Facebook profile must be 255 characters max.").isLength({max:255}),
+  check("linkedin", "LinkedIn URL must be 255 characters max.").isLength({max:255}),
+  check("website", "Website URL must be 255 characters max.").isLength({max:255}),
   check("phone_number", "Phone number must be 11 characters max.").isLength({max:11}),
   check("profile_photo").custom((value, {req}) => {
     if(typeof req.files["profile_photo"] !== "undefined"){

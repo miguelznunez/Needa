@@ -2,7 +2,7 @@
 
 <section id="profile-cover-photo"></section>
 
-<section>
+<section style="background-color: #e9e9e9;">
   <div class="container" style="padding-bottom: 20px;">
     <div class="subcontainer">
       <div class="profile-wrapper">
@@ -42,12 +42,12 @@
 
           <!-- PROFILE SOCIAL MEDIA  -->
 
-        <% if(user.website_url || user.twitter_profile || user.instagram_profile || user.facebook_profile || user.linkedin_url) { %>
+        <% if(user.website || user.twitter || user.instagram || user.facebook || user.linkedin) { %>
           <div class="profile-col-2">
 
-            <% if(user.website_url) { %>
+            <% if(user.website) { %>
               <div class="profile-social-link">
-                <a href="<%= user.website_url %>" target="_blank">
+                <a href="<%= user.website %>" target="_blank">
                   <div class="flex">
                     <i class="fas fa-desktop"></i>
                     <p>Website</p>
@@ -56,9 +56,9 @@
               </div>
             <% } %>
 
-            <% if(user.twitter_profile) { %>
+            <% if(user.twitter) { %>
               <div class="profile-social-link">
-                <a href="<%= user.twitter_profile %>" target="_blank">
+                <a href="<%= user.twitter %>" target="_blank">
                   <div class="flex">
                     <i class="fab fa-twitter"></i>
                     <p>Twitter</p>
@@ -67,9 +67,9 @@
               </div>
             <% } %>
 
-            <% if(user.instagram_profile) { %>
+            <% if(user.instagram) { %>
               <div class="profile-social-link">
-                <a href="<%= user.instagram_profile %>" target="_blank">
+                <a href="<%= user.instagram %>" target="_blank">
                   <div class="flex">
                     <i class="fab fa-instagram"></i>
                     <p>Instagram</p>
@@ -78,9 +78,9 @@
               </div>
             <% } %>
 
-            <% if(user.facebook_profile) { %>
+            <% if(user.facebook) { %>
               <div class="profile-social-link">
-                <a href="<%= user.facebook_profile %>" target="_blank">
+                <a href="<%= user.facebook %>" target="_blank">
                   <div class="flex">
                     <i class="fab fa-facebook"></i>
                     <p>Facebook</p>
@@ -89,9 +89,9 @@
               </div>
             <% } %>
 
-            <% if(user.linkedin_url) { %>
+            <% if(user.linkedin) { %>
               <div class="profile-social-link">
-                <a href="<%= user.linkedin_url %>" target="_blank">
+                <a href="<%= user.linkedin %>" target="_blank">
                   <div class="flex">
                     <i class="fab fa-linkedin"></i>
                     <p>LinkedIn</p>
