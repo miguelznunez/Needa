@@ -347,7 +347,6 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
   const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
-    // if(!err) return res.json({success : true, message: "Profile was updated"});
     if(!err) {
       req.flash("success", "Profile was updated successfully");
       return res.redirect("/settings");
@@ -356,20 +355,51 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
   }); 
 }
 
-async function unlinkShowcasePhotos(req){
 
-  if(typeof req.files["file[0]"] !== "undefined"){ 
-    const filesArray = Object.keys(req.files);
-    const filteredArray = filesArray.filter(function(e) { return e !== "profile_photo" && e !== "cover_photo" })
-    const count = filteredArray.length;
-    if(count > 0){
-      for(let i = 0;i < count;i++){
-        await unlinkFile(req.files[`file[${i}]`][0].path);
-      }
+exports.showcaseSettings = async (req, res) => { 
+
+  const length = Object.keys(req.files).length;
+  const showcaseData = {showcase_0: null, showcase_1: null, showcase_2: null, showcase_3:null, showcase_4:null,
+                        showcase_5: null, showcase_6: null, showcase_7: null};
+  const showcasePhotoPath = [req.user.showcase_0, req.user.showcase_1, req.user.showcase_2, req.user.showcase_3, req.user.showcase_4, req.user.showcase_5, req.user.showcase_6, req.user.showcase_7];
+
+  // USER UPLOADED AT LEAST ONE PHOTO
+  if(length > 0){
+
+    // ITERATE THROUGH UPLOADED PHOTOS ARRAY
+    for(let i = 0;i < length;i++) {
+      // UPLOAD PHOTO TO S3 
+      await s3.uploadImage(req.user.id, req.files[i]);
+      // REMOVE FILE FROM LOCAL FOLDER
+      await unlinkFile(req.files[i].path);
+      // INITIALIZE DATA OBJECT
+      showcaseData[`showcase_${i}`] = req.files[i].filename;
     }
+    // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
+    for(let i = 0;i < 8;i++)
+      await s3.deleteImage(req.user.id, showcasePhotoPath[i]);
+
+    // UPDATE THE DATABASE
+    db.query("UPDATE user SET ? WHERE id = ?", [showcaseData, req.user.id], (err, results) => {
+      if(!err) return res.json({success : true, message: "Profile was updated"}); 
+      else console.log(err.message);
+    }); 
+    
+  // USER DELETED ALL PHOTOS
   } else {
-    console.log("No showcase photos uploaded");
+
+    // DELETE ALL SHOWCASE PHOTOS FROM S3
+    for(let i = 0;i < 8;i++)
+      await s3.deleteImage(req.user.id, showcasePath[i]);
+
+    // UPDATE THE DATABASE
+    db.query("UPDATE user SET ? WHERE id = ?", [showcaseData, req.user.id], (err, results) => {
+      if(!err) return res.json({success : true, message: "Profile was updated"}); 
+      else console.log(err.message);
+    });  
+    
   }
+  
 }
 
 

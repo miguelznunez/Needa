@@ -1,26 +1,10 @@
-window.addEventListener("load", loadStates);
-
-async function loadStates(){
-  let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
-  let response = await fetch(url);
-  let data = await response.json();
-  data.forEach( function(i){ 
-    var state = document.createElement("option");
-    state.textContent = i.state;
-    state.value = i.usps;
-    document.querySelector("#state").appendChild(state);
-  });
-};
-
-// UPLOAD WORK PHOTOS
-
 let files = [], // STORE THE PHOTOS
-showcaseForm = document.querySelector("#showcaseForm"),
+showcaseForm = document.querySelector("#showcaseForm"), // form id
 form = document.querySelector('.showcase-photos'), // form ( drag area )
-container = document.querySelector('.images-container'), // container in which image will be insert
 text = document.querySelector('.inner'), // inner text of form
-browse = document.querySelector('.select'), // text option to run input
-input = document.querySelector('.showcase-photos input'); // file input
+browse = document.querySelector('.select'), // "Browse" to run input field
+input = document.querySelector('.showcase-photos input'), // file input
+container = document.querySelector('.images-container'); // container in which images will be inserted
 
 browse.addEventListener('click', () => input.click());
 
@@ -32,10 +16,12 @@ input.addEventListener('change', () => {
 		if (files.every(e => e.name !== file[i].name)) files.push(file[i])
 	}
 
-	input.value = "";
+	// input.value = "";
   showcaseForm.reset();
 	showImages();
 })
+
+// DISPLAY PHOTOS
 
 const showImages = () => {
 	let images = '';
@@ -48,6 +34,8 @@ const showImages = () => {
 
 	container.innerHTML = images;
 } 
+
+// DELETE A PHOTO
 
 const delImage = index => {
 	files.splice(index, 1)
@@ -77,11 +65,14 @@ form.addEventListener('drop', e => {
 	text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
 
 	let file = e.dataTransfer.files;
-	for (let i = 0; i < file.length; i++) {
-		if (files.every(e => e.name !== file[i].name)) files.push(file[i])
-	}
 
-	showImages();
+  for (let i = 0; i < file.length; i++) {
+    if (!file[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
+    if (files.every(e => e.name !== file[i].name)) files.push(file[i]) // NO REPEATED PHOTOS
+  }
+  files = files.slice(0,8); // UPLOAD 8 PHOTOS MAX
+  showImages();
+	
 })
 
 // SUBMIT REQUEST WITH FETCH
@@ -94,7 +85,7 @@ showcaseForm.addEventListener("submit", (e) => {
   files.forEach((e, i) => 
     formData.append(`file[${i}]`, e))
 
-  fetch("/auth/settings", {
+  fetch("/auth/showcase-settings", {
     method: "POST",
     body: formData
   })
@@ -105,31 +96,32 @@ showcaseForm.addEventListener("submit", (e) => {
   })
 
   .then(data => {
-    if(data.allParsedErrors) {
-      removeElementsByClass("alert-message");
-      removeElementsByClass("success");
+    console.log(data.message);
+    // if(data.allParsedErrors) {
+    //   removeElementsByClass("alert-message");
+    //   removeElementsByClass("success");
 
-      for(let i=0; i < data.allParsedErrors.errors.length; i++ ) {
-        const div = document.createElement("div");
-        div.className = "alert-message";
-        div.innerHTML = data.allParsedErrors.errors[i].msg;
-        document.querySelector(".alert-message-wrapper").append(div);
-      }
+    //   for(let i=0; i < data.allParsedErrors.errors.length; i++ ) {
+    //     const div = document.createElement("div");
+    //     div.className = "alert-message";
+    //     div.innerHTML = data.allParsedErrors.errors[i].msg;
+    //     document.querySelector(".alert-message-wrapper").append(div);
+    //   }
 
-    } else {
-      removeElementsByClass("success");
-      removeElementsByClass("alert-message");
+    // } else {
+    //   removeElementsByClass("success");
+    //   removeElementsByClass("alert-message");
 
-      const div = document.createElement("div");
-      div.className = "alert-message success";
-      div.innerHTML = data.message;
-      document.querySelector(".alert-message-wrapper").append(div);
+    //   const div = document.createElement("div");
+    //   div.className = "alert-message success";
+    //   div.innerHTML = data.message;
+    //   document.querySelector(".alert-message-wrapper").append(div);
 
-      let clearTime = setInterval(() => {
-        removeElementsByClass("success");
-        clearInterval(clearTime);
-      }, 7000);
-    } 
+    //   let clearTime = setInterval(() => {
+    //     removeElementsByClass("success");
+    //     clearInterval(clearTime);
+    //   }, 7000);
+    // } 
   })
 
   .catch(error => console.log(error));
@@ -142,6 +134,20 @@ function removeElementsByClass(className){
       elements[0].parentNode.removeChild(elements[0]);
   }
 }
+
+window.addEventListener("load", loadStates);
+
+async function loadStates(){
+  let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
+  let response = await fetch(url);
+  let data = await response.json();
+  data.forEach( function(i){ 
+    var state = document.createElement("option");
+    state.textContent = i.state;
+    state.value = i.usps;
+    document.querySelector("#state").appendChild(state);
+  });
+};
 
 
 

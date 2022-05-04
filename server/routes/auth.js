@@ -5,15 +5,11 @@ const multer  = require('multer');
 const upload = multer({ 
   dest: "uploads/"
 }).fields([{name: "profile_photo"}, 
-           {name: "cover_photo"},
-           {name: "file[0]"},
-           {name: "file[1]"},
-           {name: "file[2]"},
-           {name: "file[3]"},
-           {name: "file[4]"},
-           {name: "file[5]"},
-           {name: "file[6]"},
-           {name: "file[7]"}]);
+           {name: "cover_photo"}]);
+
+const showcaseUpload = multer({ 
+  dest: "uploads/"
+}).any();
 
 const router = express.Router();
 
@@ -106,6 +102,8 @@ router.post("/settings",
     }else {return true}
   })
 ], authController.isLoggedIn, authController.settings);
+
+router.post("/showcase-settings", showcaseUpload, authController.isLoggedIn, authController.showcaseSettings);
 
 router.post("/find-user", authController.isLoggedIn, authController.findUser);
 

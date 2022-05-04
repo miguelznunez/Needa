@@ -233,10 +233,10 @@
                   <% if(user.display_phone==="yes" ) { %>
                     <input type="checkbox" value="yes" name="display_phone" checked>
                     <label for="display_phone">Display my phone number on profile page</label>
-                    <% } else { %>
+                  <% } else { %>
                       <input type="checkbox" value="yes" name="display_phone">
                       <label for="display_phone">Display my phone number on profile page</label>
-                      <% } %>
+                  <% } %>
                 </div>
                 <div class="user-input">
                   <input type="email" name="email" placeholder="<%= user.email %>" disabled>
@@ -270,9 +270,17 @@
             <div class="flex-10" style="width: 100%;">
               <div class="showcase-photos flex-2">
                 <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
+                <p>( Upload 8 photos max )</p>
                 <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg" />
               </div>
-              <div class="images-container"></div>
+              <div class="images-container">
+                <% if(user.showcase_0 != null) { %>
+                  <div class="image">
+                    <img src="http://localhost:5000/showcase-photo/<%= user.showcase_0%>" alt="image">
+                    <span onclick="delImage(${i})">&times;</span>
+                  </div>`
+                <% } %>
+              </div>
             </div>
           </form>
 

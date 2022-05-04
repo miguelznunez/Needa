@@ -145,6 +145,14 @@ router.get("/cover-photo/:key", authController.isLoggedIn, (req, res) => {
     return res.redirect("/login");
 });
 
+router.get("/showcase-photo/:key", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.user.id, req.user.showcase_0);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
+
 // ADMIN CRUD SYSTEM =======================================================================
 
 // USER MUST BE LOGGED IN AND BE AN ADMIN TO USE THESE ROUTES
