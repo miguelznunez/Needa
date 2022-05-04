@@ -207,7 +207,7 @@ exports.passwordReset = (req, res) => {
       db.query("UPDATE user SET ? WHERE email = ?", [data, email], (err, results) => {
         if(!err) {
           mail.resetPasswordEmail(email, id, token, (err, data) => {
-            if(!err) return res.render("password-reset-sent", {title: "Password Reset Sent | Loaves Fishes Computers"});  
+            if(!err) return res.render("password-reset-sent", {title: "Password Reset Sent | Needa"});  
             else console.log(err.message);
           });
         // DATABASE ERROR
@@ -215,7 +215,7 @@ exports.passwordReset = (req, res) => {
       }); 
     // EMAIL WAS NOT FOUND (USER DOES NOT EXIST)
     } else if(!err && results[0] === undefined) {
-       return res.render("password-reset-sent", {title: "Password Reset Sent"});
+       return res.render("password-reset-sent", {title: "Password Reset Sent | Needa"});
     // DATABASE ERROR
     } else {
       console.log(err.message)
@@ -239,7 +239,8 @@ exports.settings = async (req, res) => {
       await unlinkFile(profile_photo[0].path);
     if(typeof req.files["cover_photo"] !== "undefined")
       await unlinkFile(cover_photo[0].path);
-    return res.json({success : false, allParsedErrors: allParsedErrors})
+    const success = req.flash("success");
+    return res.render("settings", {title: "Settings | Needa", allParsedErrors: allParsedErrors,  user : req.user, success})
   }
 
   if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
@@ -257,8 +258,6 @@ exports.settings = async (req, res) => {
 // UPLOAD PROFILE AND COVER PHOTOS
 
 async function uploadPhotos(user, req, res, profile_data, cover_data, update){
-  // UNLINK SHOWCASE PHOTOS
-  unlinkShowcasePhotos(req);
   // UPLOAD IMAGES TO S3
   await s3.uploadImage(user.id, profile_data);
   await s3.uploadImage(user.id, cover_data);
@@ -279,8 +278,6 @@ async function uploadPhotos(user, req, res, profile_data, cover_data, update){
 // UPLOAD PROFILE PHOTO (DELETE COVER PHOTO IF NEEDED)
 
 async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, cover_outcome, update){
-  // UNLINK SHOWCASE PHOTOS
-  unlinkShowcasePhotos(req);
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, profile_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -303,8 +300,6 @@ async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, 
 // UPLOAD COVER PHOTO (DELETE PROFILE PHOTO IF NEEDED)
 
 async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, profile_outcome, update){
-  // UNLINK SHOWCASE PHOTOS
-  unlinkShowcasePhotos(req);
   // UPLOAD IMAGE TO S3
   await s3.uploadImage(user.id, cover_data);
   // UNLINK FILE FROM UPLOADS FOLDER
@@ -327,8 +322,6 @@ async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, pr
 // NO PHOTOS UPLOADED (DELETE PROFILE AND COVER PHOTOS IF NEEDED)
 
 async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, update){
-  // UNLINK SHOWCASE PHOTOS
-  unlinkShowcasePhotos(req);
   if(profile_outcome === "delete" && user.profile_photo != null && cover_outcome === "delete" && user.cover_photo != null){
     console.log("Profile and cover deleted")
     await s3.deleteImage(user.id, user.profile_photo);
@@ -354,7 +347,11 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
   const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
-    if(!err) return res.json({success : true, message: "Profile was updated"});
+    // if(!err) return res.json({success : true, message: "Profile was updated"});
+    if(!err) {
+      req.flash("success", "Profile was updated successfully");
+      return res.redirect("/settings");
+    }
     else console.log(err.message);
   }); 
 }

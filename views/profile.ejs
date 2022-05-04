@@ -30,7 +30,7 @@
                   <i class="fas fa-map-marker-alt"></i>
                   <%= user.city %>, <%= user.state%>
                 </h3>
-              <% } else { %>
+              <% } else if (user.city || user.state) { %>
                 <h3>
                   <i class="fas fa-map-marker-alt"></i>
                   <%= user.city %>

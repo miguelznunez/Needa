@@ -114,7 +114,8 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    return res.render("settings", {title: "Needa | Settings", user : req.user} );
+    const success = req.flash("success");
+    return res.render("settings", {title: "Needa | Settings", user : req.user, success} );
   }
   else 
     return res.redirect("/login");

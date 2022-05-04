@@ -110,6 +110,13 @@ button{
   gap: 10px;
 }
 
+.flex-space-between{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .container{
   width: 1700px;
   margin: auto;
@@ -148,6 +155,7 @@ button{
 .alert-message-wrapper{
   padding-top: 15px;
 }
+
 .alert-message{
   width: 100%;
   padding: 12px;
@@ -606,6 +614,13 @@ button{
   font-size: 1.5rem;
 }
 
+.forms-container{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+
 .settings-col-2{
   width: 100%;
   border: 1px solid lightgray;
@@ -707,6 +722,10 @@ button{
 .fa-cloud-upload{ font-size: 1.4rem;}
 
 /* SHOWCASE PHOTOS */
+
+#showcaseForm {
+  padding: 18px;
+}
 
 .showcase-photos{
   width: 100%;

@@ -15,7 +15,7 @@ async function loadStates(){
 // UPLOAD WORK PHOTOS
 
 let files = [], // STORE THE PHOTOS
-settingsForm = document.querySelector("#settingsForm"),
+showcaseForm = document.querySelector("#showcaseForm"),
 form = document.querySelector('.showcase-photos'), // form ( drag area )
 container = document.querySelector('.images-container'), // container in which image will be insert
 text = document.querySelector('.inner'), // inner text of form
@@ -33,7 +33,7 @@ input.addEventListener('change', () => {
 	}
 
 	input.value = "";
-  settingsForm.reset();
+  showcaseForm.reset();
 	showImages();
 })
 
@@ -73,7 +73,7 @@ form.addEventListener('dragleave', e => {
 form.addEventListener('drop', e => {
 	e.preventDefault()
 
-    form.classList.remove('dragover')
+  form.classList.remove('dragover')
 	text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
 
 	let file = e.dataTransfer.files;
@@ -86,10 +86,10 @@ form.addEventListener('drop', e => {
 
 // SUBMIT REQUEST WITH FETCH
 
-settingsForm.addEventListener("submit", (e) => {
+showcaseForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const formData = new FormData(settingsForm);
+  const formData = new FormData(showcaseForm);
   
   files.forEach((e, i) => 
     formData.append(`file[${i}]`, e))
