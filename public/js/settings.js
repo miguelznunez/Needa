@@ -96,32 +96,29 @@ showcaseForm.addEventListener("submit", (e) => {
   })
 
   .then(data => {
-    console.log(data.message);
-    // if(data.allParsedErrors) {
-    //   removeElementsByClass("alert-message");
-    //   removeElementsByClass("success");
+    if(data.success) {
+      removeElementsByClass("success");
+      removeElementsByClass("alert-message");
 
-    //   for(let i=0; i < data.allParsedErrors.errors.length; i++ ) {
-    //     const div = document.createElement("div");
-    //     div.className = "alert-message";
-    //     div.innerHTML = data.allParsedErrors.errors[i].msg;
-    //     document.querySelector(".alert-message-wrapper").append(div);
-    //   }
+      const div = document.createElement("div");
+      div.className = "alert-message success";
+      div.innerHTML = data.message;
+      document.querySelector(".forms-container").append(div);
 
-    // } else {
-    //   removeElementsByClass("success");
-    //   removeElementsByClass("alert-message");
+      // let clearTime = setInterval(() => {
+      //   removeElementsByClass("success");
+      //   clearInterval(clearTime);
+      // }, 5000);
 
-    //   const div = document.createElement("div");
-    //   div.className = "alert-message success";
-    //   div.innerHTML = data.message;
-    //   document.querySelector(".alert-message-wrapper").append(div);
+    } else {
+      removeElementsByClass("success");
+      removeElementsByClass("alert-message");
 
-    //   let clearTime = setInterval(() => {
-    //     removeElementsByClass("success");
-    //     clearInterval(clearTime);
-    //   }, 7000);
-    // } 
+      const div = document.createElement("div");
+      div.className = "alert-message";
+      div.innerHTML = data.message;
+      document.querySelector(".forms-container").append(div);
+    } 
   })
 
   .catch(error => console.log(error));

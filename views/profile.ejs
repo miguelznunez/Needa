@@ -126,6 +126,13 @@
             <div>
               <h3>Showcase</h3>
             </div>
+            <% if (showcasePhotos !== null) { %>
+              <div class="images-container">
+                <% for(let i=0; i < length; i++) { %>
+                  <img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>" alt="">
+                <% } %>
+              </div>
+            <% } %>
           </div>
 
           <div class="profile-following">
@@ -148,25 +155,9 @@
 <script src="/js/script.js"></script>
 
 <script>
-
-  const overlay = document.querySelector("#overlay");
-  const images = ["https://images.pexels.com/photos/3637837/pexels-photo-3637837.jpeg?cs=srgb&dl=pexels-cleyder-duque-3637837.jpg&fm=jpg", "https://images.pexels.com/photos/2398375/pexels-photo-2398375.jpeg?cs=srgb&dl=pexels-diego-%F0%9F%9A%80-2398375.jpg&fm=jpg", "ttps://images.pexels.com/photos/94865/pexels-photo-94865.jpeg?cs=srgb&dl=pexels-photomix-company-94865.jpg&fm=jpg", "https://images.pexels.com/photos/4491846/pexels-photo-4491846.jpeg?cs=srgb&dl=pexels-ivan-samkov-4491846.jpg&fm=jpg"];
-  let i = 0;
-
-  document.querySelectorAll(".profile-work-image").forEach(n => {
-    n.addEventListener("click", () => {
-      console.log(i++)
-      // n.style.backgroundImage = `url(${images[0]})`;
-      overlay.style.display = "block";
-    })
-  })
-
-  document.querySelector("#close-modal-btn").addEventListener("click", () => {
-    overlay.style.display = "none";
-  })
-
   const cover = "<%= user.cover_photo %>";
   const profile = "<%= user.profile_photo %>";
+
   if(cover)
     document.querySelector("#profile-cover-photo").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
 
@@ -174,7 +165,6 @@
     document.querySelector("#fa-user").style.opacity = 0;
     document.querySelector(".profile-photo").style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
   }
-  
 </script>
 
 <%- include("partials/footer.ejs") %>

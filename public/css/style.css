@@ -360,6 +360,7 @@ button{
   height: 300px;
   background-position: center;
   background-size: cover;
+  /* background-attachment: fixed; */
   background-image: url(/images/default_cover_img.jpg);
 }
 
@@ -450,6 +451,10 @@ button{
   transition: 0.2s ease;
 }
 
+.profile-social-link:nth-child(even){
+  background-color: #f1f1f1;
+}
+
 .profile-social-link p{
   font-size: 1.2rem;
 }
@@ -526,6 +531,10 @@ button{
 
 .profile-showcase-photos{
   width: 100%;
+}
+
+.profile-showcase-photos img{
+  height: 200px;
 }
 
 /* ADJUST WIDTH & HEIGHT */

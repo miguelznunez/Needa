@@ -240,7 +240,9 @@ exports.settings = async (req, res) => {
     if(typeof req.files["cover_photo"] !== "undefined")
       await unlinkFile(cover_photo[0].path);
     const success = req.flash("success");
-    return res.render("settings", {title: "Settings | Needa", allParsedErrors: allParsedErrors,  user : req.user, success})
+    const showcasePhotos = JSON.parse(req.user.showcase_photos);
+    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+    return res.render("settings", {title: "Settings | Needa", allParsedErrors: allParsedErrors,  user : req.user, showcasePhotos: showcasePhotos, length:length, success})
   }
 
   if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
@@ -359,49 +361,47 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 exports.showcaseSettings = async (req, res) => { 
 
   const length = Object.keys(req.files).length;
-  const showcaseData = {showcase_0: null, showcase_1: null, showcase_2: null, showcase_3:null, showcase_4:null,
-                        showcase_5: null, showcase_6: null, showcase_7: null};
-  const showcasePhotoPath = [req.user.showcase_0, req.user.showcase_1, req.user.showcase_2, req.user.showcase_3, req.user.showcase_4, req.user.showcase_5, req.user.showcase_6, req.user.showcase_7];
+  var showcasePhotos = JSON.parse(req.user.showcase_photos); // PREVIOUS SHOWCASE PHOTOS
+  var previousDataLength = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
 
-  // USER UPLOADED AT LEAST ONE PHOTO
-  if(length > 0){
-
-    // ITERATE THROUGH UPLOADED PHOTOS ARRAY
-    for(let i = 0;i < length;i++) {
-      // UPLOAD PHOTO TO S3 
-      await s3.uploadImage(req.user.id, req.files[i]);
-      // REMOVE FILE FROM LOCAL FOLDER
-      await unlinkFile(req.files[i].path);
-      // INITIALIZE DATA OBJECT
-      showcaseData[`showcase_${i}`] = req.files[i].filename;
+  if(length > 0){ // USER UPLOADED AT LEAST ONE PHOTO
+    let data = {};
+    for(let i = 0;i < length;i++){  // ITERATE THROUGH UPLOADED PHOTOS ARRAY
+      data[`${i}`] = req.files[i].filename; // CREATE JSON OBJECT WITH PHOTO FILENAMES
+      await s3.uploadImage(req.user.id, req.files[i]); // UPLOAD PHOTO TO S3 
+      await unlinkFile(req.files[i].path); // REMOVE FILE FROM LOCAL FOLDER
     }
-    // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
-    for(let i = 0;i < 8;i++)
-      await s3.deleteImage(req.user.id, showcasePhotoPath[i]);
-
-    // UPDATE THE DATABASE
-    db.query("UPDATE user SET ? WHERE id = ?", [showcaseData, req.user.id], (err, results) => {
-      if(!err) return res.json({success : true, message: "Profile was updated"}); 
-      else console.log(err.message);
-    }); 
+    data = JSON.stringify(data); // CONVERT TO JSON
     
-  // USER DELETED ALL PHOTOS
-  } else {
+    if(previousDataLength !== null){
+      console.log("Deleted old showcase photos..")
+      for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
+        await s3.deleteImage(req.user.id, showcasePhotos[i]);
+    }
+    console.log(".. uploaded new showcase photos");
+    showcasePhotosQuery(req, res, data); // UPDATE THE DATABASE WITH THE NEW PHOTOS OBJECT  
 
-    // DELETE ALL SHOWCASE PHOTOS FROM S3
-    for(let i = 0;i < 8;i++)
-      await s3.deleteImage(req.user.id, showcasePath[i]);
+  } else if(length === 0 && previousDataLength !== null) { 
 
-    // UPDATE THE DATABASE
-    db.query("UPDATE user SET ? WHERE id = ?", [showcaseData, req.user.id], (err, results) => {
-      if(!err) return res.json({success : true, message: "Profile was updated"}); 
-      else console.log(err.message);
-    });  
-    
+    for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
+      await s3.deleteImage(req.user.id, showcasePhotos[i]);
+
+    console.log("Deleted all showcase photos...");
+    showcasePhotosQuery(req, res, null); // SET SHOWCASE PHOTOS COLUMN TO NULL
+
+  } else { // USER CLICKED THE UPLOAD BUTTON BUT THEY DIDN'T UPLOAD ANYTHING
+
+    console.log("No changes...");
+    return res.json({success : false, message: "Please select photos to upload"}); 
   }
-  
 }
 
+function showcasePhotosQuery(req, res, data){
+  db.query("UPDATE user SET ? WHERE id = ?", [{showcase_photos: data}, req.user.id], (err, results) => {
+    if(!err) return res.json({success : true, message: "Photo update success"}); 
+    else console.log(err.message);
+  });  
+}
 
 // IS USER LOGGED IN? -------------------------------------------------------
 

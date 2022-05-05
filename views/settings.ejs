@@ -274,11 +274,13 @@
                 <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg" />
               </div>
               <div class="images-container">
-                <% if(user.showcase_0 != null) { %>
-                  <div class="image">
-                    <img src="http://localhost:5000/showcase-photo/<%= user.showcase_0%>" alt="image">
-                    <span onclick="delImage(${i})">&times;</span>
-                  </div>`
+                <% if (typeof showcasePhotos !== null) { %>
+                  <% for(let i=0; i < length; i++) { %>
+                    <div class="image">
+                      <img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>" alt="image">
+                      <span onclick="delImage('<%= i %>')">&times;</span>
+                    </div>
+                  <% } %>
                 <% } %>
               </div>
             </div>

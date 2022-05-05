@@ -105,17 +105,20 @@ router.get("/password-reset-update/:id:token", authController.isLoggedIn, async 
 
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
-  if(req.user && !checkBrowser(req.headers)) 
-    return res.render("profile", {title: "Needa | Profile", user : req.user} );
-  else 
-    return res.redirect("/login");
+  if(req.user && !checkBrowser(req.headers)) {
+    const showcasePhotos = JSON.parse(req.user.showcase_photos);
+    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, length:length} );
+  } else return res.redirect("/login");
 });
 
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
     const success = req.flash("success");
-    return res.render("settings", {title: "Needa | Settings", user : req.user, success} );
+    const showcasePhotos = JSON.parse(req.user.showcase_photos);
+    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+    return res.render("settings", {title: "Needa | Settings", user : req.user, showcasePhotos: showcasePhotos, length:length, success} );
   }
   else 
     return res.redirect("/login");
@@ -131,7 +134,7 @@ router.get("/settings/account", authController.isLoggedIn, (req, res) => {
 
 router.get("/profile-photo/:key", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.user.id, req.user.profile_photo);
+    const readStream = s3.getImageStream(req.user.id, req.params.key);
     readStream.pipe(res);
   }else 
     return res.redirect("/login");
@@ -139,7 +142,7 @@ router.get("/profile-photo/:key", authController.isLoggedIn, (req, res) => {
 
 router.get("/cover-photo/:key", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.user.id, req.user.cover_photo);
+    const readStream = s3.getImageStream(req.user.id, req.params.key);
     readStream.pipe(res);
   }else 
     return res.redirect("/login");
@@ -147,7 +150,7 @@ router.get("/cover-photo/:key", authController.isLoggedIn, (req, res) => {
 
 router.get("/showcase-photo/:key", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.user.id, req.user.showcase_0);
+    const readStream = s3.getImageStream(req.user.id, req.params.key);
     readStream.pipe(res);
   }else 
     return res.redirect("/login");
