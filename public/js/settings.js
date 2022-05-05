@@ -105,10 +105,10 @@ showcaseForm.addEventListener("submit", (e) => {
       div.innerHTML = data.message;
       document.querySelector(".forms-container").append(div);
 
-      // let clearTime = setInterval(() => {
-      //   removeElementsByClass("success");
-      //   clearInterval(clearTime);
-      // }, 5000);
+      let clearTime = setInterval(() => {
+        removeElementsByClass("success");
+        clearInterval(clearTime);
+      }, 3000);
 
     } else {
       removeElementsByClass("success");

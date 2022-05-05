@@ -360,7 +360,6 @@ button{
   height: 300px;
   background-position: center;
   background-size: cover;
-  /* background-attachment: fixed; */
   background-image: url(/images/default_cover_img.jpg);
 }
 
@@ -533,40 +532,123 @@ button{
   width: 100%;
 }
 
-.profile-showcase-photos img{
+.showcase-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.showcase-container img{
+  border-radius: 5px;
+  cursor: pointer;
   height: 200px;
 }
 
-/* ADJUST WIDTH & HEIGHT */
-#overlay {
-  display: none;
+/* LIGHTBOX */
+.image span {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.image img {
+  width: 100%;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.image:hover img {
+  transform: scale(1.1);
+}
+
+.preview-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  max-width: 700px;
+  width: 100%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 3px;
+  padding: 0 5px 5px 5px;
+  color: white;
+}
+
+.preview-box.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.3s ease;
+}
+
+.preview-box .details {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px 12px 10px;
+  justify-content: space-between;
+}
+
+.preview-box .details .title {
+  display: flex;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.details .title p {
+  margin: 0 5px;
+}
+
+.details .icon {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.preview-box .image-box {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.image-box .slide {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  height: 50px;
+  width: 60px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.slide.prev {
+  left: 0px;
+}
+
+.slide.next {
+  right: 0px;
+}
+
+.image-box img {
+  width: 100%;
+  border-radius: 0 0 3px 3px;
+}
+
+.shadow {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-#modal {
-  max-width: 850px;
-  height: 478px;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  border-radius: 5px;
-  background-position: center;
-  background-size: cover;
-}
-
-#close-modal-btn{
-  position: absolute;
-  top: 15%;
-  left: 50%;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  display: none;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 /* SETTINGS.EJS */
@@ -798,7 +880,6 @@ button{
   height: 100%;
   width: 100%;
 }
-
 
 .images-container .image span {
   position: absolute;
