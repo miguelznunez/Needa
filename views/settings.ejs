@@ -6,6 +6,9 @@
   }
 </style>
 
+<section id="settingsPage">
+
+
   <div class="container">
     <div class="subcontainer">
 
@@ -293,6 +296,7 @@
     </div>
   </div>
 
+</section>
 
 <script src="/js/script.js"></script>
 
@@ -300,10 +304,10 @@
 
   // PROFILE PHOTO ==================================
 
-  const profilePhoto = document.querySelector("#profilePhoto");
-  const profilePhotoContainer = document.querySelector(".profile-photo-container")
-  const profile = "<%= user.profile_photo %>";
-  const uploadCloudPro = document.querySelector("#uploadCloudPro");
+  const profilePhoto = document.querySelector("#profilePhoto"),
+  profilePhotoContainer = document.querySelector(".profile-photo-container"),
+  profile = "<%= user.profile_photo %>",
+  uploadCloudPro = document.querySelector("#uploadCloudPro");
 
   // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
 
@@ -337,10 +341,10 @@
 
   // COVER PHOTO ==================================
 
-  const coverPhoto = document.querySelector("#coverPhoto");
-  const coverPhotoContainer = document.querySelector(".cover-photo-container")
-  const cover = "<%= user.cover_photo %>";
-  const uploadCloudCov = document.querySelector("#uploadCloudCov");
+  const coverPhoto = document.querySelector("#coverPhoto"),
+  coverPhotoContainer = document.querySelector(".cover-photo-container"),
+  cover = "<%= user.cover_photo %>",
+  uploadCloudCov = document.querySelector("#uploadCloudCov");
 
   // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
 
@@ -371,6 +375,144 @@
     });
     reader.readAsDataURL(this.files[0]);
   });
+
+
+  let files = [], // STORE THE PHOTOS
+  showcaseForm = document.querySelector("#showcaseForm"), // form id
+  form = document.querySelector('.showcase-photos'), // form ( drag area )
+  text = document.querySelector('.inner'), // inner text of form
+  browse = document.querySelector('.select'), // "Browse" to run input field
+  input = document.querySelector('.showcase-photos input'), // file input
+  container = document.querySelector('.images-container'); // container in which images will be 
+
+  // ==========================================================================
+  // const length = "<%= length %>";
+  // const showcasePhotos = JSON.parse('<%-JSON.stringify(showcasePhotos)%>');
+  // ===========================================================================
+
+  browse.addEventListener('click', () => input.click());
+
+  // INPUT CHANGE EVENT 
+  input.addEventListener('change', () => {
+    let file = input.files;
+
+    for (let i = 0; i < file.length; i++) {
+      if (files.every(e => e.name !== file[i].name)) files.push(file[i])
+    }
+    showcaseForm.reset();
+    showImages();
+  })
+
+  // DISPLAY PHOTOS
+
+  const showImages = () => {
+    let images = '';
+    files.forEach((e, i) => {
+      images += `<div class="image">
+        <img src="${URL.createObjectURL(e)}" alt="image">
+        <span onclick="delImage(${i})">&times;</span>
+      </div>`
+    })
+
+    container.innerHTML = images;
+  }
+
+  // DELETE A PHOTO
+
+  const delImage = index => {
+    files.splice(index, 1)
+    showImages()
+  }
+
+  // DRAG AND DROP
+
+  form.addEventListener('dragover', e => {
+    e.preventDefault()
+
+    form.classList.add('dragover')
+    text.innerHTML = 'Drop images here'
+  })
+
+  form.addEventListener('dragleave', e => {
+    e.preventDefault()
+
+    form.classList.remove('dragover')
+    text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
+  })
+
+  form.addEventListener('drop', e => {
+    e.preventDefault()
+
+    form.classList.remove('dragover')
+    text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
+
+    let file = e.dataTransfer.files;
+
+    for (let i = 0; i < file.length; i++) {
+      if (!file[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
+      if (files.every(e => e.name !== file[i].name)) files.push(file[i]) // NO REPEATED PHOTOS
+    }
+    files = files.slice(0, 8); // UPLOAD 8 PHOTOS MAX
+    showImages();
+
+  })
+
+  // SUBMIT REQUEST WITH FETCH
+
+  showcaseForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(showcaseForm);
+
+    files.forEach((e, i) =>
+      formData.append(`file[${i}]`, e))
+
+    fetch("/auth/showcase-settings", {
+      method: "POST",
+      body: formData
+    })
+
+    .then(response => {
+      if (!response.ok) throw Error(response.statusText);
+      else return response.json();
+    })
+
+    .then(data => {
+      if (data.success) {
+        removeElementsByClass("success");
+        removeElementsByClass("alert-message");
+
+        const div = document.createElement("div");
+        div.className = "alert-message success";
+        div.innerHTML = data.message;
+        document.querySelector(".forms-container").append(div);
+
+        let clearTime = setInterval(() => {
+          removeElementsByClass("success");
+          clearInterval(clearTime);
+        }, 3000);
+
+      } else {
+        removeElementsByClass("success");
+        removeElementsByClass("alert-message");
+
+        const div = document.createElement("div");
+        div.className = "alert-message";
+        div.innerHTML = data.message;
+        document.querySelector(".forms-container").append(div);
+      }
+    })
+
+    .catch(error => console.log(error));
+
+  });
+
+  function removeElementsByClass(className) {
+    const elements = document.getElementsByClassName(className);
+    while (elements.length > 0) {
+      elements[0].parentNode.removeChild(elements[0]);
+    }
+  }
 
 </script>
 

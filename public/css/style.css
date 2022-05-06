@@ -11,6 +11,7 @@ body{
   overflow-x: hidden ;
   font-family: 'Roboto', sans-serif;
   background-color: white;
+  position: relative;
 }
 
 form{
@@ -137,12 +138,6 @@ button{
   padding: 20px 0 30px 0;
 }
 
-.breadcrumbs{
-  display: flex;
-  gap: 10px;
-  margin-top: 25px;
-}
-
 #title{
   width: 100%;
   text-align: center;
@@ -173,8 +168,27 @@ button{
   color: green;
 }
 
+#errorSection,
+#infoSection {
+  margin-top: 70px;
+}
+
 /* Header / Navbar */
-#header{
+#header, #homeHeader{
+  background-color: black;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#homeHeader{
+  background-color: transparent;
+  transition: 0.6s;
+  z-index: 5;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+#homeHeader.sticky{
   background-color: black;
 }
 
@@ -358,6 +372,7 @@ button{
 
 #profile-cover-photo{
   height: 300px;
+  margin-top: 70px;
   background-position: center;
   background-size: cover;
   background-image: url(/images/default_cover_img.jpg);
@@ -519,13 +534,17 @@ button{
   border: 3px solid lightgray;
 }
 
-.profile-services h3, .profile-skills h3, .profile-work-images h3{
+.profile-services h3,
+.profile-skills h3,
+.profile-work-images h3{
   color: #262626;
 }
 
-.profile-edit, .profile-services, .profile-skills, .profile-following{
+.profile-edit, 
+.profile-services,
+.profile-skills,
+.profile-following{
   width: 100%;
-  /* padding: 10px 0; */
 }
 
 .profile-showcase-photos{
@@ -555,11 +574,7 @@ button{
 .image img {
   width: 100%;
   vertical-align: middle;
-  transition: all 0.3s ease;
-}
-
-.image:hover img {
-  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
 }
 
 .preview-box {
@@ -567,7 +582,7 @@ button{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
   z-index: 5;
   opacity: 0;
@@ -652,6 +667,9 @@ button{
 }
 
 /* SETTINGS.EJS */
+#settingsPage {
+  margin-top: 70px;
+}
 
 .settings-wrapper{
   display: grid;
@@ -710,6 +728,7 @@ button{
   display: flex;
   gap: 20px;
   flex-direction: column;
+  z-index: -1;
 }
 
 
@@ -884,7 +903,7 @@ button{
 .images-container .image span {
   position: absolute;
   top: -4px;
-  right: 5px;
+  right: -4px;
   cursor: pointer;
   font-size: 22px;
   color: #fff;
@@ -905,6 +924,11 @@ button{
 }
 
 /* SETTINGS/ACCOUNT.EJS */
+
+#accountPage{
+  margin-top: 70px;
+}
+
 .account-col-2{
   width: 100%;
   height: 100%;
@@ -1323,12 +1347,13 @@ input[type="checkbox"]{
 }
 
 #forgot-password a{
-  text-decoration: underline;
+  text-decoration: none;
   color: #009999;
 }
 
-#register, #login{
+#register a, #login a{
   color: #009999;
+  text-decoration: none;
 }
 
 #account-btn, #login-btn, #link-btn, #update-password{

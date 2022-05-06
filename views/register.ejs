@@ -1,5 +1,41 @@
 <%- include("partials/header.ejs") %>
 
+<section id="errorSection">
+  <div class="container">
+    <div class="subcontainer">
+  
+      <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
+        <div class="alert-message-wrapper">
+          <div class="alert-message">
+            <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
+              <%= (allParsedErrors.errors[i].msg) %>
+                <br>
+                <% } %>
+          </div>
+        </div>
+      <% } %>
+  
+      <% if(typeof success !="undefined" && success) { %>
+        <div class="alert-message-wrapper">
+          <div class="alert-message success">
+            <%= message %>
+          </div>
+        </div>
+      <% } %>
+  
+      <% if(typeof success !="undefined" && !success) { %>
+        <div class="alert-message-wrapper">
+          <div class="alert-message">
+            <%= message %>
+          </div>
+        </div>
+      <% } %>
+  
+    </div>
+  </div>
+</section>
+
+
 <section>
   <div class="container center-content">
     <div class="subcontainer">
@@ -36,26 +72,10 @@
         <div>
           <button id="account-btn">Create Account</button>
         </div>
-        <div>
-          <p>Already a member? <a href="/login" id="login">Login</a></p>
+        <div id="login">
+          <p>Already a member? <a href="/login">Login</a></p>
         </div>
-        <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
-          <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
-            <div class="alert-message">
-              <%= (allParsedErrors.errors[i].msg) %>
-            </div>
-          <% } %>
-        <% } %>
-        <% if(typeof success != "undefined" && success) { %>
-          <div class="alert-message success">
-            <%= message %>
-          </div>
-        <% } %>
-        <% if(typeof success != "undefined" && !success) { %>
-          <div class="alert-message">
-            <%= message %>
-          </div>
-        <% } %>
+        
       </form>
     </div>
   </div>

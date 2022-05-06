@@ -52,7 +52,7 @@ exports.register = (req, res) => {
   db.query("SELECT email FROM user WHERE email = ?", [email], async (err, results) => {
     // CHECK IF EMAIL ALREADY EXISTS IN DATABASE
     if (!err && results != "") {
-      return res.render("register", {title: "Register | Loaves Fishes Computers",
+      return res.render("register", {title: "Needa | Register",
                               success: false,
                               message: "An account with that email already exists",
                               first_name : first_name,
@@ -67,7 +67,7 @@ exports.register = (req, res) => {
             async (err, results) => {
               if (!err) {
                 mail.activateAccountEmail(email, results.insertId, token, (err, data) => {
-                  if(!err) return res.render("account-verification", {title: "Account Verification | Loaves Fishes Computers"});
+                  if(!err) return res.render("register", {title: "Needa | Register", success: true, message: `We have sent an email to ${email}, please click the link included to verify your email address.`});
                   else console.log(err.message);
                 });
               // DATABASE ERROR
@@ -89,7 +89,7 @@ exports.login = async (req, res) => {
   // VALIDATE THAT EMAIL AND/OR PASSWORD ARE NOT EMPTY STRINGS
   if(!email || !password){
     return res.status(400).render("login", {
-      title:"Login",
+      title:"Needa | Login",
       success: false,
       message: "Please provide a username and password"
     })
@@ -98,10 +98,10 @@ exports.login = async (req, res) => {
   db.query("SELECT * FROM user WHERE email = ?", [email], async (err, results) => {
     // IF EMAIL IS NOT IN THE DATABASE OR PASSWORDS DO NOT MATCH
     if(!err && (results == "" || !(await bcrypt.compare(password, results[0].password.toString())))){
-      return res.status(401).render("login", {title:"Login", success: false,  message: "Email or password is incorrect"});
+      return res.status(401).render("login", {title:"Needa | Login", success: false,  message: "The email or password is incorrect."});
     // ELSE IF ACCOUNT IS INACTIVE
     } else if (!err && results[0].status === "Inactive") {
-      return res.render("login", {title: "Login", success: false, message: "This account is not verified"});
+      return res.render("login", {title: "Needa | Login", success: false, message: "This account has not been verified."});
     // ELSE ALLOW USER TO LOGIN
     } else if (!err && results[0].status === "Active"){
       const id = results[0].id;
@@ -153,7 +153,7 @@ exports.updatePassword = (req, res) => {
      // OUTPUT VALIDATION ERRORS IF ANY
     if(!errors.isEmpty()){
       return res.render("password-reset-update", {
-        title: "Password Reset Update",
+        title: "Needa | Password Reset Update",
         allParsedErrors: allParsedErrors,
         token: token,
         token_expires: token_expires,
@@ -165,12 +165,12 @@ exports.updatePassword = (req, res) => {
     bcrypt.hash(password, saltRounds, (err, hash) => {
       var data = { token: null, token_expires: null, password: hash};
       db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, result) => {
-        if(!err) return res.render("password-reset-success", {title: "Password Reset Success"});
+        if(!err) return res.render("password-reset-success", {title: "Needa | Password Reset Success"});
         else console.log(err.message);
       });
     });
   } else {
-    return res.render("password-reset-update", {title: "Password Reset Update", token_success: false, message: "Password reset token is invalid or has expired" });
+    return res.render("password-reset-update", {title: "Needa | Password Reset Update", token_success: false, message: "Password reset token is invalid or has expired" });
   }
 }
 
@@ -188,9 +188,9 @@ exports.passwordReset = (req, res) => {
     email === "" ||
     email === null
   ){
-    return res.render("password-reset", {title: "Password Reset", success: false, message : "Email field cannot be empty"})
+    return res.render("password-reset", {title: "Needa | Password Reset", success: false, message : "The email field cannot be empty."})
   } else if(!pattern.test(email)){
-    return res.render("password-reset", {title: "Password Reset", success: false, message : "Email is invalid"})
+    return res.render("password-reset", {title: "Needa | Password Reset", success: false, message : "The email you entered is invalid."})
   }
 
   // CHECK IF EMAIL EXISTS  
@@ -207,7 +207,7 @@ exports.passwordReset = (req, res) => {
       db.query("UPDATE user SET ? WHERE email = ?", [data, email], (err, results) => {
         if(!err) {
           mail.resetPasswordEmail(email, id, token, (err, data) => {
-            if(!err) return res.render("password-reset-sent", {title: "Password Reset Sent | Needa"});  
+            if(!err) return res.render("password-reset", {title: "Needa | Password Reset", success: true, message : `We have sent an email to ${email}, please click the link included to reset your password.`})  
             else console.log(err.message);
           });
         // DATABASE ERROR
@@ -215,7 +215,7 @@ exports.passwordReset = (req, res) => {
       }); 
     // EMAIL WAS NOT FOUND (USER DOES NOT EXIST)
     } else if(!err && results[0] === undefined) {
-       return res.render("password-reset-sent", {title: "Password Reset Sent | Needa"});
+       return res.render("password-reset", {title: "Needa | Password Reset", success: false, message : "An account with that email address does not exist."})
     // DATABASE ERROR
     } else {
       console.log(err.message)
@@ -242,7 +242,7 @@ exports.settings = async (req, res) => {
     const success = req.flash("success");
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
     const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("settings", {title: "Settings | Needa", allParsedErrors: allParsedErrors,  user : req.user, showcasePhotos: showcasePhotos, length:length, success})
+    return res.render("settings", {title: "Needa | Settings", allParsedErrors: allParsedErrors,  user : req.user, showcasePhotos: showcasePhotos, length:length, success})
   }
 
   if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
@@ -435,7 +435,7 @@ exports.isLoggedIn = async (req, res, next) => {
 exports.findUser = (req, res) => {
   let searchTerm = req.body.search;
   db.query("SELECT * FROM user WHERE (first_name LIKE ? OR last_name LIKE ? OR email LIKE ?) && status != 'Deleted'", ["%" + searchTerm + "%", "%" + searchTerm + "%", "%" + searchTerm + "%"], (err, rows) => {
-    if(!err) return res.render("admin", {title: "Admin" , user : req.user, rows: rows});
+    if(!err) return res.render("admin", {title: "Needa | Admin" , user : req.user, rows: rows});
     else console.log(err);
   });
 }
@@ -463,7 +463,7 @@ exports.addUser = (req, res) => {
   // If there are validation errors: return them to the user.
   if(!errors.isEmpty()){
     return res.render("add-user", { 
-      title:"Add User",
+      title:"Needa | Add User",
       user : req.user,
       allParsedErrors: allParsedErrors,
       first_name : first_name,
@@ -480,7 +480,7 @@ exports.addUser = (req, res) => {
       console.log(err);
     // Email already exists
     } else if (results != ""){
-      return res.render("add-user", {title: "Add User",
+      return res.render("add-user", {title: "Needa | Add User",
                               user : req.user,
                               success: false,
                               message: "An account with that email already exists",
@@ -515,7 +515,7 @@ exports.updateUser = (req, res) => {
     async (err, results) => {
       if (!err) {
         db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-          if(!err) return res.render("edit-user", {title: "Edit User", user : req.user, success: true, message: "User has been updated", rows: rows});
+          if(!err) return res.render("edit-user", {title: "Needa | Edit User", user : req.user, success: true, message: "User has been updated", rows: rows});
           else console.log(err);
         });
       } else {
