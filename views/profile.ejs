@@ -1,9 +1,9 @@
 <%- include("partials/header.ejs") %>
 
-<section id="profile-cover-photo"></section>
+<section id="profileCoverSection"></section>
 
-<section style="background-color: #e9e9e9;">
-  <div class="container" style="padding-bottom: 20px;">
+<section id="profileSection">
+  <div class="container">
     <div class="subcontainer">
       <div class="profile-wrapper">
 
@@ -168,7 +168,7 @@
   const profile = "<%= user.profile_photo %>";
 
   if(cover)
-    document.querySelector("#profile-cover-photo").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+    document.querySelector("#profileCoverSection").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
 
   if(profile){
     document.querySelector("#fa-user").style.opacity = 0;

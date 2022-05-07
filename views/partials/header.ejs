@@ -22,9 +22,17 @@
       <div class="subcontainer">
         <nav>
           <div class="navbar">
-            <a href="/" class="nav-branding">
-              <h1>Needa</h1>
-            </a>
+            <div class="nav-branding">
+              <a href="/" class="nav-logo">
+                <h1>Needa</h1>
+              </a>
+              <div class="nav-search">
+                <input type="text" placeholder="Mechanic...">
+                <i class="fas fa-search"></i>
+              </div>
+
+            </div>
+
             <ul class="nav-menu">
 
               <!-- IF USER IS LOGGED IN -->
@@ -53,7 +61,7 @@
                         <div class="dropdown-links top-link">
                           <div class="user-icon">
 
-                            <!-- IF USER HAS A PROFILE PHOTO ( DROP DOWN MENU ) -->
+                            <!-- IF USER HAS A PROFILE PICTURE ( DROP DOWN MENU ) -->
 
                             <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
                               <style>
@@ -71,6 +79,17 @@
                           </h3>
                         </div>
                       </a>
+
+                      <!-- IF USER IS AN ADMIN -->
+
+                      <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
+                        <a href="/admin">
+                          <div class="dropdown-links">
+                            <i class="fa-solid fa-unlock"></i>
+                            <h3>Admin</h3>
+                          </div>
+                        </a>
+                      <% } %>
                       <a href="/">
                         <div class="dropdown-links">
                           <i class="fas fa-home"></i>

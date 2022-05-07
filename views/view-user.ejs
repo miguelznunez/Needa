@@ -1,0 +1,255 @@
+<%- include("partials/header.ejs") %>
+
+  <section id="viewUserSection">
+
+    <div class="container">
+      <div class="subcontainer">
+
+        <!-- BREAD CRUMBS -->
+
+        <div class="breadcrumbs">
+          <a href="/admin">Admin</a> / <p>View User</p>
+        </div>
+
+
+        <br>
+        <div>
+          <h2>USER INFORMATION</h2>
+        </div>
+          <br>
+
+
+        <!-- USER PHOTO -->
+
+
+        <div class="user-photos">
+          <div class="photo">
+            <% if (rows[0].profile_photo !=null) { %>
+              <h4>Profile Photo</h4>
+              <img src="http://localhost:5000/profile-photo/<%= rows[0].profile_photo %>" width="300" class="profile-img"
+                alt="user-image">
+              <% } %>
+          </div>
+                  
+          <div class="photo">
+            <% if (rows[0].profile_photo !=null) { %>
+              <h4>Cover Photo</h4>
+              <img src="http://localhost:5000/cover-photo/<%= rows[0].cover_photo %>" width="300" class="profile-img"
+                alt="user-image">
+              <% } %>
+          </div>
+        </div>
+
+        <!-- TABLE  -->
+        
+        
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Phone</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].first_name %>
+              </td>
+              <td>
+                <%= rows[0].last_name %>
+              </td>
+              <td>
+                <%= rows[0].phone %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Email</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].email %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>City</th>
+              <th>State</th>
+              <th>Gender</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].city %>
+              </td>
+              <td>
+                <%= rows[0].state %>
+              </td>
+              <td>
+                <%= rows[0].gender %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Profession</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].profession %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>ID</th>
+              <th>Member Since</th>
+              <th>Status</th>
+              <th>Admin</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].id %>
+              </td>
+              <td>
+                <%= rows[0].member_since %>
+              </td>
+              <td>
+                <%= rows[0].status %>
+              </td>
+              <td>
+                <%= rows[0].admin %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Specialty</th>
+            </tr>
+            <tr>
+              <td style="white-space: normal;">
+                <%= rows[0].specialty %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>About</th>
+            </tr>
+            <tr>
+              <td style="white-space: normal;">
+                <%= rows[0].about %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Skills</th>
+            </tr>
+            <tr>
+              <td style="white-space: normal;">
+                <%= rows[0].skills %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Twitter</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].twitter %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Instagram</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].instagram %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Facebook</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].facebook %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>LinkedIn</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].linkedin %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div>
+          <table class="view-user-table">
+            <tr>
+              <th>Website</th>
+            </tr>
+            <tr>
+              <td>
+                <%= rows[0].website %>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <script src="/js/script.js"></script>
+
+
+  <%- include("partials/footer.ejs") %>

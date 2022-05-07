@@ -31,68 +31,78 @@
     </div>
   </section>
 
-  <div id="carousel">
-    <header id="homeHeader">
-      <div class="container">
-        <div class="subcontainer">
-          <nav>
-            <div class="navbar">
-              <a href="/" class="nav-branding">
-                <h1>Needa</h1>
-              </a>
-              <ul class="nav-menu">
-                <% if (typeof user != "undefined" && user) { %>
-                  <li class="nav-item">
-                    <div class="dropdown" data-dropdown>
-                      <div class="user-icon link" data-dropdown-button>
-                        <% if(typeof user.profile_photo != "undefined" && user.profile_photo) { %>
-                          <style>
-                            .user-icon{
-                              background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
-                            }
-                          </style>
-                        <% } else { %>
-                          <i class="fas fa-user link" data-dropdown-button></i>
-                        <% } %>
-                      </div>
-                      <div class="dropdown-menu">
-                        <a href="/profile">
-                          <div class="dropdown-links top-link">
-                            <div class="user-icon" data-dropdown-button>
-                              <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
-                                <style>
-                                  .user-icon {
-                                    background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
-                                  }
-                                </style>
-                              <% } else { %>
-                                <i class="fas fa-user link" data-dropdown-button></i>
-                              <% } %>
-                            </div>
-                            <h3><%= user.first_name %> <%= user.last_name%> </h3>
-                          </div>
-                        </a>
-                        <a href="/">
-                          <div class="dropdown-links">
-                            <i class="fas fa-home"></i>
-                            <h3>Home</h3>
-                          </div>
-                        </a>
-                        <a href="/settings">
-                          <div class="dropdown-links">
-                            <i class="fas fa-user-circle"></i>
-                            <h3>Account Settings</h3>
-                          </div>
-                        </a>
-                        <a href="/auth/logout">
-                          <div class="dropdown-links bottom-link">
-                            <i class="fas fa-sign-out"></i>
-                            <h3>Logout</h3>
-                          </div>
-                        </a>
-                      </div>
+  <header id="homeHeader">
+    <div class="container">
+      <div class="subcontainer">
+        <nav>
+          <div class="navbar">
+            <a href="/" class="nav-branding">
+              <h1>Needa</h1>
+            </a>
+            <ul class="nav-menu">
+              <% if (typeof user !="undefined" && user) { %>
+                <li class="nav-item">
+                  <div class="dropdown" data-dropdown>
+                    <div class="user-icon link" data-dropdown-button>
+                      <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
+                        <style>
+                          .user-icon {
+                            background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                          }
+                        </style>
+                      <% } else { %>
+                        <i class="fas fa-user link" data-dropdown-button></i>
+                      <% } %>
                     </div>
-                  </li>
+                    <div class="dropdown-menu">
+                      <a href="/profile">
+                        <div class="dropdown-links top-link">
+                          <div class="user-icon" data-dropdown-button>
+                            <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
+                              <style>
+                                .user-icon {
+                                  background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                                }
+                              </style>
+                            <% } else { %>
+                              <i class="fas fa-user link" data-dropdown-button></i>
+                            <% } %>
+                          </div>
+                          <h3>
+                            <%= user.first_name %>
+                            <%= user.last_name%>
+                          </h3>
+                        </div>
+                      </a>
+                      <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
+                        <a href="/admin">
+                          <div class="dropdown-links">
+                            <i class="fa-solid fa-unlock"></i>
+                            <h3>Admin</h3>
+                          </div>
+                        </a>
+                      <% } %>
+                      <a href="/">
+                        <div class="dropdown-links">
+                          <i class="fas fa-home"></i>
+                          <h3>Home</h3>
+                        </div>
+                      </a>
+                      <a href="/settings">
+                        <div class="dropdown-links">
+                          <i class="fas fa-user-circle"></i>
+                          <h3>Account Settings</h3>
+                        </div>
+                      </a>
+                      <a href="/auth/logout">
+                        <div class="dropdown-links bottom-link">
+                          <i class="fas fa-sign-out"></i>
+                          <h3>Logout</h3>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
                 <% } else { %>
                   <li class="nav-item">
                     <a href="/login" class="nav-link">Log in</a>
@@ -102,21 +112,22 @@
                         id="register-user-btn">Register</button></a>
                   </li>
                 <% } %>
-              </ul>
-              <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-              </div>
+            </ul>
+            <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <section id="carousel">
     <div class="container">
       <div class="subcontainer">
-        <div class="showcase fade">
+        <div class="carousel-header">
           <h1>Needa connects you with working professionals in your area.</h1>
           <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
             dog? No problem. Search for professionals of any trade in your area today.</p>
@@ -127,9 +138,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <section style="background-color: white;">
+  <section id="popularSearches">
     <div class="container">
       <div class="subcontainer">
         <div class="recommended">
@@ -282,7 +293,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="topRated">
     <div class="container">
       <div class="subcontainer">
         <div class="recommended">
@@ -301,10 +312,15 @@
                 <div class="slide-img img-2_1">
                   <p>Learn More</p>
                 </div>
-                <div>
-                  <p>Electrician</p>
-                  <h3>Dirrel Smith</h3>
-                  <p>Chicago, IL</p>
+                <div class="user">
+                  <div>
+                    <h3>Dirrel Smith</h3>
+                    <p>Electrician</p>
+                  </div>
+                  <div class="user-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Chicago, IL</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -313,10 +329,15 @@
                 <div class="slide-img img-2">
                   <p>Learn More</p>
                 </div>
-                <div>
-                  <p>Electrician</p>
-                  <h3>Angel Velez</h3>
-                  <p>Atlanta, GA</p>
+                <div class="user">
+                  <div>
+                    <h3>Dirrel Smith</h3>
+                    <p>Electrician</p>
+                  </div>
+                  <div class="user-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Chicago, IL</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -325,10 +346,15 @@
                 <div class="slide-img img-3">
                   <p>Learn More</p>
                 </div>
-                <div>
-                  <p>Electrician</p>
-                  <h3>Angel Velez</h3>
-                  <p>Los Angeles, CA</p>
+                <div class="user">
+                  <div>
+                    <h3>Dirrel Smith</h3>
+                    <p>Electrician</p>
+                  </div>
+                  <div class="user-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Chicago, IL</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -337,11 +363,14 @@
                 <div class="slide-img img-4">
                     <p>Learn More</p>
                 </div>
-                <div>
-                  <h3>Angel Velez</h3>
-                  <div class="location">
+                <div class="user">
+                  <div>
+                    <h3>Dirrel Smith</h3>
                     <p>Electrician</p>
-                    <p>Little Rock, AR</p>
+                  </div>
+                  <div class="user-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Chicago, IL</p>
                   </div>
                 </div>
               </div>
@@ -351,10 +380,14 @@
                 <div class="slide-img img-5">
                   <p>Learn More</p>
                 </div>
-                <div>
-                  <h3>Angel Velez</h3>
-                  <div class="location">
+                <div class="user">
+                  <div>
+                    <h3>Dirrel Smith</h3>
                     <p>Electrician</p>
+                  </div>
+                  <div class="user-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Chicago, IL</p>
                   </div>
                 </div>
               </div>
@@ -365,10 +398,10 @@
     </div>
   </section>
 
-  <section id="workers">
+  <section id="advertise">
     <div class="container">
       <div class="subcontainer">
-        <div class="workers">
+        <div class="header">
           <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
           <a href="/register"><button style="padding: 8px 12px 8px 12px;">Sign up</button></a>
         </div>
