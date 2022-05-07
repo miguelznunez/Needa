@@ -74,6 +74,24 @@
                           </h3>
                         </div>
                       </a>
+                      <a href="/">
+                        <div class="dropdown-links">
+                          <i class="fas fa-home"></i>
+                          <h3>Home</h3>
+                        </div>
+                      </a>
+                      <a href="/profile">
+                        <div class="dropdown-links">
+                          <i class="fas fa-user-circle"></i>
+                          <h3>My Profile</h3>
+                        </div>
+                      </a>
+                      <a href="/settings">
+                        <div class="dropdown-links">
+                          <i class="fa-solid fa-gear"></i>
+                          <h3>Account Settings</h3>
+                        </div>
+                      </a>
                       <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
                         <a href="/admin">
                           <div class="dropdown-links">
@@ -82,18 +100,6 @@
                           </div>
                         </a>
                       <% } %>
-                      <a href="/">
-                        <div class="dropdown-links">
-                          <i class="fas fa-home"></i>
-                          <h3>Home</h3>
-                        </div>
-                      </a>
-                      <a href="/settings">
-                        <div class="dropdown-links">
-                          <i class="fas fa-user-circle"></i>
-                          <h3>Account Settings</h3>
-                        </div>
-                      </a>
                       <a href="/auth/logout">
                         <div class="dropdown-links bottom-link">
                           <i class="fas fa-sign-out"></i>
@@ -293,7 +299,7 @@
     </div>
   </section>
 
-  <section id="topRated">
+  <section id="topRatedMembers">
     <div class="container">
       <div class="subcontainer">
         <div class="recommended">
@@ -398,12 +404,12 @@
     </div>
   </section>
 
-  <section id="advertise">
+  <section id="advertising">
     <div class="container">
       <div class="subcontainer">
         <div class="header">
           <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
-          <a href="/register"><button style="padding: 8px 12px 8px 12px;">Sign up</button></a>
+          <a href="/register"><button>SIGN UP</button></a>
         </div>
       </div>
     </div>

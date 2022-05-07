@@ -7,6 +7,8 @@
   box-sizing: border-box;
 }
 
+/* GLOBAL */
+
 body{
   overflow-x: hidden ;
   font-family: 'Roboto', sans-serif;
@@ -201,7 +203,40 @@ th {
   margin-top: 70px;
 }
 
-/* Header / Navbar */
+#cookies {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  z-index: 1;
+}
+
+.cookies {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cookies a {
+  text-decoration: none;
+}
+
+#cookies-btn {
+  border: 3px solid white;
+  background-color: black;
+  color: white;
+}
+
+#more-info-link {
+  font-weight: 500;
+  color: #009999;
+}
+
 #header{
   background-color: black;
   position: fixed;
@@ -371,6 +406,9 @@ th {
   font-weight: 400;
 }
 
+.dropdown-links .fa-unlock,
+.dropdown-links .fa-home,
+.dropdown-links .fa-gear,
 .dropdown-links .fa-user-circle,
 .dropdown-links .fa-sign-out{
   font-size: 1.4rem;
@@ -402,14 +440,16 @@ th {
   background-size: cover;
 }
 
-.user-icon img {width:100%;}
+.user-icon img {
+  width:100%;
+}
 
 .fa-user{
   font-size: 1.2rem;
   color: white;
 }
 
-/* PROFILE.EJS =========================*/
+/* PROFILE.EJS */
 
 #profileCoverSection{
   height: 300px;
@@ -435,14 +475,12 @@ th {
   padding: 25px 0;
 }
 
-/* PROFILE COLUMN 1 WRAPPER */
-
 #profileSection .profile-col-1-wrapper{
   height: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: #e9e9e9;
+  background-color: whitesmoke;
   color: #262626;
 
 }
@@ -458,7 +496,6 @@ th {
   background-color: white;
   border: 1px solid lightgray;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-
 }
 
 #profileSection .profile-col-1 h2,
@@ -559,8 +596,6 @@ th {
   color: #0e76a8;
 }
 
-/* PROFILE COLUMN 2 WRAPPER */
-
 #profileSection .profile-col-2-wrapper {
   width: 100%;
   height: fit-content;
@@ -595,6 +630,8 @@ th {
 #profileSection .profile-skills,
 #profileSection .profile-following{
   width: 100%;
+  line-height: 2;
+  padding: 5px 0;
 }
 
 #profileSection .profile-showcase-photos{
@@ -964,10 +1001,7 @@ th {
   opacity: 0.8;
 }
 
-
-/* UPDATE BUTTON */
-
-#update-profile-btn {
+#settingsSection #update-profile-btn {
   color: white;
   border: 2px solid white;
   background-color: #009999;
@@ -1216,18 +1250,18 @@ th {
   font-size: 1rem;
 }
 
-#topRated {
+#topRatedMembers {
   background-color: #e9e9e9;
 }
 
-#topRated .recommended {
+#topRatedMembers .recommended {
   min-height: 485px;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
 }
 
-#topRated .slide-img{
+#topRatedMembers .slide-img{
   width: 100%;
   height: 250px;
   border-radius: 5px;
@@ -1241,14 +1275,14 @@ th {
   transition: 0.5s;
 }
 
-#topRated .slide {
-  height: 315px;
+#topRatedMembers .slide {
+  height: 335px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
 
-#topRated .slide-img p {
+#topRatedMembers .slide-img p {
   opacity: 0;
   transform: scale(0);
   transition: 0.8s;
@@ -1256,33 +1290,33 @@ th {
   color: white;
 }
 
-#topRated .slide-img:hover {
+#topRatedMembers .slide-img:hover {
   box-shadow: 0 0 0 200px rgba(0, 0, 0, 0.9) inset;
 }
 
-#topRated .slide-img:hover p {
+#topRatedMembers .slide-img:hover p {
   opacity: 1;
   transform: scale(1);
 }
 
-#topRated .user{
+#topRatedMembers .user{
   display: flex;
   flex-direction: column; 
   gap: 10px;
   padding-top: 20px;
 }
 
-#topRated .user-info{
+#topRatedMembers .user-info{
   display: flex;
   gap: 5px;
 }
 
-#topRated .img-2_1 {
+#topRatedMembers .img-2_1 {
   background-image: url(/images/electrician.png);
 }
 
-#topRated .previous_2,
-#topRated .next_2 {
+#topRatedMembers .previous_2,
+#topRatedMembers .next_2 {
   padding: 2px;
   width: 30px;
   cursor: pointer;
@@ -1294,28 +1328,28 @@ th {
   box-shadow: 0 0 5px #bbb;
 }
 
-#topRated .previous_2:hover,
-#topRated .next_2:hover {
+#topRatedMembers .previous_2:hover,
+#topRatedMembers .next_2:hover {
   border: 3px solid white;
 }
 
-#topRated #controls_2 i{
+#topRatedMembers #controls_2 i{
   color: white;
   font-size: 1rem;
 }
 
-#topRated .location{
+#topRatedMembers .location{
   display: flex;
   justify-content: space-between;
 }
 
-#advertise{
+#advertising{
   background-size: cover;
   background-position: center;
   background-image: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5)), url(/images/trainer.png);
 }
 
-#advertise .header{
+#advertising .header{
   width: 800px;
   height: 600px;
   margin: auto;
@@ -1326,16 +1360,20 @@ th {
   gap: 10px;
 }
 
-#advertise .header h1{
+#advertising .header h1{
   color: white;
   font-size: 3.5rem;
   text-align: center;
 }
 
-#advertise .header button{
-  font-family: inherit;
+#advertising button{
+  color: white;
+  padding: 12px 16px;
+  border: 2px solid white;
   background-color: #009999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
+
 
 /* FOOTER.EJS */
 
@@ -1346,7 +1384,7 @@ th {
   justify-content: center;
 }
 
-.footer-wrapper{  
+#footer .footer-wrapper{  
   color: white;
   display: flex;
   justify-content: space-between;
@@ -1355,7 +1393,7 @@ th {
   gap: 20px;
 }
 
-.footer-box{
+#footer .footer-box{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -1363,96 +1401,66 @@ th {
   line-height: 2;
 }
 
-.footer-box h1{
+#footer .footer-box h1{
   font-size: 3rem;
 }
 
-.footer-box address{
+#footer .footer-box address{
   color: gray;
   font-style: normal;
   line-height: 2;
 }
 
-.info{
+#footer .info{
   display: flex;
   flex-direction: column;
   color: gray;
 }
 
-.info a{
+#footer .info a{
   color: gray;
   text-decoration: none;
 }
 
-.info span{
+#footer .info span{
   color: white;
 }
 
-.brand{
+#footer .brand{
   color: white;
   margin-top: -25px;
 }
 
-.rights{
+#footer .rights{
   padding-top: 50px;
   color: gray;
 }
 
-.fb1{
+#footer .fb1{
   width: 300px;
 }
 
-.fb2, .fb3, .fb4, .fb5{
+#footer .fb2,
+#footer .fb3,
+#footer .fb4,
+#footer .fb5{
   width: fit-content;
   line-height: 2;
 }
 
-.social-media{
+#footer .social-media{
   display: flex;
   gap: 20px;
 }
 
-.social-media a{
+#footer .social-media a{
   color: white;
   text-decoration: none;
   transition: 0.3s ease-out;
 }
 
-#cookies{
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: none;
-  z-index: 1;
-}
-
-.cookies{
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.cookies a{
-  text-decoration: none;
-}
-
-#cookies-btn{
-  border: 3px solid white;
-  background-color: black;
-  color: white;
-}
-
-#more-info-link{
-  font-weight: 500;
-  color: #009999;
-}
-
 /* Complete Profile */
+
 .wrapper{
   display: grid;
   grid-template-columns: 50% 50%;
