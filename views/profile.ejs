@@ -37,7 +37,7 @@
                   <%= user.state%>
                 </h3>
               <% } %>
-              </div>
+            </div>
           </div>
 
           <!-- PROFILE SOCIAL MEDIA  -->
@@ -48,7 +48,7 @@
             <% if(user.website) { %>
               <div class="profile-social-link">
                 <a href="<%= user.website %>" target="_blank">
-                  <div class="flex">
+                  <div class="flex" style="justify-content: center;">
                     <i class="fas fa-desktop"></i>
                     <p>Website</p>
                   </div>
@@ -59,9 +59,9 @@
             <% if(user.twitter) { %>
               <div class="profile-social-link">
                 <a href="<%= user.twitter %>" target="_blank">
-                  <div class="flex">
+                  <div class="flex" style="justify-content: center;">
                     <i class="fab fa-twitter"></i>
-                    <p>Twitter</p>
+                    <!-- <p>Twitter</p> -->
                   </div>
                 </a>
               </div>

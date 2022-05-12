@@ -486,7 +486,7 @@ th {
 }
 
 #profileSection .profile-col-1{
-  height: 450px;
+  height: 325px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -508,14 +508,14 @@ th {
   width: 250px;
   height: 250px;
   border-radius: 50%;
+  margin-top: -175px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-size: cover;
   background-position: center;
   background-color: #f9f9f9;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border: 10px solid white;
 }
 
 #profileSection .profile-photo i{
@@ -531,6 +531,10 @@ th {
 #profileSection .profile-identity h1{
   font-size: 2rem;
   font-weight: bold;
+}
+
+#profileSection .profile-identity h2 {
+  text-transform: uppercase;
 }
 
 #profileSection .profile-identity h3{

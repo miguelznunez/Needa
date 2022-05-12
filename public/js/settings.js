@@ -12,14 +12,6 @@ async function loadStates(){
   });
 };
 
-const tags = document.querySelector("#tags");
-const tagify = new Tagify(tags , {
-    maxTags: 4,
-    texts: {
-      duplicate: "Duplicates are not allowed"
-    }
-  });
-
 let files = [], // STORE THE PHOTOS
   showcaseForm = document.querySelector("#showcaseForm"), // form id
   form = document.querySelector('.showcase-photos'), // form ( drag area )

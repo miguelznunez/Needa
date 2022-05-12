@@ -227,8 +227,6 @@ exports.passwordReset = (req, res) => {
 exports.settings = async (req, res) => {
   const {profile_photo, cover_photo} = req.files;
 
-  console.log(req.body.tags);
-
   // GRAB ERRORS FROM EXPRESS VALIDATOR
   const errors = validationResult(req);
   // STRINGIFY TO PARSE THE DATA
@@ -348,7 +346,9 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 // UPDATE DATABASE
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email };
+  const tags = parseTags(update.tags);
+
+  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) {
@@ -357,6 +357,22 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
     }
     else console.log(err.message);
   }); 
+}
+
+function parseTags(rawTags){
+  let tags = {}; // CREATE JSON OBJECT
+
+  if(rawTags !== "") {
+    const values = JSON.parse(rawTags); // PARSE TAGS COMING IN FROM THE FRONT END
+
+    for(let i = 0;i < values.length;i++) // LOOP THROUGH EACH TAG
+      tags[`${i}`] = values[i]["value"]; // STORE THE VALUE IN JSON OBJECT
+
+    tags = JSON.stringify(tags); // CONVERT TO JSON - TO STORE IN DATABASE
+
+    return tags;
+  } 
+    return null;
 }
 
 

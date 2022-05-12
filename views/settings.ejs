@@ -259,8 +259,7 @@
                 <div class="user-input" style="z-index: 0;">
                   <label for="tags">Add up to 4 tags to help users find your profile</label>
                   <input name="tags" id="tags"></input>
-                </div>
-                
+                </div>                
           
                 <div>
                   <button type="submit" id="update-profile-btn">Update</button>
@@ -309,6 +308,26 @@
 <script src="/js/script.js"></script>
 
 <script>  
+
+  // TAGS ==========================================
+
+  const myTags = JSON.parse('<%-JSON.stringify(tags)%>');
+
+  const myTagsLength = (myTags === null) ? null : Object.keys(myTags).length;
+  let myTagsArray = [];
+
+  for(let i = 0;i < myTagsLength;i++)
+    myTagsArray.push(myTags[i]);
+
+  const tags = document.querySelector("#tags");
+  const tagify = new Tagify(tags, {
+    maxTags: 4,
+    texts: {
+      duplicate: "Duplicates are not allowed"
+    }
+  });
+
+  tagify.addTags(myTagsArray);
 
   // PROFILE PHOTO ==================================
 
