@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
 
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <title><%= title %></title>
 </head>
@@ -94,7 +98,7 @@
                       <a href="/settings">
                         <div class="dropdown-links">
                           <i class="fa-solid fa-gear"></i>
-                          <h3>Account Settings</h3>
+                          <h3>Settings</h3>
                         </div>
                       </a>
                       <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>

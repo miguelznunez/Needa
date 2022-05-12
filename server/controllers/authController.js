@@ -227,6 +227,8 @@ exports.passwordReset = (req, res) => {
 exports.settings = async (req, res) => {
   const {profile_photo, cover_photo} = req.files;
 
+  console.log(req.body.tags);
+
   // GRAB ERRORS FROM EXPRESS VALIDATOR
   const errors = validationResult(req);
   // STRINGIFY TO PARSE THE DATA

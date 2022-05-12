@@ -1111,7 +1111,7 @@ th {
   left: 3%;
 }
 
-#carousel .fade {
+.fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 0.7s;
   animation-name: fade;
