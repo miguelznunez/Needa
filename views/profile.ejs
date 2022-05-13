@@ -12,7 +12,7 @@
           
           <!-- PROFILE PHOTO, FULL NAME, PROFESSION, CITY, STATE -->
 
-          <div class="profile-col-1">
+          <div class="profile-col-1-box-1">
             <div class="profile-photo">
               <i class="fas fa-user" id="fa-user"></i>
             </div>
@@ -40,98 +40,114 @@
             </div>
           </div>
 
-          <!-- PROFILE SOCIAL MEDIA  -->
+        <!-- WEBSITE -->
 
-        <% if(user.website || user.twitter || user.instagram || user.facebook || user.linkedin) { %>
-          <div class="profile-col-2">
+          <% if(user.website) { %>
+            <div class="profile-col-1-box-2">
+              <h3>WEBSITE</h3>
+              <% if(user.website) { %>
+                <div class="profile-website-link">
+                  <a href="<%= user.website %>" target="_blank">
+                    <div class="flex">
+                      <i class="fas fa-desktop"></i>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
 
-            <% if(user.website) { %>
-              <div class="profile-social-link">
-                <a href="<%= user.website %>" target="_blank">
-                  <div class="flex" style="justify-content: center;">
-                    <i class="fas fa-desktop"></i>
-                    <p>Website</p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
+        <!-- SOCIAL MEDIA  -->
 
-            <% if(user.twitter) { %>
-              <div class="profile-social-link">
-                <a href="<%= user.twitter %>" target="_blank">
-                  <div class="flex" style="justify-content: center;">
-                    <i class="fab fa-twitter"></i>
-                    <!-- <p>Twitter</p> -->
-                  </div>
-                </a>
-              </div>
-            <% } %>
+          <% if(user.twitter || user.instagram || user.facebook || user.linkedin) { %>
+            <div class="profile-col-1-box-3">
+              <h3>SOCIAL MEDIA</h3>
 
-            <% if(user.instagram) { %>
-              <div class="profile-social-link">
-                <a href="<%= user.instagram %>" target="_blank">
-                  <div class="flex">
-                    <i class="fab fa-instagram"></i>
-                    <p>Instagram</p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
+              <% if(user.twitter) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.twitter %>" target="_blank">
+                    <div class="flex">
+                      <i class="fab fa-twitter"></i>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
 
-            <% if(user.facebook) { %>
-              <div class="profile-social-link">
-                <a href="<%= user.facebook %>" target="_blank">
-                  <div class="flex">
-                    <i class="fab fa-facebook"></i>
-                    <p>Facebook</p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
+              <% if(user.instagram) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.instagram %>" target="_blank">
+                    <div class="flex">
+                      <i class="fab fa-instagram"></i>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
 
-            <% if(user.linkedin) { %>
-              <div class="profile-social-link">
-                <a href="<%= user.linkedin %>" target="_blank">
-                  <div class="flex">
-                    <i class="fab fa-linkedin"></i>
-                    <p>LinkedIn</p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
+              <% if(user.facebook) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.facebook %>" target="_blank">
+                    <div class="flex">
+                      <i class="fab fa-facebook"></i>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
 
-          </div>
+              <% if(user.linkedin) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.linkedin %>" target="_blank">
+                    <div class="flex">
+                      <i class="fab fa-linkedin"></i>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
 
-        <% } %>
-
+          <!-- TAGS -->
+          
+          <% if(user.tags) { %>
+            <div class="profile-col-1-box-4">
+              <h3>TAGS</h3>
+              <div class="tags"></div>
+            </div>
+          <% } %>
+      
         </div>
 
         <div class="profile-col-2-wrapper">
 
-          <div class="profile-edit">
-            <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
-          </div>
+          <div class="col-2">
 
-          <div class="profile-services flex-5">
-            <h3>Services</h3>
-            <p><%= user.specialty %></p>
-          </div>
-
-          <div class="profile-skills flex-5">
-            <h3>Skills</h3>
-            <p><%= user.skills %></p>
-          </div>
-
-          <div class="profile-showcase-photos flex-5">
-            <div>
-              <h3>Showcase</h3>
+            <div class="profile-edit">
+              <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
             </div>
-            <% if (showcasePhotos !== null) { %>
-              <div class="showcase-container">
-                <% for(let i=0; i < length; i++) { %>
-                  <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>"></span></div>
-                <% } %>
+            
+            <div class="profile-services flex-5">
+              <h3>SERVICES</h3>
+              <p>
+                <%= user.specialty %>
+              </p>
+            </div>
+            
+            <div class="profile-skills flex-5">
+              <h3>SKILLS</h3>
+              <p>
+                <%= user.skills %>
+              </p>
+            </div>
+            
+            <div class="profile-showcase-photos flex-5">
+              <div>
+                <h3>SHOWCASE</h3>
               </div>
+              <% if (showcasePhotos !==null) { %>
+                <div class="showcase-container">
+                  <% for(let i=0; i < length; i++) { %>
+                    <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>"></span></div>
+                    <% } %>
+                </div>
                 <div class="preview-box">
                   <div class="details">
                     <span class="title">
@@ -146,15 +162,18 @@
                   </div>
                 </div>
                 <div class="shadow"></div>
-            <% } %>
-          </div>
-
-          <div class="profile-following">
-            <div>
-              <h3>Following</h3>
+                <% } %>
             </div>
+            
+            <div class="profile-following">
+              <div>
+                <h3>FOLLOWING</h3>
+              </div>
+            </div>
+
           </div>
 
+         
         </div>
       </div>
     </div>
@@ -164,8 +183,18 @@
 <script src="/js/script.js"></script>
 <script src="/js/lightbox.js"></script>
 <script>
-  const cover = "<%= user.cover_photo %>";
-  const profile = "<%= user.profile_photo %>";
+
+  const myTags = JSON.parse('<%-JSON.stringify(tags)%>'),
+  myTagsLength = (myTags === null) ? null : Object.keys(myTags).length,
+  tagsContainer = document.querySelector(".tags"),
+  cover = "<%= user.cover_photo %>",
+  profile = "<%= user.profile_photo %>";
+
+  for(let i = 0;i < myTagsLength;i++){
+    const tag = document.createElement("div");
+    tag.innerHTML = `<div class="tag"> #${myTags[i]} </div>`;
+    tagsContainer.appendChild(tag);
+  }
 
   if(cover)
     document.querySelector("#profileCoverSection").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;

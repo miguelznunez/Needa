@@ -107,8 +107,9 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
+    const tags = JSON.parse(req.user.tags);
     const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, length:length} );
+    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, tags: tags, length:length} );
   } else return res.redirect("/login");
 });
 
@@ -119,7 +120,7 @@ router.get("/settings", authController.isLoggedIn, (req, res) => {
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
     const tags = JSON.parse(req.user.tags);
     const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("settings", {title: "Needa | Settings", user : req.user, showcasePhotos: showcasePhotos, length:length, tags: tags, success} );
+    return res.render("settings", {title: "Needa | Settings", user : req.user, showcasePhotos: showcasePhotos, tags: tags, length:length, success} );
   }
   else 
     return res.redirect("/login");
