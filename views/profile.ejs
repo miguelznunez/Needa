@@ -147,9 +147,9 @@
               </div>
               <% if (showcasePhotos !==null) { %>
                 <div class="showcase-container">
-                  <% for(let i=0; i < length; i++) { %>
-                    <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>"></span></div>
-                    <% } %>
+                  <% for(let photo in showcasePhotos) { %>
+                    <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[photo] %>"></span></div>
+                  <% } %>
                 </div>
                 <div class="preview-box">
                   <div class="details">
@@ -187,24 +187,24 @@
 <script src="/js/lightbox.js"></script>
 <script>
 
-  const myTags = JSON.parse('<%-JSON.stringify(tags)%>'),
-  myTagsLength = (myTags === null) ? null : Object.keys(myTags).length,
-  tagsContainer = document.querySelector(".tags"),
+  const profile = "<%= user.profile_photo %>",
   cover = "<%= user.cover_photo %>",
-  profile = "<%= user.profile_photo %>";
-
-  for(let i = 0;i < myTagsLength;i++){
-    const tag = document.createElement("div");
-    tag.innerHTML = `<div class="tag"> #${myTags[i]} </div>`;
-    tagsContainer.appendChild(tag);
-  }
-
-  if(cover)
-    document.querySelector("#profileCoverSection").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+  myTags = JSON.parse('<%-JSON.stringify(tags)%>'),
+  tagsContainer = document.querySelector(".tags");
 
   if(profile){
     document.querySelector("#fa-user").style.opacity = 0;
     document.querySelector(".profile-photo").style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+  }
+
+  if (cover) {
+    document.querySelector("#profileCoverSection").style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+  }
+
+  for (let tag in myTags) {
+    const div = document.createElement("div");
+    div.innerHTML = `<div class="tag"> #${myTags[tag]} </div>`;
+    tagsContainer.appendChild(div);
   }
 </script>
 

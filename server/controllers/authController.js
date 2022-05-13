@@ -366,13 +366,15 @@ function parseTags(rawTags){
     const values = JSON.parse(rawTags); // PARSE TAGS COMING IN FROM THE FRONT END
 
     for(let i = 0;i < values.length;i++) // LOOP THROUGH EACH TAG
-      tags[`${i}`] = values[i]["value"]; // STORE THE VALUE IN JSON OBJECT
+      tags[`tag_${i}`] = values[i]["value"].toLowerCase(); // STORE THE VALUE IN JSON OBJECT
 
-    tags = JSON.stringify(tags); // CONVERT TO JSON - TO STORE IN DATABASE
+    tags = JSON.stringify(tags); // STRINGIFY JSON - TO STORE IN DATABASE
 
     return tags;
-  } 
+
+  } else {
     return null;
+  }
 }
 
 

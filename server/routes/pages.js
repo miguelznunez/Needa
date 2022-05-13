@@ -108,8 +108,7 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
     const tags = JSON.parse(req.user.tags);
-    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, tags: tags, length:length} );
+    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, tags: tags} );
   } else return res.redirect("/login");
 });
 
