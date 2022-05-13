@@ -130,16 +130,22 @@ th {
   align-items: center;
 }
 
-.flex-5 {
+.flex-5, .flex-10, .flex-15, .flex-20 {
   display: flex;
   gap: 5px;
   flex-direction: column;
 }
 
 .flex-10{
-  display: flex;
-  flex-direction: column;
   gap: 10px;
+}
+
+.flex-15{
+  gap: 15px;
+}
+
+.flex-20{
+  gap: 20px;
 }
 
 .flex-space-between{
@@ -650,11 +656,13 @@ th {
   color: #262626;
 }
 
-.col-2{
+#profileSection .profile-col-2-box-1,
+#profileSection .profile-col-2-box-2,
+#profileSection .profile-col-2-box-3,
+#profileSection .profile-col-2-box-4{
   width: 100%;
   padding: 20px;
   border-radius: 10px;
-  /* border: 5px solid whitesmoke; */
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
@@ -677,7 +685,6 @@ th {
 #profileSection .profile-following{
   width: 100%;
   line-height: 2;
-  padding: 5px 0;
 }
 
 #profileSection .profile-showcase-photos{

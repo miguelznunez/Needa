@@ -26,6 +26,7 @@ CREATE TABLE `login`.`user` (
   `phone` VARCHAR(11) DEFAULT NULL,
   `display_phone` VARCHAR(3) DEFAULT NULL,
   `display_email` VARCHAR(100) DEFAULT NULL,
+  `tags` JSON DEFAULT NULL,
   `showcase_photos` JSON DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,

@@ -106,7 +106,7 @@
           <% } %>
 
           <!-- TAGS -->
-          
+
           <% if(user.tags) { %>
             <div class="profile-col-1-box-4">
               <h3>TAGS</h3>
@@ -118,27 +118,30 @@
 
         <div class="profile-col-2-wrapper">
 
-          <div class="col-2">
+          <div class="profile-edit">
+            <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
+          </div>
 
-            <div class="profile-edit">
-              <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
-            </div>
-            
-            <div class="profile-services flex-5">
+          <div class="profile-col-2-box-1">            
+            <div class="profile-services flex-20">
               <h3>SERVICES</h3>
               <p>
                 <%= user.specialty %>
               </p>
             </div>
-            
-            <div class="profile-skills flex-5">
+          </div>
+
+          <div class="profile-col-2-box-2">
+            <div class="profile-skills flex-20">
               <h3>SKILLS</h3>
               <p>
                 <%= user.skills %>
               </p>
             </div>
-            
-            <div class="profile-showcase-photos flex-5">
+          </div>
+
+          <div class="profile-col-2-box-3">
+            <div class="profile-showcase-photos flex-20">
               <div>
                 <h3>SHOWCASE</h3>
               </div>
@@ -162,18 +165,18 @@
                   </div>
                 </div>
                 <div class="shadow"></div>
-                <% } %>
+              <% } %>
             </div>
-            
+          </div>
+
+          <div class="profile-col-2-box-4">
             <div class="profile-following">
               <div>
                 <h3>FOLLOWING</h3>
               </div>
             </div>
-
           </div>
 
-         
         </div>
       </div>
     </div>
