@@ -1,17 +1,3 @@
-window.addEventListener("load", loadStates);
-
-async function loadStates(){
-  let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
-  let response = await fetch(url);
-  let data = await response.json();
-  data.forEach( function(i){ 
-    var state = document.createElement("option");
-    state.textContent = i.state;
-    state.value = i.usps;
-    document.querySelector("#state").appendChild(state);
-  });
-};
-
 let files = [], // STORE THE PHOTOS
   showcaseForm = document.querySelector("#showcaseForm"), // form id
   form = document.querySelector('.showcase-photos'), // form ( drag area )
@@ -94,10 +80,14 @@ let files = [], // STORE THE PHOTOS
 
   // SUBMIT REQUEST WITH FETCH
 
+  const messageContainer = document.querySelector(".message-container");
+
   showcaseForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const formData = new FormData(showcaseForm);
+
+    messageContainer.innerHTML = "";
 
     files.forEach((e, i) =>
       formData.append(`file[${i}]`, e))
@@ -114,38 +104,36 @@ let files = [], // STORE THE PHOTOS
 
     .then(data => {
       if (data.success) {
-        removeElementsByClass("success");
-        removeElementsByClass("alert-message");
-
         const div = document.createElement("div");
         div.className = "alert-message success";
         div.innerHTML = data.message;
-        document.querySelector(".forms-container").append(div);
-
-        let clearTime = setInterval(() => {
-          removeElementsByClass("success");
-          clearInterval(clearTime);
-        }, 3000);
-
+        messageContainer.append(div);
       } else {
-        removeElementsByClass("success");
-        removeElementsByClass("alert-message");
-
         const div = document.createElement("div");
         div.className = "alert-message";
         div.innerHTML = data.message;
-        document.querySelector(".forms-container").append(div);
+        messageContainer.append(div);
       }
     })
 
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error)
+    });
 
   });
 
-  function removeElementsByClass(className) {
-    const elements = document.getElementsByClassName(className);
-    while (elements.length > 0) {
-      elements[0].parentNode.removeChild(elements[0]);
-    }
-  }
+// LOAD ALL STATES ON INPUT FIELD FOR STATE
 
+async function loadStates(){
+  let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
+  let response = await fetch(url);
+  let data = await response.json();
+  data.forEach( function(i){ 
+    var state = document.createElement("option");
+    state.textContent = i.state;
+    state.value = i.usps;
+    document.querySelector("#state").appendChild(state);
+  });
+};
+
+window.addEventListener("load", loadStates);

@@ -120,16 +120,23 @@
                 </div>
                 <div class="user-input">
                   <label for="city">City</label>
-                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
+                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60" required>
                 </div>
                 <div class="user-input">
                   <label for="state">State</label>
-                  <select name="state" id="state">
+                  <select name="state" id="state" required>
                     <option value="<%= user.state %>">
                       <%= user.state %>
                     </option>
                   </select>
                 </div>
+                <div class="user-input">
+                  <Label for="zip_code">ZIP Code</Label>
+                  <input type="text" pattern="[0-9]{5}" placeholder="Enter your zip code" required/>
+                </div>
+
+                
+
                 <div class="user-input">
                   <% if(user.gender==="M" ) { %>
                     <label for="gender">Gender</label>
@@ -256,7 +263,7 @@
                 
                 <h3>Tags</h3>
                 <div class="user-input" style="z-index: 0;">
-                  <label for="tags">Add up to 4 tags to help users find your profile</label>
+                  <label for="tags">Enter up to 4 tags to help users find your profile</label>
                   <input name="tags" id="tags"></input>
                 </div>                
           
@@ -271,6 +278,7 @@
 
 
           <!-- SHOWCASE PHOTOS  -->
+          
           <form id="showcaseForm" class="settings-col-2">
             <div class="flex-space-between">
               <h3>Showcase photos</h3>
@@ -295,9 +303,11 @@
             </div>
           </form>
 
+          <!-- SUCCESS/ERROR MESSAGES -->
+
+          <div class="message-container"></div>
+
         </div>
-       
-        
       </div>
     </div>
   </div>

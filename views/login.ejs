@@ -1,52 +1,144 @@
 <%- include("partials/header.ejs") %>
 
-<section id="errorSection">
-  <div class="container">
-    <div class="subcontainer">
-      <% if(typeof success !="undefined" && !success) { %>
-        <div class="alert-message-wrapper">
-          <div class="alert-message">
+<% if(typeof type !=="undefined" && type==="success" ) { %>
+  <style>
+    .toast {
+      transform: translateX(0);
+      border-left: 8px solid #47d764;
+    }
+
+    .fa-check-circle {
+      color: #47d764;
+    }
+  </style>
+  <section>
+    <div class="toast-wrapper">
+      <div class="toast">
+        <div class="icon-container">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="message-container flex-5">
+          <p>Success</p>
+          <p>
             <%= message %>
-          </div>
+          </p>
         </div>
-      <% } %>
+        <button id="closeToast">&times;</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+  <% } %>
 
-<section>
-  <div class="container center-content">
-    <div class="subcontainer">
-      <form action="/auth/login" id="login-form" method="POST">
-        <div id="title">
-          <h1 style="font-size: 2.5rem;"><a href="/">Needa</a></h1>
+  <% if(typeof type !=="undefined" && type === "error") { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #ff2121; 
+      }
+      .fa-times-circle{
+        color: #ff2121;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="message-container flex-5">
+            <p>Error</p>
+            <p><%= message %></p>
+          </div>
+          <button id="closeToast">&times;</button>
         </div>
-        <div>
-          <input type="text" id="email" name="email" placeholder="Email" required>
+      </div>
+    </section>
+  <% } %>
+
+  <% if(typeof type !=="undefined" && type==="info" ) { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #2F86EB;
+      }
+  
+      .fa-info-circle {
+        color: #2F86EB;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="message-container flex-5">
+            <p>Info</p>
+            <p>
+              <%= message %>
+            </p>
+          </div>
+          <button id="closeToast">&times;</button>
         </div>
-        <div id="password-container">
-          <input type="password" id="password" name="password" placeholder="Password" required>
-        </div>
-        <div id="show-password-container">
+      </div>
+    </section>
+  <% } %>
+
+  <section id="loginSection">
+    <div class="container">
+      <div class="subcontainer">
+        <form action="/auth/login" id="login-form" method="POST">
+          <div id="title">
+            <h1><a href="/">Needa</a></h1>
+          </div>
           <div>
-            <input type="checkbox" id="show-password">
-            <label for="show-password">Show password</label>
+            <input type="text" id="email" name="email" placeholder="Email" required>
           </div>
-          <div id="forgot-password">
-            <a href="/password-reset">Forgot Password?</a>
+          <div id="password-container">
+            <input type="password" id="password" name="password" placeholder="Password" required>
           </div>
-        </div>
-        <div>
-          <button id="login-btn">Let's go</button>
-        </div>
-        <div id="register">
-          <p>Not a member?<a href="/register"> Register</a></p>
-        </div>
-      </form>
+          <div id="show-password-container">
+            <div>
+              <input type="checkbox" id="show-password">
+              <label for="show-password">Show password</label>
+            </div>
+            <div id="forgot-password">
+              <a href="/password-reset">Forgot Password?</a>
+            </div>
+          </div>
+          <div>
+            <button id="login-btn">Let's go</button>
+          </div>
+          <div id="register">
+            <p>Not a member?<a href="/register"> Register</a></p>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script src="/js/script.js"></script>
+  <script src="/js/script.js"></script>
+  <script>
+
+   const showPassword = document.querySelector("#show-password"),
+   passwordField = document.querySelector("#password"),
+   toast = document.querySelector(".toast"),
+   closeToast = document.querySelector("#closeToast");
+
+  showPassword.addEventListener("click", function (e) {
+    if (showPassword.checked)
+      passwordField.setAttribute("type", "text");
+    else
+      passwordField.setAttribute("type", "password");
+  })
+
+  if (toast) {
+    closeToast.addEventListener("click", () => {
+      toast.style.transform = "translateX(400px)";
+    })
+  }
+
+  </script>
+
 
 <%- include("partials/footer.ejs") %>

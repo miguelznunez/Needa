@@ -31,6 +31,16 @@
     </div>
   </section>
 
+  <section>
+    <div class="toast-wrapper">
+      <div class="toast">
+        <div class="icon-container"></div>
+        <div class="message-container flex-5"></div>
+        <button id="closeToast">&times;</button>
+      </div>
+    </div>
+  </section>
+
   <header id="homeHeader">
     <div class="container">
       <div class="subcontainer">
@@ -133,14 +143,33 @@
   <section id="carousel" class="fade">
     <div class="container">
       <div class="subcontainer">
-        <div class="carousel-header">
-          <h1>Needa connects you with working professionals in your area.</h1>
-          <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
-            dog? No problem. Search for professionals of any trade in your area today.</p>
-          <div class="showcase-search">
-            <input type="text" placeholder="Carpenter..."><button>SEARCH</button>
-            <i class="fas fa-search"></i>
+        <div class="carousel-header flex-15">
+          <div class="carousel-header-box-1 flex-10">
+            <h1>Needa connects you with working professionals in your area.</h1>
+            <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
+              dog? No problem. Search for professionals of any trade in your area today.
+            </p>
           </div>
+
+          <form action="/auth/find-professionals" method="POST" id="findProsForm" class="carousel-header-box-2">
+            <input type="hidden" name="zip" id="zip">
+            <input type="hidden" name="city" id="city">
+            <input type="hidden" name="state" id="state">
+            <input type="hidden" name="county" id="county">
+            <div>
+              <input type="text" name="profession" id="profession" placeholder="Carpenter...">
+            </div>
+            <div class="location">
+              <input type="text" id="location" placeholder="City, State or Zip">
+            </div>
+            <!-- <div>
+              <p>Or</p>
+            </div> -->
+            <!-- <button id="locationBtn"><i class="fa-solid fa-location-crosshairs"></i></button> -->
+            
+            <i class="fas fa-search"></i>
+            <button id="submitBtn">SEARCH</button>
+          </form>
         </div>
       </div>
     </div>

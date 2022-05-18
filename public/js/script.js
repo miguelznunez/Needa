@@ -19,30 +19,6 @@ switch(windowLocation){
     registerJS.src = "/js/register.js";
     document.body.append(registerJS);
     break;
-  case "/login":
-    var loginJS = document.createElement('script');
-    loginJS.type = "text/javascript";
-    loginJS.src = "/js/login.js";
-    document.body.append(loginJS);
-    break;
-  case "/auth/login":
-    var loginJS = document.createElement('script');
-    loginJS.type = "text/javascript";
-    loginJS.src = "/js/login.js";
-    document.body.append(loginJS);
-    break; 
-  case "/password-reset":
-    var passwordResetJS = document.createElement('script');
-    passwordResetJS.type = "text/javascript";
-    passwordResetJS.src = "/js/password-reset.js";
-    document.body.append(passwordResetJS);
-    break;
-  case "/auth/password-reset":
-    var passwordResetJS = document.createElement('script');
-    passwordResetJS.type = "text/javascript";
-    passwordResetJS.src = "/js/password-reset.js";
-    document.body.append(passwordResetJS);
-    break;
   case "/auth/update-password":
     var passwordResetUpdateJS = document.createElement('script');
     passwordResetUpdateJS.type = "text/javascript";
@@ -132,37 +108,3 @@ window.addEventListener('scroll', () => {
 	hamburger.classList.remove("active");
 	navMenu.classList.remove("active");
 })
-
-// var result = document.getElementById("json-result");
-// const Http = new XMLHttpRequest();
-// function getLocation() {
-//     console.log("getLocation Called");
-//     var bdcApi = "https://api.bigdatacloud.net/data/reverse-geocode-client"
-
-//     navigator.geolocation.getCurrentPosition(
-//         (position) => {
-//             bdcApi = bdcApi
-//                 + "?latitude=" + position.coords.latitude
-//                 + "&longitude=" + position.coords.longitude
-//                 + "&localityLanguage=en";
-//             getApi(bdcApi);
-
-//         },
-//         (err) => { getApi(bdcApi); },
-//         {
-//             enableHighAccuracy: true,
-//             timeout: 5000,
-//             maximumAge: 0
-//         });
-// }
-
-// function getApi(bdcApi) {
-//     Http.open("GET", bdcApi);
-//     Http.send();
-//     Http.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             // result.innerHTML = this.responseText;
-//             console.log(this.responseText);
-//         }
-//     };
-// }

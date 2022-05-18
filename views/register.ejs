@@ -1,87 +1,150 @@
 <%- include("partials/header.ejs") %>
 
-<section id="errorSection">
-  <div class="container">
-    <div class="subcontainer">
+  <% if(typeof type !=="undefined" && type === "success") { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #47d764;
+      }
   
-      <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
-        <div class="alert-message-wrapper">
-          <div class="alert-message">
-            <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
-              <%= (allParsedErrors.errors[i].msg) %>
-                <br>
-                <% } %>
+      .fa-check-circle {
+        color: #47d764;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-check-circle"></i>
           </div>
-        </div>
-      <% } %>
-  
-      <% if(typeof success !="undefined" && success) { %>
-        <div class="alert-message-wrapper">
-          <div class="alert-message success">
-            <%= message %>
+          <div class="message-container flex-5">
+            <p>Success</p>
+            <p>
+              <%= message %>
+            </p>
           </div>
+          <button id="closeToast">&times;</button>
         </div>
-      <% } %>
-  
-      <% if(typeof success !="undefined" && !success) { %>
-        <div class="alert-message-wrapper">
-          <div class="alert-message">
-            <%= message %>
-          </div>
-        </div>
-      <% } %>
-  
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
+  <% } %>
 
+  <% if(typeof type !=="undefined" && type === "error") { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #ff2121;
+      }
+      .fa-times-circle {
+        color: #ff2121;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="message-container flex-5">
+            <p>Error</p>
+            <p>
+              <%= message %>
+            </p>
+          </div>
+          <button id="closeToast">&times;</button>
+        </div>
+      </div>
+    </section>
+  <% } %>
 
-<section>
-  <div class="container center-content">
-    <div class="subcontainer">
-      <form action="/auth/register" id="register-account-form" method="POST">
-        <div id="title">
-          <h1 style="font-size: 2.5rem;"><a href="/">Needa</a></h1>
+  <% if(typeof allParsedErrors !=="undefined" && allParsedErrors) { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #ff2121;
+      }
+      .fa-times-circle {
+        color: #ff2121;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="message-container flex-5">
+            <p>Error</p>
+            <div class="flex-10">
+              <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
+                <p style="font-weight: normal; color: black; font-size: 1rem;">
+                  <%= (allParsedErrors.errors[i].msg) %>
+                </p>
+              <% } %>
+            </div>
+          </div>
+          <button id="closeToast">&times;</button>
         </div>
-        <div>
-          <input type="text" id="first-name" name="first_name" maxlength="25" placeholder="First name"
-            value="<%= typeof first_name != 'undefined' ? first_name : '' %>" required>
-        </div>
-        <div>
-          <input type="text" id="last-name" name="last_name" maxlength="25" placeholder="Last name"
-            value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
-        </div>
-        <div>
-          <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
-            value="<%= typeof email != 'undefined' ? email : '' %>" required>
-        </div>
-        <div id="password-container">
-          <input type="password" id="password" name="password" maxlength="60" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" required>
-          <p id="password-strength-text"></p>
-        </div>
-        <div>
-          <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
-            required>
-        </div>
-        <div id="show-password-container">
+      </div>
+    </section>
+  <% } %>
+
+  <section id="registerSection">
+    <div class="container">
+      <div class="subcontainer">
+        <form action="/auth/register" id="register-account-form" method="POST">
+          <div id="title">
+            <h1 style="font-size: 2.5rem;"><a href="/">Needa</a></h1>
+          </div>
           <div>
-            <input type="checkbox" id="show-password">
-            <label for="show-password">Show password</label>
+            <input type="text" id="first-name" name="first_name" maxlength="25" placeholder="First name"
+              value="<%= typeof first_name != 'undefined' ? first_name : '' %>" required>
           </div>
-        </div>
-        <div>
-          <button id="account-btn">Create Account</button>
-        </div>
-        <div id="login">
-          <p>Already a member? <a href="/login">Login</a></p>
-        </div>
-        
-      </form>
+          <div>
+            <input type="text" id="last-name" name="last_name" maxlength="25" placeholder="Last name"
+              value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
+          </div>
+          <div>
+            <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>" required>
+          </div>
+          <div id="password-container">
+            <input type="password" id="password" name="password" maxlength="60" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" required>
+            <p id="password-strength-text"></p>
+          </div>
+          <div>
+            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
+              required>
+          </div>
+          <div id="show-password-container">
+            <div>
+              <input type="checkbox" id="show-password">
+              <label for="show-password">Show password</label>
+            </div>
+          </div>
+          <div>
+            <button id="account-btn">Create Account</button>
+          </div>
+          <div id="login">
+            <p>Already a member? <a href="/login">Login</a></p>
+          </div>
+          
+        </form>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
-<script src="/js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+  <script src="/js/script.js"></script>
+
+  <script>
+    const toast = document.querySelector(".toast"),
+    closeToast = document.querySelector("#closeToast");
+    if (toast) {
+      closeToast.addEventListener("click", () => {
+        toast.style.transform = "translateX(400px)";
+      })
+    }
+  </script>
 
 <%- include("partials/footer.ejs") %>

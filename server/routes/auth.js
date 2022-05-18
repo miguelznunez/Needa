@@ -129,4 +129,6 @@ router.post("/add-user", [
 
 router.post("/update-user/:id", authController.isLoggedIn, authController.updateUser);
 
+router.post("/find-professionals", authController.isLoggedIn, authController.findProfessionals);
+
 module.exports = router;
