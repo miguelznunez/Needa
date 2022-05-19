@@ -77,7 +77,7 @@ router.get("/activate-account/:id/:token", authController.isLoggedIn, async (req
       expires: new Date(Date.now() + 2*1000),
       httpOnly: true
     });
-    return res.redirect("/");
+    return res.redirect("/login");
   } 
 });
 
@@ -107,19 +107,25 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
+
+    const website = req.user.website.split("https:/");
+    const twitter = req.user.twitter.split(".com");
+    const instagram = req.user.instagram.split(".com");
+    const facebook = req.user.facebook.split(".com");
+    const linkedin = req.user.linkedin.split(".com");
+  
+  // console.log(arrInsta[1]);
     const tags = JSON.parse(req.user.tags);
-    return res.render("profile", {title: "Needa | Profile", user : req.user, showcasePhotos: showcasePhotos, tags: tags} );
+    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], showcasePhotos: showcasePhotos, tags: tags} );
   } else return res.redirect("/login");
 });
 
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    const success = req.flash("success");
-    const showcasePhotos = JSON.parse(req.user.showcase_photos);
-    const tags = JSON.parse(req.user.tags);
-    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("settings", {title: "Needa | Settings", user : req.user, showcasePhotos: showcasePhotos, tags: tags, length:length, success} );
+    const success = req.flash("success"),
+    tags = JSON.parse(req.user.tags);
+    return res.render("settings", {title: "Needa | Settings", user : req.user, tags: tags, success} );
   }
   else 
     return res.redirect("/login");
@@ -131,6 +137,17 @@ router.get("/settings/account", authController.isLoggedIn, (req, res) => {
     return res.render("account", {title: "Needa | Account Settings", user : req.user} );
   else 
     return res.redirect("/login");
+});
+
+router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
+  // If user IS logged in show the page otherwise redirect to the home page
+  if(req.user && !checkBrowser(req.headers)) {
+    const showcasePhotos = JSON.parse(req.user.showcase_photos),
+    length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+    return res.render("showcase", {title: "Needa | Showcase Settings", user : req.user, showcasePhotos:showcasePhotos, length:length } );
+  } else { 
+    return res.redirect("/login");
+  }
 });
 
 router.get("/profile-photo/:key", authController.isLoggedIn, (req, res) => {

@@ -1,0 +1,90 @@
+<%- include("partials/header.ejs") %>
+
+  <style>
+    body {
+      background-color: #e9e9e9;
+    }
+  </style>
+
+
+  <section>
+    <div class="toast-wrapper">
+      <div class="toast">
+        <div class="icon-container"></div>
+        <div class="message-container flex-5"></div>
+        <button id="closeToast">&times;</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="showcaseSection">
+    <div class="container">
+      <div class="subcontainer">
+        <div class="showcase-wrapper">
+
+          <div class="showcase-col-1">
+            <div class="showcase-col-1-child-1">
+              <h2>Settings</h2>
+            </div>
+            <div class="showcase-col-1-child-2">
+              <a href="/settings" style="color:#009999;">
+                <div class="showcase-col-1-link flex">
+                  <i class="fas fa-user-circle"></i>
+                  <p>PROFILE</p>
+                </div>
+              </a>
+              <a href="/settings/showcase">
+                <div class="showcase-col-1-link flex">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <p>SHOWCASE PHOTOS</p>
+                </div>
+              </a>
+              <a href="/settings/account">
+                <div class="showcase-col-1-link flex">
+                  <i class="fas fa-cog"></i>
+                  <p>ACCOUNT</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- SHOWCASE PHOTOS  -->
+          
+          <form id="showcaseForm" class="showcase-col-2">
+            <div class="flex-space-between">
+              <h3>Showcase photos</h3>
+              <button type="submit" id="update-profile-btn">Upload</button>
+            </div>
+            <div class="flex-10" style="width: 100%;">
+              <div class="showcase-photos flex-2">
+                <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
+                <p>( Upload 8 photos max )</p>
+                <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg" />
+              </div>
+              <div class="images-container">
+                <% if (showcasePhotos !==null) { %>
+                  <% for(let i=0; i < length; i++) { %>
+                    <div class="image">
+                      <img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>" alt="image">
+                      <span onclick="delImage('<%= i %>')">&times;</span>
+                    </div>
+                  <% } %>
+                <% } %>
+              </div>
+            </div>
+          </form>
+          
+          <!-- SUCCESS/ERROR MESSAGES -->
+          
+          <div class="message-container"></div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="/js/script.js"></script>
+
+  <%- include("partials/footer.ejs") %>

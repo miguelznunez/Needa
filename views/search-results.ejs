@@ -1,31 +1,34 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/toast.ejs") %>
 
-<div class="container">
-  <div class="subcontainer">
-    
-    <div class="m" style="margin-top:70px ;">
-      <% for(let i=0;i < rows.length;i++) { %>
-        <p>
-          <%= rows[i].first_name %>
-        </p>
-        <p>
-          <%= rows[i].last_name %>
-        </p>
-        <p>
-          <%= rows[i].profession %>
-        </p>
-        <p>
-          <%= rows[i].city %>
-        </p>
-        <p>
-          <%= rows[i].state %>
-        </p>
-        <br>
-      <% } %>
+<div id="searchResultsSection">
+  <div class="container">
+    <div class="subcontainer">
+      <div class="m" style="margin-top:70px ;">
+        <% for(let i=0;i < rows.length;i++) { %>
+          <p>
+            <%= rows[i].first_name %>
+          </p>
+          <p>
+            <%= rows[i].last_name %>
+          </p>
+          <p>
+            <%= rows[i].profession %>
+          </p>
+          <p>
+            <%= rows[i].city %>
+          </p>
+          <p>
+            <%= rows[i].state %>
+          </p>
+          <br>
+          <% } %>
+      </div>
+  
     </div>
-   
   </div>
 </div>
+
 
 <script src="/js/script.js"></script>
 

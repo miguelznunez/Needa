@@ -29,14 +29,13 @@ function get_date(){
 
 
 exports.register = (req, res) => {
-  const { first_name, last_name, email, password, password_confirm } = req.body;
-  const member_since = get_date();
+  const { first_name, last_name, email, password, password_confirm } = req.body,
+  member_since = get_date();
 
   // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
-  const errors = validationResult(req);
-  // STRINGIFY TO PARSE THE DATA
-  const allErrors = JSON.stringify(errors);
-  const allParsedErrors = JSON.parse(allErrors);
+  const errors = validationResult(req),
+  allErrors = JSON.stringify(errors),
+  allParsedErrors = JSON.parse(allErrors);
    // OUTPUT VALIDATION ERRORS IF ANY
   if(!errors.isEmpty()){
     return res.render("register", {
@@ -61,7 +60,7 @@ exports.register = (req, res) => {
                               password: password});
     // ELSE CREATE A NEW USER
     } else if(!err && results[0] === undefined){
-        var token = randomstring.generate(20);
+        const token = randomstring.generate(20);
         bcrypt.hash(password, saltRounds, (err, hash) => {
           db.query("INSERT INTO user (first_name, last_name, email, password, token, member_since) VALUES (?,?,?,?,?,?)", [first_name, last_name, email, hash, token, member_since],
             async (err, results) => {
@@ -145,11 +144,9 @@ exports.updatePassword = (req, res) => {
 
   // CHECK THAT TOKEN IS NOT EXPIRED
   if(token_expires > Date.now()){
-    // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
-    const errors = validationResult(req);
-    // STRINGIFY TO PARSE THE DATA
-    var allErrors = JSON.stringify(errors);
-    var allParsedErrors = JSON.parse(allErrors);
+    const errors = validationResult(req),
+    allErrors = JSON.stringify(errors),
+    allParsedErrors = JSON.parse(allErrors);
      // OUTPUT VALIDATION ERRORS IF ANY
     if(!errors.isEmpty()){
       return res.render("password-reset-update", {
@@ -163,7 +160,7 @@ exports.updatePassword = (req, res) => {
     }
     // UPDATE THE PASSWORD
     bcrypt.hash(password, saltRounds, (err, hash) => {
-      var data = { token: null, token_expires: null, password: hash};
+      const data = { token: null, token_expires: null, password: hash};
       db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, result) => {
         if(!err) return res.render("password-reset-update", {title: "Needa | Password Reset Success", type: "success", message: "Your new password has been saved. Please use your new credentials to login."});
         else return res.render("password-reset-update", {title: "Needa | Password Reset Success", type: "error", message: err.message});
@@ -180,8 +177,8 @@ exports.updatePassword = (req, res) => {
 
 
 exports.passwordReset = (req, res) => {
-  var email = req.body.email;
-  const pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+  const email = req.body.email,
+  pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
   // CHECK FOR EMAIL VALIDATION
   if(!email){
     return res.render("password-reset", { title:"Needa | Password Reset", type:"error", message:"The email field cannot be empty." })
@@ -193,9 +190,9 @@ exports.passwordReset = (req, res) => {
   db.query("SELECT id, email FROM user WHERE email = ?", [email] , (err, results) => {    
     // EMAIL FOUND
     if(!err && results[0] != undefined) {
-      var id = results[0].id;
+      const id = results[0].id;
       // GENERATE TOKEN 
-      var token = randomstring.generate(20);
+      const token = randomstring.generate(20);
       // SET EXPIRATION DATE
       const token_expires = Date.now() + 3600000;
       const data = { token: token, token_expires: token_expires};
@@ -226,13 +223,11 @@ exports.passwordReset = (req, res) => {
 
 
 exports.settings = async (req, res) => {
-  const {profile_photo, cover_photo} = req.files;
 
-  // GRAB ERRORS FROM EXPRESS VALIDATOR
-  const errors = validationResult(req);
-  // STRINGIFY TO PARSE THE DATA
-  const allErrors = JSON.stringify(errors);
-  const allParsedErrors = JSON.parse(allErrors);
+  const {profile_photo, cover_photo} = req.files,
+  errors = validationResult(req),
+  allErrors = JSON.stringify(errors),
+  allParsedErrors = JSON.parse(allErrors);
 
    // OUTPUT VALIDATION ERRORS ( IF ANY )
   if(!errors.isEmpty()){
@@ -241,9 +236,8 @@ exports.settings = async (req, res) => {
     if(typeof req.files["cover_photo"] !== "undefined")
       await unlinkFile(cover_photo[0].path);
     const success = req.flash("success");
-    const showcasePhotos = JSON.parse(req.user.showcase_photos);
-    const length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-    return res.render("settings", {title: "Needa | Settings", allParsedErrors: allParsedErrors,  user : req.user, showcasePhotos: showcasePhotos, length:length, success})
+    const tags = JSON.parse(req.user.tags);
+    return res.render("settings", {title: "Needa | Settings", allParsedErrors:allParsedErrors, user:req.user, tags:tags, success})
   }
 
   if(typeof req.files.profile_photo !== "undefined" && typeof req.files.cover_photo !== "undefined"){
@@ -255,7 +249,6 @@ exports.settings = async (req, res) => {
   } else {
     noUploadedPhotos(req.user, req, res, req.body.deleteProfilePhoto, req.body.deleteCoverPhoto, req.body);
   }
-
 }
 
 // UPLOAD PROFILE AND COVER PHOTOS
@@ -347,9 +340,8 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 // UPDATE DATABASE
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
-  const tags = parseTags(update.tags);
-
-  const data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
+  const tags = parseTags(update.tags),
+  data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, zip:update.zip, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) {
@@ -381,10 +373,9 @@ function parseTags(rawTags){
 
 exports.showcaseSettings = async (req, res) => { 
 
-  const length = Object.keys(req.files).length;
-  var showcasePhotos = JSON.parse(req.user.showcase_photos); // PREVIOUS SHOWCASE PHOTOS
-  let outcomeMsg = "";
-  var previousDataLength = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+  const length = Object.keys(req.files).length,
+  showcasePhotos = JSON.parse(req.user.showcase_photos), // PREVIOUS SHOWCASE PHOTOS
+  previousDataLength = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
 
   if(length > 0){ // USER UPLOADED AT LEAST ONE PHOTO
     let data = {};
@@ -400,25 +391,22 @@ exports.showcaseSettings = async (req, res) => {
       for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
         await s3.deleteImage(req.user.id, showcasePhotos[i]);
     }
-    outcomeMsg = "Successfully updated photos." //uploaded new showcase photos
-    showcasePhotosQuery(req, res, data, outcomeMsg); // UPDATE THE DATABASE WITH THE NEW PHOTOS OBJECT  
+    showcasePhotosQuery(req, res, data, "success", "Successfully updated photos."); // UPDATE THE DATABASE WITH THE NEW PHOTOS OBJECT  
 
   } else if(length === 0 && previousDataLength !== null) { 
 
     for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
       await s3.deleteImage(req.user.id, showcasePhotos[i]);
-    outcomeMsg = "Successfully updated photos"; //Deleted all showcase photos
-    showcasePhotosQuery(req, res, null, outcomeMsg); // SET SHOWCASE PHOTOS COLUMN TO NULL
+    showcasePhotosQuery(req, res, null, "success", "Successfully deleted photos."); // SET SHOWCASE PHOTOS COLUMN TO NULL
 
   } else { // USER CLICKED THE UPLOAD BUTTON BUT THEY DIDN'T UPLOAD ANYTHING
-    outcomeMsg = "You have not select any photos."; //No changes...
-    return res.json({success : false, message: outcomeMsg}); 
+    return res.json({type: "error", message: "No photos have been selected."}); 
   }
 }
 
-function showcasePhotosQuery(req, res, data, outcomeMsg){
+function showcasePhotosQuery(req, res, data, type, message){
   db.query("UPDATE user SET ? WHERE id = ?", [{showcase_photos: data}, req.user.id], (err, results) => {
-    if(!err) return res.json({success : true, message: outcomeMsg}); 
+    if(!err) return res.json({type: type, message: message}); 
     else console.log(err.message);
   });  
 }
@@ -449,14 +437,17 @@ exports.isLoggedIn = async (req, res, next) => {
 // SEARCH FOR PROFESSIONALS ----------------------------------------
 
 exports.findProfessionals = (req, res) => {
-  let searchTerm = req.body.profession;
-  db.query("SELECT first_name, last_name, profile_photo, city, state, profession FROM user WHERE (profession LIKE ?) && status != 'Deleted'", ["%" + searchTerm + "%"], (err, rows) => {
+  const profession = req.body.profession,
+  city = req.body.city,
+  state = req.body.state,
+  zip = req.body.zip;
+
+  db.query("SELECT first_name, last_name, profile_photo, city, state, profession FROM user WHERE (profession LIKE ? && city = ? && state = ?) OR (profession LIKE ? && zip = ?)", [`%${profession}%`, city, state, `%${profession}%`, zip], (err, rows) => {
+    console.log(rows);
     if(!err) return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows});
-    else console.log(err);
+    else return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
   });
 }
-
-
 
 // ADMIN CRUD SYSTEM 
 

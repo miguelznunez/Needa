@@ -1,30 +1,40 @@
 <%- include("partials/header.ejs") %>
 
-<section id="accountPage">
-  <div class="container" style="padding: 20px 0;">
+<style>
+  body {
+    background-color: #e9e9e9;
+  }
+</style>
+
+<section id="accountSection">
+  <div class="container">
     <div class="subcontainer">
-      <div class="settings-wrapper">
-        <div class="settings-col-1">
-          <div class="settings-col-1-child-1">
-            <h2>Account Settings</h2>
+
+      <div class="account-wrapper">
+
+        <div class="account-col-1">
+          <div class="account-col-1-child-1">
+            <h2>Settings</h2>
           </div>
-          <div class="settings-col-1-child-2">
-            <div class="settings-col-1-link">
-              <a href="/settings">
-                <div class="flex">
-                  <i class="fas fa-user-circle"></i>
-                  <p>PROFILE</p>
-                </div>
-              </a>
-            </div>
-            <div class="settings-col-1-link">
-              <a href="/settings/account" style="color:#009999;">
-                <div class="flex">
-                  <i class="fas fa-cog"></i>
-                  <p>ACCOUNT</p>
-                </div>
-              </a>
-            </div>
+          <div class="account-col-1-child-2">
+            <a href="/settings" style="color:#009999;">
+              <div class="account-col-1-link flex">
+                <i class="fas fa-user-circle"></i>
+                <p>PROFILE</p>
+              </div>
+            </a>
+            <a href="/settings/showcase">
+              <div class="account-col-1-link flex">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>SHOWCASE PHOTOS</p>
+              </div>
+            </a>
+            <a href="/settings/account">
+              <div class="account-col-1-link flex">
+                <i class="fas fa-cog"></i>
+                <p>ACCOUNT</p>
+              </div>
+            </a>
           </div>
         </div>
   

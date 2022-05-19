@@ -19,23 +19,18 @@ switch(windowLocation){
     registerJS.src = "/js/register.js";
     document.body.append(registerJS);
     break;
+  case "/settings/showcase":
+    var showcaseJS = document.createElement('script');
+    showcaseJS.type = "text/javascript";
+    showcaseJS.src = "/js/showcase.js";
+    document.body.append(showcaseJS);
+    break;
   case "/auth/update-password":
     var passwordResetUpdateJS = document.createElement('script');
     passwordResetUpdateJS.type = "text/javascript";
     passwordResetUpdateJS.src = "/js/password-reset-update.js";
     document.body.append(passwordResetUpdateJS);
     break;
-  case "/settings":
-    var settingsJS = document.createElement('script');
-    settingsJS.type = "text/javascript";
-    settingsJS.src = "/js/settings.js";
-    document.body.append(settingsJS);
-    break;
-  case "/auth/settings":
-    var settingsJS = document.createElement('script');
-    settingsJS.type = "text/javascript";
-    settingsJS.src = "/js/settings.js";
-    document.body.append(settingsJS);
 }
 
 // HAMBURGER MENU

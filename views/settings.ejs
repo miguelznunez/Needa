@@ -1,60 +1,72 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/toast.ejs") %>
 
-<style>
-  body{
-    background-color: #e9e9e9;
-  }
-</style>
+  <style>
+    body{ background-color: #e9e9e9;}
+  </style>
 
-<section id="settingsSection">
+  <!-- CONNECT FLASH MESSAGE -->
 
-  <div class="container">
-    <div class="subcontainer">
-
-      <% if (success != "" ) { %>
-        <div class="alert-message-wrapper">
-          <div class="alert-message success">
+  <% if(success !="" ) { %>
+    <style>
+      .toast {
+        transform: translateX(0);
+        border-left: 8px solid #47d764;
+      }
+  
+      .fa-check-circle {
+        color: #47d764;
+      }
+    </style>
+    <section>
+      <div class="toast-wrapper">
+        <div class="toast">
+          <div class="icon-container">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="message-container flex-5">
+            <p>Success</p>
             <p>
               <%= success %>
             </p>
           </div>
+          <button id="closeToast">&times;</button>
         </div>
-      <% } %>
+      </div>
+    </section>
+    <% } %>
 
-      <% if (typeof allParsedErrors !="undefined" && allParsedErrors) { %>
-        <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
-          <div class="alert-message-wrapper">
-            <div class="alert-message">
-              <%= (allParsedErrors.errors[i].msg) %>
-            </div>
-          </div>
-        <% } %>
-      <% } %>
-  
+
+  <section id="settingsSection">
+    <div class="container">
+      <div class="subcontainer">
+    
       <div class="settings-wrapper">
 
 
         <div class="settings-col-1">
           <div class="settings-col-1-child-1">
-            <h2>User Settings</h2>
+            <h2>Settings</h2>
           </div>
           <div class="settings-col-1-child-2">
-            <div class="settings-col-1-link">
-              <a href="/settings" style="color:#009999;">
-                <div class="flex">
-                  <i class="fas fa-user-circle"></i>
-                  <p>PROFILE</p>
-                </div>
-              </a>
-            </div>
-            <div class="settings-col-1-link">
-              <a href="/settings/account">
-                <div class="flex">
-                  <i class="fas fa-cog"></i>
-                  <p>ACCOUNT</p>
-                </div>
-              </a>
-            </div>
+            <a href="/settings" style="color:#009999;">
+              <div class="settings-col-1-link flex">
+                <i class="fas fa-user-circle"></i>
+                <p>PROFILE</p>
+              </div>
+            </a>
+            <a href="/settings/showcase">
+              <div class="settings-col-1-link flex">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>SHOWCASE PHOTOS</p>
+              </div>
+            </a>
+            <a href="/settings/account">
+              <div class="settings-col-1-link flex">
+                <i class="fas fa-cog"></i>
+                <p>ACCOUNT</p>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -132,7 +144,7 @@
                 </div>
                 <div class="user-input">
                   <Label for="zip_code">ZIP Code</Label>
-                  <input type="text" pattern="[0-9]{5}" placeholder="Enter your zip code" required/>
+                  <input type="text" name="zip" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>" required/>
                 </div>
 
                 
@@ -277,46 +289,17 @@
           </form>
 
 
-          <!-- SHOWCASE PHOTOS  -->
-          
-          <form id="showcaseForm" class="settings-col-2">
-            <div class="flex-space-between">
-              <h3>Showcase photos</h3>
-              <button type="submit" id="update-profile-btn">Upload</button>
-            </div>
-            <div class="flex-10" style="width: 100%;">
-              <div class="showcase-photos flex-2">
-                <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
-                <p>( Upload 8 photos max )</p>
-                <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg" />
-              </div>
-              <div class="images-container">
-                <% if (showcasePhotos !== null) { %>
-                  <% for(let i=0; i < length; i++) { %>
-                    <div class="image">
-                      <img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>" alt="image">
-                      <span onclick="delImage('<%= i %>')">&times;</span>
-                    </div>
-                  <% } %>
-                <% } %>
-              </div>
-            </div>
-          </form>
-
-          <!-- SUCCESS/ERROR MESSAGES -->
-
-          <div class="message-container"></div>
-
         </div>
       </div>
     </div>
   </div>
+  </div>
+    </div>
+  </section>
 
-</section>
+  <script src="/js/script.js"></script>
 
-<script src="/js/script.js"></script>
-
-<script>  
+  <script>  
 
   // TAGS ==========================================
 
@@ -409,6 +392,20 @@
     });
     reader.readAsDataURL(this.files[0]);
   });
+
+  async function loadStates() {
+    let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
+    let response = await fetch(url);
+    let data = await response.json();
+    data.forEach(function (i) {
+      var state = document.createElement("option");
+      state.textContent = i.state;
+      state.value = i.usps;
+      document.querySelector("#state").appendChild(state);
+    });
+  };
+
+  window.addEventListener("load", loadStates);
 
 </script>
 

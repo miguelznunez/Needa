@@ -13,6 +13,7 @@ CREATE TABLE `login`.`user` (
   `cover_photo` VARCHAR(50) DEFAULT NULL,
   `city` VARCHAR(60) DEFAULT NULL,
   `state` CHAR(2) DEFAULT NULL,
+  `zip` CHAR(5) DEFAULT NULL,
   `gender` CHAR(1) DEFAULT NULL,
   `profession` VARCHAR(50) DEFAULT NULL,
   `specialty` TINYTEXT DEFAULT NULL,
