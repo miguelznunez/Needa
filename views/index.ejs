@@ -57,7 +57,7 @@
                       <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
                         <style>
                           .user-icon {
-                            background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                            background-image: url("http://localhost:5000/profile-photo/<%= user.id%>/<%= user.profile_photo %>");
                           }
                         </style>
                       <% } else { %>
@@ -71,7 +71,7 @@
                             <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
                               <style>
                                 .user-icon {
-                                  background-image: url("http://localhost:5000/profile-photo/<%= user.profile_photo %>");
+                                  background-image: url("http://localhost:5000/profile-photo/<%= user.id%>/<%= user.profile_photo %>");
                                 }
                               </style>
                             <% } else { %>
@@ -143,8 +143,8 @@
   <section id="carousel" class="fade">
     <div class="container">
       <div class="subcontainer">
-        <div class="carousel-header flex-15">
-          <div class="carousel-header-box-1 flex-10">
+        <div class="carousel-header flex-column-gap-15">
+          <div class="carousel-header-box-1 flex-column-gap-10">
             <h1>Needa connects you with working professionals in your area.</h1>
             <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
               dog? No problem. Search for professionals of any trade in your area today.

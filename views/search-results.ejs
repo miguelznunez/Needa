@@ -1,30 +1,84 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
 
+  <style>
+    body {
+      background-color: #e9e9e9;
+    }
+  </style>
+
 <div id="searchResultsSection">
   <div class="container">
     <div class="subcontainer">
-      <div class="m" style="margin-top:70px ;">
-        <% for(let i=0;i < rows.length;i++) { %>
-          <p>
-            <%= rows[i].first_name %>
-          </p>
-          <p>
-            <%= rows[i].last_name %>
-          </p>
-          <p>
-            <%= rows[i].profession %>
-          </p>
-          <p>
-            <%= rows[i].city %>
-          </p>
-          <p>
-            <%= rows[i].state %>
-          </p>
-          <br>
+      <div class="search-results-wrapper">
+        <div class="search-results-col-1">
+
+        </div>
+        <div class="search-results-col-2 flex-column-gap-25">
+
+          <div class="flex-column-gap-10">
+            <h1>
+              Results
+            </h1>
+            <div class="tag">
+              <p>
+                #<%= profession %>
+              </p>
+            </div>
+          </div>
+
+          
+          <div class="search-results-user-boxes flex-column-gap-20">
+          <% for(let i=0;i < rows.length;i++) { %>
+
+            
+            <div class="search-results-user-box flex-row-gap-10">
+
+              <div class="search-results-user-box-child flex-row-gap-10">
+                <div class="image"
+                  style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                </div>
+                
+                <div class="flex-column-gap-5">
+                  <div class="flex-row-gap-5">
+                    <h3>
+                      <%= rows[i].first_name %>
+                    </h3>
+                    <h3>
+                      <%= rows[i].last_name %>
+                    </h3>
+                  </div>
+                  <div>
+                    <p>
+                      <%= rows[i].profession %>
+                    </p>
+                  </div>
+                  <div class="flex-row-gap-5">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p>
+                      <%= rows[i].city %>,
+                    </p>
+                    <p>
+                      <%= rows[i].state %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="search-results-user-box-child">
+               <a href="http://localhost:5000/search-results-view-user/<%= rows[i].id %>">
+                <button id="viewUser">View User</button>
+               </a> 
+              </div>
+
+            </div>
+        
           <% } %>
+          </div>
+
+
+        </div>
       </div>
-  
     </div>
   </div>
 </div>

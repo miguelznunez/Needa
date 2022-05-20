@@ -24,19 +24,19 @@
 
         <div class="user-photos">
           <div class="photo">
-            <% if (rows[0].profile_photo !=null) { %>
+            <% if (rows[0].profile_photo !==null) { %>
               <h4>Profile Photo</h4>
-              <img src="http://localhost:5000/profile-photo/<%= rows[0].profile_photo %>" width="300" class="profile-img"
+              <img src="http://localhost:5000/profile-photo/<%= rows[0].id %>/<%= rows[0].profile_photo %>" width="300" class="profile-img"
                 alt="user-image">
-              <% } %>
+            <% } %>
           </div>
                   
           <div class="photo">
-            <% if (rows[0].profile_photo !=null) { %>
+            <% if (rows[0].cover_photo !==null) { %>
               <h4>Cover Photo</h4>
-              <img src="http://localhost:5000/cover-photo/<%= rows[0].cover_photo %>" width="300" class="profile-img"
+              <img src="http://localhost:5000/cover-photo/<%= rows[0].id %>/<%= rows[0].cover_photo %>" width="300" class="profile-img"
                 alt="user-image">
-              <% } %>
+            <% } %>
           </div>
         </div>
 

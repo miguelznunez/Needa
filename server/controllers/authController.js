@@ -25,12 +25,30 @@ function get_date(){
   return yourDate.toISOString().split('T')[0]
 }
 
+// CAPITALIZE FIRST LETTER OF STRING
+function titleCase(string){
+  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+}
+
+// CAPITALIZE FIRST LETTER OF EVERY WORD STRING
+function titleCaseAll(string) {
+    const splitString = string.toLowerCase().split(' ');
+    for (var i = 0; i < splitString.length; i++) 
+        splitString[i] = splitString[i].charAt(0).toUpperCase() + splitString[i].substring(1);   
+
+    return splitString.join(' '); 
+}
+
 // REGISTER -------------------------------------------------------
 
 
 exports.register = (req, res) => {
-  const { first_name, last_name, email, password, password_confirm } = req.body,
+  const { email, password, password_confirm } = req.body,
   member_since = get_date();
+  let {first_name, last_name} = req.body;
+
+  first_name = titleCase(first_name);
+  last_name = titleCase(last_name);
 
   // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
   const errors = validationResult(req),
@@ -340,8 +358,8 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 // UPDATE DATABASE
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
-  const tags = parseTags(update.tags),
-  data = { first_name:update.first_name, last_name:update.last_name, profile_photo:profile_photo, cover_photo:cover_photo, city:update.city, state:update.state, zip:update.zip, gender:update.gender, profession:update.profession, specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
+  const tags = parseTags(update.tags);
+  let data = { first_name:titleCase(update.first_name), last_name:titleCase(update.last_name), profile_photo:profile_photo, cover_photo:cover_photo, city:titleCase(update.city), state:update.state, zip:update.zip, gender:update.gender, profession:titleCaseAll(update.profession), specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) {
@@ -353,16 +371,15 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 }
 
 function parseTags(rawTags){
-  let tags = {}; // CREATE JSON OBJECT
+  let tags = [];
 
   if(rawTags !== "") {
     const values = JSON.parse(rawTags); // PARSE TAGS COMING IN FROM THE FRONT END
 
     for(let i = 0;i < values.length;i++) // LOOP THROUGH EACH TAG
-      tags[`tag_${i}`] = values[i]["value"].toLowerCase(); // STORE THE VALUE IN JSON OBJECT
+      tags.push(values[i]["value"].toLowerCase());
 
     tags = JSON.stringify(tags); // STRINGIFY JSON - TO STORE IN DATABASE
-
     return tags;
 
   } else {
@@ -441,10 +458,10 @@ exports.findProfessionals = (req, res) => {
   city = req.body.city,
   state = req.body.state,
   zip = req.body.zip;
-
-  db.query("SELECT first_name, last_name, profile_photo, city, state, profession FROM user WHERE (profession LIKE ? && city = ? && state = ?) OR (profession LIKE ? && zip = ?)", [`%${profession}%`, city, state, `%${profession}%`, zip], (err, rows) => {
-    console.log(rows);
-    if(!err) return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows});
+  db.query("SELECT id, first_name, last_name, profile_photo, city, state, profession, tags FROM user WHERE (profession LIKE ? && city = ? && state = ?) OR (profession LIKE ? && zip = ?)", [`%${profession}%`, city, state, `%${profession}%`, zip], (err, rows) => {
+    if(!err) {
+      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows, profession: profession});
+    }
     else return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
   });
 }

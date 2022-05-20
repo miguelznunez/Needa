@@ -324,6 +324,7 @@
   const profilePhoto = document.querySelector("#profilePhoto"),
   profilePhotoContainer = document.querySelector(".profile-photo-container"),
   profile = "<%= user.profile_photo %>",
+  id = "<%= user.id %>";
   uploadCloudPro = document.querySelector("#uploadCloudPro");
 
   // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
@@ -331,7 +332,7 @@
   if(profile) {
     uploadCloudPro.style.opacity = "0";
     profilePhoto.style.visibility = "hidden";
-    profilePhotoContainer.style.backgroundImage = `url(http://localhost:5000/profile-photo/${profile})`;
+    profilePhotoContainer.style.backgroundImage = `url(http://localhost:5000/profile-photo/${id}/${profile})`;
   }
 
   // IF THE USER DELETES THEIR PROFILE PHOTO DO THIS
@@ -368,7 +369,7 @@
   if (cover) {
     uploadCloudCov.style.opacity = "0";
     coverPhoto.style.visibility = "hidden";
-    coverPhotoContainer.style.backgroundImage = `url(http://localhost:5000/cover-photo/${cover})`;
+    coverPhotoContainer.style.backgroundImage = `url(http://localhost:5000/cover-photo/${id}/${cover})`;
   }
 
   // IF THE USER DELETES THEIR COVER PHOTO DO THIS
