@@ -6,14 +6,14 @@
       <div class="subcontainer">
         <form action="/auth/register" id="register-account-form" method="POST">
           <div id="title">
-            <h1 style="font-size: 2.5rem;"><a href="/">Register</a></h1>
+            <h1><a href="/">Register</a></h1>
           </div>
           <div>
-            <input type="text" id="first-name" name="first_name" maxlength="25" placeholder="First name"
+            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]" placeholder="First name"
               value="<%= typeof first_name != 'undefined' ? first_name : '' %>" required>
           </div>
           <div>
-            <input type="text" id="last-name" name="last_name" maxlength="25" placeholder="Last name"
+            <input type="text" id="last-name" name="last_name" maxlength="30" pattern="[A-Za-z]" placeholder="Last name"
               value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
           </div>
           <div>

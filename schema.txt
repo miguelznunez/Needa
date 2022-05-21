@@ -24,7 +24,7 @@ CREATE TABLE `login`.`user` (
   `facebook` TINYTEXT DEFAULT NULL,
   `linkedin` TINYTEXT DEFAULT NULL,
   `website` TINYTEXT DEFAULT NULL,
-  `phone` VARCHAR(11) DEFAULT NULL,
+  `phone` VARCHAR(12) DEFAULT NULL,
   `display_phone` VARCHAR(3) DEFAULT NULL,
   `display_email` VARCHAR(100) DEFAULT NULL,
   `tags` JSON DEFAULT NULL,

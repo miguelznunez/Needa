@@ -123,20 +123,20 @@
                 <div class="user-input">
                   <label for="first_name">First name</label>
                   <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"
-                    value="<%= user.first_name %>" maxlength="30">
+                    value="<%= user.first_name %>" maxlength="30" pattern="[a-zA-Z'-'\s]*">
                 </div>
                 <div class="user-input">
                   <label for="last_name">Last name</label>
                   <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>"
-                    maxlength="30">
+                  maxlength="30" pattern="[A-Za-z]+">
                 </div>
                 <div class="user-input">
                   <label for="city">City</label>
-                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60" required>
+                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60" pattern="[A-Za-z]+">
                 </div>
                 <div class="user-input">
                   <label for="state">State</label>
-                  <select name="state" id="state" required>
+                  <select name="state" id="state">
                     <option value="<%= user.state %>">
                       <%= user.state %>
                     </option>
@@ -144,7 +144,7 @@
                 </div>
                 <div class="user-input">
                   <Label for="zip_code">ZIP Code</Label>
-                  <input type="text" name="zip" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>" required/>
+                  <input type="text" name="zip" maxlength="5" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>">
                 </div>
 
                 
@@ -190,8 +190,8 @@
                 <h3>About You</h3>
                 <div class="user-input">
                   <label for="profession">Profession</label>
-                  <input type="text" name="profession" placeholder="e.g. Electrician" value="<%= user.profession %>"
-                    maxlength="50">
+                  <input type="text" name="profession" placeholder="E.g. Electrician" value="<%= user.profession %>"
+                    maxlength="50" pattern="[^\s][a-zA-Z ]+">
                 </div>
                 <div class="user-input">
                   <label for="specialty">Services</label>
@@ -247,7 +247,8 @@
           
                 <h3>Profile identity</h3>
                 <div class="user-input">
-                  <input type="phone" name="phone" placeholder="Enter your phone number" value="<%= user.phone %>" maxlength="11">
+                  <label for="phone">Phone</label>
+                  <input type="tel" name="phone" placeholder="E.g. 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
                 </div>
                 <div class="flex">
                   <% if(user.display_phone==="yes" ) { %>
@@ -259,6 +260,7 @@
                   <% } %>
                 </div>
                 <div class="user-input">
+                  <label for="email">Email</label>
                   <input type="email" name="email" placeholder="<%= user.email %>" disabled>
                 </div>
                 <div class="flex">
@@ -300,6 +302,16 @@
   <script src="/js/script.js"></script>
 
   <script>  
+
+
+    const toast = document.querySelector(".toast"),
+    closeToast = document.querySelector("#closeToast");
+    if (toast) {
+      closeToast.addEventListener("click", () => {
+        toast.style.transform = "translateX(400px)";
+      })
+    }
+
 
   // TAGS ==========================================
 
