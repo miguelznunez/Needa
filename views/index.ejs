@@ -19,6 +19,8 @@
 
 <body>
 
+  <%- include("partials/toast.ejs") %>
+
   <section id="cookies">
     <div class="container">
       <div class="subcontainer">
@@ -27,16 +29,6 @@
               id="more-info-link">More info.</a></p>
           <button id="cookies-btn" style="padding: 8px 12px 8px 12px;">I agree</button>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="toast-wrapper">
-      <div class="toast">
-        <div class="icon-container"></div>
-        <div class="message-container flex-5"></div>
-        <button id="closeToast">&times;</button>
       </div>
     </div>
   </section>
@@ -152,23 +144,19 @@
           </div>
 
           <form action="/auth/find-professionals" method="POST" id="findProsForm" class="carousel-header-box-2">
-            <input type="hidden" name="zip" id="zip">
-            <input type="hidden" name="city" id="city">
-            <input type="hidden" name="state" id="state">
-            <input type="hidden" name="county" id="county">
             <div>
-              <input type="text" name="profession" id="profession" placeholder="I needa...">
+              <input type="text" name="profession" id="profession" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
             </div>
             <div class="location">
-              <input type="text" id="location" placeholder="City, State or Zip">
+              <input type="text" name="location" id="location" placeholder="City, State or Zip" required>
             </div>
             <!-- <div>
               <p>Or</p>
             </div> -->
             <!-- <button id="locationBtn"><i class="fa-solid fa-location-crosshairs"></i></button> -->
             
-            <i class="fas fa-search"></i>
-            <button id="submitBtn">SEARCH</button>
+            <!-- <i class="fas fa-search"></i> -->
+            <button id="submitBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
           </form>
         </div>
       </div>
@@ -447,10 +435,116 @@
 <script src="/js/script.js"></script>
 
 <script>
-  window.addEventListener("scroll", () => {
-    const homeHeader = document.querySelector("#homeHeader");
-    homeHeader.classList.toggle("sticky", window.scrollY > 0);
-  })
+
+  const toast = document.querySelector(".toast"),
+  closeToast = document.querySelector("#closeToast");
+  if (toast) {
+    closeToast.addEventListener("click", () => {
+      toast.style.transform = "translateX(400px)";
+    })
+  }
+
+  const images = ["/images/barber.png", "/images/dj.png", "/images/lessons.jpg", "/images/carpenter.png"],
+  carousel = document.querySelector("#carousel"),
+  submitBtn = document.querySelector("#submitBtn"),
+  interval = setInterval(function () {
+    startCarousel();
+  }, 8000);
+
+  let index = 1;
+
+  // CAROUSEL
+
+  startCarousel = () => {
+    carousel.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0, 0, 0, 0.7)), url(${images[index++]})`;
+    carousel.classList.remove("fade");
+    void carousel.offsetWidth;
+    carousel.classList.add("fade");
+    if (index > images.length - 1) index = 0;
+  }
+
+  // TINY SLIDER 1
+
+  let slider_1 = tns({
+    container: '.my-slider-1',
+    animateIn: "jello",
+    animateOut: "rollOut",
+    slideBy: 1,
+    speed: 400,
+    nav: false,
+    swipeAngle: false,
+    autoplay: true,
+    autoplayButtonOutput: false,
+    controlsContainer: '#controls_1',
+    prevButton: '.previous_1',
+    nextButton: '.next_1',
+    responsive: {
+      1800: {
+        items: 5,
+        gutter: 20
+      },
+      1600: {
+        items: 4,
+        gutter: 20
+      },
+      1280: {
+        items: 4,
+        gutter: 20
+      },
+      768: {
+        items: 2
+      },
+      480: {
+        items: 1
+      },
+      320: {
+        items: 1
+      }
+    }
+  });
+
+  // TINY SLIDER 2
+
+  let slider_2 = tns({
+    container: '.my-slider-2',
+    animateIn: "jello",
+    animateOut: "rollOut",
+    slideBy: 'page',
+    speed: 400,
+    nav: false,
+    swipeAngle: false,
+    controlsContainer: '#controls_2',
+    prevButton: '.previous_2',
+    nextButton: '.next_2',
+    responsive: {
+      1800: {
+        items: 5,
+        gutter: 20
+      },
+      1600: {
+        items: 4,
+        gutter: 20
+      },
+      1280: {
+        items: 4,
+        gutter: 20
+      },
+      768: {
+        items: 2
+      },
+      480: {
+        items: 1
+      },
+      320: {
+        items: 1
+      }
+    }
+  });
+
+    window.addEventListener("scroll", () => {
+      const homeHeader = document.querySelector("#homeHeader");
+      homeHeader.classList.toggle("sticky", window.scrollY > 0);
+    })
 </script>
 
 <%- include("partials/footer.ejs") %>

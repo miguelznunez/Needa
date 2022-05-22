@@ -137,11 +137,22 @@ router.post("/add-user", [
     return value;
   }
  })
-
 ], authController.isLoggedIn, authController.addUser);
 
 router.post("/update-user/:id", authController.isLoggedIn, authController.updateUser);
 
-router.post("/find-professionals", authController.isLoggedIn, authController.findProfessionals);
+router.post("/find-professionals", [
+  check("profession", "Profession must be only alphabetical characters.").isAlpha('en-US', {ignore: ' '}),
+  check("profession", "Profession field cannot be empty.").not().isEmpty(),
+  check("location", "City, State, or zip field cannot be empty.").not().isEmpty(),
+  check("location").custom( (value) => {
+    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value);
+    const isValidCityState = /^([a-zA-Z ]+)(?:,([ A-Za-z]{3}))$/.test(value);
+    if(isValidZip || isValidCityState)
+      return true;
+    else
+      throw new Error("Please enter a valid location.");
+  })
+], authController.isLoggedIn, authController.findProfessionals);
 
 module.exports = router;

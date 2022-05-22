@@ -28,7 +28,7 @@ form{
   width: 375px;
   height: auto;
   margin: auto;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -165,6 +165,7 @@ th {
 /* FLEX, ROW, GAP */
 .flex-row-gap-5, .flex-row-gap-10, .flex-row-gap-15{
   display: flex;
+  flex-direction: row;
   gap: 5px;
 }
 
@@ -172,7 +173,7 @@ th {
   gap: 10px;
 }
 
-.flex-row-gap-10{
+.flex-row-gap-15{
   gap: 15px;
 }
 
@@ -334,28 +335,39 @@ th {
   text-decoration: none;
 }
 
-.nav-branding{
-  display: flex;
+.nav-search {
+  justify-content: flex-start;
   align-items: center;
-  gap: 20px;
-}
-
-.nav-search{
+  width: 100%;
   position: relative;
 }
 
-.nav-search input{
-  width: 600px;
-  padding-left: 40px;
+.nav-search #profession{
+  width: 400px;
 }
 
-.nav-search .fa-search{
+.nav-search #location {
+  width: 150px;
+}
+
+.nav-search #submitBtn{
+  color: white;
+  padding: 7px;
+  border: 3px solid white;
+  background-color: #009999;
+}
+/* .nav-search input{
+  width: 600px;
+  padding-left: 40px;
+} */
+
+/* .nav-search .fa-search{
   position: absolute;
   top: 25%; 
   left: 2%;
   color: lightgray;
   font-size: 1.2rem;
-}
+} */
 
 .nav-menu{
   display: flex;
@@ -1426,13 +1438,13 @@ th {
 #carousel .carousel-header-box-2 input {
   font-size: 1rem;
   width: 430px;
-  padding: 18px 18px 18px 60px;
+  padding: 19px;
   /* font-size: 1.2rem; */
 }
 
 #carousel .location input{
   width: 175px;
-  padding: 18px;
+  padding: 19px;
 }
 
 #carousel #locationBtn,
@@ -1449,13 +1461,13 @@ th {
   color: white;
 }
 
-#carousel .fa-search{
+/* #carousel .fa-search{
   font-size: 1.4rem;
   color: lightgray;
   position: absolute;
   top: 30%;
   left: 3%;
-}
+} */
 
 .fade {
   -webkit-animation-name: fade;

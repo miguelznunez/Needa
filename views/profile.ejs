@@ -182,7 +182,7 @@
                 <% if (showcasePhotos !==null) { %>
                   <div class="showcase-container">
                     <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[photo] %>"></span></div>
+                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span></div>
                     <% } %>
                   </div>
                   <div class="preview-box">

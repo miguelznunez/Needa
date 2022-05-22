@@ -1,12 +1,6 @@
 var windowLocation = window.location.pathname; 
 
-switch(windowLocation){
-  case "/":
-    var indexJS = document.createElement('script');
-    indexJS.type = "text/javascript";
-    indexJS.src = "/js/index.js";
-    document.body.append(indexJS);
-    break;  
+switch(windowLocation){ 
   case "/register":
     var registerJS = document.createElement('script');
     registerJS.type = "text/javascript";

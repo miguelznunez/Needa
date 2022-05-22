@@ -28,16 +28,23 @@
       <div class="subcontainer">
         <nav>
           <div class="navbar">
-            <div class="nav-branding">
-              <a href="/" class="nav-logo">
-                <h1>Needa</h1>
-              </a>
-              <div class="nav-search">
-                <input type="text" placeholder="I needa...">
-                <i class="fas fa-search"></i>
+          
+            <% if(typeof user != "undefined" && user) { %>
+              <form action="/auth/find-professionals" method="POST" class="nav-search flex-row-gap-15">
+                <a href="/" class="nav-logo">
+                  <h1>Needa</h1>
+                </a>
+                <input type="text" name="profession" id="profession" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
+                <input type="text" name="location" id="location" placeholder="City, State or Zip" required>
+                <button id="submitBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </form>
+            <% } else { %>
+              <div class="nav-branding">
+                <a href="/" class="nav-logo">
+                  <h1>Needa</h1>
+                </a>
               </div>
-
-            </div>
+            <% } %>
 
             <ul class="nav-menu">
 

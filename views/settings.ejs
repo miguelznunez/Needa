@@ -123,12 +123,12 @@
                 <div class="user-input">
                   <label for="first_name">First name</label>
                   <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"
-                    value="<%= user.first_name %>" maxlength="30" pattern="[a-zA-Z'-'\s]*">
+                    value="<%= user.first_name %>" maxlength="30" pattern="[A-Za-z]+" required>
                 </div>
                 <div class="user-input">
                   <label for="last_name">Last name</label>
                   <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>"
-                  maxlength="30" pattern="[A-Za-z]+">
+                  maxlength="30" pattern="[A-Za-z]+" required>
                 </div>
                 <div class="user-input">
                   <label for="city">City</label>
@@ -217,26 +217,26 @@
                 <h3>Social</h3>
                 <div class="user-input">
                   <label for="website">Website</label>
-                  <input type="text" name="website" placeholder="https://johndoe.com" value="<%= user.website %>" maxlength="255">
+                  <input type="url" name="website" placeholder="https://johndoe.com" value="<%= user.website %>" maxlength="255">
                 </div>
                 <div class="user-input">
                   <label for="twitter">Twitter</label>
-                  <input type="text" name="twitter" placeholder="https://twitter.com/johndoe" value="<%= user.twitter %>"
+                  <input type="url" name="twitter" placeholder="https://twitter.com/johndoe" value="<%= user.twitter %>"
                     maxlength="255">
                 </div>
                 <div class="user-input">
                   <label for="instagram">Instagram</label>
-                  <input type="text" name="instagram" placeholder="https://instagram.com/johndoe" value="<%= user.instagram %>"
+                  <input type="url" name="instagram" placeholder="https://instagram.com/johndoe" value="<%= user.instagram %>"
                     maxlength="255">
                 </div>
                 <div class="user-input">
                   <label for="facebook">Facebook</label>
-                  <input type="text" name="facebook" placeholder="https://facebook.com/johndoe" value="<%= user.facebook %>"
+                  <input type="url" name="facebook" placeholder="https://facebook.com/johndoe" value="<%= user.facebook %>"
                     maxlength="255">
                 </div>
                 <div class="user-input">
                   <label for="linkedin">LinkedIn</label>
-                  <input type="text" name="linkedin" placeholder="https://www.linkedin.com/in/johndoe"
+                  <input type="url" name="linkedin" placeholder="https://www.linkedin.com/in/johndoe"
                     value="<%= user.linkedin %>" maxlength="255">
                 </div>
           

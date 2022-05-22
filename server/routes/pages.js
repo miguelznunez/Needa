@@ -106,16 +106,14 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    const showcasePhotos = JSON.parse(req.user.showcase_photos);
-
-    const website = req.user.website.split("https:/");
-    const twitter = req.user.twitter.split(".com");
-    const instagram = req.user.instagram.split(".com");
-    const facebook = req.user.facebook.split(".com");
-    const linkedin = req.user.linkedin.split(".com");
-  
-    const tags = JSON.parse(req.user.tags);
-    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], showcasePhotos: showcasePhotos, tags: tags} );
+    const website = req.user.website.split("https:/"),
+    twitter = req.user.twitter.split(".com"),
+    instagram = req.user.instagram.split(".com"),
+    facebook = req.user.facebook.split(".com"),
+    linkedin = req.user.linkedin.split(".com"),
+    tags = JSON.parse(req.user.tags),
+    showcasePhotos = JSON.parse(req.user.showcase_photos);
+    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags: tags, showcasePhotos: showcasePhotos} );
   } else return res.redirect("/login");
 });
 
@@ -149,13 +147,19 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/search-results-view-user/:id", (req, res) => {
+router.get("/search-results-user-profile/:id", (req, res) => {
   if(!checkBrowser(req.headers)){
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      console.log(rows);
-      // if(!err) return res.render("view-user", {title: "Needa | View User" , user : req.user, rows: rows})
-      if(!err) res.send("Here we are")
-      else console.log(err);
+      if(!err) {
+        const website = rows[0].website.split("https:/"),
+        twitter = rows[0].twitter.split(".com"),
+        instagram = rows[0].instagram.split(".com"),
+        facebook = rows[0].facebook.split(".com"),
+        linkedin = rows[0].linkedin.split(".com"),
+        tags = JSON.parse(rows[0].tags),
+        showcasePhotos = JSON.parse(rows[0].showcase_photos);
+        return res.render("user-profile", {title: "Needa | View User" , user : req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
+      } else console.log(err);
     });
   }
   else return res.redirect("/login");
@@ -164,7 +168,7 @@ router.get("/search-results-view-user/:id", (req, res) => {
 // PHOTO ROUTES
 
 router.get("/profile-photo/:id/:key", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers)){
+  if(!checkBrowser(req.headers)){
     const readStream = s3.getImageStream(req.params.id, req.params.key);
     readStream.pipe(res);
   }else 
@@ -172,16 +176,16 @@ router.get("/profile-photo/:id/:key", authController.isLoggedIn, (req, res) => {
 });
 
 router.get("/cover-photo/:id/:key", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers)){
+  if(!checkBrowser(req.headers)){
     const readStream = s3.getImageStream(req.params.id, req.params.key);
     readStream.pipe(res);
   }else 
     return res.redirect("/login");
 });
 
-router.get("/showcase-photo/:key", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.user.id, req.params.key);
+router.get("/showcase-photo/:id/:key", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.params.id, req.params.key);
     readStream.pipe(res);
   }else 
     return res.redirect("/login");

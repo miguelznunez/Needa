@@ -27,13 +27,13 @@
               <h2>Settings</h2>
             </div>
             <div class="showcase-col-1-child-2">
-              <a href="/settings" style="color:#009999;">
+              <a href="/settings">
                 <div class="showcase-col-1-link flex">
                   <i class="fas fa-user-circle"></i>
                   <p>PROFILE</p>
                 </div>
               </a>
-              <a href="/settings/showcase">
+              <a href="/settings/showcase" style="color:#009999;">
                 <div class="showcase-col-1-link flex">
                   <i class="fa-solid fa-cloud-arrow-up"></i>
                   <p>SHOWCASE PHOTOS</p>
@@ -65,7 +65,7 @@
                 <% if (showcasePhotos !==null) { %>
                   <% for(let i=0; i < length; i++) { %>
                     <div class="image">
-                      <img src="http://localhost:5000/showcase-photo/<%= showcasePhotos[i] %>" alt="image">
+                      <img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[i] %>" alt="image">
                       <span onclick="delImage('<%= i %>')">&times;</span>
                     </div>
                   <% } %>

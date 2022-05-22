@@ -454,14 +454,32 @@ exports.isLoggedIn = async (req, res, next) => {
 // SEARCH FOR PROFESSIONALS ----------------------------------------
 
 exports.findProfessionals = (req, res) => {
-  const profession = req.body.profession,
-  city = req.body.city,
-  state = req.body.state,
-  zip = req.body.zip;
-  db.query("SELECT id, first_name, last_name, profile_photo, city, state, profession, tags FROM user WHERE (profession LIKE ? && city = ? && state = ?) OR (profession LIKE ? && zip = ?)", [`%${profession}%`, city, state, `%${profession}%`, zip], (err, rows) => {
-    if(!err) {
-      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows, profession: profession});
-    }
+  const profession = req.body.profession;
+  location = req.body.location;
+
+  // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
+  const errors = validationResult(req),
+  allErrors = JSON.stringify(errors),
+  allParsedErrors = JSON.parse(allErrors);
+   // OUTPUT VALIDATION ERRORS IF ANY
+  if(!errors.isEmpty()){
+    return res.render("index", {
+      title: "Home | Loaves Fishes Computers",
+      allParsedErrors: allParsedErrors
+    })
+  }
+
+  if(location.includes(",")) {
+    const arrLocation = location.replace(/\s/g, '').split(',');
+    queryLocation(req, res, profession, arrLocation[0], arrLocation[1], "");
+  } else {
+    queryLocation(req, res, profession, "", "", location);
+  }
+}
+
+function queryLocation(req, res, profession, city, state, zip) {
+  db.query("SELECT id, first_name, last_name, profile_photo, city, state, profession, tags FROM user WHERE ((profession LIKE ? || tags LIKE ?) && (city = ? && state = ? || zip = ?))", [`%${profession}%`, `%${profession}%`, city, state, zip], (err, rows) => {
+    if(!err) return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows, profession: profession});
     else return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
   });
 }
