@@ -106,14 +106,21 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    const website = req.user.website.split("https:/"),
-    twitter = req.user.twitter.split(".com"),
-    instagram = req.user.instagram.split(".com"),
-    facebook = req.user.facebook.split(".com"),
-    linkedin = req.user.linkedin.split(".com"),
+    let website = (req.user.website === null) ? null : req.user.website.split("https:/")[1],
+    twitter = (req.user.twitter === null) ? null : req.user.twitter.split(".com")[1],
+    instagram = (req.user.instagram === null) ? null : req.user.instagram.split(".com")[1],
+    facebook = (req.user.facebook === null) ? null : req.user.facebook.split(".com")[1],
+    linkedin = (req.user.linkedin === null) ? null : req.user.linkedin.split(".com")[1];
     tags = JSON.parse(req.user.tags),
     showcasePhotos = JSON.parse(req.user.showcase_photos);
-    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags: tags, showcasePhotos: showcasePhotos} );
+
+    // website = (website === null) ? null : website[1];
+    // twitter = (twitter === null) ? null : twitter[1];
+    // instagram = (instagram === null) ? null : instagram[1];
+    // facebook = (facebook === null) ? null : facebook[1];
+    // linkedin = (linkedin === null) ? null : linkedin[1];
+
+    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website, twitter:twitter, instagram:instagram, facebook:facebook, linkedin:linkedin, tags: tags, showcasePhotos: showcasePhotos} );
   } else return res.redirect("/login");
 });
 

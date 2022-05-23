@@ -50,19 +50,19 @@
           </div>
           <div class="settings-col-1-child-2">
             <a href="/settings" style="color:#009999;">
-              <div class="settings-col-1-link flex">
+              <div class="settings-col-1-link flex-row-gap-10">
                 <i class="fas fa-user-circle"></i>
                 <p>PROFILE</p>
               </div>
             </a>
             <a href="/settings/showcase">
-              <div class="settings-col-1-link flex">
+              <div class="settings-col-1-link flex-row-gap-10">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <p>SHOWCASE PHOTOS</p>
               </div>
             </a>
             <a href="/settings/account">
-              <div class="settings-col-1-link flex">
+              <div class="settings-col-1-link flex-row-gap-10">
                 <i class="fas fa-cog"></i>
                 <p>ACCOUNT</p>
               </div>
@@ -152,31 +152,31 @@
                 <div class="user-input">
                   <% if(user.gender==="M" ) { %>
                     <label for="gender">Gender</label>
-                    <div class="flex" style="width: 60px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
                       <input type="radio" name="gender" value="M" checked>
                       <label for="M">Male</label>
                     </div>
-                    <div class="flex" style="width: 78px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
                       <input type="radio" name="gender" value="F">
                       <label for="F">Female</label>
                     </div>
                   <% } else if (user.gender==="F" ) { %>
                     <label for="gender">Gender</label>
-                    <div class="flex" style="width: 60px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
                       <input type="radio" name="gender" value="M">
                       <label for="M">Male</label>
                     </div>
-                    <div class="flex" style="width: 78px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
                       <input type="radio" name="gender" value="F" checked>
                       <label for="F">Female</label>
                     </div>
                   <% } else { %>
                     <label for="gender">Gender</label>
-                    <div class="flex" style="width: 60px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
                       <input type="radio" name="gender" value="M">
                       <label for="M">Male</label>
                     </div>
-                    <div class="flex" style="width: 78px;">
+                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
                       <input type="radio" name="gender" value="F">
                       <label for="F">Female</label>
                     </div>
@@ -250,7 +250,7 @@
                   <label for="phone">Phone</label>
                   <input type="tel" name="phone" placeholder="E.g. 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
                 </div>
-                <div class="flex">
+                <div>
                   <% if(user.display_phone==="yes" ) { %>
                     <input type="checkbox" value="yes" name="display_phone" checked>
                     <label for="display_phone">Display my phone number on profile page</label>
@@ -263,7 +263,7 @@
                   <label for="email">Email</label>
                   <input type="email" name="email" placeholder="<%= user.email %>" disabled>
                 </div>
-                <div class="flex">
+                <div>
                   <% if(user.display_email==="yes" ) { %>
                     <input type="checkbox" value="yes" name="display_email" checked>
                     <label for="display_email">Display my email on profile page</label>

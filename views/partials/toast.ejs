@@ -15,7 +15,7 @@
           <div class="icon-container">
             <i class="fas fa-check-circle"></i>
           </div>
-          <div class="message-container flex-5">
+          <div class="message-container flex-column-gap-10">
             <p>Success</p>
             <p>
               <%= message %>
@@ -43,7 +43,7 @@
           <div class="icon-container">
             <i class="fas fa-times-circle"></i>
           </div>
-          <div class="message-container flex-5">
+          <div class="message-container flex-column-gap-10">
             <p>Error</p>
             <p>
               <%= message %>
@@ -72,7 +72,7 @@
           <div class="icon-container">
             <i class="fas fa-info-circle"></i>
           </div>
-          <div class="message-container flex-5">
+          <div class="message-container flex-column-gap-10">
             <p>Info</p>
             <p>
               <%= message %>
@@ -100,15 +100,13 @@
           <div class="icon-container">
             <i class="fas fa-times-circle"></i>
           </div>
-          <div class="message-container flex-5">
+          <div class="message-container flex-column-gap-10">
             <p>Error</p>
-            <div class="flex-10">
-              <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
-                <p style="font-weight: normal; color: black; font-size: 1rem;">
-                  <%= (allParsedErrors.errors[i].msg) %>
-                </p>
-              <% } %>
-            </div>
+            <% for(let i=0; i < allParsedErrors.errors.length; i++ ) { %>
+              <p style="font-weight: normal; color: black; font-size: 1rem;">
+                <%= (allParsedErrors.errors[i].msg) %>
+              </p>
+            <% } %>
           </div>
           <button id="closeToast">&times;</button>
         </div>

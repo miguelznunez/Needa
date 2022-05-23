@@ -33,7 +33,7 @@
               <div class="profile-identity flex-column-gap-10">
                 <h1>
                   <%= user.first_name%>
-                    <%= user.last_name%>
+                  <%= user.last_name%>
                 </h1>
                 <h2>
                   <%= user.profession%>
@@ -41,13 +41,14 @@
                 <% if(user.city && user.state) { %>
                   <h3>
                     <i class="fas fa-map-marker-alt"></i>
-                    <%= user.city %>, <%= user.state%>
+                    <%= user.city %>, <%= user.state%> <%= user.zip %>
                   </h3>
                 <% } else if (user.city || user.state) { %>
                   <h3>
                     <i class="fas fa-map-marker-alt"></i>
                     <%= user.city %>
                     <%= user.state%>
+                    <%= user.zip %>
                   </h3>
                 <% } %>
               </div>
@@ -156,26 +157,44 @@
               <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
             </div>
 
-            <div class="profile-col-2-box-1">            
-              <div class="profile-services flex-column-gap-20">
-                <h3>SERVICES</h3>
-                <p>
-                  <%= user.specialty %>
-                </p>
-              </div>
+            <div class="profile-col-2-box-1">  
+              <% if(user.specialty) { %>
+                <div class="profile-services flex-column-gap-20">
+                  <h3>SERVICES</h3>
+                  <p>
+                    <%= user.specialty %>
+                  </p>
+                </div>
+              <% } else { %>
+                <div class="profile-services">
+                  <h3>SERVICES</h3>
+                  <p>
+                    <%= user.specialty %>
+                  </p>
+                </div>
+              <% } %>
             </div>
 
             <div class="profile-col-2-box-2">
-              <div class="profile-skills flex-column-gap-20">
-                <h3>SKILLS</h3>
-                <p>
-                  <%= user.skills %>
-                </p>
-              </div>
+              <% if(user.skills) { %>
+                <div class="profile-skills flex-column-gap-20">
+                  <h3>SKILLS</h3>
+                  <p>
+                    <%= user.skills %>
+                  </p>
+                </div>
+              <% } else { %>
+                <div class="profile-skills">
+                  <h3>SKILLS</h3>
+                  <p>
+                    <%= user.skills %>
+                  </p>
+                </div>
+              <% } %>
             </div>
 
             <div class="profile-col-2-box-3">
-              <div class="profile-showcase-photos flex-column-gap-20">
+              <div class="profile-showcase-photos">
                 <div>
                   <h3>SHOWCASE</h3>
                 </div>
@@ -204,9 +223,9 @@
             </div>
 
             <div class="profile-col-2-box-4">
-              <div class="profile-following ">
+              <div class="profile-contacts ">
                 <div>
-                  <h3>FOLLOWING</h3>
+                  <h3>CONTACTS</h3>
                 </div>
               </div>
             </div>

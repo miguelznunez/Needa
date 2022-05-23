@@ -27,16 +27,19 @@ function get_date(){
 
 // CAPITALIZE FIRST LETTER OF STRING
 function titleCase(string){
-  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  const updatedString = (string === "") ? null : string[0].toUpperCase() + string.slice(1).toLowerCase();
+  return updatedString;
 }
 
 // CAPITALIZE FIRST LETTER OF EVERY WORD STRING
 function titleCaseAll(string) {
-    const splitString = string.toLowerCase().split(' ');
-    for (var i = 0; i < splitString.length; i++) 
-        splitString[i] = splitString[i].charAt(0).toUpperCase() + splitString[i].substring(1);   
-
-    return splitString.join(' '); 
+  const splitString = (string === "") ? null : string.toLowerCase().split(' ');
+  if(splitString){
+    for (let i = 0; i < splitString.length; i++) 
+      splitString[i] = splitString[i].charAt(0).toUpperCase() + splitString[i].substring(1);   
+    return splitString.join(' ');
+  } 
+  return splitString;   
 }
 
 // REGISTER -------------------------------------------------------
