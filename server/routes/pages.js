@@ -114,12 +114,6 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
     tags = JSON.parse(req.user.tags),
     showcasePhotos = JSON.parse(req.user.showcase_photos);
 
-    // website = (website === null) ? null : website[1];
-    // twitter = (twitter === null) ? null : twitter[1];
-    // instagram = (instagram === null) ? null : instagram[1];
-    // facebook = (facebook === null) ? null : facebook[1];
-    // linkedin = (linkedin === null) ? null : linkedin[1];
-
     return res.render("profile", {title: "Needa | Profile", user : req.user, website:website, twitter:twitter, instagram:instagram, facebook:facebook, linkedin:linkedin, tags: tags, showcasePhotos: showcasePhotos} );
   } else return res.redirect("/login");
 });
