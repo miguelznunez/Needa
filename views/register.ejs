@@ -48,15 +48,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
   <script src="/js/script.js"></script>
-
-  <script>
-    const toast = document.querySelector(".toast"),
-    closeToast = document.querySelector("#closeToast");
-    if (toast) {
-      closeToast.addEventListener("click", () => {
-        toast.style.transform = "translateX(400px)";
-      })
-    }
-  </script>
+  <script src="/js/toast.js"></script>
 
 <%- include("partials/footer.ejs") %>

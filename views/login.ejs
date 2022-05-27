@@ -35,12 +35,11 @@
   </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/toast.js"></script>
   <script>
 
    const showPassword = document.querySelector("#show-password"),
-   passwordField = document.querySelector("#password"),
-   toast = document.querySelector(".toast"),
-   closeToast = document.querySelector("#closeToast");
+   passwordField = document.querySelector("#password");
 
   showPassword.addEventListener("click", function (e) {
     if (showPassword.checked)
@@ -48,12 +47,6 @@
     else
       passwordField.setAttribute("type", "password");
   })
-
-  if (toast) {
-    closeToast.addEventListener("click", () => {
-      toast.style.transform = "translateX(400px)";
-    })
-  }
 
   </script>
 

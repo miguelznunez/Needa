@@ -34,9 +34,12 @@
                 <a href="/" class="nav-logo">
                   <h1>Needa</h1>
                 </a>
-                <input type="text" name="profession" id="profession" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
+                <div id="needa-search">
+                  <input type="text" name="profession" id="search" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
+                  <div id="match-list"></div>
+                </div>
                 <input type="text" name="location" id="location" placeholder="City, State or Zip" required>
-                <button id="submitBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="submitBtn">Search</button>
               </form>
             <% } else { %>
               <div class="nav-branding">
@@ -66,7 +69,6 @@
                       <% } else { %>
                         <i class="fas fa-user link" data-dropdown-button></i>
                       <% } %>
-
 
                     </div>
                     <div class="dropdown-menu">
@@ -137,26 +139,36 @@
 
                 <% if(title === "Needa | Login") { %>
                   <li class="nav-item">
-                    <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                        id="register-user-btn">Register</button></a>
+                    <a href="/register" class="nav-link">
+                      <button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                        id="register-user-btn">Register
+                      </button>
+                    </a>
                   </li>
 
                 <!-- ELSE IF USER IS IN REGISTER PAGE -->
 
                 <% } else if(title === "Needa | Register") { %>
                   <li class="nav-item">
-                    <a href="/login" class="nav-link">Log in</a>
+                    <a href="/login" class="nav-link">
+                      Log in
+                    </a>
                   </li>
 
                 <!-- ELSE ANY OTHER PAGE -->
 
                 <% } else { %>
                     <li class="nav-item">
-                      <a href="/login" class="nav-link">Log in</a>
+                      <a href="/login" class="nav-link">
+                        Log in
+                      </a>
                     </li>
                     <li class="nav-item">
-                      <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                          id="register-user-btn">Register</button></a>
+                      <a href="/register" class="nav-link">
+                        <button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
+                          id="register-user-btn">Register
+                        </button>
+                      </a>
                     </li>
                 <% } %>
 
@@ -185,4 +197,8 @@
       </div>
     </div>
   </section>
+
+  <% if (typeof user !="undefined" && user) { %>
+    <script src="/js/search-list.js"></script>
+  <% } %>
 

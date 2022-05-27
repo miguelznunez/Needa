@@ -4,14 +4,6 @@
     <%- include("partials/toast.ejs") %>
   </section>
 
-  <script>
-    const toast = document.querySelector(".toast"),
-    closeToast = document.querySelector("#closeToast");
-    if (toast) {
-      closeToast.addEventListener("click", () => {
-        toast.style.transform = "translateX(400px)";
-      })
-    }
-  </script>
+  <script src="/js/toast.js"></script>
 
 <%- include("partials/footer.ejs") %>

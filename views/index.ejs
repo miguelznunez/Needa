@@ -434,16 +434,11 @@
   </section>
 
 <script src="/js/script.js"></script>
+<script src="/js/tiny-slider.js"></script>
+<script src="/js/search-list.js"></script>
+<script src="/js/toast.js"></script>
 
 <script>
-
-  const toast = document.querySelector(".toast"),
-  closeToast = document.querySelector("#closeToast");
-  if (toast) {
-    closeToast.addEventListener("click", () => {
-      toast.style.transform = "translateX(400px)";
-    })
-  }
 
   const images = ["/images/barber.png", "/images/dj.png", "/images/lessons.jpg", "/images/carpenter.png"],
   carousel = document.querySelector("#carousel"),
@@ -463,136 +458,6 @@
     carousel.classList.add("fade");
     if (index > images.length - 1) index = 0;
   }
-
-  // TINY SLIDER 1
-
-  let slider_1 = tns({
-    container: '.my-slider-1',
-    animateIn: "jello",
-    animateOut: "rollOut",
-    slideBy: 1,
-    speed: 400,
-    nav: false,
-    swipeAngle: false,
-    autoplay: true,
-    autoplayButtonOutput: false,
-    controlsContainer: '#controls_1',
-    prevButton: '.previous_1',
-    nextButton: '.next_1',
-    responsive: {
-      1800: {
-        items: 5,
-        gutter: 20
-      },
-      1600: {
-        items: 4,
-        gutter: 20
-      },
-      1280: {
-        items: 4,
-        gutter: 20
-      },
-      768: {
-        items: 2
-      },
-      480: {
-        items: 1
-      },
-      320: {
-        items: 1
-      }
-    }
-  });
-
-  // TINY SLIDER 2
-
-  let slider_2 = tns({
-    container: '.my-slider-2',
-    animateIn: "jello",
-    animateOut: "rollOut",
-    slideBy: 'page',
-    speed: 400,
-    nav: false,
-    swipeAngle: false,
-    controlsContainer: '#controls_2',
-    prevButton: '.previous_2',
-    nextButton: '.next_2',
-    responsive: {
-      1800: {
-        items: 5,
-        gutter: 20
-      },
-      1600: {
-        items: 4,
-        gutter: 20
-      },
-      1280: {
-        items: 4,
-        gutter: 20
-      },
-      768: {
-        items: 2
-      },
-      480: {
-        items: 1
-      },
-      320: {
-        items: 1
-      }
-    }
-  });
-
-  const search = document.querySelector("#search");
-  const matchList = document.querySelector("#match-list");
-
-  // Search professions.json and filter it
-  const searchProfessions = async searchText => {
-    const res = await fetch("/data/professions.json");
-    const professions = await res.json();
-
-    matchList.style.display = "block";
-
-    // Get matches to current text input
-    let matches = professions.filter(profession => {
-      const regex = new RegExp(`^${searchText}`, "gi");
-      return profession.name.match(regex);
-    });
-
-    if (searchText.length === 0) {
-      matches = [];
-      matchList.innerHTML = "";
-      matchList.style.display = "none";
-    }
-
-    outputHtml(matches);
-  }
-
-  // Show results in HTML
-  const outputHtml = matches => {
-      if (matches.length > 0) {
-      const html = matches.map(match => `
-      <div class="name" onclick="setSearchValue('${match.name}')">
-        <p>${match.name}</p>
-      </div>
-    `).join("");
-
-      matchList.innerHTML = html;
-    }
-  }
-
-  const setSearchValue = name => {
-    search.value = name;
-    matchList.style.display = "none";
-  }
-
-  search.addEventListener("input", () => searchProfessions(search.value))
-
-
-  window.addEventListener('click', function (e) {
-    if (!document.querySelector("#needa-search").contains(e.target)) {
-      matchList.style.display = "none";
-    } 
-  });
 
   window.addEventListener("scroll", () => {
     const homeHeader = document.querySelector("#homeHeader");

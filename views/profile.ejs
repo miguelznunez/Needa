@@ -54,6 +54,24 @@
               </div>
             </div>
 
+          <!-- CONTACT  -->
+
+          <div class="profile-col-1-box-5">
+            <h3>CONTACT</h3>
+            <div class="profile-phone flex-row-gap-20">
+              <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
+              <p>
+                <%= user.phone %>
+              </p>
+            </div>
+            <div class="profile-email flex-row-gap-20">
+              <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
+              <p>
+                <%= user.email %>
+              </p>
+            </div>
+          </div>
+
           <!-- WEBSITE -->
 
             <% if(user.website) { %>
@@ -148,18 +166,6 @@
                 </div>
               </div>
             <% } %>
-
-            <div class="profile-col-1-box-5">
-              <h3>CONTACT</h3>
-              <div class="profile-phone flex-row-gap-20">
-                <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
-                <p><%= user.phone %></p>
-              </div>
-              <div class="profile-email flex-row-gap-20">
-                <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
-                <p><%= user.email %></p>
-              </div>
-            </div>
         
           </div>
 
