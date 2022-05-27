@@ -148,8 +148,8 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/search-results-user-profile/:id", (req, res) => {
-  if(!checkBrowser(req.headers)){
+router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers) && req.user){
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
       if(!err) {
         const website = rows[0].website.split("https:/"),
@@ -159,11 +159,25 @@ router.get("/search-results-user-profile/:id", (req, res) => {
         linkedin = rows[0].linkedin.split(".com"),
         tags = JSON.parse(rows[0].tags),
         showcasePhotos = JSON.parse(rows[0].showcase_photos);
-        return res.render("user-profile", {title: "Needa | View User" , user : req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
+        return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
       } else console.log(err);
     });
+  } else if(!checkBrowser(req.headers) && !req.user) {
+    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
+      if(!err) {
+        const website = rows[0].website.split("https:/"),
+        twitter = rows[0].twitter.split(".com"),
+        instagram = rows[0].instagram.split(".com"),
+        facebook = rows[0].facebook.split(".com"),
+        linkedin = rows[0].linkedin.split(".com"),
+        tags = JSON.parse(rows[0].tags),
+        showcasePhotos = JSON.parse(rows[0].showcase_photos);
+        return res.render("user-profile", {title: "Needa | View User", rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
+      } else console.log(err);
+    });
+  } else {
+    return res.redirect("/login");
   }
-  else return res.redirect("/login");
 });
 
 // PHOTO ROUTES

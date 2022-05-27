@@ -807,7 +807,8 @@ th {
 }
 
 #profileSection #profile-edit,
-#profileSection #show-modal-btn {
+#profileSection #show-modal-btn,
+#profileSection #add-contact-btn {
   color: #009999;
   background-color: white;
   border: 3px solid #009999;

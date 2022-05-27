@@ -95,9 +95,15 @@
 
           <div class="profile-col-2-wrapper">
 
-            <div class="profile-edit">
-              <button id="show-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
-            </div>
+            <% if(typeof user !== "undefined" && user.id !== rows[0].id) { %>
+              <div class="profile-edit">
+                <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+              </div>
+            <% } else if(typeof user === "undefined") { %>
+              <div class="profile-edit">
+                <button id="show-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+              </div>
+            <% } %>
 
             <div class="profile-col-2-box-1">
               <% if(rows[0].specialty) { %>
@@ -214,25 +220,32 @@
     showModalBtn = document.querySelector("#show-modal-btn"),
     body = document.querySelector("body");
 
-    setTimeout(function () {
-      modal.classList.add("show-modal");
-      modal.style.zIndex = "1";
-      body.style.overflow = "hidden";
-    }, 1000);
+    if(showModalBtn){
+      setTimeout(function () {
+        modal.classList.add("show-modal");
+        modal.style.zIndex = "1";
+        body.style.overflow = "hidden";
+      }, 1000);
+    }
 
-    showModalBtn.addEventListener("click", () => {
-      modal.classList.remove("hide-modal");
-      modal.classList.add("show-modal");
-      modal.style.zIndex = "1";
-      body.style.overflow = "hidden";
-    })
+    if(showModalBtn){
+      showModalBtn.addEventListener("click", () => {
+        modal.classList.remove("hide-modal");
+        modal.classList.add("show-modal");
+        modal.style.zIndex = "1";
+        body.style.overflow = "hidden";
+      })
+    }
 
-    closeModalBtn.addEventListener("click", () => {
-      modal.classList.remove("show-modal");
-      modal.classList.add("hide-modal");
-      modal.style.zIndex = "-1";
-      body.style.overflow = "auto";
-    })
+    if(closeModalBtn){
+      closeModalBtn.addEventListener("click", () => {
+        modal.classList.remove("show-modal");
+        modal.classList.add("hide-modal");
+        modal.style.zIndex = "-1";
+        body.style.overflow = "auto";
+      })
+    }
+
   </script>
 
 <%- include("partials/footer.ejs") %>
