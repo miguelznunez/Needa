@@ -160,7 +160,9 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
         tags = JSON.parse(rows[0].tags),
         showcasePhotos = JSON.parse(rows[0].showcase_photos);
         return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
-      } else console.log(err);
+      } else {
+        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} )
+      }
     });
   } else if(!checkBrowser(req.headers) && !req.user) {
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
@@ -173,7 +175,7 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
         tags = JSON.parse(rows[0].tags),
         showcasePhotos = JSON.parse(rows[0].showcase_photos);
         return res.render("user-profile", {title: "Needa | View User", rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
-      } else console.log(err);
+      } else return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} );
     });
   } else {
     return res.redirect("/login");

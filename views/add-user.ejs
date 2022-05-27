@@ -1,37 +1,40 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
 
-  <section id="registerSection">
+  <section id="addUserSection">
     <div class="container">
       <div class="subcontainer">
-        <form action="/auth/register" id="register-account-form" method="POST">
+        <form action="/auth/add-user" id="add-user-form" method="POST">
           <div class="form-title">
-            <h1>Register</h1>
+            <h1>Create User</h1>
           </div>
 
           <div class="input-group">
-            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name" value="<%= typeof first_name != 'undefined' ? first_name : '' %>" onkeyup="validateFirstName()" required>
-              <span id="first-name-error"></span>
+            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
+              value="<%= typeof first_name != 'undefined' ? first_name : '' %>" onkeyup="validateFirstName()" required>
+            <span id="first-name-error"></span>
           </div>
           <div class="input-group">
             <input type="text" id="last-name" name="last_name" maxlength="30" pattern="[A-Za-z]+" placeholder="Last name"
               value="<%= typeof last_name != 'undefined' ? last_name : '' %>" onkeyup="validateLastName()" required>
-              <span id="last-name-error"></span>
+            <span id="last-name-error"></span>
           </div>
           <div class="input-group">
             <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
               value="<%= typeof email != 'undefined' ? email : '' %>" onkeyup="validateEmail()" required>
-              <span id="email-error"></span>
+            <span id="email-error"></span>
           </div>
           <div class="input-group">
-            <input type="password" id="password" name="password" maxlength="60" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" onkeyup="validatePassword()" required>
+            <input type="password" id="password" name="password" maxlength="60" placeholder="Password"
+              value="<%= typeof password != 'undefined' ? password : '' %>" onkeyup="validatePassword()" required>
             <span id="password-error"></span>
           </div>
           <div class="input-group">
-            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password" onkeyup="validatePasswordConfirm()" required>
+            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
+              onkeyup="validatePasswordConfirm()" required>
             <span id="password-confirm-error"></span>
           </div>
-
+          
           <div id="show-password-container">
             <div>
               <input type="checkbox" id="show-password">
@@ -39,12 +42,10 @@
             </div>
           </div>
           <div>
-            <button id="account-btn">Create Account</button>
-          </div>
-          <div id="login">
-            <p>Already a member? <a href="/login">Login</a></p>
+            <button id="account-btn"><i class="fa-solid fa-user-plus" style="color: white;"></i> Add User</button>
           </div>
         </form>
+
       </div>
     </div>
   </section>
@@ -53,5 +54,5 @@
   <script src="/js/toast.js"></script>
   <script src="/js/register-show-password.js"></script>
   <script src="/js/input-validation.js"></script>
-
+  
 <%- include("partials/footer.ejs") %>

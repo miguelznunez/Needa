@@ -1,18 +1,6 @@
 var windowLocation = window.location.pathname; 
 
 switch(windowLocation){ 
-  case "/register":
-    var registerJS = document.createElement('script');
-    registerJS.type = "text/javascript";
-    registerJS.src = "/js/register.js";
-    document.body.append(registerJS);
-    break;
-  case "/auth/register":
-    var registerJS = document.createElement('script');
-    registerJS.type = "text/javascript";
-    registerJS.src = "/js/register.js";
-    document.body.append(registerJS);
-    break;
   case "/settings/showcase":
     var showcaseJS = document.createElement('script');
     showcaseJS.type = "text/javascript";

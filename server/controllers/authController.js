@@ -87,15 +87,15 @@ exports.register = (req, res) => {
             async (err, results) => {
               if (!err) {
                 mail.activateAccountEmail(email, results.insertId, token, (err, data) => {
-                  if(!err) return res.render("register", {title: "Needa | Register", type: "success", message: `We have sent an email to ${email}, please click the link included to verify your email address.`});
-                  else return res.render("register", {title: "Needa | Register", type: "error", message: err.message});
+                  if(!err) return res.render("register", { title:"Needa | Register", type:"success", message:`We have sent an email to ${email}, please click the link included to verify your email address.` });
+                  else return res.render("register", { title:"Needa | Register", type:"error", message:err.message });
                 });
               // DATABASE ERROR
-              } else { return res.render("register", {title: "Needa | Register", type: "error", message: err.message}); }
+              } else { return res.render("register", { title:"Needa | Register", type:"error", message:err.message}); }
           })//function
         });//bcrypt
     // DATABASE ERROR
-    } else{ return res.render("register", {title: "Needa | Register", type: "error", message: err.message}); } 
+    } else{ return res.render("register", { title:"Needa | Register", type:"error", message:err.message }); } 
    });
 }
 
@@ -521,13 +521,13 @@ exports.addUser = (req, res) => {
   // If there are validation errors: return them to the user.
   if(!errors.isEmpty()){
     return res.render("add-user", { 
-      title:"Needa | Add User",
-      user : req.user,
-      allParsedErrors: allParsedErrors,
-      first_name : first_name,
-      last_name : last_name,
-      email: email,
-      password: password
+      title           :"Needa | Add User",
+      user            : req.user,
+      allParsedErrors : allParsedErrors,
+      first_name      : first_name,
+      last_name       : last_name,
+      email           : email,
+      password        : password
     })
   }
 
@@ -539,19 +539,19 @@ exports.addUser = (req, res) => {
     // Email already exists
     } else if (results != ""){
       return res.render("add-user", {title: "Needa | Add User",
-                              user : req.user,
-                              success: false,
-                              message: "An account with that email already exists",
-                              first_name : first_name,
-                              last_name : last_name,
-                              email: email,
-                              password: password});
+                              user        : req.user,
+                              type        : "error",
+                              message     : "An account with that email already exists",
+                              first_name  : first_name,
+                              last_name   : last_name,
+                              email       : email,
+                              password    : password});
     // Create account
     } else {
       bcrypt.hash(password, saltRounds, (err, hash) => {
         db.query("INSERT INTO user (first_name, last_name, email, password, member_since, status, admin) VALUES (?,?,?,?,?,?,?)", [first_name, last_name, email, hash, member_since, status, admin],
           async (err, results) => {
-            if (!err) return res.render("add-user", {title: "Add User", user : req.user, success: true, message: "User account was created successfully"});
+            if (!err) return res.render("add-user", {title: "Add User", user:req.user, type:"success", message:"User account was created successfully"});
             else console.log(err)
         })// db function
       });//bcrypt

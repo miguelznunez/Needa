@@ -188,23 +188,13 @@ th {
   margin: auto;
 }
 
-.center-content{
-  display: flex;
-  justify-content: center;
-  align-items: center;  
-  text-align: center;
-  min-height: 500px;
-  padding: 20px 0 30px 0;
-}
-
-#title{
+.form-title{
   width: 100%;
   text-align: center;
 }
 
-#title a{
-  text-decoration: none;
-  color: black;
+.form-title h1{
+  font-size: 2.5rem;
 }
 
 #errorSection,
@@ -416,8 +406,8 @@ th {
 }
 
 .nav-search #match-list .name:hover {
-  background-color: #bfbfbf;
-  color: black
+  background-color: #009999;
+  color: white;
 }
 
 .nav-search #location {
@@ -440,7 +430,7 @@ th {
 
 #register-user-btn{
   color: white;
-  border: 2px solid white;
+  border: 3px solid white;
   background-color: #009999;
 }
 
@@ -1789,8 +1779,8 @@ th {
 }
 
 #carousel #match-list .name:hover {
-  background-color: #bfbfbf;
-  color: black
+  background-color: #009999;
+  color: white;
 }
 
 #carousel .location input{
@@ -1930,6 +1920,10 @@ th {
 
 #popularSearches .img-1_12{
   background-image: url(/images/security.png);
+}
+
+#popularSearches .img-1_13{
+  background-image: url(/images/web_developer.jpg);
 }
 
 #popularSearches .previous_1,
@@ -2223,10 +2217,6 @@ input[type="checkbox"]{
  width: auto;
 }
 
-#password-strength-text{
-  font-size: 0.8rem;
-}
-
 #forgot-password a{
   text-decoration: none;
   color: #009999;
@@ -2237,7 +2227,6 @@ input[type="checkbox"]{
   text-decoration: none;
 }
 
-
 #account-btn, #login-btn, #link-btn, #update-password{
   width: 375px;
   color: white;
@@ -2246,6 +2235,24 @@ input[type="checkbox"]{
   box-shadow: 0 0 5px #009999;
   border: 1px solid black;
   transition: 0.3s ease-out;
+}
+
+.input-group{
+  position: relative;
+}
+
+.input-group span{
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.fa-circle-check{
+  color: #47d764;
+}
+
+.fa-circle-xmark{
+  color: red;
 }
 
 /* PASSWORD-RESET.EJS */
@@ -2349,6 +2356,16 @@ input[type="checkbox"]{
 
 #adminSection .delete {
   background-color: #d9534f;
+}
+
+/* ADD-USER.EJS */
+
+#addUserSection {
+  margin-top: 70px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* VIEW-USER.EJS */

@@ -58,40 +58,143 @@
 
             <!-- CONTACT -->
 
-            <div class="profile-col-1-box-5 not-loggedIn">
-              <h3>CONTACT</h3>
-              <i class="fa-solid fa-lock"></i>
-            </div>
+            <% if(typeof user !== "undefined") { %>
+              <div class="profile-col-1-box-5">
+                <h3>CONTACT</h3>
+
+                <% if(rows[0].display_phone === "yes") { %>
+                  <div class="profile-phone flex-row-gap-20">
+                    <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
+                    <p>
+                      <%= user.phone %>
+                    </p>
+                  </div>
+                <% } %>
+
+                <% if(rows[0].display_email === "yes") { %>
+                  <div class="profile-email flex-row-gap-20">
+                    <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
+                    <p>
+                      <%= user.email %>
+                    </p>
+                  </div>
+                <% } %>
+
+              </div>
+            <% } else { %>
+              <div class="profile-col-1-box-5 not-loggedIn">
+                <h3>CONTACT</h3>
+                <i class="fa-solid fa-lock"></i>
+              </div>
+            <% } %>
+      
 
             <!-- WEBSITE -->
 
-            <div class="profile-col-1-box-2 not-loggedIn">
-              <h3>WEBSITE</h3>
-              <i class="fa-solid fa-lock"></i>
-            </div>
+            <% if(typeof user !=="undefined") { %>
+              <div class="profile-col-1-box-2">
+                <h3>WEBSITE</h3>
+                <% if(rows[0].website) { %>
+                  <div class="profile-website-link">
+                    <a href="<%= user.website %>" target="_blank">
+                      <div class="flex-row-gap-20">
+                        <i class="fas fa-desktop"></i>
+                        <p>
+                          <%= website %>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                  <% } %>
+              </div>
+            <% } else { %>
+              <div class="profile-col-1-box-2 not-loggedIn">
+                <h3>WEBSITE</h3>
+                <i class="fa-solid fa-lock"></i>
+              </div>
+            <% } %>
+
 
             <!-- SOCIAL MEDIA  -->
 
+          <% if(typeof user !=="undefined" ) { %>
+            <div class="profile-col-1-box-3">
+              <h3>SOCIAL MEDIA</h3>
+              <% if(twitter) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.twitter %>" target="_blank">
+                    <div class="flex-row-gap-20">
+                      <i class="fab fa-twitter"></i>
+                      <p>
+                        <%= twitter %>
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+              
+              <% if(instagram) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.instagram %>" target="_blank">
+                    <div class="flex-row-gap-20">
+                      <i class="fab fa-instagram"></i>
+                      <p>
+                        <%= instagram %>
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+      
+              <% if(facebook) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.facebook %>" target="_blank">
+                    <div class="flex-row-gap-20">
+                      <i class="fab fa-facebook"></i>
+                      <p>
+                        <%= facebook %>
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+      
+              <% if(linkedin) { %>
+                <div class="profile-social-link">
+                  <a href="<%= user.linkedin %>" target="_blank">
+                    <div class="flex-row-gap-20">
+                      <i class="fab fa-linkedin"></i>
+                      <p>
+                        <%= linkedin %>
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+                          
+            </div>
+          <% } else { %>
             <div class="profile-col-1-box-3 not-loggedIn">
               <h3>SOCIAL MEDIA</h3>
               <i class="fa-solid fa-lock"></i>
             </div>
+          <% } %>
 
 
-            <!-- TAGS -->
+          <!-- TAGS -->
 
-              <div class="profile-col-1-box-5">
-                <h3>TAGS</h3>
-                <div class="tags">
-                  <% for(let tag in tags) { %>
-                    <div class="tag">
-                      #<%= tags[tag] %>
-                    </div>
-                    <% } %>
+          <div class="profile-col-1-box-5">
+            <h3>TAGS</h3>
+            <div class="tags">
+              <% for(let tag in tags) { %>
+                <div class="tag">
+                  #<%= tags[tag] %>
                 </div>
-              </div>
-
+                <% } %>
+            </div>
           </div>
+
+        </div>
 
           <div class="profile-col-2-wrapper">
 

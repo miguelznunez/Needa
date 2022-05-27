@@ -5,13 +5,13 @@
     <div class="container">
       <div class="subcontainer">
         <form action="/auth/login" id="login-form" method="POST">
-          <div id="title">
-            <h1><a href="/">Login</a></h1>
+          <div class="form-title">
+            <h1>Login</h1>
           </div>
-          <div>
+          <div class="input-group">
             <input type="text" id="email" name="email" placeholder="Email" required>
           </div>
-          <div id="password-container">
+          <div class="input-group">
             <input type="password" id="password" name="password" placeholder="Password" required>
           </div>
           <div id="show-password-container">
@@ -36,19 +36,6 @@
 
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
-  <script>
-
-   const showPassword = document.querySelector("#show-password"),
-   passwordField = document.querySelector("#password");
-
-  showPassword.addEventListener("click", function (e) {
-    if (showPassword.checked)
-      passwordField.setAttribute("type", "text");
-    else
-      passwordField.setAttribute("type", "password");
-  })
-
-  </script>
-
+  <script src="/js/login-show-password.js"></script>
 
 <%- include("partials/footer.ejs") %>
