@@ -62,7 +62,7 @@
                 <% if(user.website) { %>
                   <div class="profile-website-link">
                     <a href="<%= user.website %>" target="_blank">
-                      <div class="flex">
+                      <div class="flex-row-gap-20">
                         <i class="fas fa-desktop"></i>
                         <p>
                           <%= website %>
@@ -83,7 +83,7 @@
                 <% if(user.twitter) { %>
                   <div class="profile-social-link">
                     <a href="<%= user.twitter %>" target="_blank">
-                      <div class="flex">
+                      <div class="flex-row-gap-20">
                         <i class="fab fa-twitter"></i>
                           <p>
                             <%= twitter %>
@@ -96,7 +96,7 @@
                 <% if(user.instagram) { %>
                   <div class="profile-social-link">
                     <a href="<%= user.instagram %>" target="_blank">
-                      <div class="flex">
+                      <div class="flex-row-gap-20">
                         <i class="fab fa-instagram"></i>
                           <p>
                             <%= instagram %>
@@ -109,7 +109,7 @@
                 <% if(user.facebook) { %>
                   <div class="profile-social-link">
                     <a href="<%= user.facebook %>" target="_blank">
-                      <div class="flex">
+                      <div class="flex-row-gap-20">
                         <i class="fab fa-facebook"></i>
                         <p>
                           <%= facebook %>
@@ -122,7 +122,7 @@
                 <% if(user.linkedin) { %>
                   <div class="profile-social-link">
                     <a href="<%= user.linkedin %>" target="_blank">
-                      <div class="flex">
+                      <div class="flex-row-gap-20">
                         <i class="fab fa-linkedin"></i>
                         <p>
                           <%= linkedin %>
@@ -148,6 +148,18 @@
                 </div>
               </div>
             <% } %>
+
+            <div class="profile-col-1-box-5">
+              <h3>CONTACT</h3>
+              <div class="profile-phone flex-row-gap-20">
+                <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
+                <p><%= user.phone %></p>
+              </div>
+              <div class="profile-email flex-row-gap-20">
+                <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
+                <p><%= user.email %></p>
+              </div>
+            </div>
         
           </div>
 
