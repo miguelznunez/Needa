@@ -503,10 +503,15 @@ exports.findUser = (req, res) => {
 
 
 exports.addUser = (req, res) => {
-  const { first_name, last_name, password, password_confirm, admin } = req.body;
+  const { password, password_confirm, admin } = req.body;
   const member_since = get_date();
   const status = "Active";
-  var email = req.body.email;
+  let {first_name, last_name} = req.body;
+
+  first_name = titleCase(first_name);
+  last_name = titleCase(last_name);
+
+  let email = req.body.email;
 
   if(email === "@")
     email = undefined;
@@ -551,7 +556,7 @@ exports.addUser = (req, res) => {
       bcrypt.hash(password, saltRounds, (err, hash) => {
         db.query("INSERT INTO user (first_name, last_name, email, password, member_since, status, admin) VALUES (?,?,?,?,?,?,?)", [first_name, last_name, email, hash, member_since, status, admin],
           async (err, results) => {
-            if (!err) return res.render("add-user", {title: "Add User", user:req.user, type:"success", message:"User account was created successfully"});
+            if (!err) return res.render("add-user", {title: "Add User", user:req.user, type:"success", message:`A user account with an email of ${email} was created successfully.`});
             else console.log(err)
         })// db function
       });//bcrypt

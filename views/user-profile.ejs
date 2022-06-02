@@ -121,7 +121,7 @@
             <div class="profile-col-1-box-3">
               <h3>SOCIAL MEDIA</h3>
               <% if(twitter) { %>
-                <div class="profile-social-link">
+                <div class="profile-social-link twitter">
                   <a href="<%= user.twitter %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-twitter"></i>
@@ -134,7 +134,7 @@
               <% } %>
               
               <% if(instagram) { %>
-                <div class="profile-social-link">
+                <div class="profile-social-link instagram">
                   <a href="<%= user.instagram %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-instagram"></i>
@@ -147,7 +147,7 @@
               <% } %>
       
               <% if(facebook) { %>
-                <div class="profile-social-link">
+                <div class="profile-social-link facebook">
                   <a href="<%= user.facebook %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-facebook"></i>
@@ -160,7 +160,7 @@
               <% } %>
       
               <% if(linkedin) { %>
-                <div class="profile-social-link">
+                <div class="profile-social-link linkedin">
                   <a href="<%= user.linkedin %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-linkedin"></i>
@@ -185,13 +185,15 @@
 
           <div class="profile-col-1-box-5">
             <h3>TAGS</h3>
-            <div class="tags">
-              <% for(let tag in tags) { %>
-                <div class="tag">
-                  #<%= tags[tag] %>
-                </div>
+            <% if(tags) { %>
+              <div class="tags">
+                <% for(let tag in tags) { %>
+                  <div class="tag">
+                    #<%= tags[tag] %>
+                  </div>
                 <% } %>
-            </div>
+              </div>
+            <% } %>
           </div>
 
         </div>
@@ -209,6 +211,12 @@
             <% } %>
 
             <div class="profile-col-2-box-1">
+              <div class="profile-services flex-column-gap-20">
+                <h3>EXPERIENCE</h3>
+              </div>
+            </div>
+
+            <div class="profile-col-2-box-2">
               <% if(rows[0].specialty) { %>
                 <div class="profile-services flex-column-gap-20">
                   <h3>SERVICES</h3>
@@ -226,7 +234,7 @@
               <% } %>
             </div>
 
-            <div class="profile-col-2-box-2">
+            <div class="profile-col-2-box-3">
               <% if(rows[0].skills) { %>
                 <div class="profile-skills flex-column-gap-20">
                   <h3>SKILLS</h3>
@@ -244,7 +252,15 @@
               <% } %>
             </div>
 
-            <div class="profile-col-2-box-3">
+            <div class="profile-col-2-box-4">
+              <div class="profile-following ">
+                <div>
+                  <h3>CONTACTS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-col-2-box-5">
               <div class="profile-showcase-photos flex-column-gap-20">
                 <div>
                   <h3>SHOWCASE</h3>
@@ -273,14 +289,6 @@
               </div>
             </div>
 
-
-            <div class="profile-col-2-box-4">
-              <div class="profile-following ">
-                <div>
-                  <h3>FOLLOWING</h3>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>
@@ -327,7 +335,6 @@
       setTimeout(function () {
         modal.classList.add("show-modal");
         modal.style.zIndex = "1";
-        body.style.overflow = "hidden";
       }, 1000);
     }
 
@@ -336,7 +343,6 @@
         modal.classList.remove("hide-modal");
         modal.classList.add("show-modal");
         modal.style.zIndex = "1";
-        body.style.overflow = "hidden";
       })
     }
 
@@ -345,7 +351,6 @@
         modal.classList.remove("show-modal");
         modal.classList.add("hide-modal");
         modal.style.zIndex = "-1";
-        body.style.overflow = "auto";
       })
     }
 

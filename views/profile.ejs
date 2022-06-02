@@ -56,7 +56,7 @@
 
           <!-- CONTACT  -->
 
-          <div class="profile-col-1-box-5">
+          <div class="profile-col-1-box-2">
             <h3>CONTACT</h3>
             <div class="profile-phone flex-row-gap-20">
               <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
@@ -76,10 +76,10 @@
           <!-- WEBSITE -->
 
 
-          <div class="profile-col-1-box-2">
+          <div class="profile-col-1-box-3">
             <h3>WEBSITE</h3>
             <% if(user.website) { %>
-              <div class="profile-website-link">
+              <div class="profile-website-link website">
                 <a href="<%= user.website %>" target="_blank">
                   <div class="flex-row-gap-20">
                     <i class="fas fa-desktop"></i>
@@ -95,11 +95,11 @@
           <!-- SOCIAL MEDIA  -->
 
 
-          <div class="profile-col-1-box-3">
+          <div class="profile-col-1-box-4">
             <h3>SOCIAL MEDIA</h3>
 
             <% if(user.twitter) { %>
-              <div class="profile-social-link">
+              <div class="profile-social-link twitter">
                 <a href="<%= user.twitter %>" target="_blank">
                   <div class="flex-row-gap-20">
                     <i class="fab fa-twitter"></i>
@@ -112,7 +112,7 @@
             <% } %>
 
             <% if(user.instagram) { %>
-              <div class="profile-social-link">
+              <div class="profile-social-link instagram">
                 <a href="<%= user.instagram %>" target="_blank">
                   <div class="flex-row-gap-20">
                     <i class="fab fa-instagram"></i>
@@ -125,7 +125,7 @@
             <% } %>
 
             <% if(user.facebook) { %>
-              <div class="profile-social-link">
+              <div class="profile-social-link facebook">
                 <a href="<%= user.facebook %>" target="_blank">
                   <div class="flex-row-gap-20">
                     <i class="fab fa-facebook"></i>
@@ -138,7 +138,7 @@
             <% } %>
 
             <% if(user.linkedin) { %>
-              <div class="profile-social-link">
+              <div class="profile-social-link linkedin">
                 <a href="<%= user.linkedin %>" target="_blank">
                   <div class="flex-row-gap-20">
                     <i class="fab fa-linkedin"></i>
@@ -155,7 +155,7 @@
             <!-- TAGS -->
 
 
-          <div class="profile-col-1-box-4">
+          <div class="profile-col-1-box-5">
             <h3>TAGS</h3>
             <% if(user.tags) { %>
               <div class="tags">
@@ -176,7 +176,13 @@
               <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
             </div>
 
-            <div class="profile-col-2-box-1">  
+            <div class="profile-col-2-box-1">
+              <div class="profile-services flex-column-gap-20">
+                <h3>EXPERIENCE</h3>
+              </div>
+            </div>
+
+            <div class="profile-col-2-box-2">  
               <% if(user.specialty) { %>
                 <div class="profile-services flex-column-gap-20">
                   <h3>SERVICES</h3>
@@ -194,7 +200,7 @@
               <% } %>
             </div>
 
-            <div class="profile-col-2-box-2">
+            <div class="profile-col-2-box-3">
               <% if(user.skills) { %>
                 <div class="profile-skills flex-column-gap-20">
                   <h3>SKILLS</h3>
@@ -212,7 +218,15 @@
               <% } %>
             </div>
 
-            <div class="profile-col-2-box-3">
+            <div class="profile-col-2-box-4">
+              <div class="profile-contacts ">
+                <div>
+                  <h3>CONTACTS</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-col-2-box-5">
               <div class="profile-showcase-photos">
                 <div>
                   <h3>SHOWCASE</h3>
@@ -238,14 +252,6 @@
                   </div>
                   <div class="shadow"></div>
                 <% } %>
-              </div>
-            </div>
-
-            <div class="profile-col-2-box-4">
-              <div class="profile-contacts ">
-                <div>
-                  <h3>CONTACTS</h3>
-                </div>
               </div>
             </div>
 

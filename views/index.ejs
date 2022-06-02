@@ -21,6 +21,28 @@
 
   <%- include("partials/toast.ejs") %>
 
+  <div id="location-modal-overlay">
+    <div id="location-modal">
+      <div class="modal-container flex-column-gap-20">
+        <div class="modal-header flex-row-gap-10">
+          <h2><i class="fa-solid fa-location-crosshairs" style="color: black;"></i> Current Location: <span id="current-location"></span></h2>
+          <i class="fa-solid fa-xmark" id="location-close-modal-btn"></i>
+        </div>
+        <div class="modal-header flex-row-gap-10">
+          <input type="text" placeholder="City, State" id="update-location-input">
+          <button id="update-location-btn">Update</button>
+          <p>OR</p>
+          <button id="use-my-current-location-btn">Use My Current Location</button>          
+        </div>
+      </div>
+      <div class="modal-container">
+        <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade" id="location-src">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
   <section id="cookies">
     <div class="container">
       <div class="subcontainer">
@@ -41,8 +63,16 @@
             <a href="/" class="nav-branding">
               <h1>Needa</h1>
             </a>
+            
             <ul class="nav-menu">
+
               <% if (typeof user !="undefined" && user) { %>
+                <li class="nav-item">
+                  <i class="fa-solid fa-bell" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
+                </li>
+                <li class="nav-item">
+                  <i class="fa-solid fa-location-dot" id="location-show-modal-btn" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
+                </li>
                 <li class="nav-item">
                   <div class="dropdown" data-dropdown>
                     <div class="user-icon link" data-dropdown-button>
@@ -121,18 +151,27 @@
                   </li>
                 <% } %>
             </ul>
+
             <div class="hamburger">
               <span class="bar"></span>
               <span class="bar"></span>
               <span class="bar"></span>
             </div>
+
           </div>
         </nav>
       </div>
     </div>
   </header>
 
-  <section id="carousel" class="fade">
+  <section id="carousel" class="fade" style="position: relative;">
+    <div class="custom-shape-divider-bottom-1654062691">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"></path>
+      </svg>
+    </div>
     <div class="container">
       <div class="subcontainer">
         <div class="carousel-header flex-column-gap-15">
@@ -151,18 +190,14 @@
             <div class="location">
               <input type="text" name="location" id="location" placeholder="City, State or Zip" required>
             </div>
-            <!-- <div>
-              <p>Or</p>
-            </div> -->
-            <!-- <button id="locationBtn"><i class="fa-solid fa-location-crosshairs"></i></button> -->
-            
-            <!-- <i class="fas fa-search"></i> -->
             <button id="submitBtn">SEARCH</button>
           </form>
         </div>
       </div>
     </div>
   </section>
+
+
 
   <section id="popularSearches">
     <div class="container">
@@ -185,7 +220,7 @@
                 </div>
                 <div>
                   <h3>Mechanics</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -196,7 +231,7 @@
                 </div>
                 <div>
                   <h3>Tutors</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -208,7 +243,7 @@
                 </div>
                 <div>
                   <h3>Personal Trainers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -219,7 +254,7 @@
                 </div>
                 <div>
                   <h3>Landscapers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -230,7 +265,7 @@
                 </div>
                 <div>
                   <h3>Movers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -241,7 +276,7 @@
                 </div>
                 <div>
                   <h3>Carpenters</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -252,7 +287,7 @@
                 </div>
                 <div>
                   <h3>Cleaners</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -263,7 +298,7 @@
                 </div>
                 <div>
                   <h3>Caterers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -274,7 +309,7 @@
                 </div>
                 <div>
                   <h3>DJ's</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -285,7 +320,7 @@
                 </div>
                 <div>
                   <h3>Plumbers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -296,7 +331,7 @@
                 </div>
                 <div>
                   <h3>Barbers</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -307,7 +342,7 @@
                 </div>
                 <div>
                   <h3>Security</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -318,7 +353,7 @@
                 </div>
                 <div>
                   <h3>Web Developer</h3>
-                  <p>Needa <i class="far fa-check-circle" style="font-size: 0.8rem;color: #009999;"></i></p>
+                  <p>Needa <i class="far fa-check-circle"></i></p>
                 </div>
               </div>
             </div>
@@ -448,6 +483,9 @@
 <script src="/js/tiny-slider.js"></script>
 <script src="/js/search-list.js"></script>
 <script src="/js/toast.js"></script>
+<% if (typeof user !="undefined" && user) { %>
+  <script src="/js/google-map.js"></script>
+<% } %>
 
 <script>
 
@@ -474,6 +512,22 @@
     const homeHeader = document.querySelector("#homeHeader");
     homeHeader.classList.toggle("sticky", window.scrollY > 0);
   })
+
+
+  const overlay = document.querySelector("#location-modal-overlay"),
+  showModalBtn = document.querySelector("#location-show-modal-btn"),
+  closeModalBtn = document.querySelector("#location-close-modal-btn");
+
+  if(showModalBtn)
+    showModalBtn.addEventListener("click", () => {
+      overlay.style.display = "block";
+    })
+
+  if(closeModalBtn)
+    closeModalBtn.addEventListener("click", () => {
+      overlay.style.display = "none";
+    })
+
 </script>
 
 <%- include("partials/footer.ejs") %>

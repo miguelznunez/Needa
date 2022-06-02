@@ -167,14 +167,9 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
   } else if(!checkBrowser(req.headers) && !req.user) {
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
       if(!err) {
-        const website = rows[0].website.split("https:/"),
-        twitter = rows[0].twitter.split(".com"),
-        instagram = rows[0].instagram.split(".com"),
-        facebook = rows[0].facebook.split(".com"),
-        linkedin = rows[0].linkedin.split(".com"),
-        tags = JSON.parse(rows[0].tags),
+        const tags = JSON.parse(rows[0].tags),
         showcasePhotos = JSON.parse(rows[0].showcase_photos);
-        return res.render("user-profile", {title: "Needa | View User", rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
+        return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:tags, showcasePhotos: showcasePhotos })
       } else return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} );
     });
   } else {

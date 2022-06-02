@@ -17,6 +17,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <title><%= title %></title>
 </head>
@@ -54,6 +56,12 @@
               <!-- IF USER IS LOGGED IN -->
 
               <% if (typeof user !="undefined" && user) { %>
+                <li class="nav-item">
+                  <i class="fa-solid fa-bell" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
+                </li>
+                <li class="nav-item">
+                  <i class="fa-solid fa-location-dot" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
+                </li>
                 <li class="nav-item">
                   <div class="dropdown" data-dropdown>
                     <div class="user-icon link" data-dropdown-button>
