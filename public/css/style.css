@@ -102,6 +102,11 @@ th {
   text-align: left;
 }
 
+iframe{
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 ::-webkit-input-placeholder {
    font-style: italic;
 }
@@ -262,6 +267,7 @@ th {
   width: 100%;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 #location-modal .modal-header i{
@@ -398,7 +404,6 @@ th {
   display: flex;
   justify-content: space-between;
   align-items: center;  
-
 }
 
 .navbar li{ 
@@ -2605,6 +2610,10 @@ footer {
   #settingsSection .settings-wrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  #location-modal {
+    width: 95%;
   }
 
 }

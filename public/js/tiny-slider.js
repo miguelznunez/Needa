@@ -14,20 +14,21 @@
     prevButton: '.previous-1',
     nextButton: '.next-1',
     responsive: {
-      1800: {
+      1700: {
         items: 5,
-        gutter: 20
+        gutter: 15
       },
       1600: {
         items: 4,
-        gutter: 20
+        gutter: 15
       },
       1280: {
         items: 4,
-        gutter: 20
+        gutter: 15
       },
       768: {
-        items: 2
+        items: 2,
+        gutter: 15
       },
       480: {
         items: 1
@@ -58,20 +59,21 @@
     prevButton: '.previous-2',
     nextButton: '.next-2',
     responsive: {
-      1800: {
+      1700: {
         items: 5,
-        gutter: 20
+        gutter: 15
       },
       1600: {
         items: 4,
-        gutter: 20
+        gutter: 15
       },
       1280: {
         items: 4,
-        gutter: 20
+        gutter: 15
       },
       768: {
-        items: 2
+        items: 2,
+        gutter: 15
       },
       480: {
         items: 1
