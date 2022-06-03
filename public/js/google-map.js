@@ -8,7 +8,7 @@ const Http = new XMLHttpRequest(),
 useMyCurrentLocationBtn = document.querySelector("#use-my-current-location-btn"),
 updateLocationInput = document.querySelector("#update-location-input"),
 updateLocationBtn = document.querySelector("#update-location-btn"),
-overlay = document.querySelector("#location-modal-overlay"),
+overlay = document.querySelector("#location-modal"),
 showModalBtn = document.querySelector("#location-show-modal-btn"),
 closeModalBtn = document.querySelector("#location-close-modal-btn");
 
