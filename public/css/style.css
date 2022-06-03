@@ -1704,7 +1704,7 @@ th {
 #showcaseSection .showcase-photos .select {
   margin-left: 7px;
   cursor: pointer;
-  color: #009999;
+  color: var(--color);
   font-weight: bold;
 }
 

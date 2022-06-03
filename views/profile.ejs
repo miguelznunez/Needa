@@ -1,4 +1,5 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/location-modal.ejs") %>
 
   <!-- COVER SECTION -->
 
@@ -263,5 +264,8 @@
 
   <script src="/js/script.js"></script>
   <script src="/js/lightbox.js"></script>
+  <% if (typeof user !="undefined" && user) { %>
+    <script src="/js/google-map.js"></script>
+  <% } %>
 
 <%- include("partials/footer.ejs") %>

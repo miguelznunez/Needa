@@ -7,7 +7,20 @@ locationSRC = document.querySelector("#location-src");
 const Http = new XMLHttpRequest(),
 useMyCurrentLocationBtn = document.querySelector("#use-my-current-location-btn"),
 updateLocationInput = document.querySelector("#update-location-input"),
-updateLocationBtn = document.querySelector("#update-location-btn");
+updateLocationBtn = document.querySelector("#update-location-btn"),
+overlay = document.querySelector("#location-modal-overlay"),
+showModalBtn = document.querySelector("#location-show-modal-btn"),
+closeModalBtn = document.querySelector("#location-close-modal-btn");
+
+if(showModalBtn)
+  showModalBtn.addEventListener("click", () => {
+    overlay.style.display = "block";
+})
+
+if(closeModalBtn)
+  closeModalBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+})
 
 // HELPER FUNCTION
 
@@ -51,8 +64,6 @@ if(!locationObject){
 // LOGIC FUNCTIONS
 
 function findMyLocation() {
-
-  // IF USER ENABLES LOCATION
   const success = (position) => {
     let bdcApi = "https://api.bigdatacloud.net/data/reverse-geocode-client";
     bdcApi = bdcApi
@@ -61,8 +72,6 @@ function findMyLocation() {
       + "&localityLanguage=en";
     getApi(bdcApi);
   }
-
-  // IF USER DOES NOT ENABLE LOCATION
   const error = () => {
     currentLocation.textContent = "Unavailable";
     document.querySelector("#location").value = "";
@@ -95,15 +104,15 @@ function updateMyLocation() {
   const isValidCityState = /^([a-zA-Z ]+)(?:,([ A-Za-z]{3}))$/.test(updateLocationInput.value);
 
   if(isValidCityState){
-    const location = updateLocationInput.value.split(",");
+    let location = updateLocationInput.value.split(",");
     locationObject = {
       "city"       : titleCaseAll(location[0]),
-      "state"      : location[1].toUpperCase()
+      "state"      : location[1].replace(/\s+/g, '').toUpperCase()
     }
     updateLocationInput.value = "";
     localStorage.setItem('item', JSON.stringify(locationObject));
     currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
-    document.querySelector("#location").value = `${locationObject.city},${locationObject.state}`;
+    document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
     locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=12`;
   } else {
     console.log("wrong!")
