@@ -15,12 +15,12 @@ closeModalBtn = document.querySelector("#location-close-modal-btn");
 if(showModalBtn)
   showModalBtn.addEventListener("click", () => {
     overlay.style.display = "block";
-})
+  })
 
 if(closeModalBtn)
   closeModalBtn.addEventListener("click", () => {
     overlay.style.display = "none";
-})
+  })
 
 // HELPER FUNCTION
 

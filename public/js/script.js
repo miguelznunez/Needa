@@ -15,20 +15,6 @@ switch(windowLocation){
     break;
 }
 
-// HAMBURGER MENU
-const hamburger = document.querySelector(".hamburger");
-const navMenu = document.querySelector(".nav-menu");
-
-hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
-});
-
-document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navMenu.classList.remove("active");
-}));
-
 // DROPDOWN MENU
 
 document.addEventListener("click", e => {
@@ -78,10 +64,3 @@ cookieMessage = () => {
 }
 
 window.addEventListener("load", cookieMessage);
-
-// HIDE NAVIGATION MENU ON SCROLL
-
-window.addEventListener('scroll', () => {
-	hamburger.classList.remove("active");
-	navMenu.classList.remove("active");
-})

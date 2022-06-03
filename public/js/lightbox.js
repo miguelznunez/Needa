@@ -49,7 +49,6 @@ for (let i = 0; i < gallery.length; i++) {
                 preview();
             }
         }
-        document.querySelector("body").style.overflow = "hidden";
         previewBox.classList.add("show"); 
         shadow.style.display = "block"; 
         closeIcon.onclick = ()=>{
@@ -58,7 +57,6 @@ for (let i = 0; i < gallery.length; i++) {
             nextBtn.style.display = "block";
             previewBox.classList.remove("show");
             shadow.style.display = "none";
-            document.querySelector("body").style.overflow = "scroll";
         }
     }
 } 

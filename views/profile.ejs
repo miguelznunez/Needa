@@ -173,10 +173,6 @@
 
           <div class="profile-col-2-wrapper">
 
-            <div class="profile-edit">
-              <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
-            </div>
-
             <div class="profile-col-2-box-1">
               <div class="profile-services flex-column-gap-20">
                 <h3>EXPERIENCE</h3>
@@ -235,25 +231,31 @@
                 <% if (showcasePhotos !==null) { %>
                   <div class="showcase-container">
                     <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span></div>
+                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>" loading="lazy"></span></div>
                     <% } %>
                   </div>
                   <div class="preview-box">
-                    <div class="details">
-                      <span class="title">
-                        <p class="current-img"></p>/<p class="total-img"></p>
-                      </span>
-                      <span class="icon fas fa-times"></span>
+                    <div class="subcontainer">
+                      <div class="details">
+                        <span class="title">
+                          <p class="current-img"></p>/<p class="total-img"></p>
+                        </span>
+                        <span class="icon fas fa-times"></span>
+                      </div>
+                      <div class="image-box">
+                        <div class="slide prev"><i class="fas fa-angle-left"></i></div>
+                        <img src="" alt="">
+                        <div class="slide next"><i class="fas fa-angle-right"></i></div>
+                      </div>
                     </div>
-                    <div class="image-box">
-                      <img src="" alt="">
-                    </div>
-                    <div class="slide prev"><i class="fas fa-angle-left"></i></div>
-                    <div class="slide next"><i class="fas fa-angle-right"></i></div>
                   </div>
                   <div class="shadow"></div>
                 <% } %>
               </div>
+            </div>
+
+            <div class="profile-edit">
+              <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit Profile</button></a>
             </div>
 
           </div>

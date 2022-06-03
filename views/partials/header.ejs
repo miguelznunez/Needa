@@ -29,13 +29,12 @@
     <div class="container">
       <div class="subcontainer">
         <nav>
-          <div class="navbar">
-          
+          <div class="navbar flex-row-gap-15">
+            <a href="/" class="nav-logo">
+              <h1>Needa</h1>
+            </a>
             <% if(typeof user != "undefined" && user) { %>
               <form action="/auth/find-professionals" method="POST" class="nav-search flex-row-gap-15">
-                <a href="/" class="nav-logo">
-                  <h1>Needa</h1>
-                </a>
                 <div id="needa-search">
                   <input type="text" name="profession" id="search" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
                   <div id="match-list"></div>
@@ -183,11 +182,6 @@
               <% } %>
 
             </ul>
-            <div class="hamburger">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-            </div>
           </div>
         </nav>
       </div>
