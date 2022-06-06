@@ -6,6 +6,18 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+// HELPER FUNCTIONS ==================================================================
+
+function cropSocialURL(URL){
+  const cleanURL = (URL === null) ? null : URL.split(".com")[1];
+  return cleanURL;
+}
+
+function cropWebURL(URL){
+  const cleanURL = (URL === null) ? null : URL.split("https:/")[1];
+  return cleanURL;
+}
+
 // FUNCTION TO CHECK FOR INTERNET EXPLORER ============================================
 
 function checkBrowser(headers){
@@ -106,24 +118,19 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    let website = (req.user.website === null) ? null : req.user.website.split("https:/")[1],
-    twitter = (req.user.twitter === null) ? null : req.user.twitter.split(".com")[1],
-    instagram = (req.user.instagram === null) ? null : req.user.instagram.split(".com")[1],
-    facebook = (req.user.facebook === null) ? null : req.user.facebook.split(".com")[1],
-    linkedin = (req.user.linkedin === null) ? null : req.user.linkedin.split(".com")[1];
-    tags = JSON.parse(req.user.tags),
-    showcasePhotos = JSON.parse(req.user.showcase_photos);
-
-    return res.render("profile", {title: "Needa | Profile", user : req.user, website:website, twitter:twitter, instagram:instagram, facebook:facebook, linkedin:linkedin, tags: tags, showcasePhotos: showcasePhotos} );
-  } else return res.redirect("/login");
+    db.query("select user.id, user.first_name, user.last_name, user.city, user.state, user.profession, user.profile_photo from following join user on following.following_id = user.id where following.id = ?", [req.user.id], (err, result) => { 
+      return res.render("profile", {title: "Needa | Profile", user : req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:result, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
+    });
+  } else {
+    return res.redirect("/login");
+  }
 });
 
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    const success = req.flash("success"),
-    tags = JSON.parse(req.user.tags);
-    return res.render("settings", {title: "Needa | Settings", user : req.user, tags: tags, success} );
+    const success = req.flash("success");
+    return res.render("settings", {title: "Needa | Settings", user : req.user, tags: JSON.parse(req.user.tags), success} );
   }
   else 
     return res.redirect("/login");
@@ -148,29 +155,31 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
+router.get("/search-results-user-profile/:id/:first_name/:last_name", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers) && req.user){
-    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      if(!err) {
+    db.query("SELECT * FROM user WHERE id = ? && first_name = ? && last_name = ?",[req.params.id, req.params.first_name, req.params.last_name], (err, rows) => {
+      if(!err && rows[0] !== undefined) {
         const website = rows[0].website.split("https:/"),
         twitter = rows[0].twitter.split(".com"),
         instagram = rows[0].instagram.split(".com"),
         facebook = rows[0].facebook.split(".com"),
-        linkedin = rows[0].linkedin.split(".com"),
-        tags = JSON.parse(rows[0].tags),
-        showcasePhotos = JSON.parse(rows[0].showcase_photos);
-        return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:tags, showcasePhotos: showcasePhotos })
-      } else {
+        linkedin = rows[0].linkedin.split(".com");
+        return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos) })
+      } else if(rows[0] === undefined){
+        return res.redirect("/");
+      }else {
         return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} )
       }
     });
   } else if(!checkBrowser(req.headers) && !req.user) {
-    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      if(!err) {
-        const tags = JSON.parse(rows[0].tags),
-        showcasePhotos = JSON.parse(rows[0].showcase_photos);
-        return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:tags, showcasePhotos: showcasePhotos })
-      } else return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} );
+    db.query("SELECT * FROM user WHERE id = ? && first_name",[req.params.id, req.params.first_name], (err, rows) => {
+      if(!err && rows[0] !== undefined) {
+        return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos) })
+      } else if(rows[0] === undefined) {
+        return res.redirect("/");
+      } else { 
+        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} );
+      }
     });
   } else {
     return res.redirect("/login");

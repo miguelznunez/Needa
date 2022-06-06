@@ -41,6 +41,7 @@ useMyCurrentLocationBtn.addEventListener("click", function() {
 });
 
 updateLocationBtn.addEventListener("click", function() {
+  console.log("hey");
   updateMyLocation();
 })
 

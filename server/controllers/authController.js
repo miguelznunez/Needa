@@ -138,6 +138,7 @@ exports.login = async (req, res) => {
       return res.redirect("/");
     // DATABASE ERROR
     } else{
+      console.log("yo");
       return res.render("login", {title: "Needa | Login", type: "error", message: err.message});
     }
   });
@@ -480,11 +481,27 @@ exports.findProfessionals = (req, res) => {
   }
 }
 
+// FIND USERS THAT MATCH PROFESSION AND CITY/STATE OR ZIP
+
 function queryLocation(req, res, profession, city, state, zip) {
   db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession LIKE ? || tags LIKE ?) && (city = ? && state = ? || zip = ?))", [`%${profession}%`, `%${profession}%`, city, state, zip], (err, rows) => {
     if(!err) return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows, profession: profession});
     else return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
   });
+}
+
+// ADD USER TO MY CONTACT LIST
+
+exports.addContactForm = (req, res) => {
+
+  db.query("INSERT INTO following (id, following_id) VALUES (?,?)", [req.user.id, req.body.following_id], async (err, results) => {
+    if(!err){
+      return res.json({type: "success", message: "User was added to my contact list."}); 
+    } else {
+      return res.json({type: "error", message: err.message}); 
+    }
+  })
+  
 }
 
 // ADMIN CRUD SYSTEM 
@@ -503,7 +520,7 @@ exports.findUser = (req, res) => {
 
 
 exports.addUser = (req, res) => {
-  const { password, password_confirm, admin } = req.body;
+  const { password, password_confirm, admin} = req.body;
   const member_since = get_date();
   const status = "Active";
   let {first_name, last_name} = req.body;

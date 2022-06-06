@@ -1,4 +1,8 @@
-CREATE TABLE `login`.`user` (
+create schema login;
+
+use login;
+
+CREATE TABLE `user` (
   `id` INT UNSIGNED AUTO_INCREMENT,
   `first_name` VARCHAR(30),
   `last_name` VARCHAR(30),
@@ -26,9 +30,17 @@ CREATE TABLE `login`.`user` (
   `website` TINYTEXT DEFAULT NULL,
   `phone` VARCHAR(12) DEFAULT NULL,
   `display_phone` VARCHAR(3) DEFAULT NULL,
-  `display_email` VARCHAR(100) DEFAULT NULL,
+  `display_email` VARCHAR(3) DEFAULT NULL,
   `tags` JSON DEFAULT NULL,
   `showcase_photos` JSON DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+CREATE TABLE `following` (
+  `id` INT UNSIGNED NOT NULL,
+  `following_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `following_id`),
+  FOREIGN KEY(`id`) REFERENCES user (`id`) , 
+  FOREIGN KEY(`following_id`) REFERENCES user (`id`) 
+);

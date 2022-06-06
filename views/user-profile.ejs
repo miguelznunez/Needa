@@ -200,16 +200,6 @@
 
           <div class="profile-col-2-wrapper">
 
-            <% if(typeof user !== "undefined" && user.id !== rows[0].id) { %>
-              <div class="profile-edit">
-                <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
-              </div>
-            <% } else if(typeof user === "undefined") { %>
-              <div class="profile-edit">
-                <button id="show-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
-              </div>
-            <% } %>
-
             <div class="profile-col-2-box-1">
               <div class="profile-services flex-column-gap-20">
                 <h3>EXPERIENCE</h3>
@@ -289,6 +279,16 @@
               </div>
             </div>
 
+            <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
+              <form class="profile-edit" id="add-contact-form">
+                <input type="hidden" id="following-id" value="<%= rows[0].id%>">
+                <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+              </form>
+            <% } else if(typeof user==="undefined" ) { %>
+              <div class="profile-edit">
+                <button id="show-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+              </div>
+            <% } %>
 
           </div>
         </div>
@@ -329,6 +329,7 @@
     const modal = document.querySelector(".overlay"),
     closeModalBtn = document.querySelector("#close-modal-btn"),
     showModalBtn = document.querySelector("#show-modal-btn"),
+    addContactForm = document.querySelector("#add-contact-form"),
     body = document.querySelector("body");
 
     if(showModalBtn){
@@ -352,6 +353,45 @@
         modal.classList.add("hide-modal");
         modal.style.zIndex = "-1";
       })
+    }
+
+    if(addContactForm){
+      addContactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const following_id = document.querySelector("#following-id").value;
+
+        fetch("/auth/addContactForm", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json, text/plain, */*",
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({ following_id:following_id })
+        })
+
+        .then(response => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          } else {
+            return response.json();
+          }
+        })
+
+        .then(data => {
+          if (data.type === "success") {
+            console.log(data.message);
+            // displayToast('success', data.message);
+          } else {
+            console.log(data.message)
+            // displayToast('error', data.message);
+          }
+        })
+
+        .catch(error => {
+          displayToast('error', error);
+        });
+
+      });
     }
 
   </script>

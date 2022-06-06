@@ -221,7 +221,7 @@ iframe{
   left: 0;
   right: 0;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 #location-modal .modal-wrapper{
@@ -700,12 +700,13 @@ iframe{
 /* PROFILE.EJS */
 
 #profileCoverSection{
-  height: 300px;
   margin-top: 70px;
+  height: 300px;
   background-color: white;
   background-position: center;
   background-size: cover;
   background-image: url(/images/default_cover_img.jpg);
+  background-repeat: no-repeat;
 }
 
 #profileSection{
@@ -1086,7 +1087,7 @@ iframe{
   width: 100%;
   z-index: 2;
   display: none;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .overlay {
@@ -1205,6 +1206,16 @@ iframe{
     opacity: 0;
     transform: scale(0);
   }
+}
+
+#profileSection .contact-photo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
 }
 
 /* SEARCH-RESULTS.EJS */
@@ -2113,7 +2124,11 @@ iframe{
 /* ////////// */
 
 #topRatedMembers {
-  background-color: #e9e9e9;
+  /* background-color: #e9e9e9; */ 
+  background: #ffffff;
+  background: -webkit-linear-gradient(top, #ffffff, #4d4d4d);
+  background: -moz-linear-gradient(top, #ffffff, #4d4d4d);
+  background: linear-gradient(to bottom, #ffffff, #4d4d4d);
 }
 
 #topRatedMembers .recommended {
@@ -2172,6 +2187,11 @@ iframe{
   display: flex;
   gap: 5px;
 }
+/* 
+#topRatedMembers .user h3,
+#topRatedMembers .user p{
+  color: white;
+} */
 
 #topRatedMembers .img-2_1 {
   background-image: url(/images/electrician.png);
@@ -2392,7 +2412,7 @@ input[type="checkbox"]{
   font-size: 0.9rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  background-color: #009999;
+  background-color: var(--color);
   color: white;
 }
 
@@ -2428,15 +2448,15 @@ input[type="checkbox"]{
 }
 
 #adminSection .view {
-  background-color: #5bc0de;
+  background-color: gray;
 }
 
 #adminSection .edit {
-  background-color: #5cb85c;
+  background-color: black;
 }
 
 #adminSection .delete {
-  background-color: #d9534f;
+  background-color: var(--color);
 }
 
 /* ADD-USER.EJS */

@@ -59,12 +59,14 @@
 
           <div class="profile-col-1-box-2">
             <h3>CONTACT</h3>
-            <div class="profile-phone flex-row-gap-20">
-              <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
-              <p>
-                <%= user.phone %>
-              </p>
-            </div>
+            <% if(user.phone) { %>
+              <div class="profile-phone flex-row-gap-20">
+                <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
+                <p>
+                  <%= user.phone %>
+                </p>
+              </div>
+            <% } %>
             <div class="profile-email flex-row-gap-20">
               <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
               <p>
@@ -220,6 +222,22 @@
                 <div>
                   <h3>CONTACTS</h3>
                 </div>
+
+                <% if(following !== null) { %>
+                  <div class="flex-row-gap-20">
+                    <% for(let i = 0;i < following.length;i++) { %>
+                      <div class="flex-column-gap-5">
+                        <div class="contact-photo"
+                          style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                        </div>
+                        <div style="text-align: center;">
+                          <%= following[i].profession %>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                <% } %>
+                
               </div>
             </div>
 
