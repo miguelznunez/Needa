@@ -27,8 +27,8 @@ for (let i = 0; i < gallery.length; i++) {
         
         preview(); //calling above function
 
-        const prevBtn = document.querySelector(".prev");
-        const nextBtn = document.querySelector(".next");
+        const prevBtn = document.querySelector("#prev");
+        const nextBtn = document.querySelector("#next");
 
         prevBtn.onclick = ()=>{ 
             newIndex--; //decrement index

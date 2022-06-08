@@ -1,4 +1,5 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/location-modal.ejs") %>
 
   <!-- COVER SECTION -->
   
@@ -243,50 +244,92 @@
             </div>
 
             <div class="profile-col-2-box-4">
-              <div class="profile-following ">
-                <div>
-                  <h3>CONTACTS</h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="profile-col-2-box-5">
-              <div class="profile-showcase-photos flex-column-gap-20">
-                <div>
-                  <h3>SHOWCASE</h3>
-                </div>
-                <% if (showcasePhotos !==null) { %>
-                  <div class="showcase-container">
-                    <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= rows[0].id%>/<%= showcasePhotos[photo] %>"></span></div>
+              <div class="profile-contacts flex-column-gap-25">
+                <% if(following !==null) { %>
+                  <div class="profile-contacts-photos">
+                    <div>
+                      <h3>CONTACTS</h3>
+                    </div>
+                    <div id="controls-1">
+                      <button class="prev-1"><i class="fas fa-angle-left"></i></button>
+                      <button class="next-1"><i class="fas fa-angle-right"></i></button>
+                    </div>
+                  </div>
+                  <div class="slider-1">
+                    <% for(let i=0;i < following.length;i++) { %>
+                      <div>
+                        <div class="contact-photo"
+                          style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                        </div>
+                      </div>
                     <% } %>
                   </div>
-                  <div class="preview-box">
-                    <div class="details">
-                      <span class="title">
-                        <p class="current-img"></p>/<p class="total-img"></p>
-                      </span>
-                      <span class="icon fas fa-times"></span>
-                    </div>
-                    <div class="image-box">
-                      <img src="" alt="">
-                    </div>
-                    <div class="slide prev"><i class="fas fa-angle-left"></i></div>
-                    <div class="slide next"><i class="fas fa-angle-right"></i></div>
+                <% } else { %>
+                  <div class="profile-contacts">
+                    <h3>CONTACTS</h3>
                   </div>
-                  <div class="shadow"></div>
                 <% } %>
               </div>
             </div>
 
+            <div class="profile-col-2-box-5">
+              <div class="profile-showcase flex-column-gap-25">
+                <% if(showcasePhotos !==null) { %>
+                  <div class="profile-showcase-photos">
+                    <div>
+                      <h3>SHOWCASE</h3>
+                    </div>
+                    <div id="controls-2">
+                      <button class="prev-2"><i class="fas fa-angle-left"></i></button>
+                      <button class="next-2"><i class="fas fa-angle-right"></i></button>
+                    </div>
+                  </div>
+                  <div class="slider-2 showcase-container">
+                    <% for(let photo in showcasePhotos) { %>
+                      <div class="image"><span><img
+                            src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                      </div>
+                      <% } %>
+                  </div>
+                  <div class="preview-box">
+                    <div class="subcontainer">
+                      <div class="details">
+                        <span class="title">
+                          <p class="current-img"></p>/<p class="total-img"></p>
+                        </span>
+                        <span class="icon fas fa-times"></span>
+                      </div>
+                      <div class="image-box">
+                        <div class="slide" id="prev"><i class="fas fa-angle-left"></i></div>
+                        <img src="" alt="image">
+                        <div class="slide" id="next"><i class="fas fa-angle-right"></i></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="shadow"></div>
+                  <% } else { %>
+                    <div class="profile-showcase-photos">
+                      <h3>SHOWCASE</h3>
+                    </div>
+                  <% } %>
+              </div>
+            </div>
+
             <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
-              <form class="profile-edit" id="add-contact-form">
-                <input type="hidden" id="following-id" value="<%= rows[0].id%>">
-                <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
-              </form>
-            <% } else if(typeof user==="undefined" ) { %>
+              <% if (!ifollowing) { %>
+                <form class="profile-edit" id="add-contact-form">
+                  <input type="hidden" id="following-id" value="<%= rows[0].id%>">
+                  <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+                </form>
+              <% } else { %>
+                <form class="profile-edit" id="delete-contact-form">
+                  <input type="hidden" id="following-id" value="<%= rows[0].id%>">
+                  <button id="delete-contact-btn"><i class="fa-solid fa-minus"></i> Delete from Contacts</button>
+                </form>
+              <% } %>
+            <% } else if(typeof user==="undefined") { %>
               <div class="profile-edit">
-                <button id="show-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+                <button id="show-login-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
               </div>
             <% } %>
 
@@ -304,7 +347,7 @@
           <i class="fa-solid fa-circle-exclamation"></i>
           <h1>Needa</h1>
         </div>
-        <i class="fa-solid fa-xmark" id="close-modal-btn"></i>
+        <i class="fa-solid fa-xmark" id="close-login-modal-btn"></i>
       </div>
       <div class="modal-bottom">
         <div>
@@ -325,21 +368,25 @@
   
   <script src="/js/script.js"></script>
   <script src="/js/lightbox.js"></script>
+  <script src="/js/tiny-slider-manual.js"></script>
+  <% if (typeof user !="undefined" && user) { %>
+    <script src="/js/google-map.js"></script>
+  <% } %>
   <script>
     const modal = document.querySelector(".overlay"),
-    closeModalBtn = document.querySelector("#close-modal-btn"),
-    showModalBtn = document.querySelector("#show-modal-btn"),
+    closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
+    showLoginModalBtn = document.querySelector("#show-login-modal-btn"),
     addContactForm = document.querySelector("#add-contact-form"),
     body = document.querySelector("body");
 
-    if(showModalBtn){
+    if(showLoginModalBtn){
       setTimeout(function () {
         modal.classList.add("show-modal");
         modal.style.zIndex = "1";
       }, 1000);
     }
 
-    if(showModalBtn){
+    if(showLoginModalBtn){
       showModalBtn.addEventListener("click", () => {
         modal.classList.remove("hide-modal");
         modal.classList.add("show-modal");
@@ -347,7 +394,7 @@
       })
     }
 
-    if(closeModalBtn){
+    if(closeLoginModalBtn){
       closeModalBtn.addEventListener("click", () => {
         modal.classList.remove("show-modal");
         modal.classList.add("hide-modal");
@@ -393,7 +440,7 @@
 
       });
     }
-
   </script>
+
 
 <%- include("partials/footer.ejs") %>

@@ -192,9 +192,6 @@
               <% } else { %>
                 <div class="profile-services">
                   <h3>SERVICES</h3>
-                  <p>
-                    <%= user.specialty %>
-                  </p>
                 </div>
               <% } %>
             </div>
@@ -210,46 +207,55 @@
               <% } else { %>
                 <div class="profile-skills">
                   <h3>SKILLS</h3>
-                  <p>
-                    <%= user.skills %>
-                  </p>
                 </div>
               <% } %>
             </div>
 
             <div class="profile-col-2-box-4">
-              <div class="profile-contacts ">
-                <div>
-                  <h3>CONTACTS</h3>
-                </div>
-
-                <% if(following !== null) { %>
-                  <div class="flex-row-gap-20">
-                    <% for(let i = 0;i < following.length;i++) { %>
-                      <div class="flex-column-gap-5">
+              <div class="profile-contacts flex-column-gap-25">
+                <% if(following !==null) { %>
+                  <div class="profile-contacts-photos">
+                    <div>
+                      <h3>CONTACTS</h3>
+                    </div>
+                    <div id="controls-1">
+                      <button class="prev-1"><i class="fas fa-angle-left"></i></button>
+                      <button class="next-1"><i class="fas fa-angle-right"></i></button>
+                    </div>
+                  </div>
+                  <div class="slider-1">
+                    <% for(let i=0;i < following.length;i++) { %>
+                      <div>
                         <div class="contact-photo"
                           style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
-                        </div>
-                        <div style="text-align: center;">
-                          <%= following[i].profession %>
                         </div>
                       </div>
                     <% } %>
                   </div>
+                <% } else { %>
+                  <div class="profile-contacts">
+                    <h3>CONTACTS</h3>
+                  </div>
                 <% } %>
-                
               </div>
             </div>
 
             <div class="profile-col-2-box-5">
-              <div class="profile-showcase-photos">
-                <div>
-                  <h3>SHOWCASE</h3>
-                </div>
-                <% if (showcasePhotos !==null) { %>
-                  <div class="showcase-container">
+              <div class="profile-showcase flex-column-gap-25">
+                <% if(showcasePhotos !==null) { %>
+                  <div class="profile-showcase-photos">
+                    <div>
+                      <h3>SHOWCASE</h3>
+                    </div>
+                    <div id="controls-2">
+                      <button class="prev-2"><i class="fas fa-angle-left"></i></button>
+                      <button class="next-2"><i class="fas fa-angle-right"></i></button>
+                    </div>
+                  </div>
+                  <div class="slider-2 showcase-container">
                     <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>" loading="lazy"></span></div>
+                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                      </div>
                     <% } %>
                   </div>
                   <div class="preview-box">
@@ -261,13 +267,17 @@
                         <span class="icon fas fa-times"></span>
                       </div>
                       <div class="image-box">
-                        <div class="slide prev"><i class="fas fa-angle-left"></i></div>
-                        <img src="" alt="">
-                        <div class="slide next"><i class="fas fa-angle-right"></i></div>
+                        <div class="slide" id="prev"><i class="fas fa-angle-left"></i></div>
+                        <img src="" alt="image">
+                        <div class="slide" id="next"><i class="fas fa-angle-right"></i></div>
                       </div>
                     </div>
                   </div>
                   <div class="shadow"></div>
+                <% } else { %>
+                  <div class="profile-showcase-photos">
+                    <h3>SHOWCASE</h3>
+                  </div>
                 <% } %>
               </div>
             </div>
@@ -284,6 +294,7 @@
 
   <script src="/js/script.js"></script>
   <script src="/js/lightbox.js"></script>
+  <script src="/js/tiny-slider-manual.js"></script>
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>

@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const db = require("../../db.js");
 const s3 = require("../../s3.js");
 const authController = require("../controllers/authController");
+const { query } = require("express");
 
 const router = express.Router();
 
@@ -118,8 +119,9 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
-    db.query("select user.id, user.first_name, user.last_name, user.city, user.state, user.profession, user.profile_photo from following join user on following.following_id = user.id where following.id = ?", [req.user.id], (err, result) => { 
-      return res.render("profile", {title: "Needa | Profile", user : req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:result, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
+    db.query("select user.id, user.profile_photo from following join user on following.following_id = user.id where following.id = ?", [req.user.id], (err, result) => { 
+      const results = (result[0] === undefined) ? null : result;
+      return res.render("profile", {title: "Needa | Profile", user : req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:results, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
     });
   } else {
     return res.redirect("/login");
@@ -155,24 +157,71 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/search-results-user-profile/:id/:first_name/:last_name", authController.isLoggedIn, (req, res) => {
+
+
+function queryUserInfo(userId){
+  db.query("SELECT * FROM user WHERE id = ?", [userId], (err, result) => {
+    if(!err && result[0] !== undefined)
+      return result[0];
+    else if(rows[0] === undefined)
+      return res.redirect("/");
+    else
+      return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} )
+  })
+}
+
+function queryFollowingInfo(userId){
+  db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [userId], (err, result) => {
+    if(!err)
+      return result[0];
+    else
+      return console.log(err.message);
+  })
+}
+
+function queryIsFollowing(loggedInUserId, userId){
+  db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [loggedInUserId, userId], (err, result) => { 
+    if(!err)
+      return result[0];
+    else
+      return console.log(err.message);
+  });
+}
+
+router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers) && req.user){
-    db.query("SELECT * FROM user WHERE id = ? && first_name = ? && last_name = ?",[req.params.id, req.params.first_name, req.params.last_name], (err, rows) => {
-      if(!err && rows[0] !== undefined) {
-        const website = rows[0].website.split("https:/"),
-        twitter = rows[0].twitter.split(".com"),
-        instagram = rows[0].instagram.split(".com"),
-        facebook = rows[0].facebook.split(".com"),
-        linkedin = rows[0].linkedin.split(".com");
-        return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:website[1], twitter:twitter[1], instagram:instagram[1], facebook:facebook[1], linkedin:linkedin[1], tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos) })
-      } else if(rows[0] === undefined){
-        return res.redirect("/");
-      }else {
-        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} )
-      }
-    });
+
+    db.query("SELECT * FROM user WHERE id = ?", [req.params.id], (err1, result1) => {
+      if(!err1) {
+        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
+          if(!err2) {
+            db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
+              if(!err3){
+                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), following: result2, ifollowing:true});
+              } else {
+                return console.log(err3.message);
+              }
+           });
+          } else {
+            return console.log(err2.message);
+          }
+        })
+      } else {
+        return console.log(err1.message);
+      } 
+    })
+   
+        // db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err, result) => {
+        //   if(!err && result[0] != null){
+        //     return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:cropWebURL(rows[0].website), twitter:cropSocialURL(rows[0].twitter), instagram:cropSocialURL(rows[0].instagram), facebook:cropSocialURL(rows[0].facebook), linkedin:cropSocialURL(rows[0].linkedin), tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos), ifollowing:true});
+        //   } else if(!err && result[0] == null) {
+        //      return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:cropWebURL(rows[0].website), twitter:cropSocialURL(rows[0].twitter), instagram:cropSocialURL(rows[0].instagram), facebook:cropSocialURL(rows[0].facebook), linkedin:cropSocialURL(rows[0].linkedin), tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos), ifollowing:false});
+        //   } else {
+        //     return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} ) 
+        //   }
+        // }) 
   } else if(!checkBrowser(req.headers) && !req.user) {
-    db.query("SELECT * FROM user WHERE id = ? && first_name",[req.params.id, req.params.first_name], (err, rows) => {
+    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
       if(!err && rows[0] !== undefined) {
         return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos) })
       } else if(rows[0] === undefined) {

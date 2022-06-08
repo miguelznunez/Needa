@@ -28,7 +28,7 @@
             
             <div class="search-results-user-box flex-row-gap-10">
 
-              <div class="search-results-user-box-child flex-row-gap-10">
+              <div class="search-results-user-box-child flex-row-gap-20">
                 <div class="image"
                   style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
                 </div>
@@ -41,11 +41,11 @@
                     <h3>
                       <%= rows[i].last_name %>
                     </h3>
-                  </div>
-                  <div>
-                    <p>
-                      <%= rows[i].profession %>
-                    </p>
+                    <h3>
+                                  
+                     -  <%= rows[i].profession %>
+                               
+                    </h3>
                   </div>
                   <div class="flex-row-gap-5">
                     <i class="fa-solid fa-location-dot"></i>
@@ -63,7 +63,7 @@
               </div>
 
               <div class="search-results-user-box-child">
-               <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>/<%= rows[0].first_name %>/<%= rows[0].last_name %>">
+               <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
                 <button id="viewUser">View User</button>
                </a> 
               </div>
