@@ -228,8 +228,10 @@
                   <div class="slider-1">
                     <% for(let i=0;i < following.length;i++) { %>
                       <a href="http://localhost:5000/search-results-user-profile/<%= following[i].id %>">
-                        <div class="contact-photo"
-                          style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                        <div class="contact-photo-wrapper">
+                          <div class="contact-photo"
+                            style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                          </div>
                         </div>
                       </a>
                     <% } %>
