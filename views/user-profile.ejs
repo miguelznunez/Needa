@@ -368,11 +368,23 @@
   </div>
   
   <script src="/js/script.js"></script>
-  <script src="/js/lightbox.js"></script>
-  <script src="/js/tiny-slider-manual.js"></script>
+
+  <% if(showcasePhotos !==null) { %>
+    <script src="/js/lightbox.js"></script>
+  <% } %>
+
+  <% if(usersFollowing !== null) { %>
+    <script src="/js/tiny-slider-1-manual.js"></script>
+  <% } %>
+
+  <% if(showcasePhotos !== null) { %>
+    <script src="/js/tiny-slider-2-manual.js"></script>
+  <% } %>
+
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>
+
   <script>
     const modal = document.querySelector(".overlay"),
     closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
