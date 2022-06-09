@@ -26,8 +26,7 @@
     <div class="container">
       <div class="subcontainer">
         <div class="cookies">
-          <p>This website uses cookies to ensure you get the best experience on our website. <a href=""
-              id="more-info-link">More info.</a></p>
+          <p>This website uses cookies to ensure you get the best experience on our website. <a href="" id="more-info-link">More info.</a></p>
           <button id="cookies-btn" style="padding: 8px 12px 8px 12px;">That's fine</button>
         </div>
       </div>
@@ -467,46 +466,26 @@
       <div class="subcontainer">
         <div class="header">
           <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
-          <a href="/register"><button>SIGN UP</button></a>
+          <a href="/register" target="_blank"><button>SIGN UP</button></a>
         </div>
       </div>
     </div>
   </section>
 
-<script src="/js/script.js"></script>
-<script src="/js/tiny-slider-auto.js"></script>
-<script src="/js/search-list.js"></script>
-<script src="/js/toast.js"></script>
-<% if (typeof user !="undefined" && user) { %>
-  <script src="/js/google-map.js"></script>
-<% } %>
+  <script src="/js/script.js"></script>
+  <script src="/js/carousel.js"></script>
+  <script src="/js/tiny-slider-auto.js"></script>
+  <script src="/js/search-list.js"></script>
+  <script src="/js/toast.js"></script>
+  <% if (typeof user !="undefined" && user) { %>
+    <script src="/js/google-map.js"></script>
+  <% } %>
 
-<script>
-
-  const images = ["/images/barber.png", "/images/dj.png", "/images/lessons.jpg", "/images/carpenter.png"],
-  carousel = document.querySelector("#carousel"),
-  submitBtn = document.querySelector("#submitBtn"),
-  interval = setInterval(function () {
-    startCarousel();
-  }, 8000);
-
-  let index = 1;
-
-  // CAROUSEL
-
-  startCarousel = () => {
-    carousel.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0, 0, 0, 0.7)), url(${images[index++]})`;
-    carousel.classList.remove("fade");
-    void carousel.offsetWidth;
-    carousel.classList.add("fade");
-    if (index > images.length - 1) index = 0;
-  }
-
-  window.addEventListener("scroll", () => {
-    const homeHeader = document.querySelector("#homeHeader");
-    homeHeader.classList.toggle("sticky", window.scrollY > 0);
-  })
-
-</script>
+  <script>
+    window.addEventListener("scroll", () => {
+      const homeHeader = document.querySelector("#homeHeader");
+      homeHeader.classList.toggle("sticky", window.scrollY > 0);
+    })
+  </script>
 
 <%- include("partials/footer.ejs") %>

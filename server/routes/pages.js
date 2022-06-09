@@ -121,7 +121,7 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
     db.query("select user.id, user.profile_photo from following join user on following.following_id = user.id where following.id = ?", [req.user.id], (err, result) => { 
       const results = (result[0] === undefined) ? null : result;
-      return res.render("profile", {title: "Needa | Profile", user : req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:results, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
+      return res.render("profile", {title: "Needa | Profile", user:req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:results, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
     });
   } else {
     return res.redirect("/login");
@@ -197,7 +197,9 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
           if(!err2) {
             db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
               if(!err3){
-                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), following: result2, ifollowing:true});
+                const r2 = (result2[0].id === null) ? null : result2;
+                console.log(r2);
+                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), following: r2, ifollowing:true});
               } else {
                 return console.log(err3.message);
               }
@@ -210,16 +212,6 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
         return console.log(err1.message);
       } 
     })
-   
-        // db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err, result) => {
-        //   if(!err && result[0] != null){
-        //     return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:cropWebURL(rows[0].website), twitter:cropSocialURL(rows[0].twitter), instagram:cropSocialURL(rows[0].instagram), facebook:cropSocialURL(rows[0].facebook), linkedin:cropSocialURL(rows[0].linkedin), tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos), ifollowing:true});
-        //   } else if(!err && result[0] == null) {
-        //      return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: rows, website:cropWebURL(rows[0].website), twitter:cropSocialURL(rows[0].twitter), instagram:cropSocialURL(rows[0].instagram), facebook:cropSocialURL(rows[0].facebook), linkedin:cropSocialURL(rows[0].linkedin), tags:JSON.parse(rows[0].tags), showcasePhotos: JSON.parse(rows[0].showcase_photos), ifollowing:false});
-        //   } else {
-        //     return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} ) 
-        //   }
-        // }) 
   } else if(!checkBrowser(req.headers) && !req.user) {
     db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
       if(!err && rows[0] !== undefined) {

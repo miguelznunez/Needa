@@ -1104,15 +1104,14 @@ iframe{
   cursor: pointer;
 }
 
-#profileSection #prev,
-#profileSection #next,
-#profileSection .fa-times:hover {
+#profileSection .fa-times,
+#profileSection .image-box i{
   transition: 0.3s;
+  font-size: 1.7rem;
 }
 
-#profileSection #prev:hover,
-#profileSection #next:hover,
-#profileSection .fa-times:hover {
+#profileSection .fa-times:hover,
+#profileSection .image-box i:hover {
   color: var(--color);
 }
 

@@ -119,7 +119,7 @@
           
                 </div>
           
-                <!--  -->
+                <!-- BASIC INFO  -->
           
                 <div class="user-input">
                   <label for="first_name">First name</label>
@@ -147,8 +147,6 @@
                   <Label for="zip_code">ZIP Code</Label>
                   <input type="text" name="zip" maxlength="5" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>">
                 </div>
-
-                
 
                 <div class="user-input">
                   <% if(user.gender==="M" ) { %>
@@ -186,6 +184,7 @@
           
           
                 <!-- ABOUT YOU  -->
+
                 <br>
                 <h3>About You</h3>
                 <div class="user-input" id="needa-search">
@@ -252,11 +251,11 @@
                   <input type="tel" name="phone" placeholder="E.g. 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
                 </div>
                 <div>
-                  <% if(user.display_phone==="yes" ) { %>
-                    <input type="checkbox" value="yes" name="display_phone" checked>
+                  <% if(user.display_phone==="Yes" ) { %>
+                    <input type="checkbox" value="Yes" name="display_phone" checked>
                     <label for="display_phone">Display my phone number on profile page</label>
                   <% } else { %>
-                      <input type="checkbox" value="yes" name="display_phone">
+                      <input type="checkbox" value="Yes" name="display_phone">
                       <label for="display_phone">Display my phone number on profile page</label>
                   <% } %>
                 </div>
@@ -265,14 +264,17 @@
                   <input type="email" name="email" placeholder="<%= user.email %>" disabled>
                 </div>
                 <div>
-                  <% if(user.display_email==="yes" ) { %>
-                    <input type="checkbox" value="yes" name="display_email" checked>
+                  <% if(user.display_email==="Yes" ) { %>
+                    <input type="checkbox" value="Yes" name="display_email" checked>
                     <label for="display_email">Display my email on profile page</label>
                   <% } else { %>
-                    <input type="checkbox" value="yes" name="display_email">
+                    <input type="checkbox" value="Yes" name="display_email">
                     <label for="display_email">Display my email on profile page</label>
                   <% } %>
                 </div>
+
+
+                <!-- TAGS -->
 
                 <br>
                 
