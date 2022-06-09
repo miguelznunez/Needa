@@ -1393,9 +1393,9 @@ iframe{
 }
 
 #profileSection #profile-edit,
-#profileSection #show-modal-btn,
+#profileSection #show-login-modal-btn,
 #profileSection #add-contact-btn,
-#profileSection #delete-contact-btn {
+#profileSection #delete-contact-btn{
   color: white;
   background-color: var(--color);
   border: 3px solid var(--color);
@@ -2665,12 +2665,14 @@ footer {
     flex-direction: column;
   }
 
-  #delete-account-btn {
+  #profileSection #profile-edit,
+  #profileSection #show-login-modal-btn,
+  #profileSection #add-contact-btn,
+  #profileSection #delete-contact-btn {
     width: 100%;
   }
 
-  #add-contact-btn,
-  #delete-contact-btn{
+  #delete-account-btn {
     width: 100%;
   }
 

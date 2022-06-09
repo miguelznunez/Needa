@@ -181,13 +181,20 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
       } 
     })
   } else if(!checkBrowser(req.headers) && !req.user) {
-    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err, rows) => {
-      if(!err && rows[0] !== undefined) {
-        return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos) })
+    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err1, rows) => {
+      if(!err1 && rows[0] !== undefined) {
+        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
+          if(!err2) {
+            const r2 = (result2[0].id === null) ? null : result2;
+            return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos), usersFollowing:r2, isFollowing:false })
+          } else {
+            return console.log(err2.message);
+          }
+        })
       } else if(rows[0] === undefined) {
         return res.redirect("/");
       } else { 
-        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} );
+        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err1.message} );
       }
     });
   } else {

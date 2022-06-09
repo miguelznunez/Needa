@@ -496,7 +496,7 @@ exports.addContactForm = (req, res) => {
 
   db.query("INSERT INTO following (id, following_id) VALUES (?,?)", [req.user.id, req.body.following_id], async (err, results) => {
     if(!err){
-      return res.json({type: "success", message: "User was added to my contact list."}); 
+      return res.json({type: "success", message: "User was added to your contact list."}); 
     } else {
       return res.json({type: "error", message: err.message}); 
     }

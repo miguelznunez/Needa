@@ -1,6 +1,17 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/location-modal.ejs") %>
 
+
+  <section>
+    <div class="toast-wrapper">
+      <div class="toast">
+        <div class="icon-container"></div>
+        <div class="message-container flex-5"></div>
+        <button id="closeToast">&times;</button>
+      </div>
+    </div>
+  </section>
+
   <!-- COVER SECTION -->
   
   <% if(rows[0].cover_photo) { %>
@@ -317,6 +328,7 @@
             </div>
 
             <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
+
               <% if (!isFollowing) { %>
                 <form class="profile-edit" id="add-contact-form">
                   <input type="hidden" id="following-id" value="<%= rows[0].id%>">
@@ -328,6 +340,8 @@
                   <button id="delete-contact-btn"><i class="fa-solid fa-minus"></i> Delete from Contacts</button>
                 </form>
               <% } %>
+
+
             <% } else if(typeof user==="undefined") { %>
               <div class="profile-edit">
                 <button id="show-login-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
@@ -342,7 +356,6 @@
 
   <div class="overlay">
     <div class="modal">
-
       <div class="modal-top">
         <div class="flex-row-gap-10">
           <i class="fa-solid fa-circle-exclamation"></i>
@@ -369,6 +382,18 @@
   
   <script src="/js/script.js"></script>
 
+  <% if (!isFollowing) { %>
+    <script src="/js/add-contact-form.js"></script>
+  <% } %>
+
+  <% if(typeof user ==="undefined") { %>
+    <script src="/js/login-modal.js"></script>
+  <% } %>
+
+  <% if(typeof user !=="undefined") { %>
+    <script src="/js/toast-front-end.js"></script>
+  <% } %>
+
   <% if(showcasePhotos !==null) { %>
     <script src="/js/lightbox.js"></script>
   <% } %>
@@ -384,76 +409,5 @@
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>
-
-  <script>
-    const modal = document.querySelector(".overlay"),
-    closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
-    showLoginModalBtn = document.querySelector("#show-login-modal-btn"),
-    addContactForm = document.querySelector("#add-contact-form"),
-    body = document.querySelector("body");
-
-    if(showLoginModalBtn){
-      setTimeout(function () {
-        modal.classList.add("show-modal");
-        modal.style.zIndex = "1";
-      }, 1000);
-    }
-
-    if(showLoginModalBtn){
-      showModalBtn.addEventListener("click", () => {
-        modal.classList.remove("hide-modal");
-        modal.classList.add("show-modal");
-        modal.style.zIndex = "1";
-      })
-    }
-
-    if(closeLoginModalBtn){
-      closeModalBtn.addEventListener("click", () => {
-        modal.classList.remove("show-modal");
-        modal.classList.add("hide-modal");
-        modal.style.zIndex = "-1";
-      })
-    }
-
-    if(addContactForm){
-      addContactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const following_id = document.querySelector("#following-id").value;
-
-        fetch("/auth/addContactForm", {
-          method: "POST",
-          headers: {
-            "Accept": "application/json, text/plain, */*",
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify({ following_id:following_id })
-        })
-
-        .then(response => {
-          if (!response.ok) {
-            throw Error(response.statusText);
-          } else {
-            return response.json();
-          }
-        })
-
-        .then(data => {
-          if (data.type === "success") {
-            console.log(data.message);
-            // displayToast('success', data.message);
-          } else {
-            console.log(data.message)
-            // displayToast('error', data.message);
-          }
-        })
-
-        .catch(error => {
-          displayToast('error', error);
-        });
-
-      });
-    }
-  </script>
-
 
 <%- include("partials/footer.ejs") %>
