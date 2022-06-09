@@ -58,7 +58,7 @@ if(!locationObject){
 } else {
   currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
   document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
-  locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=12`;
+  locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
   document.querySelector("#location-show-modal-btn").style.color = "#7449F5";
 }
 
@@ -95,7 +95,7 @@ function getApi(bdcApi) {
       localStorage.setItem('item', JSON.stringify(locationObject));
       currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
       document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
-      locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=12`;
+      locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
       document.querySelector("#location-show-modal-btn").style.color = "#7449F5";
     }
   };
@@ -114,7 +114,7 @@ function updateMyLocation() {
     localStorage.setItem('item', JSON.stringify(locationObject));
     currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
     document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
-    locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=12`;
+    locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
   } else {
     console.log("wrong!")
   }

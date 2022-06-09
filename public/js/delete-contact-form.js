@@ -1,10 +1,10 @@
-const addContactForm = document.querySelector("#add-contact-form");
+const deleteContactForm = document.querySelector("#delete-contact-form");
 
-addContactForm.addEventListener("submit", (e) => {
+deleteContactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const following_id = document.querySelector("#following-id").value;
 
-  fetch("/auth/addContactForm", {
+  fetch("/auth/deleteContactForm", {
     method: "POST",
     headers: {
       "Accept": "application/json, text/plain, */*",

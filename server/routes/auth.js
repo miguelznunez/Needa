@@ -161,5 +161,6 @@ router.post("/find-professionals", [
 ], authController.isLoggedIn, authController.findProfessionals);
 
 router.post("/addContactForm", authController.isLoggedIn, authController.addContactForm);
+router.post("/deleteContactForm", authController.isLoggedIn, authController.deleteContactForm);
 
 module.exports = router;

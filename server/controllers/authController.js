@@ -504,6 +504,20 @@ exports.addContactForm = (req, res) => {
   
 }
 
+// DELETE USER FROM MY CONTACT LIST
+
+exports.deleteContactForm = (req, res) => {
+
+  db.query("DELETE FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.body.following_id], async (err, results) => {
+    if(!err){
+      return res.json({type: "success", message: "User was deleted from your contact list."}); 
+    } else {
+      return res.json({type: "error", message: err.message}); 
+    }
+  })
+  
+}
+
 // ADMIN CRUD SYSTEM 
 
 // FIND USER -------------------------------------------------------

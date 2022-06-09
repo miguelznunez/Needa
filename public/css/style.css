@@ -1458,8 +1458,6 @@ iframe{
   width: 150px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.40);
 }
 
 #profileSection .contact-photo {
@@ -1488,8 +1486,6 @@ iframe{
   width: 100%;
   overflow: hidden;
   border-radius: 5px;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.40);
 }
 
 #profileSection .slider-2 img {

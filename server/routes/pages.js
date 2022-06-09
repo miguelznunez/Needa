@@ -163,7 +163,7 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
       if(!err1) {
         db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
           if(!err2) {
-            db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
+            db.query("SELECT * FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
               if(!err3){
                 const r2 = (result2[0].id === null) ? null : result2;
                 const r3 = (result3[0] === undefined) ? null : true;
