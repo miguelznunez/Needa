@@ -382,12 +382,16 @@
   
   <script src="/js/script.js"></script>
 
-  <% if (!isFollowing && user.id !==rows[0].id) { %>
-    <script src="/js/add-contact-form.js"></script>
+  <% if (!isFollowing && typeof user !== "undefined") { %>
+    <% if (user.id !==rows[0].id) { %>
+      <script src="/js/add-contact-form.js"></script>
+    <% } %>
   <% } %>
   
-  <% if (isFollowing && user.id !==rows[0].id) { %>
-    <script src="/js/delete-contact-form.js"></script>
+  <% if (isFollowing && typeof user !== "undefined") { %>
+    <% if (user.id !==rows[0].id) { %>
+      <script src="/js/delete-contact-form.js"></script>
+    <% } %>
   <% } %>
 
   <% if(typeof user ==="undefined") { %>
