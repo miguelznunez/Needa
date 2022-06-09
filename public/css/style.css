@@ -1227,7 +1227,7 @@ iframe{
 }
 
 #profileSection{
-  background-color: #e9e9e9;
+  background-color: whitesmoke;
 }
 
 #profileSection .profile-wrapper {
@@ -1746,6 +1746,7 @@ iframe{
   margin-top: 70px;
   min-height: 600px;
   padding: 50px 0;
+  background-color: whitesmoke;
 }
 
 #searchResultsSection .search-results-wrapper{
@@ -1827,6 +1828,7 @@ iframe{
 #settingsSection {
   margin-top: 70px;
   padding: 50px 0;
+  background-color: whitesmoke;
 }
 
 #settingsSection .settings-wrapper{
@@ -2320,6 +2322,7 @@ iframe{
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 
 #login-section h1{
@@ -2344,6 +2347,7 @@ iframe{
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 
 #register-section h1 {
@@ -2432,6 +2436,7 @@ input[type="checkbox"]{
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 
 #password-reset-section a{
@@ -2454,6 +2459,7 @@ input[type="checkbox"]{
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 
 /* ERROR.EJS */
