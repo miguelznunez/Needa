@@ -1,12 +1,20 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
 
-  <section id="loginSection">
+  <style>
+    body {
+      background-color: whitesmoke;
+    }
+  </style>
+
+
+  <section id="login-section">
     <div class="container">
       <div class="subcontainer">
         <form action="/auth/login" id="login-form" method="POST">
           <div class="form-title">
-            <h1>Login</h1>
+            <h1>Log in</h1>
+            <i class="fa-solid fa-lock"></i>
           </div>
           <div class="input-group">
             <input type="text" id="email" name="email" placeholder="Email" required>
@@ -23,7 +31,7 @@
               <a href="/password-reset">Forgot Password?</a>
             </div>
           </div>
-          <div>
+          <div class="input-group">
             <button id="login-btn">Let's go</button>
           </div>
           <div id="register">

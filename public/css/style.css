@@ -199,11 +199,18 @@ iframe{
 
 .form-title{
   width: 100%;
-  text-align: center;
+  text-align: left;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .form-title h1{
   font-size: 2.5rem;
+}
+
+.form-title i{
+  font-size: 2rem;
 }
 
 #errorSection,
@@ -700,27 +707,6 @@ iframe{
 
 /* INDEX.EJS */
 
-.custom-shape-divider-bottom-1654062691 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1654062691 svg {
-  position: relative;
-  display: block;
-  width: calc(147% + 1.3px);
-  height: 92px;
-}
-
-.custom-shape-divider-bottom-1654062691 .shape-fill {
-  fill: #FFFFFF;
-}
-
 #homeHeader {
   background-color: black;
   position: fixed;
@@ -736,6 +722,27 @@ iframe{
 
 #homeHeader.sticky {
   background-color: black;
+}
+
+#carousel .custom-shape-divider-bottom-1654062691 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+#carousel .custom-shape-divider-bottom-1654062691 svg {
+  position: relative;
+  display: block;
+  width: calc(147% + 1.3px);
+  height: 92px;
+}
+
+#carousel .custom-shape-divider-bottom-1654062691 .shape-fill {
+  fill: #FFFFFF;
 }
 
 #carousel {
@@ -1187,6 +1194,27 @@ iframe{
 }
 
 /* PROFILE.EJS */
+
+#profileCoverSection .custom-shape-divider-bottom-1654062691 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+#profileCoverSection .custom-shape-divider-bottom-1654062691 svg {
+  position: relative;
+  display: block;
+  width: calc(147% + 1.3px);
+  height: 92px;
+}
+
+#profileCoverSection .custom-shape-divider-bottom-1654062691 .shape-fill {
+  fill: #FFFFFF;
+}
 
 #profileCoverSection{
   margin-top: 70px;
@@ -2286,7 +2314,7 @@ iframe{
 
 /* LOGIN */
 
-#loginSection{
+#login-section{
   margin-top: 70px;
   height: 600px;
   display: flex;
@@ -2294,23 +2322,40 @@ iframe{
   align-items: center;
 }
 
-#loginSection h1{
+#login-section h1{
   font-size: 2.5rem;
+}
+
+#login-form{
+  padding: 50px;
+  width: fit-content;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
 }
 
 
 /* REGISTER */
 
-#registerSection{
+#register-section{
   margin-top: 70px;
-  height: 600px;
+  min-height: 600px;
+  padding: 50px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#registerSection h1 {
+#register-section h1 {
   font-size: 2.5rem;
+}
+
+#register-form {
+  padding: 50px;
+  width: fit-content;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
 }
 
 /* LOGIN/ REGISTER */
@@ -2346,14 +2391,20 @@ input[type="checkbox"]{
   text-decoration: none;
 }
 
-#account-btn, #login-btn, #link-btn, #update-password{
+#account-btn, 
+#login-btn,
+#link-btn,
+#update-password{
   width: 375px;
   color: white;
-  background-color: black;
-  border-radius: 10px;
-  /* box-shadow: 0 0 5px #009999; */
-  border: 1px solid black;
+  background-color: var(--color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color);
   transition: 0.3s ease-out;
+}
+
+#link-btn{
+  width: 100%;
 }
 
 .input-group{
@@ -2375,12 +2426,25 @@ input[type="checkbox"]{
 }
 
 /* PASSWORD-RESET.EJS */
-#passwordResetSection{
+#password-reset-section{
   margin-top: 70px;
-  height: 600px;
+  min-height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#password-reset-section a{
+  text-decoration: none;
+  color: var(--color);
+}
+
+#password-reset-form{
+  padding: 50px;
+  width: fit-content;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
 }
 
 /* PASSWORD-RESET-UPDATE.EJS */
@@ -2755,6 +2819,26 @@ footer {
   #profileSection .image-box img {
     width: 100%;
     height: auto;
+  }
+
+  #login-form,
+  #register-form{
+    width: 100%;
+  }
+
+  .input-group{
+    width: 100%;
+  }
+
+  .input-group input{
+    width: 100%;
+  }
+
+  #account-btn,
+  #login-btn,
+  #link-btn,
+  #update-password {
+    width: 100%;
   }
 
   #cookies-btn{

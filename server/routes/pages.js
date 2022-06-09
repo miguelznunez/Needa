@@ -36,6 +36,12 @@ function checkBrowser(headers){
 }
 
 // GET ROUTES ==============================================================
+router.get("/barbers", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers))
+    res.render("barbers", {title: "Needa | Barbers", user : req.user});
+  else
+    res.redirect("/");
+});
 
 router.get("/", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers))
