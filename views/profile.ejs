@@ -214,8 +214,8 @@
             </div>
 
             <div class="profile-col-2-box-4">
-              <div class="profile-contacts flex-column-gap-25">
-                <% if(following !==null) { %>
+              <div class="profile-contacts flex-column-gap-20">
+                <% if(usersFollowing !== null) { %>
                   <div class="profile-contacts-photos">
                     <div>
                       <h3>CONTACTS</h3>
@@ -226,11 +226,11 @@
                     </div>
                   </div>
                   <div class="slider-1">
-                    <% for(let i=0;i < following.length;i++) { %>
-                      <a href="http://localhost:5000/search-results-user-profile/<%= following[i].id %>">
+                    <% for(let i=0;i < usersFollowing.length;i++) { %>
+                      <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
                         <div class="contact-photo-wrapper">
                           <div class="contact-photo"
-                            style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                            style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
                           </div>
                         </div>
                       </a>
@@ -245,7 +245,7 @@
             </div>
 
             <div class="profile-col-2-box-5">
-              <div class="profile-showcase flex-column-gap-25">
+              <div class="profile-showcase flex-column-gap-20">
                 <% if(showcasePhotos !==null) { %>
                   <div class="profile-showcase-photos">
                     <div>

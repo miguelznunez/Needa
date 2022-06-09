@@ -63,20 +63,20 @@
               <div class="profile-col-1-box-5">
                 <h3>CONTACT</h3>
 
-                <% if(rows[0].display_phone === "yes") { %>
+                <% if(rows[0].display_phone === "Yes") { %>
                   <div class="profile-phone flex-row-gap-20">
                     <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
                     <p>
-                      <%= user.phone %>
+                      <%= rows[0].phone %>
                     </p>
                   </div>
                 <% } %>
 
-                <% if(rows[0].display_email === "yes") { %>
+                <% if(rows[0].display_email === "Yes") { %>
                   <div class="profile-email flex-row-gap-20">
                     <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
                     <p>
-                      <%= user.email %>
+                      <%= rows[0].email %>
                     </p>
                   </div>
                 <% } %>
@@ -97,7 +97,7 @@
                 <h3>WEBSITE</h3>
                 <% if(rows[0].website) { %>
                   <div class="profile-website-link">
-                    <a href="<%= user.website %>" target="_blank">
+                    <a href="<%= rows[0].website %>" target="_blank">
                       <div class="flex-row-gap-20">
                         <i class="fas fa-desktop"></i>
                         <p>
@@ -123,7 +123,7 @@
               <h3>SOCIAL MEDIA</h3>
               <% if(twitter) { %>
                 <div class="profile-social-link twitter">
-                  <a href="<%= user.twitter %>" target="_blank">
+                  <a href="<%= rows[0].twitter %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-twitter"></i>
                       <p>
@@ -136,7 +136,7 @@
               
               <% if(instagram) { %>
                 <div class="profile-social-link instagram">
-                  <a href="<%= user.instagram %>" target="_blank">
+                  <a href="<%= rows[0].instagram %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-instagram"></i>
                       <p>
@@ -149,7 +149,7 @@
       
               <% if(facebook) { %>
                 <div class="profile-social-link facebook">
-                  <a href="<%= user.facebook %>" target="_blank">
+                  <a href="<%= rows[0].facebook %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-facebook"></i>
                       <p>
@@ -162,7 +162,7 @@
       
               <% if(linkedin) { %>
                 <div class="profile-social-link linkedin">
-                  <a href="<%= user.linkedin %>" target="_blank">
+                  <a href="<%= rows[0].linkedin %>" target="_blank">
                     <div class="flex-row-gap-20">
                       <i class="fab fa-linkedin"></i>
                       <p>
@@ -244,8 +244,8 @@
             </div>
 
             <div class="profile-col-2-box-4">
-              <div class="profile-contacts flex-column-gap-25">
-                <% if(following !== null) { %>
+              <div class="profile-contacts flex-column-gap-20">
+                <% if(usersFollowing !== null) { %>
                   <div class="profile-contacts-photos">
                     <div>
                       <h3>CONTACTS</h3>
@@ -256,10 +256,11 @@
                     </div>
                   </div>
                   <div class="slider-1">
-                    <% for(let i=0;i < following.length;i++) { %>
-                      <a href="http://localhost:5000/search-results-user-profile/<%= following[i].id %>">
-                        <div class="contact-photo"
-                          style="background-image: url('http://localhost:5000/user-photo/<%= following[i].id %>/<%= following[i].profile_photo%>');">
+                    <% for(let i=0;i < usersFollowing.length;i++) { %>
+                      <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
+                        <div class="contact-photo-wrapper">
+                          <div class="contact-photo" style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                          </div>
                         </div>
                       </a>
                     <% } %>
@@ -273,7 +274,7 @@
             </div>
 
             <div class="profile-col-2-box-5">
-              <div class="profile-showcase flex-column-gap-25">
+              <div class="profile-showcase flex-column-gap-20">
                 <% if(showcasePhotos !==null) { %>
                   <div class="profile-showcase-photos">
                     <div>
@@ -287,9 +288,9 @@
                   <div class="slider-2 showcase-container">
                     <% for(let photo in showcasePhotos) { %>
                       <div class="image"><span><img
-                            src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                          src="http://localhost:5000/showcase-photo/<%= rows[0].id %>/<%= showcasePhotos[photo] %>"></span>
                       </div>
-                      <% } %>
+                    <% } %>
                   </div>
                   <div class="preview-box">
                     <div class="subcontainer">
@@ -307,16 +308,16 @@
                     </div>
                   </div>
                   <div class="shadow"></div>
-                  <% } else { %>
-                    <div class="profile-showcase-photos">
-                      <h3>SHOWCASE</h3>
-                    </div>
-                  <% } %>
+                <% } else { %>
+                  <div class="profile-showcase-photos">
+                    <h3>SHOWCASE</h3>
+                  </div>
+                <% } %>
               </div>
             </div>
 
             <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
-              <% if (!ifollowing) { %>
+              <% if (!isFollowing) { %>
                 <form class="profile-edit" id="add-contact-form">
                   <input type="hidden" id="following-id" value="<%= rows[0].id%>">
                   <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>

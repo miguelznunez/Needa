@@ -121,7 +121,7 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
     db.query("select user.id, user.profile_photo from following join user on following.following_id = user.id where following.id = ?", [req.user.id], (err, result) => { 
       const results = (result[0] === undefined) ? null : result;
-      return res.render("profile", {title: "Needa | Profile", user:req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),following:results, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
+      return res.render("profile", {title: "Needa | Profile", user:req.user, website:cropWebURL(req.user.website), twitter:cropSocialURL(req.user.twitter), instagram:cropSocialURL(req.user.instagram), facebook:cropSocialURL(req.user.facebook), linkedin:cropSocialURL(req.user.linkedin), tags:JSON.parse(req.user.tags),usersFollowing:results, showcasePhotos:JSON.parse(req.user.showcase_photos)} );
     });
   } else {
     return res.redirect("/login");
@@ -157,40 +157,8 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-
-
-function queryUserInfo(userId){
-  db.query("SELECT * FROM user WHERE id = ?", [userId], (err, result) => {
-    if(!err && result[0] !== undefined)
-      return result[0];
-    else if(rows[0] === undefined)
-      return res.redirect("/");
-    else
-      return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err.message} )
-  })
-}
-
-function queryFollowingInfo(userId){
-  db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [userId], (err, result) => {
-    if(!err)
-      return result[0];
-    else
-      return console.log(err.message);
-  })
-}
-
-function queryIsFollowing(loggedInUserId, userId){
-  db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [loggedInUserId, userId], (err, result) => { 
-    if(!err)
-      return result[0];
-    else
-      return console.log(err.message);
-  });
-}
-
 router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers) && req.user){
-
     db.query("SELECT * FROM user WHERE id = ?", [req.params.id], (err1, result1) => {
       if(!err1) {
         db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
@@ -198,8 +166,8 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
             db.query("SELECT * FROM following WHERE id = ? && following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
               if(!err3){
                 const r2 = (result2[0].id === null) ? null : result2;
-                console.log(r2);
-                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), following: r2, ifollowing:true});
+                const r3 = (result3[0] === undefined) ? null : true;
+                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), usersFollowing:r2, isFollowing:r3});
               } else {
                 return console.log(err3.message);
               }
