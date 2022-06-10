@@ -16,12 +16,12 @@ let slider_1 = tns({
       items: 5,
       gutter: 15
     },
-    1600: {
-      items: 5,
+    1280: {
+      items: 4,
       gutter: 15
     },
-    1280: {
-      items: 5,
+    1024: {
+      items: 3,
       gutter: 15
     },
     768: {
@@ -29,9 +29,6 @@ let slider_1 = tns({
       gutter: 15
     },
     480: {
-      items: 1
-    },
-    320: {
       items: 1
     }
   }
@@ -55,12 +52,12 @@ let slider_2 = tns({
       items: 5,
       gutter: 15
     },
-    1600: {
-      items: 5,
+    1280: {
+      items: 4,
       gutter: 15
     },
-    1280: {
-      items: 5,
+    1024: {
+      items: 3,
       gutter: 15
     },
     768: {
@@ -68,9 +65,6 @@ let slider_2 = tns({
       gutter: 15
     },
     480: {
-      items: 1
-    },
-    320: {
       items: 1
     }
   }

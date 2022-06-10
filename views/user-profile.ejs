@@ -332,19 +332,19 @@
               <% if (!isFollowing) { %>
                 <form class="profile-edit" id="add-contact-form">
                   <input type="hidden" id="following-id" value="<%= rows[0].id%>">
-                  <button id="add-contact-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+                  <button id="add-contact-btn">Add to my contacts</button>
                 </form>
               <% } else { %>
                 <form class="profile-edit" id="delete-contact-form">
                   <input type="hidden" id="following-id" value="<%= rows[0].id%>">
-                  <button id="delete-contact-btn"><i class="fa-solid fa-minus"></i> Delete from Contacts</button>
+                  <button id="delete-contact-btn">Delete from my contacts</button>
                 </form>
               <% } %>
 
 
             <% } else if(typeof user==="undefined") { %>
               <div class="profile-edit">
-                <button id="show-login-modal-btn"><i class="fa-solid fa-plus"></i> Add to Contacts</button>
+                <button id="show-login-modal-btn">Add to my contacts</button>
               </div>
             <% } %>
 

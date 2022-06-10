@@ -484,9 +484,13 @@ exports.findProfessionals = (req, res) => {
 // FIND USERS THAT MATCH PROFESSION AND CITY/STATE OR ZIP
 
 function queryLocation(req, res, profession, city, state, zip) {
-  db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession LIKE ? || tags LIKE ?) && (city = ? && state = ? || zip = ?))", [`%${profession}%`, `%${profession}%`, city, state, zip], (err, rows) => {
-    if(!err) return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: rows, profession: profession});
-    else return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
+  db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?))", [profession +'?', profession + '?', city, state, zip], (err, rows) => {
+    if(!err) {
+      const results = (rows[0] === undefined) ? null : rows;
+      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession});
+    } else {
+      return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
+    }
   });
 }
 

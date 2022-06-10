@@ -27,6 +27,7 @@ body{
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: whitesmoke;
 }
 
 form{
@@ -774,7 +775,7 @@ iframe{
   position: relative;
   background-position: center;
   background-size: cover;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/barber.png);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/carpenter.png);
 }
 
 #carousel .carousel-header {
@@ -940,6 +941,7 @@ iframe{
 
 #popularSearches {
   z-index: 0;
+  background-color: white;
 }
 
 #popularSearches .recommended {
@@ -974,7 +976,7 @@ iframe{
   transition: 0.5s;
 }
 
-#popularSearches .slide-img p {
+#popularSearches .slide-img i {
   opacity: 0;
   transform: scale(0);
   transition: 0.8s;
@@ -986,7 +988,7 @@ iframe{
   box-shadow: 0 0 0 200px rgba(0, 0, 0, 0.9) inset;
 }
 
-#popularSearches .slide-img:hover p {
+#popularSearches .slide-img:hover i {
   opacity: 1;
   transform: scale(1);
 }
@@ -1041,6 +1043,10 @@ iframe{
 
 #popularSearches .img-1_13 {
   background-image: url(/images/web_developer.jpg);
+}
+
+#popularSearches .img-1_14 {
+  background-image: url(/images/painter.png);
 }
 
 #popularSearches .prev-1,
@@ -1828,6 +1834,7 @@ iframe{
 
 #searchResultsSection .search-results-col-1,
 #searchResultsSection .search-results-col-2{
+  height: 300px;
   width: 100%;
   border: 1px solid lightgray;
   border-radius: var(--border-radius);
@@ -1836,8 +1843,8 @@ iframe{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
-#searchResultsSection .search-results-col-1{
-  max-height: 400px;
+#searchResultsSection .search-results-col-2{
+  height: auto;  
 }
 
 #searchResultsSection .tag{
@@ -1899,7 +1906,6 @@ iframe{
 #settingsSection {
   margin-top: 70px;
   padding: 50px 0;
-  background-color: whitesmoke;
 }
 
 #settingsSection .settings-wrapper{
@@ -2388,12 +2394,11 @@ iframe{
 /* LOGIN */
 
 #login-section{
-  margin-top: 70px;
-  height: 600px;
+  /* margin-top: 70px; */
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
 }
 
 #login-section h1{
@@ -2412,13 +2417,12 @@ iframe{
 /* REGISTER */
 
 #register-section{
-  margin-top: 70px;
-  min-height: 600px;
+  /* margin-top: 70px; */
+  height: 100vh;
   padding: 50px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
 }
 
 #register-section h1 {
@@ -2502,12 +2506,11 @@ input[type="checkbox"]{
 
 /* PASSWORD-RESET.EJS */
 #password-reset-section{
-  margin-top: 70px;
-  min-height: 600px;
+  /* margin-top: 70px; */
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
 }
 
 #password-reset-section a{
@@ -2525,18 +2528,17 @@ input[type="checkbox"]{
 
 /* PASSWORD-RESET-UPDATE.EJS */
 #updatePassword{
-  margin-top: 70px;
-  height: 600px;
+  /* margin-top: 70px; */
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
 }
 
 /* ERROR.EJS */
 #errorSection{
-  margin-top: 70px;
-  height: 600px;
+  /* margin-top: 70px; */
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2890,8 +2892,22 @@ footer {
   }
 }
 
-@media(max-width:768px){
+@media(max-width:1024px){
+  #we-offer .we-offer-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #we-offer .offer {
+    height: auto;
+    padding: 30px 0;
+  }
+  #cookies-btn {
+    width: 100%;
+  }
+}
 
+@media(max-width:768px){
   .preview-box .details,
   #profileSection .image-box img {
     width: 100%;
@@ -2915,10 +2931,6 @@ footer {
   #login-btn,
   #link-btn,
   #update-password {
-    width: 100%;
-  }
-
-  #cookies-btn{
     width: 100%;
   }
 

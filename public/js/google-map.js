@@ -1,6 +1,7 @@
 let map,
 infoWindow,
 currentLocation = document.querySelector("#current-location"),
+myLocation = document.querySelectorAll(".my-location"),
 locationObject = localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : "",
 locationSRC = document.querySelector("#location-src"); 
 
@@ -41,7 +42,6 @@ useMyCurrentLocationBtn.addEventListener("click", function() {
 });
 
 updateLocationBtn.addEventListener("click", function() {
-  console.log("hey");
   updateMyLocation();
 })
 
@@ -57,6 +57,11 @@ if(!locationObject){
   locationSRC.src = `https://www.google.com/maps/embed/v1/view?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&center=39.8283,-98.5795&zoom=4`;
 } else {
   currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
+  if(myLocation) {
+    myLocation.forEach(l => {
+      l.value = `${locationObject.city}, ${locationObject.state}`;
+    })
+  }
   document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
   locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
   document.querySelector("#location-show-modal-btn").style.color = "#7449F5";

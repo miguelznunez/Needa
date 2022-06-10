@@ -1,4 +1,4 @@
- const images = ["/images/barber.png", "/images/dj.png", "/images/lessons.jpg", "/images/carpenter.png"],
+ const images = ["/images/carpenter.png", "/images/barber.png", "/images/dj.png", "/images/lessons.jpg"],
   carousel = document.querySelector("#carousel"),
   submitBtn = document.querySelector("#submitBtn"),
   interval = setInterval(function () {
