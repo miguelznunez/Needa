@@ -1,7 +1,6 @@
 const modal = document.querySelector(".overlay"),
 closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
-showLoginModalBtn = document.querySelector("#show-login-modal-btn"),
-body = document.querySelector("body");
+showLoginModalBtn = document.querySelector("#show-login-modal-btn");
 
 setTimeout(function () {
   modal.classList.add("show-modal");

@@ -1419,7 +1419,7 @@ iframe{
   background-color: white;
   background-position: center;
   background-size: cover;
-  background-image: url(/images/default_cover.png);
+  background-image: url(/images/default.png);
   background-repeat: no-repeat;
 }
 
@@ -2522,14 +2522,21 @@ iframe{
   padding: 50px;
   line-height: 1.5;
   position: relative;
+  border-radius: var(--border-radius);
+  background-color: whitesmoke;
 }
 
-.delete-account-modal-contents .fa-xmark{
+#close-login-modal-btn {
   font-size: 1.5rem;
   position: absolute;
   top: 7%;
   right: 5%;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+#close-login-modal-btn:hover{
+  color: var(--color);
 }
 
 .delete-account-modal-contents input {

@@ -96,6 +96,14 @@
                           </h3>
                         </div>
                       </a>
+                      <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
+                        <a href="/admin">
+                          <div class="dropdown-links">
+                            <i class="fa-solid fa-unlock"></i>
+                            <h3>Admin</h3>
+                          </div>
+                        </a>
+                      <% } %>
                       <a href="/">
                         <div class="dropdown-links">
                           <i class="fas fa-home"></i>
@@ -126,14 +134,6 @@
                           <h3>Settings</h3>
                         </div>
                       </a>
-                      <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
-                        <a href="/admin">
-                          <div class="dropdown-links">
-                            <i class="fa-solid fa-unlock"></i>
-                            <h3>Admin</h3>
-                          </div>
-                        </a>
-                      <% } %>
                       <a href="/auth/logout">
                         <div class="dropdown-links bottom-link">
                           <i class="fas fa-sign-out"></i>
