@@ -945,10 +945,12 @@ iframe{
 }
 
 #popularSearches .recommended {
-  min-height: 485px;
+  height: auto;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  gap: 25px;
+  padding: 50px 0;
 }
 
 #popularSearches .controller-1 {
@@ -1088,10 +1090,12 @@ iframe{
 }
 
 #topRatedMembers .recommended {
-  min-height: 485px;
+  height: auto;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  gap: 25px;
+  padding: 50px 0;
 }
 
 #topRatedMembers .slide-img {
@@ -1100,7 +1104,6 @@ iframe{
   border-radius: var(--border-radius);
   background-position: center;
   background-size: cover;
-
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1199,6 +1202,11 @@ iframe{
   color: white;
 }
 
+.we-offer-header{
+  text-align: center;
+  padding: 0 300px;
+}
+
 .we-offer-header h1 {
   font-size: 2.5rem;
 }
@@ -1214,7 +1222,7 @@ iframe{
 }
 
 .offer{
-  height: 400px;
+  height: 325px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1238,7 +1246,89 @@ iframe{
 }
 
 
-/*  */
+/* TESTIMONIALS */
+
+#testimonials{
+  height: auto;
+  background-color: black;
+  border-top: 5px solid white;
+  padding: 40px 0;
+}
+
+#testimonials .testimonials-main-wrapper{
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+}
+
+#testimonials .testimonials-header{
+  color: white;
+  text-align: center;
+}
+
+#testimonials .testimonials-header h1 {
+  font-size: 2.5rem;
+}
+
+#testimonials .testimonials-header p {
+  line-height: 1.5;
+}
+
+#testimonials .slider-3{
+  height: 335px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid orange; */
+}
+
+#testimonials .tslide{
+  text-align: center;
+  color: white;
+  line-height: 1.5;
+  font-style: italic;
+  padding: 0 100px;
+}
+
+#testimonials .prev-3,
+#testimonials .next-3 {
+  padding: 2px;
+  width: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  outline: none;
+  transition: 0.7s ease-in-out;
+  border: 3px solid #7449F5;
+  background-color: black;
+  box-shadow: 0 0 5px #bbb;
+  position: absolute;
+  top: 45%;
+  z-index: 1;
+}
+
+#testimonials .prev-3{
+  left: 0%;
+}
+
+#testimonials .next-3{
+  right: 0%;
+}
+
+#testimonials .prev-3:hover,
+#testimonials .next-3:hover {
+  border: 3px solid white;
+}
+
+#testimonials #controls-3 i {
+  color: white;
+  font-size: 1rem;
+}
+
+#testimonials .tns-nav{
+  text-align: center;
+}
 
 #advertising {
   background-size: cover;

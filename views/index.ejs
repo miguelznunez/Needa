@@ -551,14 +551,58 @@
 
             <div class="offer flex-column-gap-15">
               <i class="fas fa-building"></i>
-              <h2>WORK</h2>
+              <h2>JOBS</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia optio accusantium sed blanditiis? Fuga sunt, natus
                 velit animi alias est!</p>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="container">
+      <div class="subcontainer">
+
+        <div class="testimonials-main-wrapper">
+
+          <div class="testimonials-header">
+            <h1>Testimonials</h1>
+          </div>
 
 
+          <div class="slider-3">
+            <div>
+              <div class="tslide flex-column-gap-25">
+                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
+                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
+                  <p>Michael Smith / CEO of Lorem</p>
+              </div>
+            </div>
+            <div>
+              <div class="tslide flex-column-gap-25">
+                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
+                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
+                  <p>Cristal Pettis / CEO of Lorem</p>
+              </div>
+            </div>
+            <div>
+              <div class="tslide flex-column-gap-25">
+                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
+                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
+                  <p>Tyler Evans  / CEO of Lorem</p>
+              </div>
+            </div>
+          </div>
+
+
+            <div id="controls-3">
+              <button class="prev-3"><i class="fas fa-angle-left"></i></button>
+              <button class="next-3"><i class="fas fa-angle-right"></i></button>
+            </div>
+        </div>
+       
 
       </div>
     </div>
@@ -597,7 +641,32 @@
     window.addEventListener("scroll", () => {
       const homeHeader = document.querySelector("#homeHeader");
       homeHeader.classList.toggle("sticky", window.scrollY > 0);
-    })
+    });
+
+
+
+    const slider_3 = tns({
+        container: ".slider-3",
+        animateIn: "jello",
+        animateOut: "rollOut",
+        slideBy: 1,
+        speed: 700,
+        nav: true,
+        navPosition: "bottom",
+        swipeAngle: false,
+        autoplay: true,
+        autoplayTimeout: 7000,
+        autoplayButtonOutput: false,
+        controlsContainer: '#controls-3',
+        prevButton: ".prev-3",
+        nextButton: ".next-3",
+        responsive: {
+          1700: {
+            items: 1
+          }
+        }
+      });
+
   </script>
 
 <%- include("partials/footer.ejs") %>

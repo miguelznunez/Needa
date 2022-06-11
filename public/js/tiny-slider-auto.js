@@ -1,4 +1,4 @@
-let slider_1 = tns({
+const slider_1 = tns({
   container: '.slider-1',
   animateIn: "jello",
   animateOut: "rollOut",
@@ -34,7 +34,7 @@ let slider_1 = tns({
   }
 });
 
-let slider_2 = tns({
+const slider_2 = tns({
   container: '.slider-2',
   animateIn: "jello",
   animateOut: "rollOut",
@@ -43,6 +43,7 @@ let slider_2 = tns({
   nav: false,
   swipeAngle: false,
   autoplay: true,
+  autoplayTimeout: 6000,
   autoplayButtonOutput: false,
   controlsContainer: '#controls-2',
   prevButton: '.prev-2',
