@@ -4,9 +4,7 @@
   <section id="accountSection">
     <div class="container">
       <div class="subcontainer">
-
         <div class="account-wrapper">
-
           <div class="account-col-1">
             <div class="account-col-1-child-1">
               <h2>Settings</h2>
@@ -32,27 +30,38 @@
               </a>
             </div>
           </div>
-    
-          <form class="account-col-2">
+          <div class="account-col-2">
             <div class="account-col-2-child flex-column-gap-15">
-              <h2>Delete Account</h2>
-              <p>Your personal data will be deleted permanently when you delete your account on Needa. This action is
-                irreversible.
+              <h2>Delete account</h2>
+              <p>Are you absolutely sure you want to delete your needa.com account? <span style="font-weight: 600;">Please note your personal data will be deleted permanently when you delete your account and there is no option to
+              restore the account or its data.</span> If you click the button, you will be asked to confirm this action by entering your password.
               </p>
               <div>
-                <button type="submit" id="delete-account-btn">Delete my account</button>
+                <button id="delete-account-modal-btn">Delete my account</button>
               </div>
             </div>
-          </form>
-    
+          </div>
         </div>
       </div>
     </div>
-
   </section>
 
+  <div class="overlay">
+    <div class="delete-account-modal">
+      <div class="delete-account-modal-contents flex-column-gap-20">
+        <div class="form-title">
+          <h1>Are you sure?</h1>
+        </div>
+        <p>Please enter your password to delete your account.</p>        
+        <input type="text" placeholder="Password">
+        <button>Delete account</button>
+        <i class="fa-solid fa-xmark" id="close-login-modal-btn"></i>
+      </div>
+    </div>
+  </div>
 
   <script src="/js/script.js"></script>
+  <script src="/js/delete-modal.js"></script>
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>

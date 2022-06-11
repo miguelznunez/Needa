@@ -67,12 +67,13 @@ textarea:focus{
 }
 
 button{
-  border: 1px solid lightgray;
+  border: none;
   padding: 12px;
   border-radius: var(--border-radius);
   cursor: pointer;
   font-family: inherit;
   font-size: 1.1rem;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 table {
@@ -229,7 +230,7 @@ iframe{
   left: 0;
   right: 0;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 #location-modal .modal-wrapper{
@@ -267,6 +268,7 @@ iframe{
   height: 575px;
   border-radius: var(--border-radius);
   background-color: white;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #location-modal .modal-container:nth-child(1){
@@ -285,6 +287,7 @@ iframe{
   color: white;
   background-color: #7449F5;
   border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #location-modal .modal-container:nth-child(2) {
@@ -530,7 +533,7 @@ iframe{
   background-color: white;
   border-radius: var(--border-radius);
   border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
   position: absolute;
 }
 
@@ -621,7 +624,7 @@ iframe{
   display: flex;
   flex-direction: column;
   border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
   transition: opacity 150ms ease-in-out;
 }
 
@@ -650,12 +653,12 @@ iframe{
 }
 
 .dropdown-links .user-icon{
-  color:#262626;
-  box-shadow: 0 0 2px #262626;
+  color:black;
+  box-shadow: 0 0 2px black;
 }
 
 .dropdown-links .fa-user{
-  color:#262626;;
+  color:black;
 }
 
 .dropdown-links h3{
@@ -880,7 +883,7 @@ iframe{
   background-color: white;
   border-radius: 5px;
   border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #carousel #match-list .name {
@@ -1112,7 +1115,6 @@ iframe{
   justify-content: center;
   align-items: center;
   transition: 0.5s;
-  border: 1px solid lightgray;
 }
 
 #topRatedMembers .slide {
@@ -1830,7 +1832,7 @@ iframe{
   width: 100%;
   z-index: 2;
   display: none;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .overlay {
@@ -1845,8 +1847,8 @@ iframe{
 }
 
 .modal {
-  max-width: 700px;
-  height: 250px;
+  max-width: 600px;
+  height: 300px;
   margin: auto;
   position: absolute;
   top: 0;
@@ -1855,63 +1857,43 @@ iframe{
   left: 0;
   border-radius: var(--border-radius);
   background-color: white;
-}
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 
-.modal-top{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: var(--color);
-  height: 60px;
-  color: white;
-}
-
-.modal-top .flex-row-gap-10{
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 
-.modal-top .fa-circle-exclamation{
-  font-size: 2rem;
-}
-
-.modal-top .fa-xmark{
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.modal-bottom{
-  height: 190px;
+.modal-contents{
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 20px;
+  padding: 50px;
   line-height: 1.5;
 }
 
-.modal-bottom .flex-row-gap-10{
+.modal-contents .flex-row-gap-10{
   width: 100%;
   justify-content: flex-end;
   align-items: center;
 }
 
-.modal-bottom p{
+.modal-contents p{
   font-size: 1.2rem;
 }
 
-.modal-bottom #login,
-.modal-bottom #register{
+.modal-contents #login,
+.modal-contents #register{
   width: 100px;
   border: 3px solid var(--color);
   background-color: var(--color);
   color: white;
   border-radius: var(--border-radius);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
-.modal-bottom #login{
+.modal-contents #login{
   border: 3px solid var(--color);
   background-color: white;
   color: var(--color);
@@ -2459,8 +2441,8 @@ iframe{
   padding: 14px;
   border-radius: var(--border-radius);
   color: #262626;
-    background-color: whitesmoke;
-      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #accountSection .account-col-1-child-2 {
@@ -2500,6 +2482,7 @@ iframe{
   justify-content: flex-start;
   padding: 25px;
   background-color: whitesmoke;
+  line-height: 1.5;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
@@ -2507,14 +2490,66 @@ iframe{
   width: 100%;
 }
 
-#delete-account-btn {
+#delete-account-modal-btn {
   color: white;
   border: 3px solid var(--color);
   background-color: var(--color);
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
+.delete-account-modal {
+  max-width: 550px;
+  height: 350px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.delete-account-modal-contents {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 50px;
+  line-height: 1.5;
+  position: relative;
+}
+
+.delete-account-modal-contents .fa-xmark{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 7%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.delete-account-modal-contents input {
+  width: 100%;
+}
+
+.delete-account-modal-contents button {
+  background-color: red;
+  color: white;
+}
+
+.delete-account-modal-contents .flex-row-gap-10 {
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.delete-account-modal-contents p {
+  font-size: 1.2rem;
+}
 
 /* LOGIN */
 
