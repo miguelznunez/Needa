@@ -5,10 +5,10 @@
 
   <% if(user.cover_photo) { %>
     <section id="profileCoverSection"
-      style="background-image: url('http://localhost:5000/cover-photo/<%= user.id %>/<%= user.cover_photo%>');">
+      style="background-image: url('http://localhost:5000/cover-photo/<%= user.id %>/<%= user.cover_photo%>');" class="lazy">
     </section>
   <% } else { %>
-    <section id="profileCoverSection"></section>
+    <section id="profileCoverSection" class="lazy"></section>
   <% } %>
 
   <section id="profileSection">
@@ -297,6 +297,7 @@
   </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/lazy-loading.js"></script>
 
   <% if(showcasePhotos !==null) { %>
     <script src="/js/lightbox.js"></script>

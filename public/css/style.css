@@ -27,7 +27,7 @@ body{
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
 form{
@@ -57,7 +57,7 @@ textarea{
   transition: all 0.30s ease-in-out;
   border: 1px solid lightgray;
   font-family: inherit;
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 input:focus,
@@ -708,7 +708,7 @@ iframe{
 
 /* INDEX.EJS */
 
-#homeHeader {
+#home-header {
   background-color: black;
   position: fixed;
   top: 0;
@@ -716,12 +716,12 @@ iframe{
   z-index: 2;
 }
 
-#homeHeader {
+#home-header {
   background-color: transparent;
   transition: 0.6s ease-in-out;
 }
 
-#homeHeader.sticky {
+#home-header.sticky {
   background-color: black;
 }
 
@@ -963,6 +963,10 @@ iframe{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+}
+
+.slide button{
+  border: none;
 }
 
 #popularSearches .slide-img {
@@ -1260,8 +1264,21 @@ iframe{
   display: flex;
   flex-direction: column;
   gap: 25px;
-  position: relative;
+  position: relative;  
 }
+
+/* #testimonials .slide-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-position: center;
+  background-size: cover;
+}
+
+.img-1{
+  background-image: url(https://images.pexels.com/photos/2128807/pexels-photo-2128807.jpeg?cs=srgb&dl=pexels-david-garrison-2128807.jpg&fm=jpg);
+} */
 
 #testimonials .testimonials-header{
   color: white;
@@ -1281,7 +1298,6 @@ iframe{
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid orange; */
 }
 
 #testimonials .tslide{
@@ -1328,6 +1344,17 @@ iframe{
 
 #testimonials .tns-nav{
   text-align: center;
+}
+
+#testimonials .tns-nav button{
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  margin-left: 15px;
+}
+
+#testimonials .tns-nav .tns-nav-active{
+  background-color: var(--color);
 }
 
 #advertising {
@@ -1390,19 +1417,19 @@ iframe{
   background-color: white;
   background-position: center;
   background-size: cover;
-  background-image: url(/images/default_cover_img.jpg);
+  background-image: url(/images/default_cover.png);
   background-repeat: no-repeat;
 }
 
 #profileSection{
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 #profileSection .profile-wrapper {
   display: grid;
   grid-template-columns: 30% 70%;
+  gap: 10px;
   background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   min-height: 100vh;
 }
 
@@ -1411,9 +1438,10 @@ iframe{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: white;
   color: #262626;
-  padding: 30px 15px 30px 30px;
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  padding: 20px;
 }
 
 #profileSection .profile-col-1-box-1{
@@ -1424,7 +1452,7 @@ iframe{
   align-items: center;
   gap: 20px;
   border-radius: var(--border-radius);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
   padding: 0 20px;
 }
 
@@ -1478,7 +1506,7 @@ iframe{
   display: flex;
   flex-direction: column;
   gap: 20px; 
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
 }
 
 #profileSection .profile-website-link,
@@ -1530,7 +1558,7 @@ iframe{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
 }
 
 #profileSection .not-loggedIn{
@@ -1566,7 +1594,7 @@ iframe{
 #profileSection .profile-col-2-wrapper {
   width: 100%;
   height: fit-content;
-  padding: 30px 30px 30px 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1926,11 +1954,10 @@ iframe{
 #searchResultsSection .search-results-col-2{
   height: 300px;
   width: 100%;
-  border: 1px solid lightgray;
   border-radius: var(--border-radius);
   padding: 20px;
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #searchResultsSection .search-results-col-2{
@@ -2017,16 +2044,14 @@ iframe{
   padding: 14px;
   border-radius: var(--border-radius);
   color:#262626;
-  background-color: white;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #settingsSection .settings-col-1-child-2{
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
-  background-color: white;
   border: 1px solid lightgray;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
@@ -2059,11 +2084,10 @@ iframe{
 
 #settingsSection .settings-col-2{
   width: 100%;
-  border: 1px solid lightgray;
   border-radius: var(--border-radius);
   padding: 20px;
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #settingsSection .settings-col-2-wrapper{
@@ -2111,7 +2135,7 @@ iframe{
   border: 3px dotted lightgray;
   background-position: center;
   background-size: cover;
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 #settingsSection .profile-photo-container img { 
@@ -2135,7 +2159,7 @@ iframe{
   background-position: center;
   background-size: cover;
   position: relative;
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 #settingsSection .cover-photo-container img{
@@ -2261,9 +2285,8 @@ iframe{
   padding: 14px;
   border-radius: var(--border-radius);
   color: #262626;
-  background-color: white;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #showcaseSection .showcase-col-1-child-2 {
@@ -2303,8 +2326,8 @@ iframe{
   justify-content: flex-start;
   background-color: white;
   padding: 25px;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #showcaseSection .showcase-photos-header{
@@ -2323,7 +2346,7 @@ iframe{
   background-size: cover;
   border: 3px dotted lightgray;
   position: relative;
-  background-color: #f9f9f9;
+  background-color: white;
   font-style: italic;
   color: gray;
 }
@@ -2423,9 +2446,8 @@ iframe{
   padding: 14px;
   border-radius: var(--border-radius);
   color: #262626;
-  background-color: white;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    background-color: whitesmoke;
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #accountSection .account-col-1-child-2 {
@@ -2463,10 +2485,9 @@ iframe{
   border-radius: var(--border-radius);
   padding: 0;
   justify-content: flex-start;
-  background-color: white;
   padding: 25px;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #accountSection .account-col-2-child {
@@ -2484,7 +2505,6 @@ iframe{
 /* LOGIN */
 
 #login-section{
-  /* margin-top: 70px; */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -2499,15 +2519,14 @@ iframe{
   padding: 50px;
   width: fit-content;
   border-radius: var(--border-radius);
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 
 /* REGISTER */
 
 #register-section{
-  /* margin-top: 70px; */
   height: 100vh;
   padding: 50px 0;
   display: flex;
@@ -2523,8 +2542,8 @@ iframe{
   padding: 50px;
   width: fit-content;
   border-radius: var(--border-radius);
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* LOGIN/ REGISTER */
@@ -2596,7 +2615,6 @@ input[type="checkbox"]{
 
 /* PASSWORD-RESET.EJS */
 #password-reset-section{
-  /* margin-top: 70px; */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -2612,13 +2630,12 @@ input[type="checkbox"]{
   padding: 50px;
   width: fit-content;
   border-radius: var(--border-radius);
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* PASSWORD-RESET-UPDATE.EJS */
 #updatePassword{
-  /* margin-top: 70px; */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -2627,7 +2644,6 @@ input[type="checkbox"]{
 
 /* ERROR.EJS */
 #errorSection{
-  /* margin-top: 70px; */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -2994,6 +3010,10 @@ footer {
   }
   #cookies-btn {
     width: 100%;
+  }
+
+  #testimonials .tslide {
+    padding: 0 50px;
   }
 }
 

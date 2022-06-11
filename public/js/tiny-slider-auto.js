@@ -8,6 +8,7 @@ const slider_1 = tns({
   swipeAngle: false,
   autoplay: true,
   autoplayButtonOutput: false,
+  lazyload: true,
   controlsContainer: '#controls-1',
   prevButton: '.prev-1',
   nextButton: '.next-1',
@@ -45,6 +46,7 @@ const slider_2 = tns({
   autoplay: true,
   autoplayTimeout: 6000,
   autoplayButtonOutput: false,
+  lazyload: true,
   controlsContainer: '#controls-2',
   prevButton: '.prev-2',
   nextButton: '.next-2',
@@ -70,3 +72,25 @@ const slider_2 = tns({
     }
   }
 });
+
+ const slider_3 = tns({
+    container: ".slider-3",
+    animateIn: "jello",
+    animateOut: "rollOut",
+    slideBy: 1,
+    speed: 700,
+    nav: true,
+    navPosition: "bottom",
+    swipeAngle: false,
+    autoplay: true,
+    autoplayTimeout: 8000,
+    autoplayButtonOutput: false,
+    controlsContainer: '#controls-3',
+    prevButton: ".prev-3",
+    nextButton: ".next-3",
+    responsive: {
+      1700: {
+        items: 1
+      }
+    }
+  });

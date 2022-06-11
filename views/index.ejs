@@ -33,7 +33,7 @@
     </div>
   </section>
 
-  <header id="homeHeader">
+  <header id="home-header">
     <div class="container">
       <div class="subcontainer">
         <nav>
@@ -150,7 +150,7 @@
 
   <!-- CAROUSEL -->
 
-  <section id="carousel" class="fade">
+  <section id="carousel" class="fade lazy">
     <div class="custom-shape-divider-bottom-1654062691">
       <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <path
@@ -199,7 +199,7 @@
             </div>
           </div>
           <div class="slider-1">
-
+            
             <form action="/auth/find-professionals" method="POST">
               <div class="slide">
                 <input type="hidden" name="profession" value="mechanics">
@@ -575,6 +575,7 @@
           <div class="slider-3">
             <div>
               <div class="tslide flex-column-gap-25">
+                <div class="slide-img img-1"></div>
                 <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
                   provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
                   <p>Michael Smith / CEO of Lorem</p>
@@ -582,6 +583,7 @@
             </div>
             <div>
               <div class="tslide flex-column-gap-25">
+                <div class="slide-img"></div>
                 <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
                   provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
                   <p>Cristal Pettis / CEO of Lorem</p>
@@ -589,6 +591,7 @@
             </div>
             <div>
               <div class="tslide flex-column-gap-25">
+                <div class="slide-img"></div>
                 <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
                   provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
                   <p>Tyler Evans  / CEO of Lorem</p>
@@ -608,7 +611,7 @@
     </div>
   </section>
 
-  <section id="advertising">
+  <section id="advertising" class="lazy">
     <div class="container">
       <div class="subcontainer">
         <div class="header">
@@ -620,6 +623,7 @@
   </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/lazy-loading.js"></script>
   <script src="/js/carousel.js"></script>
   <script src="/js/tiny-slider-auto.js"></script>
   <script src="/js/search-list.js"></script>
@@ -639,34 +643,9 @@
 
   <script>
     window.addEventListener("scroll", () => {
-      const homeHeader = document.querySelector("#homeHeader");
+      const homeHeader = document.querySelector("#home-header");
       homeHeader.classList.toggle("sticky", window.scrollY > 0);
     });
-
-
-
-    const slider_3 = tns({
-        container: ".slider-3",
-        animateIn: "jello",
-        animateOut: "rollOut",
-        slideBy: 1,
-        speed: 700,
-        nav: true,
-        navPosition: "bottom",
-        swipeAngle: false,
-        autoplay: true,
-        autoplayTimeout: 7000,
-        autoplayButtonOutput: false,
-        controlsContainer: '#controls-3',
-        prevButton: ".prev-3",
-        nextButton: ".next-3",
-        responsive: {
-          1700: {
-            items: 1
-          }
-        }
-      });
-
   </script>
 
 <%- include("partials/footer.ejs") %>
