@@ -268,12 +268,22 @@
                   </div>
                   <div class="slider-1">
                     <% for(let i=0;i < usersFollowing.length;i++) { %>
-                      <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
-                        <div class="contact-photo-wrapper">
-                          <div class="contact-photo" style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                      <% if(usersFollowing[i].profile_photo) { %>
+                        <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
+                          <div class="contact-photo-wrapper">
+                            <div class="contact-photo" style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                            </div>
                           </div>
-                        </div>
-                      </a>
+                        </a>
+                      <% } else { %>
+                        <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
+                          <div class="contact-photo-wrapper">
+                            <div class="contact-photo">
+                              <i class="fas fa-user"></i>
+                            </div>
+                          </div>
+                        </a>
+                      <% } %>
                     <% } %>
                   </div>
                 <% } else { %>
