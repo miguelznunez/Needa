@@ -59,7 +59,7 @@
                 <% if (showcasePhotos !==null) { %>
                   <% for(let i=0; i < length; i++) { %>
                     <div class="image">
-                      <img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[i] %>" alt="image">
+                      <img data-src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[i] %>" alt="image" class="lazy">
                       <span onclick="delImage('<%= i %>')">&times;</span>
                     </div>
                   <% } %>
@@ -80,6 +80,11 @@
 
 
   <script src="/js/script.js"></script>
+
+  <% if (showcasePhotos !==null) { %>
+    <script src="/js/lazy-img.js"></script>
+  <% } %>
+  
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>

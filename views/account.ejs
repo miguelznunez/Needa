@@ -1,4 +1,5 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/toast.ejs") %>
 <%- include("partials/location-modal.ejs") %>
 
   <section id="accountSection">
@@ -48,19 +49,25 @@
 
   <div class="overlay">
     <div class="delete-account-modal">
-      <div class="delete-account-modal-contents flex-column-gap-20">
-        <div class="form-title">
-          <h1>Are you sure?</h1>
+      <div class="delete-account-modal-contents flex-column-gap-15">
+        <div style="width: 100%;text-align:center;">
+          <i class="fa-solid fa-circle-exclamation"></i>
         </div>
-        <p>Please enter your password to delete your account.</p>        
-        <input type="text" placeholder="Password">
-        <button>Delete</button>
+        <div class="form-title flex-column-gap-5">
+          <h1>Are you sure?</h1>
+          <p>Please enter your password to delete this account</p>
+        </div>
+        <form class="flex-column-gap-10" action="/auth/delete-account" method="POST">
+          <input type="password" name="password" placeholder="Password" maxlength="60" required>
+          <button type="submit">Delete</button>
+        </form>
         <i class="fa-solid fa-xmark" id="close-login-modal-btn"></i>
       </div>
     </div>
   </div>
 
   <script src="/js/script.js"></script>
+  <script src="/js/toast.js"></script>
   <script src="/js/delete-modal.js"></script>
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>

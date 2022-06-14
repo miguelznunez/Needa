@@ -728,28 +728,6 @@ iframe{
   background-color: black;
 }
 
-/* BARBER */
-
-#barber .custom-shape-divider-bottom-1654062691 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-#barber .custom-shape-divider-bottom-1654062691 svg {
-  position: relative;
-  display: block;
-  width: calc(147% + 1.3px);
-  height: 92px;
-}
-
-#barber .custom-shape-divider-bottom-1654062691 .shape-fill {
-  fill: #FFFFFF;
-}
 
 #carousel .custom-shape-divider-bottom-1654062691 {
   position: absolute;
@@ -2501,7 +2479,7 @@ iframe{
 
 .delete-account-modal {
   max-width: 550px;
-  height: 350px;
+  height: 400px;
   margin: auto;
   position: absolute;
   top: 0;
@@ -2518,10 +2496,7 @@ iframe{
 
 .delete-account-modal-contents {
   width: 100%;
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  height: 400px;
   padding: 50px;
   line-height: 1.5;
   position: relative;
@@ -2542,13 +2517,23 @@ iframe{
   color: var(--color);
 }
 
+.delete-account-modal-contents form {
+  width: 100%;
+}
+
 .delete-account-modal-contents input {
   width: 100%;
 }
 
 .delete-account-modal-contents button {
+  width: 100%;
   background-color: red;
   color: white;
+}
+
+.delete-account-modal-contents .fa-circle-exclamation{
+  font-size: 5rem;
+  color: red;
 }
 
 .delete-account-modal-contents .flex-row-gap-10 {
@@ -2942,6 +2927,15 @@ footer {
 
 @media(max-width:1278px){
 
+  #profileSection .image-box {
+    height: 332px;
+  }
+
+  .preview-box .details {
+    width: 100%;
+    height: auto;
+  }
+
   #settingsSection .settings-wrapper {
     display: flex;
     flex-direction: column;
@@ -3062,6 +3056,7 @@ footer {
 }
 
 @media(max-width:1024px){
+
   #we-offer .we-offer-wrapper {
     display: flex;
     flex-direction: column;
@@ -3082,11 +3077,11 @@ footer {
 
 
 @media(max-width:768px){
-  .preview-box .details{
-    width: 100%;
-    height: auto;
-  }
 
+  #profileSection .image-box {
+    height: 232px;
+  }
+  
   #login-form,
   #register-form{
     width: 100%;

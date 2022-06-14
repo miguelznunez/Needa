@@ -484,7 +484,7 @@ exports.findProfessionals = (req, res) => {
 // FIND USERS THAT MATCH PROFESSION AND CITY/STATE OR ZIP
 
 function queryLocation(req, res, profession, city, state, zip) {
-  db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?))", [profession +'?', profession + '?', city, state, zip], (err, rows) => {
+  db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?) && (status != ?))", [profession +'?', profession + '?', city, state, zip, "Deleted"], (err, rows) => {
     if(!err) {
       const results = (rows[0] === undefined) ? null : rows;
       return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession});
@@ -522,13 +522,53 @@ exports.deleteContactForm = (req, res) => {
   
 }
 
+
+// DELETE ACCOUNT ------------------------------------------------------------------
+
+
+exports.deleteAccount = (req, res) => {
+  const password = req.body.password;
+
+  if(password === "" || password === null || password === undefined)
+    return res.render("account", {title:"Needa | Account Settings",  user : req.user, type: "error",  message: "Input field cannot be empty."});
+
+  db.query("SELECT password FROM user WHERE id = ?", [req.user.id], async (err, results) => {
+    // IF PASSWORDS MATCH
+    if(!err && (await bcrypt.compare(password, results[0].password.toString()))){
+      db.query("UPDATE user SET email = ?, status = ? WHERE id = ?", [null, "Deleted", req.user.id], async (err, results) => {
+        if(!err) {
+          db.query("DELETE FROM following WHERE following_id = ?", [req.user.id], (err, results) => {
+            if(!err){
+              res.cookie("jwt", "logout", {
+                expires: new Date(Date.now() + 2*1000),
+                httpOnly: true
+              });
+              res.redirect("/");
+            } else{
+              return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
+            }
+          })
+        } else{
+          return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
+        }
+       })
+    // IF PASSWORDS DO NOT MATCH
+    } else if(!err && !(await bcrypt.compare(password, results[0].password.toString()))) {
+      return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: "The password you entered is incorrect." });
+    // DATABASE ERROR
+    } else { 
+      return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
+    }
+  });
+}
+
 // ADMIN CRUD SYSTEM 
 
 // FIND USER -------------------------------------------------------
 
 exports.findUser = (req, res) => {
   let searchTerm = req.body.search;
-  db.query("SELECT * FROM user WHERE (first_name LIKE ? OR last_name LIKE ? OR email LIKE ?) && status != 'Deleted'", ["%" + searchTerm + "%", "%" + searchTerm + "%", "%" + searchTerm + "%"], (err, rows) => {
+  db.query("SELECT * FROM user WHERE (first_name LIKE ? OR last_name LIKE ? OR email LIKE ?)", ["%" + searchTerm + "%", "%" + searchTerm + "%", "%" + searchTerm + "%"], (err, rows) => {
     if(!err) return res.render("admin", {title: "Needa | Admin" , user : req.user, rows: rows});
     else console.log(err);
   });
