@@ -1773,12 +1773,11 @@ iframe{
 .preview-box .details {
   width: 768px;
   margin: auto;
-  padding: 5px 0;
 }
 
 .preview-box .details .title {
   display: flex;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
 }
 
@@ -1793,6 +1792,7 @@ iframe{
 }
 
 #profileSection .image-box {
+  height: 432px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1817,11 +1817,14 @@ iframe{
   color: var(--color);
 }
 
+
 #profileSection .image-box img {
-  width: 768px;
-  height: 432px;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
   margin: auto;
   border-radius: var(--border-radius);
+  border: 5px solid white;
 }
 
 #profileSection .shadow {
@@ -1832,7 +1835,7 @@ iframe{
   width: 100%;
   z-index: 2;
   display: none;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .overlay {
@@ -2368,7 +2371,7 @@ iframe{
 #showcaseSection .images-container {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   gap: 15px;
   flex-wrap: wrap;
@@ -2476,7 +2479,7 @@ iframe{
 
 #accountSection .account-col-2 {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   border-radius: var(--border-radius);
   padding: 0;
   justify-content: flex-start;
@@ -3077,9 +3080,9 @@ footer {
   }
 }
 
+
 @media(max-width:768px){
-  .preview-box .details,
-  #profileSection .image-box img {
+  .preview-box .details{
     width: 100%;
     height: auto;
   }

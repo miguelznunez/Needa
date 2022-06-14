@@ -19,10 +19,11 @@ for (let i = 0; i < gallery.length; i++) {
         function preview(){
             currentImg.textContent = newIndex + 1; //passing current img index to currentImg varible with adding +1
             let imageURL = gallery[newIndex].querySelector("img").src; //getting user clicked img url
+
             previewImg.src = imageURL; //passing user clicked img url in previewImg src
-            // previewImg.classList.remove('animate__animated', 'animate__fadeIn');
-            // void previewImg.offsetWidth;
-            // previewImg.classList.add('animate__animated', 'animate__fadeIn');
+            previewImg.classList.remove('animate__animated', 'animate__fadeIn');
+            void previewImg.offsetWidth;
+            previewImg.classList.add('animate__animated', 'animate__fadeIn');
         }
         
         preview(); //calling above function
