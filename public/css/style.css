@@ -2048,7 +2048,8 @@ iframe{
 
 .settings-col-1-link .fa-user-circle,
 .settings-col-1-link .fa-cloud-arrow-up,
-.settings-col-1-link .fa-cog{
+.settings-col-1-link .fa-user-minus,
+.settings-col-1-link .fa-key{
   font-size: 1.5rem;
 }
 
@@ -2291,7 +2292,8 @@ iframe{
 
 .showcase-col-1-link .fa-user-circle,
 .showcase-col-1-link .fa-cloud-arrow-up,
-.showcase-col-1-link .fa-cog {
+.showcase-col-1-link .fa-key,
+.showcase-col-1-link .fa-user-minus {
   font-size: 1.5rem;
 }
 
@@ -2451,7 +2453,8 @@ iframe{
 
 .account-col-1-link .fa-user-circle,
 .account-col-1-link .fa-cloud-arrow-up,
-.account-col-1-link .fa-cog {
+.account-col-1-link .fa-key,
+.account-col-1-link .fa-user-minus {
   font-size: 1.5rem;
 }
 
