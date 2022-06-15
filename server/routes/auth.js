@@ -119,7 +119,7 @@ router.post("/settings",
   })
 ], authController.isLoggedIn, authController.settings);
 
-router.post("/showcase-settings", showcaseUpload, authController.isLoggedIn, authController.showcaseSettings);
+router.post("/upload-showcase-photos", showcaseUpload, authController.isLoggedIn, authController.uploadShowcasePhotos);
 
 router.post("/find-user", authController.isLoggedIn, authController.findUser);
 
@@ -160,9 +160,9 @@ router.post("/find-professionals", [
   })
 ], authController.isLoggedIn, authController.findProfessionals);
 
-router.post("/addContactForm", authController.isLoggedIn, authController.addContactForm);
+router.post("/add-contact-form", authController.isLoggedIn, authController.addContactForm);
 
-router.post("/deleteContactForm", authController.isLoggedIn, authController.deleteContactForm);
+router.post("/delete-contact-form", authController.isLoggedIn, authController.deleteContactForm);
 
 router.post("/delete-account", authController.isLoggedIn, authController.deleteAccount);
 

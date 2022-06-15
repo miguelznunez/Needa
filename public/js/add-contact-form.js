@@ -4,7 +4,7 @@ addContactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const following_id = document.querySelector("#following-id").value;
 
-  fetch("/auth/addContactForm", {
+  fetch("/auth/add-contact-form", {
     method: "POST",
     headers: {
       "Accept": "application/json, text/plain, */*",

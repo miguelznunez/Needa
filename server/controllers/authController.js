@@ -42,6 +42,33 @@ function titleCaseAll(string) {
   return splitString;   
 }
 
+// DELETE PHOTO FROM S3
+
+async function deletePhotofromS3(user_id, photo_path){
+  if(photo_path != null){
+    await s3.deleteImage(user_id, photo_path);
+  }
+}
+
+// PARSE TAGS
+
+function parseTags(rawTags){
+  let tags = [];
+
+  if(rawTags !== "") {
+    const values = JSON.parse(rawTags); // PARSE TAGS COMING IN FROM THE FRONT END
+
+    for(let i = 0;i < values.length;i++) // LOOP THROUGH EACH TAG
+      tags.push(values[i]["value"].toLowerCase());
+
+    tags = JSON.stringify(tags); // STRINGIFY JSON - TO STORE IN DATABASE
+    return tags;
+
+  } else {
+    return null;
+  }
+}
+
 // REGISTER -------------------------------------------------------
 
 
@@ -81,7 +108,7 @@ exports.register = (req, res) => {
                               password: password});
     // ELSE CREATE A NEW USER
     } else if(!err && results[0] === undefined){
-        const token = randomstring.generate(20);
+        const token = randomstring.generate(255);
         bcrypt.hash(password, saltRounds, (err, hash) => {
           db.query("INSERT INTO user (first_name, last_name, email, password, token, member_since) VALUES (?,?,?,?,?,?)", [first_name, last_name, email, hash, token, member_since],
             async (err, results) => {
@@ -214,7 +241,7 @@ exports.passwordReset = (req, res) => {
     if(!err && results[0] != undefined) {
       const id = results[0].id;
       // GENERATE TOKEN 
-      const token = randomstring.generate(20);
+      const token = randomstring.generate(255);
       // SET EXPIRATION DATE
       const token_expires = Date.now() + 3600000;
       const data = { token: token, token_expires: token_expires};
@@ -282,12 +309,9 @@ async function uploadPhotos(user, req, res, profile_data, cover_data, update){
   // UNLINK FILES FROM UPLOADS FOLDER
   await unlinkFile(profile_data.path);
   await unlinkFile(cover_data.path);
-  // DELETE OLD PROFILE IMAGE FROM S3 (IF ANY)
-  if(user.profile_photo != null)
-    await s3.deleteImage(user.id, user.profile_photo);
-  // DELETE OLD COVER IMAGE FROM S3 (IF ANY)
-  if(user.cover_photo != null)
-    await s3.deleteImage(user.id, user.cover_photo);
+  // DELETE OLD PROFILE AND COVER PHOTO FROM S3 (IF ANY)
+  deletePhotofromS3(user.id, user.profile_photo);
+  deletePhotofromS3(user.id, user.cover_photo)
 
   console.log("Uploaded profile and cover")
   databaseQuery(req, res, profile_data.filename, cover_data.filename, update, user.id);
@@ -301,12 +325,11 @@ async function uploadProfilePhotoOnly(user, req, res, profile_data, cover_data, 
   // UNLINK FILE FROM UPLOADS FOLDER
   await unlinkFile(profile_data.path);
   // DELETE OLD PROFILE PHOTO FROM S3 (IF ANY)
-  if(user.profile_photo != null)
-    await s3.deleteImage(user.id, user.profile_photo);
+  deletePhotofromS3(user.id, user.profile_photo);
 
   if(cover_outcome === "delete" && user.cover_photo != null){
     console.log("Uploaded profile and deleted cover")
-    await s3.deleteImage(user.id, user.cover_photo);
+    deletePhotofromS3(user.id, user.cover_photo);
     databaseQuery(req, res, profile_data.filename, null, update, user.id);
   } else {
     console.log("Uploaded profile only")
@@ -323,12 +346,11 @@ async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, pr
   // UNLINK FILE FROM UPLOADS FOLDER
   await unlinkFile(cover_data.path);
   // DELETE OLD COVER PHOTO FROM S3 (IF ANY)
-  if(user.cover_photo != null)
-    await s3.deleteImage(user.id, user.cover_photo);
+  deletePhotofromS3(user.id, user.cover_photo);
 
   if(profile_outcome === "delete" && user.profile_photo != null){
     console.log("Uploaded cover and deleted profile")
-    await s3.deleteImage(user.id, user.profile_photo);
+    deletePhotofromS3(user.id, user.profile_photo);
     databaseQuery(req, res, null, cover_data.filename, update, user.id);
   } else {
     console.log("Uploaded cover only")
@@ -342,16 +364,16 @@ async function uploadCoverPhotoOnly(user, req, res, profile_data, cover_data, pr
 async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, update){
   if(profile_outcome === "delete" && user.profile_photo != null && cover_outcome === "delete" && user.cover_photo != null){
     console.log("Profile and cover deleted")
-    await s3.deleteImage(user.id, user.profile_photo);
-    await s3.deleteImage(user.id, user.cover_photo);
+    deletePhotofromS3(user.id, user.profile_photo);
+    deletePhotofromS3(user.id, user.cover_photo);
     databaseQuery(req, res, null, null, update, user.id);
   } else if(profile_outcome === "delete" && user.profile_photo != null) {
     console.log("Profile deleted")
-    await s3.deleteImage(user.id, user.profile_photo);
+    deletePhotofromS3(user.id, user.profile_photo);
     databaseQuery(req, res, null, user.cover_photo, update, user.id);
   } else if(cover_outcome === "delete" && user.cover_photo != null) {
     console.log("Cover deleted")
-    await s3.deleteImage(user.id, user.cover_photo);
+    deletePhotofromS3(user.id, user.cover_photo);
     databaseQuery(req, res, user.profile_photo, null, update, user.id);
   } else {
     console.log("Nothing uploaded or deleted")
@@ -374,25 +396,8 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
   }); 
 }
 
-function parseTags(rawTags){
-  let tags = [];
 
-  if(rawTags !== "") {
-    const values = JSON.parse(rawTags); // PARSE TAGS COMING IN FROM THE FRONT END
-
-    for(let i = 0;i < values.length;i++) // LOOP THROUGH EACH TAG
-      tags.push(values[i]["value"].toLowerCase());
-
-    tags = JSON.stringify(tags); // STRINGIFY JSON - TO STORE IN DATABASE
-    return tags;
-
-  } else {
-    return null;
-  }
-}
-
-
-exports.showcaseSettings = async (req, res) => { 
+exports.uploadShowcasePhotos = async (req, res) => { 
 
   const length = Object.keys(req.files).length,
   showcasePhotos = JSON.parse(req.user.showcase_photos), // PREVIOUS SHOWCASE PHOTOS
@@ -408,16 +413,17 @@ exports.showcaseSettings = async (req, res) => {
     data = JSON.stringify(data); // CONVERT TO JSON
     
     if(previousDataLength !== null){
-      // console.log("Deleted old showcase photos..")
+      console.log("Deleted old showcase photos..")
       for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
-        await s3.deleteImage(req.user.id, showcasePhotos[i]);
+        deletePhotofromS3(req.user.id, showcasePhotos[i]);
     }
     showcasePhotosQuery(req, res, data, "success", "Successfully updated photos."); // UPDATE THE DATABASE WITH THE NEW PHOTOS OBJECT  
 
-  } else if(length === 0 && previousDataLength !== null) { 
-
+  } else if(length === 0 && previousDataLength !== null) { // USER DELETED ALL PHOTOS
+    console.log("Deleted old showcase photos..")
     for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
-      await s3.deleteImage(req.user.id, showcasePhotos[i]);
+      deletePhotofromS3(req.user.id, showcasePhotos[i]);
+      
     showcasePhotosQuery(req, res, null, "success", "Successfully deleted photos."); // SET SHOWCASE PHOTOS COLUMN TO NULL
 
   } else { // USER CLICKED THE UPLOAD BUTTON BUT THEY DIDN'T UPLOAD ANYTHING
@@ -497,67 +503,69 @@ function queryLocation(req, res, profession, city, state, zip) {
 // ADD USER TO MY CONTACT LIST
 
 exports.addContactForm = (req, res) => {
-
   db.query("INSERT INTO following (id, following_id) VALUES (?,?)", [req.user.id, req.body.following_id], async (err, results) => {
     if(!err){
       return res.json({type: "success", message: "User was added to your contact list."}); 
     } else {
       return res.json({type: "error", message: err.message}); 
     }
-  })
-  
+  });
 }
 
 // DELETE USER FROM MY CONTACT LIST
 
 exports.deleteContactForm = (req, res) => {
-
   db.query("DELETE FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.body.following_id], async (err, results) => {
     if(!err){
       return res.json({type: "success", message: "User was deleted from your contact list."}); 
     } else {
       return res.json({type: "error", message: err.message}); 
     }
-  })
-  
+  });
 }
 
 
 // DELETE ACCOUNT ------------------------------------------------------------------
 
-
 exports.deleteAccount = (req, res) => {
-  const password = req.body.password;
+  const password = req.body.password,
+  showcasePhotos = JSON.parse(req.user.showcase_photos),
+  showcasePhotosLength = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
 
   if(password === "" || password === null || password === undefined)
-    return res.render("account", {title:"Needa | Account Settings",  user : req.user, type: "error",  message: "Input field cannot be empty."});
+    return res.render("account", {title:"Needa | Account Settings",  user:req.user, type:"error",  message:"Input field cannot be empty."});
 
+  // CHECK IF PASSWORDS MATCH
   db.query("SELECT password FROM user WHERE id = ?", [req.user.id], async (err, results) => {
-    // IF PASSWORDS MATCH
+    // IF THEY MATCH DELETE THE ACCOUNT
     if(!err && (await bcrypt.compare(password, results[0].password.toString()))){
-      db.query("UPDATE user SET email = ?, status = ? WHERE id = ?", [null, "Deleted", req.user.id], async (err, results) => {
+      db.query("UPDATE user SET email = ?, status = ? WHERE id = ?;DELETE FROM following WHERE following_id = ?", [null, "Deleted", req.user.id, req.user.id], async (err, results) => {
+        // IF SUCCESSFULLY DELETED USER FROM DATABASE
         if(!err) {
-          db.query("DELETE FROM following WHERE following_id = ?", [req.user.id], (err, results) => {
-            if(!err){
-              res.cookie("jwt", "logout", {
-                expires: new Date(Date.now() + 2*1000),
-                httpOnly: true
-              });
-              res.redirect("/");
-            } else{
-              return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
-            }
-          })
-        } else{
-          return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
+          // DELETE USER IMAGES FROM S3
+          deletePhotofromS3(req.user.id, req.user.profile_photo);
+          deletePhotofromS3(req.user.id, req.user.cover_photo);
+          if(showcasePhotosLength !== null){
+            for(let i = 0;i < showcasePhotosLength;i++)
+              deletePhotofromS3(req.user.id, showcasePhotos[i]);
+          }
+          // LOG THE USER OUT
+          res.cookie("jwt", "logout", {
+            expires: new Date(Date.now() + 2*1000),
+            httpOnly: true
+          });
+          res.redirect("/");
+        // ELSE DATABASE ERROR
+        } else{  
+          return res.render("account", { title:"Needa | Account Settings",  user:req.user, type: "error",  message:err.message });
         }
        })
-    // IF PASSWORDS DO NOT MATCH
+    // ELSE IF PASSWORDS DO NOT MATCH
     } else if(!err && !(await bcrypt.compare(password, results[0].password.toString()))) {
-      return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: "The password you entered is incorrect." });
-    // DATABASE ERROR
+      return res.render("account", { title:"Needa | Account Settings",  user:req.user, type: "error",  message:"The password you entered is incorrect." });
+    // ELSE DATABASE ERROR
     } else { 
-      return res.render("account", { title:"Needa | Account Settings",  user : req.user, type: "error",  message: err.message });
+      return res.render("account", { title:"Needa | Account Settings",  user:req.user, type: "error",  message:err.message });
     }
   });
 }

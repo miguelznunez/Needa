@@ -4,7 +4,7 @@ deleteContactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const following_id = document.querySelector("#following-id").value;
 
-  fetch("/auth/deleteContactForm", {
+  fetch("/auth/delete-contact-form", {
     method: "POST",
     headers: {
       "Accept": "application/json, text/plain, */*",

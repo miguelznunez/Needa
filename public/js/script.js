@@ -1,12 +1,6 @@
 var windowLocation = window.location.pathname; 
 
 switch(windowLocation){ 
-  case "/settings/showcase":
-    var showcaseJS = document.createElement('script');
-    showcaseJS.type = "text/javascript";
-    showcaseJS.src = "/js/showcase.js";
-    document.body.append(showcaseJS);
-    break;
   case "/auth/update-password":
     var passwordResetUpdateJS = document.createElement('script');
     passwordResetUpdateJS.type = "text/javascript";
