@@ -4,6 +4,7 @@ let slider_2 = tns({
   gutter: 15,
   animateIn: "jello",
   animateOut: "rollOut",
+  loop: false,
   slideBy: 1,
   speed: 400,
   nav: false,

@@ -71,9 +71,7 @@
 
 
   <script src="/js/script.js"></script>
-  <% if (showcasePhotos !==null) { %>
-    <script src="/js/lazy-img.js"></script>
-  <% } %>
+
   <script>
 
     let files = [], // STORE THE PHOTOS
@@ -86,14 +84,6 @@
     userId = "<%= user.id %>",
     showcasePhotos = JSON.parse('<%-JSON.stringify(showcasePhotos)%>'),
     length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
-
-    const urlToObject = async (image) => {
-      const response = await fetch(image);
-      // here image is url/location of image
-      const blob = await response.blob();
-      const file = new File([blob], 'image.jpg', { type: blob.type });
-      files.push(file);
-    }
 
     const toastOptions = {
       'success': { class: "fas fa-check-circle", color: "#47d764", header: "Success" },
@@ -139,129 +129,139 @@
       toast.style.transform = "translateX(400px)";
     })
 
-  // DISPLAY SHOWCASE IMAGES FROM DB ON PAGE LOAD
+    browse.addEventListener('click', () => input.click());
 
-  if(length){
-    let images = "";
-    for(let i = 0;i < length;i++){
-      images += `<div class="image">
-                    <img data-src="http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}" alt="image" class="lazy">
-                    <span onclick="delImage(${i})">&times;</span>
-                </div>`;
-      urlToObject(`http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}`)
-    }
-    container.innerHTML = images;
-  }
+    // INPUT CHANGE EVENT 
 
-  browse.addEventListener('click', () => input.click());
+    input.addEventListener('change', () => {
+      let file = input.files;
 
-  // INPUT CHANGE EVENT 
-
-  input.addEventListener('change', () => {
-    let file = input.files;
-
-    for (let i = 0; i < file.length; i++) {
-      if (files.every(e => e.name !== file[i].name)) 
-        files.push(file[i])
-    }
-    showcaseForm.reset();
-    showImages();
-  })
-
-  // DISPLAY PHOTOS
-
-  const showImages = () => {
-    let images = '';
-    files.forEach((e, i) => {
-      images += `<div class="image">
-                  <img src="${URL.createObjectURL(e)}" alt="image" class="lazy">
-                  <span onclick="delImage(${i})">&times;</span>
-                </div>`
+      for (let i = 0; i < file.length; i++) {
+        if (files.every(e => e.name !== file[i].name)) 
+          files.push(file[i])
+      }
+      showcaseForm.reset();
+      showImages();
     })
-    container.innerHTML = images;
-  }
 
-  // DELETE A PHOTO
+    // DISPLAY PHOTOS
 
-  const delImage = index => {
-    files.splice(index, 1)
-    showImages()
-  }
-
-  // DRAG AND DROP
-
-  form.addEventListener('dragover', e => {
-    e.preventDefault()
-
-    form.classList.add('dragover')
-    text.innerHTML = 'Drop images here'
-  })
-
-  form.addEventListener('dragleave', e => {
-    e.preventDefault()
-
-    form.classList.remove('dragover')
-    text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
-  })
-
-  form.addEventListener('drop', e => {
-    e.preventDefault()
-
-    form.classList.remove('dragover')
-    text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
-
-    let file = e.dataTransfer.files;
-
-    for (let i = 0; i < file.length; i++) {
-      if (!file[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
-      if (files.every(e => e.name !== file[i].name)) files.push(file[i]) // NO REPEATED PHOTOS
+    const showImages = () => {
+      let images = '';
+      files.forEach((e, i) => {
+        images += `<div class="image">
+                    <img src="${URL.createObjectURL(e)}" alt="image">
+                    <span onclick="delImage(${i})">&times;</span>
+                  </div>`;
+      })
+      container.innerHTML = images;
     }
-    files = files.slice(0, 9); // UPLOAD 9 PHOTOS MAX
-    showImages();
 
-  })
+    // DELETE A PHOTO
+
+    const delImage = index => {
+      files.splice(index, 1);
+      showImages();
+    }
+
+    // DISPLAY SHOWCASE IMAGES FROM DB ON PAGE LOAD
+
+    if (length) {
+      const forLoop = async _ => {
+        for (let i = 0; i < length; i++) {
+          let image_url = `http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}`;
+          let response = await fetch(image_url);
+          let blob = await response.blob();
+          let file = new File([blob], image_url, { type: blob.type });
+          files.push(file);
+        }
+      }
+      
+      forLoop();
+
+      let images = '';
+      for(let i = 0;i < length;i++) {
+        images += `<div class="image">
+                    <img src="http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}" alt="image">
+                    <span onclick="delImage(${i})">&times;</span>
+                  </div>`;
+      }
+      container.innerHTML = images;
+    }
+
+    // DRAG AND DROP
+
+    form.addEventListener('dragover', e => {
+      e.preventDefault()
+
+      form.classList.add('dragover')
+      text.innerHTML = 'Drop images here'
+    })
+
+    form.addEventListener('dragleave', e => {
+      e.preventDefault()
+
+      form.classList.remove('dragover')
+      text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
+    })
+
+    form.addEventListener('drop', e => {
+      e.preventDefault()
+
+      form.classList.remove('dragover')
+      text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
+
+      let file = e.dataTransfer.files;
+
+      for (let i = 0; i < file.length; i++) {
+        if (!file[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
+        if (files.every(e => e.name !== file[i].name)) files.push(file[i]) // NO REPEATED PHOTOS
+      }
+      files = files.slice(0, 9); // UPLOAD 9 PHOTOS MAX
+      showImages();
+
+    })
 
   // SUBMIT REQUEST WITH FETCH
 
-  showcaseForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+    showcaseForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const formData = new FormData(showcaseForm);
+      const formData = new FormData(showcaseForm);
 
-    files.forEach((e, i) => { 
-      formData.append(`file[${i}]`, e)
-    })
+      files.forEach((e, i) => { 
+        formData.append(`file[${i}]`, e)
+      })
 
-    fetch("/auth/upload-showcase-photos", {
-      method: "POST",
-      body: formData
-    })
+      fetch("/auth/upload-showcase-photos", {
+        method: "POST",
+        body: formData
+      })
 
-    .then(response => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      } else {
-        return response.json();
-      }
-    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        } else {
+          return response.json();
+        }
+      })
 
-    .then(data => {
-      if (data.type === "success") {
-        //  window.location.reload();
-         displayToast('success', data.message);
-      } else {
-        displayToast('error', data.message);
-      }
-    })
+      .then(data => {
+        if (data.type === "success") {
+          displayToast('success', data.message);
+        } else {
+          displayToast('error', data.message);
+        }
+      })
 
-    .catch(error => {
-      displayToast('error', error);
+      .catch(error => {
+        displayToast('error', error);
+      });
+
     });
 
-  });
-
   </script>
-  
+
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>

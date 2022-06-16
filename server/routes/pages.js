@@ -156,7 +156,7 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
     const showcasePhotos = JSON.parse(req.user.showcase_photos);
-    return res.render("showcase", {title: "Needa | Showcase Settings", user : req.user, showcasePhotos:showcasePhotos } );
+    return res.render("showcase", { title:"Needa | Showcase Settings", user:req.user, showcasePhotos:showcasePhotos } );
   } else { 
     return res.redirect("/login");
   }

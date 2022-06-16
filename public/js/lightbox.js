@@ -7,7 +7,6 @@ currentImg = previewBox.querySelector(".current-img"),
 totalImg = previewBox.querySelector(".total-img"),
 shadow = document.querySelector(".shadow");
 
-
 for (let i = 0; i < gallery.length; i++) {
     totalImg.textContent = gallery.length; //passing total img length to totalImg variable
     let newIndex = i; //passing i value to newIndex variable
