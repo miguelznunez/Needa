@@ -34,7 +34,8 @@ for (let i = 0; i < gallery.length; i++) {
             newIndex--; //decrement index
             
             if(newIndex == -1){
-                newIndex = gallery.length - 1;
+                // newIndex = gallery.length - 1;
+                newIndex = 0;
                 preview();
             } else {
                 preview();
@@ -43,7 +44,8 @@ for (let i = 0; i < gallery.length; i++) {
         nextBtn.onclick = ()=>{ 
             newIndex++; //increment index
             if(newIndex >= gallery.length){
-                newIndex = 0;
+                // newIndex = 0;
+                newIndex = gallery.length - 1;
                 preview();
             } else {
                 preview();
