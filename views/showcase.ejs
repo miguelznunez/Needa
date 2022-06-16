@@ -52,7 +52,7 @@
             <div class="flex-column-gap-10" style="width:100%;">
               <div class="showcase-photos flex-2">
                 <span class="inner">Drag & drop photos here or <span class="select">Browse</span></span>
-                <p>( Upload 9 photos max )</p>
+                <p>( Upload up to 9 photos of 1MB max size each.)</p>
                 <input name="file" type="file" class="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg" />
               </div>
               <div class="images-container"></div>
@@ -69,7 +69,12 @@
     </div>
   </section>
 
+  <div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
 
+  <!-- <script src="/js/loader.js"></script> -->
+  
   <script src="/js/script.js"></script>
 
   <script>
@@ -172,18 +177,23 @@
           let image_url = `http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}`;
           let response = await fetch(image_url);
           let blob = await response.blob();
-          let file = new File([blob], image_url, { type: blob.type });
+          let file = new File([blob], showcasePhotos[i], { type: blob.type });
           files.push(file);
         }
+
+      const span = document.querySelectorAll(".span--hidden");
+        span.forEach(s => {
+          s.classList.remove("span--hidden");
+        })
+
       }
-      
       forLoop();
 
       let images = '';
       for(let i = 0;i < length;i++) {
         images += `<div class="image">
                     <img src="http://localhost:5000/showcase-photo/${userId}/${showcasePhotos[i]}" alt="image">
-                    <span onclick="delImage(${i})">&times;</span>
+                    <span onclick="delImage(${i})" class="span--hidden">&times;</span>
                   </div>`;
       }
       container.innerHTML = images;
@@ -227,6 +237,11 @@
     showcaseForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
+
+      const loader = document.querySelector(".loader-wrapper");
+      loader.classList.add("loader--visible");
+      
+
       const formData = new FormData(showcaseForm);
 
       files.forEach((e, i) => { 
@@ -248,13 +263,16 @@
 
       .then(data => {
         if (data.type === "success") {
+          loader.classList.remove("loader--visible");
           displayToast('success', data.message);
         } else {
+          loader.classList.remove("loader--visible");
           displayToast('error', data.message);
         }
       })
 
       .catch(error => {
+        loader.classList.remove("loader--visible");
         displayToast('error', error);
       });
 

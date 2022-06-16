@@ -93,28 +93,28 @@ router.post("/settings",
     if(typeof req.files["profile_photo"] !== "undefined"){
       if(req.files["profile_photo"][0].originalname.match(/\.(png|PNG|jpeg|JPEG|jpg|JPG)$/)){
         return true;
-      } else { throw new Error("Profile photo must be PNG, JPG, or JPEG")}
+      } else { throw new Error("Profile photo must be PNG, JPG, or JPEG.")}
     } else { return true; }
   }),
   check("profile_photo").custom((value, {req}) => {
     if(typeof req.files["profile_photo"] !== "undefined"){
       if(req.files["profile_photo"][0].size < 1000000){
         return true;
-      } else { throw new Error("Profile photo exceeds limit of 1MB") }
+      } else { throw new Error("Profile photo exceeds limit of 1MB.") }
     }else {return true}
   }),
   check("cover_photo").custom((value, {req}) => {
     if(typeof req.files["cover_photo"] !== "undefined"){
       if(req.files["cover_photo"][0].originalname.match(/\.(png|PNG|jpeg|JPEG|jpg|JPG)$/)){
         return true;
-      } else { throw new Error("Cover photo must be PNG, JPG, or JPEG")}
+      } else { throw new Error("Cover photo must be PNG, JPG, or JPEG.")}
     } else { return true; }
   }),
   check("cover_photo").custom((value, {req}) => {
     if(typeof req.files["cover_photo"] !== "undefined"){
       if(req.files["cover_photo"][0].size < 1000000){
         return true;
-      } else { throw new Error("Cover photo exceeds limit of 1MB") }
+      } else { throw new Error("Cover photo exceeds limit of 1MB.") }
     }else {return true}
   })
 ], authController.isLoggedIn, authController.settings);

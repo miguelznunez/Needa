@@ -256,12 +256,17 @@
                       <button class="next-2"><i class="fas fa-angle-right"></i></button>
                     </div>
                   </div>
-                  <div class="slider-2 showcase-container">
-                    <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
-                      </div>
-                    <% } %>
+
+                  <div style="overflow: hidden;height: 220px; width: 100%;">
+                    <div class="slider-2 showcase-container">
+                      <% for(let photo in showcasePhotos) { %>
+                        <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                        </div>
+                      <% } %>
+                    </div>
                   </div>
+
+
                   <div class="preview-box">
                     <div class="subcontainer flex-column-gap-20">
                       <div class="details">
@@ -297,7 +302,6 @@
   </section>
 
   <script src="/js/script.js"></script>
-  <script src="/js/lazy-loading.js"></script>
 
   <% if(showcasePhotos !==null) { %>
     <script src="/js/lightbox.js"></script>
@@ -309,7 +313,7 @@
 
   <% if(showcasePhotos !==null) { %>
     <script src="/js/tiny-slider-2-manual.js"></script>
-  <% } %>
+    <% } %>
 
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>

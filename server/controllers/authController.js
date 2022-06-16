@@ -399,30 +399,35 @@ function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
 exports.uploadShowcasePhotos = async (req, res) => { 
 
-  const length = Object.keys(req.files).length,
-  showcasePhotos = JSON.parse(req.user.showcase_photos), // PREVIOUS SHOWCASE PHOTOS
-  previousDataLength = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
+  const incomingPhotos = req.files,
+  incomingLength = Object.keys(req.files).length,
+  storagePhotos = JSON.parse(req.user.showcase_photos), // PREVIOUS SHOWCASE PHOTOS
+  storageLength = (storagePhotos === null) ? null : Object.keys(storagePhotos).length;
 
-  if(length > 0){ // USER UPLOADED AT LEAST ONE PHOTO
+
+  for(let i = 0;i < incomingLength;i++){
+    if(incomingPhotos[i].size > 1000000)
+      return res.json({type: "error", message: "1 or more photos exceeds the limit of 1MB."});
+  } 
+
+  if(incomingLength > 0){ // USER UPLOADED AT LEAST ONE PHOTO
     let data = {};
-    for(let i = 0;i < length;i++){  // ITERATE THROUGH UPLOADED PHOTOS ARRAY
-      data[`${i}`] = req.files[i].filename; // CREATE JSON OBJECT WITH PHOTO FILENAMES
-      await s3.uploadImage(req.user.id, req.files[i]); // UPLOAD PHOTO TO S3 
-      await unlinkFile(req.files[i].path); // REMOVE FILE FROM LOCAL FOLDER
+    for(let i = 0;i < incomingLength;i++){  // ITERATE THROUGH UPLOADED PHOTOS ARRAY
+      data[`${i}`] = incomingPhotos[i].filename; // CREATE JSON OBJECT WITH PHOTO FILENAMES
+      await s3.uploadImage(req.user.id, incomingPhotos[i]); // UPLOAD PHOTO TO S3 
+      await unlinkFile(incomingPhotos[i].path); // REMOVE FILE FROM LOCAL FOLDER
     }
     data = JSON.stringify(data); // CONVERT TO JSON
     
-    if(previousDataLength !== null){
-      console.log("Deleted old showcase photos..")
-      for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
-        deletePhotofromS3(req.user.id, showcasePhotos[i]);
+    if(storageLength  !== null){  // IS THERE ANY PHOTOS IN STORAGE? IF SO, DELETE THEM EVEN IF THEY ARE THE ONES WE ARE UPLOADING AND UPLOAD THEM AGAIN ** MULTER GIVES NEW FILENAMES TO FILES SO WE CAN"T COMPARE THEM
+      for(let i = 0;i < storageLength;i++) 
+        deletePhotofromS3(req.user.id, storagePhotos[i]);
     }
-    showcasePhotosQuery(req, res, data, "success", "Successfully updated photos."); // UPDATE THE DATABASE WITH THE NEW PHOTOS OBJECT  
+    showcasePhotosQuery(req, res, data, "success", "Successfully updated photos."); // UPDATE THE DATABASE WITH THE NEW PHOTOS  
 
-  } else if(length === 0 && previousDataLength !== null) { // USER DELETED ALL PHOTOS
-    console.log("Deleted old showcase photos..")
-    for(let i = 0;i < previousDataLength;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
-      deletePhotofromS3(req.user.id, showcasePhotos[i]);
+  } else if(incomingLength === 0 && storageLength  !== null) { // USER DELETED ALL PHOTOS
+    for(let i = 0;i < storageLength ;i++) // DELETE PREVIOUS SHOWCASE PHOTOS FROM S3
+      deletePhotofromS3(req.user.id, storagePhotos[i]);
       
     showcasePhotosQuery(req, res, null, "success", "Successfully deleted photos."); // SET SHOWCASE PHOTOS COLUMN TO NULL
 

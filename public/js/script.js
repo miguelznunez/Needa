@@ -1,14 +1,3 @@
-var windowLocation = window.location.pathname; 
-
-switch(windowLocation){ 
-  case "/auth/update-password":
-    var passwordResetUpdateJS = document.createElement('script');
-    passwordResetUpdateJS.type = "text/javascript";
-    passwordResetUpdateJS.src = "/js/password-reset-update.js";
-    document.body.append(passwordResetUpdateJS);
-    break;
-}
-
 // DROPDOWN MENU
 
 document.addEventListener("click", e => {
