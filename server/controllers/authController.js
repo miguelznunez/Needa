@@ -401,14 +401,18 @@ exports.uploadShowcasePhotos = async (req, res) => {
 
   const incomingPhotos = req.files,
   incomingLength = Object.keys(req.files).length,
-  storagePhotos = JSON.parse(req.user.showcase_photos), // PREVIOUS SHOWCASE PHOTOS
-  storageLength = (storagePhotos === null) ? null : Object.keys(storagePhotos).length;
-
-
-  for(let i = 0;i < incomingLength;i++){
-    if(incomingPhotos[i].size > 1000000)
-      return res.json({type: "error", message: "1 or more photos exceeds the limit of 1MB."});
-  } 
+  storagePhotos = JSON.parse(req.user.showcase_photos),
+  storageLength = (storagePhotos === null) ? null : Object.keys(storagePhotos).length,
+  errors = validationResult(req),
+  allErrors = JSON.stringify(errors),
+  allParsedErrors = JSON.parse(allErrors);
+    // OUTPUT VALIDATION ERRORS ( IF ANY )
+  if(!errors.isEmpty()){
+    for(let i = 0;i < incomingLength;i++){
+      await unlinkFile(incomingPhotos[i].path);
+    }
+    return res.json({type: "Error", message: allParsedErrors.errors[0].msg}); 
+  }
 
   if(incomingLength > 0){ // USER UPLOADED AT LEAST ONE PHOTO
     let data = {};

@@ -119,7 +119,15 @@ router.post("/settings",
   })
 ], authController.isLoggedIn, authController.settings);
 
-router.post("/upload-showcase-photos", showcaseUpload, authController.isLoggedIn, authController.uploadShowcasePhotos);
+router.post("/upload-showcase-photos", showcaseUpload,
+check("showcase_photos").custom((value, {req}) => {
+  req.files.forEach(f => {
+    if(f.size > 1000000){
+      throw new Error("1 or more photos exceeds the limit of 1MB.")
+    } 
+  }); 
+  return true;
+}), authController.isLoggedIn, authController.uploadShowcasePhotos);
 
 router.post("/find-user", authController.isLoggedIn, authController.findUser);
 
