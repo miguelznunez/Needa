@@ -134,6 +134,14 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   }
 });
 
+router.get("/feed", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)) {
+    return res.render("feed", {title: "Needa | Feed", user : req.user} );
+  } else {
+    return res.redirect("/login");
+  }
+})
+
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
@@ -143,6 +151,8 @@ router.get("/settings", authController.isLoggedIn, (req, res) => {
   else 
     return res.redirect("/login");
 });
+
+
 
 router.get("/settings/account", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
@@ -207,14 +217,16 @@ router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, 
   }
 });
 
+
 // PHOTO ROUTES
 
 router.get("/profile-photo/:id/:key", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers)){
     const readStream = s3.getImageStream(req.params.id, req.params.key);
     readStream.pipe(res);
-  }else 
+  }else {
     return res.redirect("/login");
+  }
 });
 
 router.get("/cover-photo/:id/:key", authController.isLoggedIn, (req, res) => {

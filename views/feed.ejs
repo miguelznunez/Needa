@@ -1,0 +1,94 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/location-modal.ejs") %>
+
+<section id="feed-section">
+
+  <div class="container">
+    <div class="subcontainer">
+      <div class="feed-main-wrapper">
+
+        <div class="feed-column">
+          <div class="feed-col-1-box-1">
+           
+
+            <% if(user.profile_photo) { %>
+              <div class="profile-photo"
+                style="background-image: url('http://localhost:5000/profile-photo/<%= user.id %>/<%= user.profile_photo%>');">
+              </div>
+            <% } else { %>
+              <div class="profile-photo">
+                <i class="fas fa-user" id="fa-user"></i>
+              </div>
+            <% } %>
+          
+            <div class="profile-identity flex-column-gap-10">
+              <h1>
+                <%= user.first_name%>
+                  <%= user.last_name%>
+              </h1>
+              <h2>
+                <%= user.profession%>
+              </h2>
+              <% if(user.city && user.state) { %>
+                <h3>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <%= user.city %>, <%= user.state%>
+                      <%= user.zip %>
+                </h3>
+              <% } else if (user.city || user.state) { %>
+                <h3>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <%= user.city %>
+                  <%= user.state%>
+                  <%= user.zip %>
+                </h3>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <div class="feed-column">
+          <div class="post flex-column-gap-20">
+            <h1>Create a post</h1>
+
+            <div class="flex-row-gap-20">
+              <div class="image"
+                style="background-image: url('http://localhost:5000/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
+              </div>
+              <div class="flex-row-gap-5" style="align-items: center;">
+                <h2>
+                  <%= user.first_name %>
+                </h2>
+                <h2>
+                  <%= user.last_name %>
+                </h2>
+              </div>
+            </div>
+
+
+
+            <textarea name="" id="post-input" placeholder="Share what you need help with..."></textarea>
+            <div class="post-footer">
+              <div  class="flex-row-gap-15">
+                <i class="fa-solid fa-image"></i>
+                <i class="fa-brands fa-youtube"></i>
+              </div>
+              <button id="post-btn">Post</button>
+            </div>
+          </div>
+        </div>
+        <div class="feed-column"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<script src="/js/script.js"></script>
+
+<% if (typeof user !="undefined" && user) { %>
+  <script src="/js/google-map.js"></script>
+<% } %>
+
+<%- include("partials/footer.ejs") %>
