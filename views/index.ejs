@@ -22,6 +22,16 @@
   <%- include("partials/toast.ejs") %>
   <%- include("partials/location-modal.ejs") %>
 
+  <section>
+    <div class="toast-wrapper-front-end">
+      <div class="toast-front-end">
+        <div class="icon-container-front-end"></div>
+        <div class="message-container-front-end flex-5"></div>
+        <button id="close-toast-btn-front-end">&times;</button>
+      </div>
+    </div>
+  </section>
+
   <section id="cookies">
     <div class="container">
       <div class="subcontainer">
@@ -202,11 +212,11 @@
           <div style="overflow: hidden;height: 315px;width: 100%;">
          
             <div class="slider-1">
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="mechanics">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_1" type="submit">
+                  <button class="slide-img img-1_1">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -215,11 +225,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="tutors">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_2" type="submit">
+                  <button class="slide-img img-1_2">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -228,11 +238,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="personal trainers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_3" type="submit">
+                  <button class="slide-img img-1_3">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -241,11 +251,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="landscapers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_4" type="submit">
+                  <button class="slide-img img-1_4">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -254,11 +264,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="movers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_5" type="submit">
+                  <button class="slide-img img-1_5">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -267,11 +277,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <input type="hidden" name="profession" value="carpenters">
                 <input type="hidden" name="location" class="my-location">
                 <div class="slide">
-                  <button class="slide-img img-1_6" type="submit">
+                  <button class="slide-img img-1_6">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -280,11 +290,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="cleaners">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_7" type="submit">
+                  <button class="slide-img img-1_7">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -293,11 +303,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="caterers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_8" type="submit">
+                  <button class="slide-img img-1_8">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -306,11 +316,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="disc jockeys">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_9" type="submit">
+                  <button class="slide-img img-1_9">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -319,11 +329,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="plumbers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_10" type="submit">
+                  <button class="slide-img img-1_10">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -332,11 +342,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="barbers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_11" type="submit">
+                  <button class="slide-img img-1_11">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -345,11 +355,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="security">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_12" type="submit">
+                  <button class="slide-img img-1_12">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -358,11 +368,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="web developers">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_13" type="submit">
+                  <button class="slide-img img-1_13">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -371,11 +381,11 @@
                   </div>
                 </div>
               </form>
-              <form action="/auth/find-professionals" method="POST">
+              <form action="/auth/find-professionals" method="POST" class="my-form">
                 <div class="slide">
                   <input type="hidden" name="profession" value="painters">
                   <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_14" type="submit">
+                  <button class="slide-img img-1_14">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
                   <div>
@@ -616,12 +626,64 @@
     </div>
   </section>
 
+
+  <!-- SUCCESS/ERROR MESSAGES FRONT END -->
+  
+  <div class="message-container-front-end"></div>
+
+
   <script src="/js/script.js"></script>
   <script src="/js/lazy-loading.js"></script>
   <script src="/js/carousel.js"></script>
   <script src="/js/tiny-slider-auto.js"></script>
   <script src="/js/search-list.js"></script>
   <script src="/js/toast.js"></script>
+  <script>
+    const toastOptions = {
+        'success': { class: "fas fa-check-circle", color: "#47d764", header: "Success" },
+        'error': { class: "fas fa-times-circle", color: "#ff1616", header: "Error" },
+        'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
+        'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
+      },
+        toastFrontEnd = document.querySelector(".toast-front-end"),
+        iconContainer = document.querySelector(".icon-container-front-end"),
+        messageContainer = document.querySelector(".message-container-front-end"),
+        closeToastFrontEnd = document.querySelector("#close-toast-btn-front-end");
+      let x;
+
+      function displayToast(type, msg) {
+        clearTimeout(x);
+        toastFrontEnd.style.borderLeft = `8px solid ${toastOptions[type].color}`;
+        toastFrontEnd.style.transform = "translateX(0)";
+
+        const icon = document.createElement("i");
+        const header = document.createElement("p");
+        const message = document.createElement("p");
+
+        icon.className = toastOptions[type].class;
+        icon.style.color = toastOptions[type].color;
+        header.textContent = toastOptions[type].header;
+        message.textContent = msg;
+
+        iconContainer.innerHTML = "";
+        iconContainer.appendChild(icon);
+
+        messageContainer.innerHTML = "";
+        messageContainer.appendChild(header);
+        messageContainer.appendChild(message);
+
+        x = setTimeout(() => {
+          toastFrontEnd.style.transform = "translateX(400px)";
+        }, 5000);
+      }
+
+      // TOAST FUNCTIONALITY
+
+      closeToastFrontEnd.addEventListener("click", () => {
+        toastFrontEnd.style.transform = "translateX(400px)";
+      })
+
+  </script>
   <% if (typeof user !="undefined" && user) { %>
     <script src="/js/google-map.js"></script>
   <% } %>

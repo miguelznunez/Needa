@@ -2,11 +2,11 @@
 <%- include("partials/location-modal.ejs") %>
 
   <section>
-    <div class="toast-wrapper">
-      <div class="toast">
-        <div class="icon-container"></div>
-        <div class="message-container flex-5"></div>
-        <button id="closeToast">&times;</button>
+    <div class="toast-wrapper-front-end">
+      <div class="toast-front-end">
+        <div class="icon-container-front-end"></div>
+        <div class="message-container-front-end flex-5"></div>
+        <button id="close-toast-btn-front-end">&times;</button>
       </div>
     </div>
   </section>
@@ -59,9 +59,9 @@
             </div>
           </form>
           
-          <!-- SUCCESS/ERROR MESSAGES -->
+          <!-- SUCCESS/ERROR MESSAGES FRONT END -->
           
-          <div class="message-container"></div>
+          <div class="message-container-front-end"></div>
           
           </div>
         </div>
@@ -96,10 +96,10 @@
       'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
       'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
     },
-      toast = document.querySelector(".toast"),
-      iconContainer = document.querySelector(".icon-container"),
-      messageContainer = document.querySelector(".message-container"),
-      closeToast = document.querySelector("#closeToast");
+      toast = document.querySelector(".toast-front-end"),
+      iconContainer = document.querySelector(".icon-container-front-end"),
+      messageContainer = document.querySelector(".message-container-front-end"),
+      closeToastFrontEnd  = document.querySelector("#close-toast-btn-front-end");
     let x;
 
     function displayToast(type, msg) {
@@ -130,7 +130,7 @@
 
     // TOAST FUNCTIONALITY
 
-    closeToast.addEventListener("click", () => {
+    closeToastFrontEnd.addEventListener("click", () => {
       toast.style.transform = "translateX(400px)";
     })
 

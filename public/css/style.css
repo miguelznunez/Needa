@@ -216,7 +216,11 @@ iframe{
 }
 
 /* FLEX, COLUMN, GAP*/
-.flex-column-gap-5, .flex-column-gap-10, .flex-column-gap-15, .flex-column-gap-20, .flex-column-gap-25 {
+.flex-column-gap-5,
+.flex-column-gap-10,
+.flex-column-gap-15,
+.flex-column-gap-20,
+.flex-column-gap-25 {
   display: flex;
   gap: 5px;
   flex-direction: column;
@@ -239,7 +243,10 @@ iframe{
 }
 
 /* FLEX, ROW, GAP */
-.flex-row-gap-5, .flex-row-gap-10, .flex-row-gap-15, .flex-row-gap-20{
+.flex-row-gap-5,
+.flex-row-gap-10,
+.flex-row-gap-15,
+.flex-row-gap-20{
   display: flex;
   flex-direction: row;
   gap: 5px;
@@ -418,7 +425,8 @@ iframe{
   background: rgb(235, 235, 235);
 }
 
-.toast-wrapper {
+.toast-wrapper,
+.toast-wrapper-front-end {
   width: 420px;
   padding: 30px 20px;
   position: fixed;
@@ -428,7 +436,8 @@ iframe{
   z-index: 1;
 }
 
-.toast {
+.toast,
+.toast-front-end {
   width: 390px;
   min-height: 90px;
   padding: 20px;
@@ -443,27 +452,33 @@ iframe{
 }
 
 .icon-container,
-.message-container {
+.message-container,
+.icon-container-front-end,
+.message-container-front-end{
   align-self: center;
 }
 
-.icon-container i {
+.icon-container i,
+.icon-container-front-end i {
   font-size: 40px;
 }
 
-.message-container p:first-child {
+.message-container p:first-child,
+.message-container-front-end p:first-child {
   color: #101020;
   font-weight: 600;
   font-size: 1.2rem;
 }
 
-.message-container p:last-child {
+.message-container p:last-child,
+.message-container-front-end p:last-child {
   font-size: 1.1rem;
   font-weight: 400;
   color: #656565;
 }
 
-.toast-wrapper button {
+.toast-wrapper button,
+.toast-wrapper-front-end button {
   align-self: flex-start;
   background-color: transparent;
   font-size: 25px;
@@ -839,6 +854,7 @@ iframe{
   background-position: center;
   background-size: cover;
   background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/carpenter.png);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/carpenter.webp);
 }
 
 #carousel .carousel-header {
@@ -1064,58 +1080,72 @@ iframe{
 
 #popularSearches .img-1_1 {
   background-image: url(/images/mechanic.png);
+  background-image: url(/images/mechanic.webp);
 }
 
 #popularSearches .img-1_2 {
-  background-image: url(/images/tutor.jpg);
+  background-image: url(/images/tutor.png);
+  background-image: url(/images/tutor.webp);
 }
 
 #popularSearches .img-1_3 {
-  background-image: url(/images/trainers.jpg);
+  background-image: url(/images/trainers.png);
+  background-image: url(/images/trainers.webp);
 }
 
 #popularSearches .img-1_4 {
   background-image: url(/images/landscaper.png);
+  background-image: url(/images/landscaper.webp);
 }
 
 #popularSearches .img-1_5 {
-  background-image: url(/images/movers.jpg);
+  background-image: url(/images/movers.png);
+  background-image: url(/images/movers.webp);
 }
 
 #popularSearches .img-1_6 {
   background-image: url(/images/carpenters.png);
+  background-image: url(/images/carpenters.webp);
 }
 
 #popularSearches .img-1_7 {
-  background-image: url(/images/cleaners.jpg);
+  background-image: url(/images/cleaners.png);
+  background-image: url(/images/cleaners.webp);
 }
 
 #popularSearches .img-1_8 {
-  background-image: url(/images/catering.jpg);
+  background-image: url(/images/catering.png);
+  background-image: url(/images/catering.webp);
 }
 
 #popularSearches .img-1_9 {
-  background-image: url(/images/dj.jpg);
+  background-image: url(/images/dj.png);
+  background-image: url(/images/dj.webp);
 }
 
 #popularSearches .img-1_10 {
   background-image: url(/images/plumber.png);
+  background-image: url(/images/plumber.webp);
 }
 
 #popularSearches .img-1_11 {
-  background-image: url(/images/barbers.jpg);
+  background-image: url(/images/barbers.png);
+  background-image: url(/images/barbers.webp);
 }
 
 #popularSearches .img-1_12 {
   background-image: url(/images/security.png);
+  background-image: url(/images/security.webp);
 }
 
 #popularSearches .img-1_13 {
-  background-image: url(/images/web_developer.jpg);
+  background-image: url(/images/web_developer.png);
+  background-image: url(/images/web_developer.webp);
 }
 
 #popularSearches .img-1_14 {
   background-image: url(/images/painter.png);
+  background-image: url(/images/painter.webp);
 }
 
 #popularSearches .prev-1,
@@ -1225,6 +1255,7 @@ iframe{
 
 #topRatedMembers .img-2_1 {
   background-image: url(/images/electrician.png);
+  background-image: url(/images/electrician.webp);
 }
 
 #topRatedMembers .controller-2 {
@@ -1427,6 +1458,7 @@ iframe{
   background-size: cover;
   background-position: center;
   background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/trainer.png);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/trainer.webp);
 }
 
 #advertising .header {
@@ -1484,6 +1516,7 @@ iframe{
   background-position: center;
   background-size: cover;
   background-image: url(/images/default.png);
+  background-image: url(/images/default.webp);
   background-repeat: no-repeat;
 }
 
@@ -2382,8 +2415,8 @@ iframe{
   gap: 20px;
   border-radius: var(--border-radius);
   padding: 20px;
-  background-color: whitesmoke;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  /* box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5); */
 }
 
 #feed-section .feed-col-1-box-1 h2,
@@ -2439,14 +2472,14 @@ iframe{
 #feed-section .post{
   height: fit-content;
   padding: 20px;
-  background-color: whitesmoke;
+  background-color: white;
   border-radius: var(--border-radius);
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5); */
 }
 
 #feed-section .image {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
   background-position: center;
   background-size: cover;
@@ -2472,6 +2505,9 @@ iframe{
   resize: none;
   font-size: 1.5rem;
   padding: 20px;
+  background-color: whitesmoke;
+  border: none;
+  /* border: 3px solid lightgray; */
 }
 
 #feed-section .post-footer{
@@ -2761,11 +2797,8 @@ iframe{
 }
 
 #login-form{
-  padding: 50px;
   width: fit-content;
   border-radius: var(--border-radius);
-  background-color: whitesmoke;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -2785,11 +2818,7 @@ iframe{
 }
 
 #register-form {
-  padding: 50px;
   width: fit-content;
-  border-radius: var(--border-radius);
-  background-color: whitesmoke;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* LOGIN/ REGISTER */
@@ -2876,9 +2905,7 @@ input[type="checkbox"]{
 #password-reset-form{
   padding: 50px;
   width: fit-content;
-  border-radius: var(--border-radius);
-  background-color: whitesmoke;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+
 }
 
 /* PASSWORD-RESET-UPDATE.EJS */

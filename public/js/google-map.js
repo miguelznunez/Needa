@@ -3,7 +3,9 @@ infoWindow,
 currentLocation = document.querySelector("#current-location"),
 myLocation = document.querySelectorAll(".my-location"),
 locationObject = localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : "",
-locationSRC = document.querySelector("#location-src"); 
+locationSRC = document.querySelector("#location-src"),
+buttons = document.querySelectorAll("button.slide-img"),
+forms = document.querySelectorAll("form.my-form");
 
 const Http = new XMLHttpRequest(),
 useMyCurrentLocationBtn = document.querySelector("#use-my-current-location-btn"),
@@ -12,6 +14,7 @@ updateLocationBtn = document.querySelector("#update-location-btn"),
 overlay = document.querySelector("#location-modal"),
 showModalBtn = document.querySelector("#location-show-modal-btn"),
 closeModalBtn = document.querySelector("#location-close-modal-btn");
+
 
 if(showModalBtn)
   showModalBtn.addEventListener("click", () => {
@@ -50,18 +53,38 @@ updateLocationInput.addEventListener("keydown", function(event) {
     updateMyLocation();
 });
 
+// localStorage.setItem('item', "");
+
+function enableWarningMessage() {
+  buttons.forEach(b => {
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      if(!locationObject) {
+        displayToast('warning', "Please enter a location by clicking the location pin on the header.");
+      }
+    })
+  });
+}
+
+function disableWarningMessage() {
+   buttons.forEach((b, i) => {
+    b.addEventListener("click", () => {
+      forms[i].submit();
+    })
+  });
+}
 
 // DEFAULT COORDINATES
 
 if(!locationObject){
+  enableWarningMessage();
   locationSRC.src = `https://www.google.com/maps/embed/v1/view?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&center=39.8283,-98.5795&zoom=4`;
+
 } else {
   currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
-  if(myLocation) {
-    myLocation.forEach(l => {
-      l.value = `${locationObject.city}, ${locationObject.state}`;
-    })
-  }
+  myLocation.forEach(l => {
+    l.value = `${locationObject.city}, ${locationObject.state}`;
+  })
   document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
   locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
   document.querySelector("#location-show-modal-btn").style.color = "#7449F5";
@@ -77,6 +100,7 @@ function findMyLocation() {
       + "&longitude=" + position.coords.longitude
       + "&localityLanguage=en";
     getApi(bdcApi);
+    disableWarningMessage();
   }
   const error = () => {
     currentLocation.textContent = "Unavailable";
@@ -96,6 +120,9 @@ function getApi(bdcApi) {
         "city"       : titleCaseAll(data.city),
         "state"      : state[1].toUpperCase()
       }
+      myLocation.forEach(l => {
+        l.value = `${locationObject.city}, ${locationObject.state}`;
+      })
       updateLocationInput.value = "";
       localStorage.setItem('item', JSON.stringify(locationObject));
       currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
@@ -115,11 +142,16 @@ function updateMyLocation() {
       "city"       : titleCaseAll(location[0]),
       "state"      : location[1].replace(/\s+/g, '').toUpperCase()
     }
+    myLocation.forEach(l => {
+      l.value = `${locationObject.city}, ${locationObject.state}`;
+    })
     updateLocationInput.value = "";
     localStorage.setItem('item', JSON.stringify(locationObject));
     currentLocation.textContent = `${locationObject.city}, ${locationObject.state}`;
     document.querySelector("#location").value = `${locationObject.city}, ${locationObject.state}`;
     locationSRC.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=${locationObject.city},${locationObject.state}&zoom=14`;
+    disableWarningMessage();
+
   } else {
     console.log("wrong!")
   }
