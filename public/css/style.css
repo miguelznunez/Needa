@@ -853,8 +853,13 @@ iframe{
   position: relative;
   background-position: center;
   background-size: cover;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/carpenter.png);
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/carpenter.webp);
+  background-color: white;
+  background-image: url(/images/carpenter.png), url(/images/carpenter.webp);
+}
+
+.carousel-overlay{
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 600px;
 }
 
 #carousel .carousel-header {
@@ -1079,73 +1084,59 @@ iframe{
 }
 
 #popularSearches .img-1_1 {
-  background-image: url(/images/mechanic.png);
-  background-image: url(/images/mechanic.webp);
+  background-image: url(/images/mechanic.webp), url(/images/mechanic.png);
 }
 
 #popularSearches .img-1_2 {
-  background-image: url(/images/tutor.png);
-  background-image: url(/images/tutor.webp);
+  background-image: url(/images/tutor.png), url(/images/tutor.webp);
 }
 
 #popularSearches .img-1_3 {
-  background-image: url(/images/trainers.png);
-  background-image: url(/images/trainers.webp);
+  background-image: url(/images/trainers.png), url(/images/trainers.webp);
 }
 
 #popularSearches .img-1_4 {
-  background-image: url(/images/landscaper.png);
-  background-image: url(/images/landscaper.webp);
+  background-image: url(/images/landscaper.png), url(/images/landscaper.webp);
 }
 
 #popularSearches .img-1_5 {
-  background-image: url(/images/movers.png);
-  background-image: url(/images/movers.webp);
+  background-image: url(/images/movers.png), url(/images/movers.webp);
 }
 
 #popularSearches .img-1_6 {
-  background-image: url(/images/carpenters.png);
-  background-image: url(/images/carpenters.webp);
+  background-image: url(/images/carpenters.png), url(/images/carpenters.webp);
 }
 
 #popularSearches .img-1_7 {
-  background-image: url(/images/cleaners.png);
-  background-image: url(/images/cleaners.webp);
+  background-image: url(/images/cleaners.png), url(/images/cleaners.webp);
 }
 
 #popularSearches .img-1_8 {
-  background-image: url(/images/catering.png);
-  background-image: url(/images/catering.webp);
+  background-image: url(/images/catering.png), url(/images/catering.webp);
 }
 
 #popularSearches .img-1_9 {
-  background-image: url(/images/dj.png);
-  background-image: url(/images/dj.webp);
+  background-image: url(/images/dj.png), url(/images/dj.webp);
 }
 
 #popularSearches .img-1_10 {
-  background-image: url(/images/plumber.png);
-  background-image: url(/images/plumber.webp);
+  background-image: url(/images/plumber.png), url(/images/plumber.webp);
 }
 
 #popularSearches .img-1_11 {
-  background-image: url(/images/barbers.png);
-  background-image: url(/images/barbers.webp);
+  background-image: url(/images/barbers.png), url(/images/barbers.webp);
 }
 
 #popularSearches .img-1_12 {
-  background-image: url(/images/security.png);
-  background-image: url(/images/security.webp);
+  background-image: url(/images/security.png), url(/images/security.webp);
 }
 
 #popularSearches .img-1_13 {
-  background-image: url(/images/web_developer.png);
-  background-image: url(/images/web_developer.webp);
+  background-image: url(/images/web_developer.png), url(/images/web_developer.webp);
 }
 
 #popularSearches .img-1_14 {
-  background-image: url(/images/painter.png);
-  background-image: url(/images/painter.webp);
+  background-image: url(/images/painter.png), url(/images/painter.webp);
 }
 
 #popularSearches .prev-1,
@@ -1254,8 +1245,7 @@ iframe{
 } */
 
 #topRatedMembers .img-2_1 {
-  background-image: url(/images/electrician.png);
-  background-image: url(/images/electrician.webp);
+  background-image: url(/images/electrician.png), url(/images/electrician.webp);
 }
 
 #topRatedMembers .controller-2 {
@@ -1457,8 +1447,7 @@ iframe{
 #advertising {
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/trainer.png);
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/trainer.webp);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/images/trainer.png), url(/images/trainer.webp);
 }
 
 #advertising .header {
