@@ -1,12 +1,6 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/location-modal.ejs") %>
 
-<style>
-  body{
-    background-color: whitesmoke;
-  }
-</style>
-
 <section id="feed-section">
 
   <div class="container">
@@ -58,9 +52,16 @@
             <h1>Create a post</h1>
 
             <div class="flex-row-gap-20">
-              <div class="image"
-                style="background-image: url('http://localhost:5000/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
-              </div>
+              <% if(user.profile_photo) { %>
+                <div class="image"
+                  style="background-image: url('http://localhost:5000/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
+                </div>
+              <% } else { %>
+                <div class="image">          
+                  <i class="fas fa-user" id="fa-user"></i>
+                </div>
+              <% } %>
+
               <div class="flex-row-gap-5" style="align-items: center;">
                 <h2>
                   <%= user.first_name %>
@@ -71,19 +72,61 @@
               </div>
             </div>
 
-
-
-            <textarea name="" id="post-input" placeholder="Share what you need help with..."></textarea>
-            <div class="post-footer">
-              <div  class="flex-row-gap-15">
-                <i class="fa-solid fa-image"></i>
-                <i class="fa-brands fa-youtube"></i>
+            <form action="/auth/post" method="POST">
+              <textarea name="post" id="post" placeholder="Share what you need help with..."></textarea>
+              <div class="post-footer">
+                <div class="flex-row-gap-15">
+                  <i class="fa-solid fa-image"></i>
+                  <i class="fa-brands fa-youtube"></i>
+                </div>
+                <button id="post-btn" type="submit">Post</button>
               </div>
-              <button id="post-btn">Post</button>
-            </div>
+            </form>
+          </div>
+
+          <% if(rows) { %>
+            <% for(let i = 0;i < rows.length;i++) { %>
+              <div class="post flex-column-gap-20">
+
+              <% if(rows[i].profile_photo) { %>
+                <div class="image"
+                  style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                </div>
+                <div class="flex-row-gap-5" style="align-items: center;">
+                  <h2>
+                    <%= rows[i].first_name %>
+                  </h2>
+                  <h2>
+                    <%= rows[i].last_name %>
+                  </h2>
+                </div>
+
+              <% } else { %>
+                <div class="image">
+                  <i class="fas fa-user" id="fa-user"></i>
+                </div>
+                <div class="flex-row-gap-5" style="align-items: center;">
+                  <h2>
+                    <%= rows[i].first_name %>
+                  </h2>
+                  <h2>
+                    <%= rows[i].last_name %>
+                  </h2>
+                </div>
+              <% } %>
+                <p><%= rows[i].city%>, <%= rows[i].state %></p>
+                <p><%= rows[i].date %></p>
+                <p><%= rows[i].post %></p>
+              </div>
+            <% } %>
+          <% } %>
+
+        </div>
+        <div class="feed-column">
+          <div style="height: 300px;background-color: whitesmoke;border-radius:5px;box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);">
+
           </div>
         </div>
-        <div class="feed-column"></div>
       </div>
     </div>
   </div>
@@ -94,6 +137,9 @@
 <script src="/js/script.js"></script>
 
 <% if (typeof user !="undefined" && user) { %>
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
+    </script>
   <script src="/js/google-map.js"></script>
 <% } %>
 

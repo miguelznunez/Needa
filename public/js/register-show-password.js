@@ -1,14 +1,10 @@
-    const showPassword = document.querySelector("#show-password"),
-    passwordField = document.querySelector("#password"),
-    passwordMatchField = document.querySelector("#password-confirm");
+const showPassword = document.querySelector("#show-password"),
+password = document.querySelector("#password"),
+passwordConfirm = document.querySelector("#password-confirm");
 
-    showPassword.addEventListener("click", function (e) {
-      if (showPassword.checked) {
-        passwordField.setAttribute("type", "text");
-        passwordMatchField.setAttribute("type", "text");
-      }
-      else {
-        passwordField.setAttribute("type", "password");
-        passwordMatchField.setAttribute("type", "password");
-      }
-    })
+showPassword.addEventListener("click", function () {
+  this.classList.toggle("fa-eye-slash");
+  const type = password.getAttribute("type") === "password" ? "text" : "password";
+  password.setAttribute("type", type);
+  passwordConfirm.setAttribute("type", type);
+});

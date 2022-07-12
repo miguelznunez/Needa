@@ -22,7 +22,12 @@ router.post("/register",
   check("first_name", "First name must be between 1 - 30 characters.").isLength({min:1, max:30}),
   check("last_name", "Last name field cannot be empty.").not().isEmpty(),
   check("last_name", "Last name must be only alphabetical characters.").isAlpha(),
-  check("last_name", "Last name must be less than 30 characters long.").isLength({min:1, max:30}), 
+  check("last_name", "Last name must be less than 30 characters long.").isLength({min:1, max:30}),
+  check("city", "City must be only alphabetical characters.").matches(/^[a-zA-Z][a-zA-Z\s]*$/),
+  check("city", "City must be 60 characters max.").isLength({max:60}),
+  check("state", "State must be 2 characters max.").isLength({max:2}),
+  check("zip", "Zip code must be 5 characters max.").isLength({max:5}),
+  check("zip", "Zip code must be valid.").isPostalCode("US"),
   check("email", "The email you entered is invalid, please try again.").isEmail().normalizeEmail(),
   check("email", "Email address must be between 4-100 characters long, please try again.").isLength({min:4, max:100}).normalizeEmail(),
   check("password_confirm", "Password confirm field cannot be empty.").not().isEmpty(), 
@@ -66,7 +71,7 @@ router.post("/settings",
   check("last_name", "Last name field cannot be empty.").not().isEmpty(),
   check("last_name", "Last name must be between 1 - 30 characters.").isLength({min:1, max:30}),
   check("last_name", "Last name must be only alphabetical characters.").isAlpha(),
-  check("city", "City must be only alphabetical characters.").isAlpha().optional({checkFalsy: true}),
+  check("city", "City must be only alphabetical characters.").matches(/^[a-zA-Z][a-zA-Z\s]*$/).optional({checkFalsy: true}),
   check("city", "City must be 60 characters max.").isLength({max:60}),
   check("state", "State must be 2 characters max.").isLength({max:2}),
   check("zip", "Zip code must be 5 characters max.").isLength({max:5}),
@@ -173,5 +178,7 @@ router.post("/add-contact-form", authController.isLoggedIn, authController.addCo
 router.post("/delete-contact-form", authController.isLoggedIn, authController.deleteContactForm);
 
 router.post("/delete-account", authController.isLoggedIn, authController.deleteAccount);
+
+router.post("/post", authController.isLoggedIn, authController.post);
 
 module.exports = router;

@@ -36,12 +36,6 @@ function checkBrowser(headers){
 }
 
 // GET ROUTES ==============================================================
-router.get("/barbers", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers))
-    res.render("barbers", {title: "Needa | Barbers", user : req.user});
-  else
-    res.redirect("/");
-});
 
 router.get("/", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers))
@@ -136,7 +130,13 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
 
 router.get("/feed", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
-    return res.render("feed", {title: "Needa | Feed", user : req.user} );
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
+      if(!err){
+        return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result} );
+      } else {
+        return res.render("feed", {title: "Needa | Feed", user : req.user, message:err.message} );
+      }
+    })
   } else {
     return res.redirect("/login");
   }

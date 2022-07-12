@@ -15,9 +15,10 @@ CREATE TABLE `user` (
   `admin` VARCHAR(3) DEFAULT 'No',
   `profile_photo` VARCHAR(50) DEFAULT NULL,
   `cover_photo` VARCHAR(50) DEFAULT NULL,
-  `city` VARCHAR(60) DEFAULT NULL,
-  `state` CHAR(2) DEFAULT NULL,
-  `zip` CHAR(5) DEFAULT NULL,
+  `city` VARCHAR(60),
+  `state` CHAR(2),
+  `zip` CHAR(5),
+  `county` VARCHAR(25) DEFAULT NULL,
   `gender` CHAR(1) DEFAULT NULL,
   `profession` VARCHAR(50) DEFAULT NULL,
   `specialty` TINYTEXT DEFAULT NULL,
@@ -43,4 +44,14 @@ CREATE TABLE `following` (
   PRIMARY KEY (`id`, `following_id`),
   FOREIGN KEY(`id`) REFERENCES user (`id`) , 
   FOREIGN KEY(`following_id`) REFERENCES user (`id`) 
+);
+
+CREATE TABLE `postings` (
+ `postId` INT UNSIGNED AUTO_INCREMENT,
+ `id` INT UNSIGNED NOT NULL,
+ `date` TINYTEXT NOT NULL,
+ `post` TEXT NOT NULL,
+ `county` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`postId`),
+  FOREIGN KEY(`id`) REFERENCES user (`id`)
 );

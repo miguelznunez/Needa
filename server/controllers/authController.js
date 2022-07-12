@@ -73,12 +73,13 @@ function parseTags(rawTags){
 
 
 exports.register = (req, res) => {
-  const { email, password, password_confirm } = req.body,
+  const { state, zip, county, email, password, password_confirm } = req.body,
   member_since = get_date();
-  let {first_name, last_name} = req.body;
+  let {first_name, last_name, city} = req.body;
 
   first_name = titleCase(first_name);
   last_name = titleCase(last_name);
+  city = titleCaseAll(city);
 
   // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
   const errors = validationResult(req),
@@ -89,9 +90,13 @@ exports.register = (req, res) => {
     return res.render("register", {
       title: "Register | Loaves Fishes Computers",
       allParsedErrors: allParsedErrors,
-      first_name : first_name,
-      last_name : last_name,
-      email : email,
+      first_name: first_name,
+      last_name: last_name,
+      city: city,
+      state: state,
+      zip: zip,
+      county: county,
+      email: email,
       password : password
     })
   }
@@ -110,7 +115,7 @@ exports.register = (req, res) => {
     } else if(!err && results[0] === undefined){
         const token = randomstring.generate(255);
         bcrypt.hash(password, saltRounds, (err, hash) => {
-          db.query("INSERT INTO user (first_name, last_name, email, password, token, member_since) VALUES (?,?,?,?,?,?)", [first_name, last_name, email, hash, token, member_since],
+          db.query("INSERT INTO user (first_name, last_name, city, state, zip, county, email, password, token, member_since) VALUES (?,?,?,?,?,?,?,?,?,?)", [first_name, last_name, city, state, zip, county, email, hash, token, member_since],
             async (err, results) => {
               if (!err) {
                 mail.activateAccountEmail(email, results.insertId, token, (err, data) => {
@@ -385,7 +390,7 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
   const tags = parseTags(update.tags);
-  let data = { first_name:titleCase(update.first_name), last_name:titleCase(update.last_name), profile_photo:profile_photo, cover_photo:cover_photo, city:titleCase(update.city), state:update.state, zip:update.zip, gender:update.gender, profession:titleCaseAll(update.profession), specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
+  let data = { first_name:titleCase(update.first_name), last_name:titleCase(update.last_name), profile_photo:profile_photo, cover_photo:cover_photo, city:titleCase(update.city), state:update.state, zip:update.zip, county:update.county, gender:update.gender, profession:titleCaseAll(update.profession), specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) {
@@ -489,8 +494,8 @@ exports.findProfessionals = (req, res) => {
   }
 
   if(location.includes(",")) {
-    const arrLocation = location.replace(/\s/g, '').split(',');
-    queryLocation(req, res, profession, arrLocation[0], arrLocation[1], "");
+    const arrLocation = location.split(',');
+    queryLocation(req, res, profession, arrLocation[0], arrLocation[1].replace(/\s/g, ''), "");
   } else {
     queryLocation(req, res, profession, "", "", location);
   }
@@ -502,14 +507,14 @@ function queryLocation(req, res, profession, city, state, zip) {
   db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?) && (status != ?))", [profession +'?', profession + '?', city, state, zip, "Deleted"], (err, rows) => {
     if(!err) {
       const results = (rows[0] === undefined) ? null : rows;
-      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession});
+      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession, city, state, zip});
     } else {
       return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
     }
   });
 }
 
-// ADD USER TO MY CONTACT LIST
+// ADD USER TO MY CONTACT LIST ------------------------------------------------------------
 
 exports.addContactForm = (req, res) => {
   db.query("INSERT INTO following (id, following_id) VALUES (?,?)", [req.user.id, req.body.following_id], async (err, results) => {
@@ -521,7 +526,7 @@ exports.addContactForm = (req, res) => {
   });
 }
 
-// DELETE USER FROM MY CONTACT LIST
+// DELETE USER FROM MY CONTACT LIST ------------------------------------------------------
 
 exports.deleteContactForm = (req, res) => {
   db.query("DELETE FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.body.following_id], async (err, results) => {
@@ -533,8 +538,20 @@ exports.deleteContactForm = (req, res) => {
   });
 }
 
+// ADD POST ------------------------------------------------------------------------------
+exports.post = (req, res) => {
+  const date = new Date();
+   db.query("INSERT INTO postings (id, date, post, county) VALUES (?,?,?,?)", [req.user.id, date, req.body.post, req.user.county], async (err, results) => {
+    if(!err){
+      return res.redirect("/feed"); 
+    } else {
+      return console.log(err.message); 
+    }
+  });
+}
 
-// DELETE ACCOUNT ------------------------------------------------------------------
+
+// DELETE ACCOUNT ------------------------------------------------------------------------
 
 exports.deleteAccount = (req, res) => {
   const password = req.body.password,

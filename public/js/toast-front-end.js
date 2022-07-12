@@ -4,16 +4,16 @@ const toastOptions = {
   'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
   'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
 },
-toast = document.querySelector(".toast"),
-iconContainer = document.querySelector(".icon-container"),
-messageContainer = document.querySelector(".message-container"),
-closeToast = document.querySelector("#closeToast");
+toastFE = document.querySelector(".toast-front-end"),
+iconContainer = document.querySelector(".icon-container-front-end"),
+messageContainer = document.querySelector(".message-container-front-end"),
+closeToastFE = document.querySelector("#close-toast-btn-front-end");
 let x;
 
 function displayToast(type, msg) {
   clearTimeout(x);
-  toast.style.borderLeft = `8px solid ${toastOptions[type].color}`;
-  toast.style.transform = "translateX(0)";
+  toastFE.style.borderLeft = `8px solid ${toastOptions[type].color}`;
+  toastFE.style.transform = "translateX(0)";
 
   const icon = document.createElement("i");
   const header = document.createElement("p");
@@ -32,10 +32,10 @@ function displayToast(type, msg) {
   messageContainer.appendChild(message);
 
   x = setTimeout(() => {
-    toast.style.transform = "translateX(400px)";
+    toastFE.style.transform = "translateX(400px)";
   }, 5000);
 }
 
-closeToast.addEventListener("click", () => {
-  toast.style.transform = "translateX(400px)";
-})
+closeToastFE.addEventListener("click", () => {
+  toastFE.style.transform = "translateX(400px)";
+});

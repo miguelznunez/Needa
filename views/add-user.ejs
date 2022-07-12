@@ -15,8 +15,37 @@
           <div class="form-title">
             <h1>Create User</h1>
           </div>
-
-          <div class="input-group">
+          <div class="input-group one">
+            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
+              value="<%= typeof first_name != 'undefined' ? first_name : '' %>" required>
+            <input type="text" id="last-name" name="last_name" maxlength="30" pattern="[A-Za-z]+" placeholder="Last name"
+              value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
+          </div>
+          <div class="input-group two">
+            <input type="text" placeholder="City" name="city" maxlength="60" pattern="[A-Za-z]+"
+              value="<%= typeof city != 'undefined' ? city : '' %>" required>
+            <select name="state" id="state" required>
+              <option value="<%= typeof state != 'undefined' ? state : '' %>">
+                <%= typeof state !='undefined' ? state : 'State' %>
+              </option>
+            </select>
+            <input type="text" placeholder="Zip" name="zip" maxlength="5" pattern="[0-9]{5}"
+              value="<%= typeof zip != 'undefined' ? zip : '' %>" required>
+            <input type="hidden" name="county" id="county" value="<%= typeof county != 'undefined' ? county : '' %>">
+          </div>
+          <div class="input-group three">
+            <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>" required>
+          </div>
+          <div class="input-group four">
+            <div class="password-container">
+              <input type="password" id="password" name="password" maxlength="60" placeholder="Password" required>
+              <i class="fa-solid fa-eye" id="show-password"></i>
+            </div>
+            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
+              required>
+          </div>
+          <!-- <div class="input-group">
             <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
               value="<%= typeof first_name != 'undefined' ? first_name : '' %>" onkeyup="validateFirstName()" required>
             <span id="first-name-error"></span>
@@ -47,7 +76,7 @@
               <input type="checkbox" id="show-password">
               <label for="show-password">Show password</label>
             </div>
-          </div>
+          </div> -->
           <div>
             <button id="account-btn">Add User</button>
           </div>
@@ -60,6 +89,6 @@
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/register-show-password.js"></script>
-  <script src="/js/input-validation.js"></script>
+  <!-- <script src="/js/input-validation.js"></script> -->
   
 <%- include("partials/footer.ejs") %>

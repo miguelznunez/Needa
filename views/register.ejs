@@ -5,41 +5,44 @@
     <div class="container">
       <div class="subcontainer">
         <form action="/auth/register" id="register-form" method="POST">
+
           <div class="form-title">
             <h1>Register</h1>
             <i class="fa-solid fa-user-plus"></i>
           </div>
-          <div class="input-group">
-            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name" value="<%= typeof first_name != 'undefined' ? first_name : '' %>" onkeyup="validateFirstName()" required>
-              <span id="first-name-error"></span>
-          </div>
-          <div class="input-group">
+          <div class="input-group one">
+            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
+              value="<%= typeof first_name != 'undefined' ? first_name : '' %>" required>
             <input type="text" id="last-name" name="last_name" maxlength="30" pattern="[A-Za-z]+" placeholder="Last name"
-              value="<%= typeof last_name != 'undefined' ? last_name : '' %>" onkeyup="validateLastName()" required>
-              <span id="last-name-error"></span>
+              value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
           </div>
-          <div class="input-group">
+          <div class="input-group two">
+            <input type="text" placeholder="City" name="city" maxlength="60" pattern="[A-Za-z]+" value="<%= typeof city != 'undefined' ? city : '' %>" required>
+            <select name="state" id="user-state" onchange="addCounties()" required>
+              <option value="<%= typeof state != 'undefined' ? state : '' %>">
+                <%= typeof state != 'undefined' ? state : 'State' %>
+              </option>
+            </select>
+            <input type="text" placeholder="Zip" name="zip" maxlength="5" pattern="[0-9]{5}" value="<%= typeof zip != 'undefined' ? zip : '' %>" required>
+          </div>
+          <div class="input-group three">
+            <select name="county" id="county" required>
+              <option value="<%= typeof county != 'undefined' ? county : '' %>">
+                <%= typeof county !='undefined' ? county : 'County' %>
+              </option>
+            </select>
             <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
-              value="<%= typeof email != 'undefined' ? email : '' %>" onkeyup="validateEmail()" required>
-              <span id="email-error"></span>
+              value="<%= typeof email != 'undefined' ? email : '' %>" required>
           </div>
-          <div class="input-group">
-            <input type="password" id="password" name="password" maxlength="60" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" onkeyup="validatePassword()" required>
-            <span id="password-error"></span>
-          </div>
-          <div class="input-group">
-            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password" onkeyup="validatePasswordConfirm()" required>
-            <span id="password-confirm-error"></span>
-          </div>
-
-          <div id="show-password-container">
-            <div>
-              <input type="checkbox" id="show-password">
-              <label for="show-password">Show password</label>
+          <div class="input-group four">
+            <div class="password-container">
+              <input type="password" id="password" name="password" maxlength="60" placeholder="Password" required>
+              <i class="fa-solid fa-eye" id="show-password"></i>
             </div>
+            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password" required>
           </div>
           <div class="input-group">
-            <button id="account-btn">Create account</button>
+            <button id="register-btn">Create account</button>
           </div>
           <div id="login">
             <p>Already a member? <a href="/login">Login</a></p>
@@ -52,6 +55,6 @@
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/register-show-password.js"></script>
-  <script src="/js/input-validation.js"></script>
+  <script src="/js/statesCounties.js"></script>
 
 <%- include("partials/footer.ejs") %>

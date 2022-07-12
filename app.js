@@ -29,9 +29,8 @@ app.set("view engine", "ejs");
 app.use("/auth", require("./server/routes/auth"));
 app.use("/", require("./server/routes/pages"));
 
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server started on port${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });

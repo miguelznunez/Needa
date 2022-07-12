@@ -26,7 +26,7 @@
     <div class="toast-wrapper-front-end">
       <div class="toast-front-end">
         <div class="icon-container-front-end"></div>
-        <div class="message-container-front-end flex-5"></div>
+        <div class="message-container-front-end flex-column-gap-5"></div>
         <button id="close-toast-btn-front-end">&times;</button>
       </div>
     </div>
@@ -629,75 +629,23 @@
     </div>
   </section>
 
-
-  <!-- SUCCESS/ERROR MESSAGES FRONT END -->
-  
-  <div class="message-container-front-end"></div>
-
-
   <script src="/js/script.js"></script>
   <script src="/js/lazy-loading.js"></script>
   <script src="/js/carousel.js"></script>
   <script src="/js/tiny-slider-auto.js"></script>
   <script src="/js/search-list.js"></script>
   <script src="/js/toast.js"></script>
-  <script>
-    const toastOptions = {
-        'success': { class: "fas fa-check-circle", color: "#47d764", header: "Success" },
-        'error': { class: "fas fa-times-circle", color: "#ff1616", header: "Error" },
-        'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
-        'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
-      },
-        toastFrontEnd = document.querySelector(".toast-front-end"),
-        iconContainer = document.querySelector(".icon-container-front-end"),
-        messageContainer = document.querySelector(".message-container-front-end"),
-        closeToastFrontEnd = document.querySelector("#close-toast-btn-front-end");
-      let x;
+  <script src="/js/toast-front-end.js"></script>
 
-      function displayToast(type, msg) {
-        clearTimeout(x);
-        toastFrontEnd.style.borderLeft = `8px solid ${toastOptions[type].color}`;
-        toastFrontEnd.style.transform = "translateX(0)";
-
-        const icon = document.createElement("i");
-        const header = document.createElement("p");
-        const message = document.createElement("p");
-
-        icon.className = toastOptions[type].class;
-        icon.style.color = toastOptions[type].color;
-        header.textContent = toastOptions[type].header;
-        message.textContent = msg;
-
-        iconContainer.innerHTML = "";
-        iconContainer.appendChild(icon);
-
-        messageContainer.innerHTML = "";
-        messageContainer.appendChild(header);
-        messageContainer.appendChild(message);
-
-        x = setTimeout(() => {
-          toastFrontEnd.style.transform = "translateX(400px)";
-        }, 5000);
-      }
-
-      // TOAST FUNCTIONALITY
-
-      closeToastFrontEnd.addEventListener("click", () => {
-        toastFrontEnd.style.transform = "translateX(400px)";
-      })
-
-  </script>
   <% if (typeof user !="undefined" && user) { %>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
+      </script>
     <script src="/js/google-map.js"></script>
   <% } %>
 
   <% if(typeof user === "undefined") { %>
-    <script>
-      const submitBtns = document.querySelectorAll(".slide-img");
-      submitBtns.forEach(btn => {
-        btn.disabled = true;
-      })
-    </script>
+    <script src="/js/user-location.js"></script>
   <% } %>
 
   <script>

@@ -17,6 +17,18 @@ html{
   box-sizing: border-box;
 }
 
+.password-container {
+  position: relative;
+}
+
+.fa-eye {
+  position: absolute;
+  top: 28%;
+  right: 4%;
+  cursor: pointer;
+  color: lightgray;
+}
+
 /* GLOBAL */
 
 body{
@@ -379,10 +391,6 @@ iframe{
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
-#location-modal .modal-container:nth-child(2) {
-  height: 450px;
-}
-
 #location-modal .modal-header:nth-child(1) {
   width: 100%;
   justify-content: space-between;
@@ -402,13 +410,14 @@ iframe{
   color: #101020;
 }
 
-#map {
+#location-modal .map-container {
+  width: 100%;
+  height: 450px;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
-  height: 100%;
 }
 
-.custom-map-control-button {
+/* .custom-map-control-button {
   background-color: #fff;
   border: 0;
   border-radius: 2px;
@@ -423,7 +432,7 @@ iframe{
 
 .custom-map-control-button:hover {
   background: rgb(235, 235, 235);
-}
+} */
 
 .toast-wrapper,
 .toast-wrapper-front-end {
@@ -433,7 +442,7 @@ iframe{
   bottom: 50px;
   right: 0;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
 .toast,
@@ -2388,10 +2397,10 @@ iframe{
 }
 
 #feed-section .feed-column{
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
   padding: 50px 0;
 }
 
@@ -2404,8 +2413,8 @@ iframe{
   gap: 20px;
   border-radius: var(--border-radius);
   padding: 20px;
-  background-color: white;
-  /* box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5); */
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #feed-section .feed-col-1-box-1 h2,
@@ -2430,7 +2439,7 @@ iframe{
 
 #feed-section .profile-photo i {
   color: black;
-  font-size: 7rem;
+  font-size: 4.5rem;
 }
 
 #feed-section .profile-identity {
@@ -2461,9 +2470,9 @@ iframe{
 #feed-section .post{
   height: fit-content;
   padding: 20px;
-  background-color: white;
+  background-color: whitesmoke;
   border-radius: var(--border-radius);
-  /* box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5); */
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 #feed-section .image {
@@ -2488,15 +2497,17 @@ iframe{
   font-weight: bold;
 }
 
+#feed-section form{
+  width: 100%;
+}
+
 #feed-section .post textarea{
   width: 100%;
   height: 225px;
   resize: none;
   font-size: 1.5rem;
   padding: 20px;
-  background-color: whitesmoke;
-  border: none;
-  /* border: 3px solid lightgray; */
+  background-color: white;
 }
 
 #feed-section .post-footer{
@@ -2508,11 +2519,11 @@ iframe{
 #feed-section .fa-image,
 #feed-section .fa-youtube{
   font-size: 2.5rem;
-  color: gray;
+  color: blue;
 }
 
 #feed-section .fa-youtube{
-  color: gray;
+  color: red;
 }
 
 #feed-section #post-btn{
@@ -2807,7 +2818,33 @@ iframe{
 }
 
 #register-form {
-  width: fit-content;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#register-form input[type="text"],
+#register-form input[type="email"],
+#register-form input[type="password"],
+#register-form select {
+  width: 100%;
+}
+
+#register-form .one,
+#register-form .three,
+#register-form .four {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+#register-form .two{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.48fr 0.48fr;
+  gap: 15px;
 }
 
 /* LOGIN/ REGISTER */
@@ -2843,7 +2880,7 @@ input[type="checkbox"]{
   text-decoration: none;
 }
 
-#account-btn, 
+#register-btn, 
 #login-btn,
 #link-btn,
 #update-password{
@@ -2855,11 +2892,15 @@ input[type="checkbox"]{
   transition: 0.3s ease-out;
 }
 
+#register-btn{
+  width: 392px;
+}
+
 #link-btn{
   width: 100%;
 }
 
-.input-group{
+/* .input-group{
   position: relative;
 }
 
@@ -2875,7 +2916,7 @@ input[type="checkbox"]{
 
 .fa-circle-xmark{
   color: red;
-}
+} */
 
 /* PASSWORD-RESET.EJS */
 #password-reset-section{
@@ -2999,6 +3040,39 @@ input[type="checkbox"]{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#add-user-form {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#add-user-form input[type="text"],
+#add-user-form input[type="email"],
+#add-user-form input[type="password"],
+#add-user-form select {
+  width: 100%;
+}
+
+#add-user-form .one,
+.four {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+#add-user-form .two {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.48fr 0.48fr;
+  gap: 15px;
+}
+
+#add-user-form .three {
+  width: 100%;
 }
 
 /* VIEW-USER.EJS */

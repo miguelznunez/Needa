@@ -128,11 +128,11 @@
                 </div>
                 <div class="user-input">
                   <label for="city">City</label>
-                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60" pattern="[A-Za-z]+">
+                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
                 </div>
                 <div class="user-input">
                   <label for="state">State</label>
-                  <select name="state" id="state">
+                  <select name="state" id="user-state" onchange="addCounties()">
                     <option value="<%= user.state %>">
                       <%= user.state %>
                     </option>
@@ -142,7 +142,14 @@
                   <Label for="zip_code">ZIP Code</Label>
                   <input type="text" name="zip" maxlength="5" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>">
                 </div>
-
+                <div class="user-input">
+                  <Label for="county">County</Label>
+                  <select name="county" id="county" required>
+                    <option value="<%= user.county %>">
+                      <%= user.county %>
+                    </option>
+                  </select>
+                </div>
                 <div class="user-input">
                   <% if(user.gender==="M" ) { %>
                     <label for="gender">Gender</label>
@@ -301,9 +308,14 @@
   </section>
 
   <script src="/js/script.js"></script>
+  <!-- <script src="/js/statesCounties.js"></script> -->
   <!-- <script src="/js/search-list.js"></script> -->
   <script src="/js/toast.js"></script>
+  
   <% if (typeof user !="undefined" && user) { %>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
+      </script>
     <script src="/js/google-map.js"></script>
   <% } %>
 
@@ -401,20 +413,58 @@
     });
     reader.readAsDataURL(this.files[0]);
   });
+</script>
+
+<script>
+
+  // const userState = document.querySelector("#user-state");
 
   async function loadStates() {
-    let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
-    let response = await fetch(url);
-    let data = await response.json();
-    data.forEach(function (i) {
-      var state = document.createElement("option");
-      state.textContent = i.state;
-      state.value = i.usps;
-      document.querySelector("#state").appendChild(state);
-    });
-  };
+      let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
+      let response = await fetch(url);
+      let data = await response.json();
+      data.forEach(function (i) {
+        var state = document.createElement("option");
+        state.textContent = i.state;
+        state.value = i.usps;
+        document.querySelector("#user-state").appendChild(state);
+      });
+    };
 
-  window.addEventListener("load", loadStates);
+    async function addCounties() {
+        const state = document.querySelector("#user-state").value;
+        const res = await fetch("/data/counties.json");
+        const counties = await res.json();
+
+        document.querySelector("#county").innerHTML = "";
+        var county = document.createElement("option");
+        county.textContent = "County";
+        county.value = "";
+        document.querySelector("#county").appendChild(county);
+
+        counties[state].forEach(c => {
+          var county = document.createElement("option");
+          county.textContent = c;
+          county.value = c;
+          document.querySelector("#county").appendChild(county);
+        })
+      }
+
+    async function initCounties() {
+      const state = document.querySelector("#user-state").value;
+      const res = await fetch("/data/counties.json");
+      const counties = await res.json();
+
+      counties[state].forEach(c => {
+        var county = document.createElement("option");
+        county.textContent = c;
+        county.value = c;
+        document.querySelector("#county").appendChild(county);
+      })
+    }
+
+    window.addEventListener("load", loadStates);
+    window.addEventListener("load", initCounties);
 
 </script>
 
