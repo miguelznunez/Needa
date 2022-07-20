@@ -1,101 +1,145 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
-<div id="searchResultsSection">
-  <div class="container">
-    <div class="subcontainer">
+  <div id="search-results-section">
+    <div class="subheader">
+      <div class="subheader-box">
+        <i class="fa-solid fa-sliders"></i>
+      </div>
+      <div class="subheader-box"></div>
+    </div>
+    <div class="search-results-grid">
+      <div class="sidebar"></div>
+      <div class="map-container">
+        <% if(typeof user==="undefined" && city) { %>
+          <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=<%= city %>,<%= state %>&zoom=14"></iframe>
+        <% } else if(typeof user ==="undefined" && zip) { %>
+          <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=<%= zip %>&zoom=14"></iframe>
+        <% } else if(typeof user !== "undefined" && city) { %>
+          <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=<%= city %>,<%= state %>&zoom=14"></iframe>
+        <% } else if(typeof user !== "undefined" && zip) { %>
+          <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=<%= zip %>&zoom=14"></iframe>
+        <% } %>
+      </div>
       <div class="search-results-wrapper">
+        
+        <% if(rows !==null) { %>
+          <div class="search-results-header">
 
-        <div class="search-results-col-1 flex-column-gap-25">
-
-          <div class="search-results-col-1-child">
-            <div class="flex-column-gap-10">
-              <h2>Filters</h2>
-            </div>
-          </div>
-
-          <div class="search-results-col-2-child">
-            <div class="flex-column-gap-10">
-              <h2>Other proffesions</h2>
-            </div>
-          </div>
-
-        </div>
- 
-
-        <div class="search-results-col-2 flex-column-gap-25">
-
-          <div class="flex-column-gap-10">
-            <h2>Results</h2>
-          </div>
-
-          <div class="search-results-user-boxes flex-column-gap-20">
-
-            <% if(rows !== null ) { %>
-              <% for(let i=0;i < rows.length;i++) { %>
-                <div class="search-results-user-box flex-row-gap-10">
-                  <div class="search-results-user-box-child flex-row-gap-20">
-
-                    <% if(rows[i].profile_photo) { %>
-                      <div class="image"
-                        style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
-                      </div>
-                    <% } else { %>
-                      <div class="image">
-                        <i class="fas fa-user" id="fa-user"></i>
-                      </div>
-                    <% } %>
-
-                    <div class="flex-column-gap-5">
-                      <div class="flex-row-gap-5">
-                        <h3>
-                          <%= rows[i].first_name %>
-                        </h3>
-                        <h3>
-                          <%= rows[i].last_name %>
-                        </h3>
-                        <h3>
-                          - <%= rows[i].profession %>
-                        </h3>
-                      </div>
-                      <div class="flex-row-gap-5">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <p>
-                          <%= rows[i].city %>,
-                        </p>
-                        <p>
-                          <%= rows[i].state %>
-                        </p>
-                        <p>
-                          <%= rows[i].zip %>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="search-results-user-box-child">
-                    <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
-                      <button id="viewUser">View User</button>
-                    </a>
-                  </div>
-                </div>
-              <% } %>
-            <% } else { %>
-              <h1 style="color: lightgray;font-size: 1.6rem;">Sorry, no <%= profession %> in <%= city %> <%= zip %> yet...</h1>
+            <% if(typeof user==="undefined" && city) { %>
+              <h3>Results for : 
+                <span id="dynamic-location">
+                <%= city %>, <%= state %>
+                </span> 
+                <span>
+                  <%= rows.length %>
+                </span>
+              </h3>
+            <% } else if(typeof user==="undefined" && zip) { %>
+              <h3>Results for : <span id="dynamic-location">
+                <%= zip %>
+                </span> 
+                <span>
+                  <%= rows.length %>
+                </span>
+              </h3>
+            <% } else if(typeof user !=="undefined" && city) { %>
+              <h3>Results for :
+                <span id="dynamic-location">
+                  <%= city %>, <%= state %>
+                </span>
+                <span>
+                  <%= rows.length %>
+                </span>
+              </h3>
+            <% } else if(typeof user !=="undefined" && zip) { %>
+              <h3>Results for : <span id="dynamic-location">
+                  <%= zip %>
+                </span>
+                <span>
+                  <%= rows.length %>
+                </span>
+              </h3>
             <% } %>
           </div>
+
+          <div class="search-results">
+            <% for(let i=0;i < rows.length;i++) { %>
+              <div class="my-form">
+                <div class="results-box-img">
+
+                  <% if (rows[i].profile_photo) { %>
+                    <img src="http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>" width="100%">
+                  <% } else { %>
+                    <i class="fas fa-user link"></i>
+                  <% } %>
+
+
+                </div>
+                <div class="results-box-info flex-column-gap-10">
+                  <div>
+                    <h3><%= rows[i].first_name %> <%= rows[i].last_name %></h3>
+                    <p><%= rows[i].profession %></p>
+                  </div>
+
+                  <div class="results-about">
+                    <% if(rows[i].about) { %>
+                      <p>
+                        <%= rows[i].about %>
+                      </p>
+                    <% } else { %>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, rerum?
+                        </p>
+                    <% } %>
+                  </div>
+  
+
+                  <span class="border"></span>
+                </div>
+                <div class="results-box-user">
+                  <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                    <button id="viewUser">View User</button>
+                  </a>
+                  <div class="flex-row-gap-20">
+                    <i class="fa-solid fa-phone-flip"></i>
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          <% } else { %>
+            <div class="search-results-header">
+              <h3>Results for : <span id="dynamic-location"><%= city %></span>. Sorry, nothing here yet.</h3>
+            </div>
+          <% } %>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src="/js/script.js"></script>
-<% if (typeof user !="undefined" && user) { %>
-  <script async
+  <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
+  <% } %>
+
+
+
+  <!-- <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
     </script>
-  <script src="/js/google-map.js"></script>
-<% } %>
+  <script src="/js/google-map.js"></script> -->
 
-<%- include("partials/footer.ejs") %>

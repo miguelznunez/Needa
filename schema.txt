@@ -21,8 +21,8 @@ CREATE TABLE `user` (
   `county` VARCHAR(25) DEFAULT NULL,
   `gender` CHAR(1) DEFAULT NULL,
   `profession` VARCHAR(50) DEFAULT NULL,
-  `specialty` TINYTEXT DEFAULT NULL,
-  `about` TEXT DEFAULT NULL,
+  `about` TINYTEXT DEFAULT NULL,
+  `services` TEXT DEFAULT NULL,
   `skills` TEXT DEFAULT NULL,
   `twitter` TINYTEXT DEFAULT NULL,
   `instagram` TINYTEXT DEFAULT NULL,
@@ -54,4 +54,10 @@ CREATE TABLE `postings` (
  `county` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`postId`),
   FOREIGN KEY(`id`) REFERENCES user (`id`)
+);
+
+CREATE TABLE `newsletter` (
+ `id` INT UNSIGNED AUTO_INCREMENT,
+ `email` VARCHAR(100),
+  PRIMARY KEY (`id`)
 );

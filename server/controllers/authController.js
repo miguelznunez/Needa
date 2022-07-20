@@ -390,7 +390,7 @@ async function noUploadedPhotos(user, req, res, profile_outcome, cover_outcome, 
 function databaseQuery(req, res, profile_photo, cover_photo, update, id){
 
   const tags = parseTags(update.tags);
-  let data = { first_name:titleCase(update.first_name), last_name:titleCase(update.last_name), profile_photo:profile_photo, cover_photo:cover_photo, city:titleCase(update.city), state:update.state, zip:update.zip, county:update.county, gender:update.gender, profession:titleCaseAll(update.profession), specialty:update.specialty, about:update.about, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
+  let data = { first_name:titleCase(update.first_name), last_name:titleCase(update.last_name), profile_photo:profile_photo, cover_photo:cover_photo, city:titleCase(update.city), state:update.state, zip:update.zip, county:update.county, gender:update.gender, profession:titleCaseAll(update.profession), about:update.about, services:update.services, skills:update.skills, twitter:update.twitter, instagram:update.instagram, facebook:update.facebook, linkedin:update.linkedin, website:update.website, phone:update.phone, display_phone:update.display_phone, display_email:update.display_email, tags: tags};
 
   db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, results) => {
     if(!err) {
@@ -487,10 +487,14 @@ exports.findProfessionals = (req, res) => {
   allParsedErrors = JSON.parse(allErrors);
    // OUTPUT VALIDATION ERRORS IF ANY
   if(!errors.isEmpty()){
-    return res.render("index", {
-      title: "Home | Loaves Fishes Computers",
+
+
+    return res.render("search-results", {
+      title: "Needa | Search Results",
       allParsedErrors: allParsedErrors
     })
+
+
   }
 
   if(location.includes(",")) {
@@ -504,7 +508,7 @@ exports.findProfessionals = (req, res) => {
 // FIND USERS THAT MATCH PROFESSION AND CITY/STATE OR ZIP
 
 function queryLocation(req, res, profession, city, state, zip) {
-  db.query("SELECT id, first_name, last_name, profile_photo, city, state, zip, profession, tags FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?) && (status != ?))", [profession +'?', profession + '?', city, state, zip, "Deleted"], (err, rows) => {
+  db.query("SELECT id, first_name, last_name, email, profile_photo, city, state, zip, profession, tags, about FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?) && (status != ?))", [profession +'?', profession + '?', city, state, zip, "Deleted"], (err, rows) => {
     if(!err) {
       const results = (rows[0] === undefined) ? null : rows;
       return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession, city, state, zip});
@@ -596,6 +600,35 @@ exports.deleteAccount = (req, res) => {
   });
 }
 
+exports.contactUser = (req, res) => {
+  const {message, receiverEmail} = req.body;
+
+  mail.contactEmail(req.user.first_name, req.user.last_name, req.user.email, message, receiverEmail, (err, data) => {
+    if(!err) return res.json({success:true, message:"Your message has been sent!"});
+    else return res.json({success:false, message: err.message});
+  }); 
+}
+
+exports.newsletter = (req, res) => {
+  const {email} = req.body;
+
+  db.query("SELECT email FROM newsletter WHERE email = ?", [email], async (err, results) => {
+    // IF EMAIL ALREADY EXISTS
+    if (!err && results != "") {
+      return res.json({success:false, message:"You're already subscribed to our newsletter."});
+    // ELSE IF EMAIL DOES NOT EXIST
+    } else if(!err && results[0] === undefined) {
+      db.query("INSERT INTO newsletter (email) VALUES (?)", [email], (err, rows) => {
+        if(!err) return res.json({success:true, message:"You successfully subscribed to our newsletter."});
+        else return res.json({success:false, message: err.message}); 
+      });
+    // DB ERROR
+    } else {
+      return res.json({success:false, message: err.message}); 
+    }
+  });
+}
+
 // ADMIN CRUD SYSTEM 
 
 // FIND USER -------------------------------------------------------
@@ -612,18 +645,17 @@ exports.findUser = (req, res) => {
 
 
 exports.addUser = (req, res) => {
-  const { password, password_confirm, admin} = req.body;
+
+  // const { state, zip, county, email, password, password_confirm, admin} = req.body;
+  const { state, zip, county, email, password, password_confirm} = req.body;
   const member_since = get_date();
   const status = "Active";
-  let {first_name, last_name} = req.body;
+  const admin = "No";
+  let {first_name, last_name, city} = req.body;
 
   first_name = titleCase(first_name);
   last_name = titleCase(last_name);
-
-  let email = req.body.email;
-
-  if(email === "@")
-    email = undefined;
+  city = titleCaseAll(city);
 
   // Use express validator to check for errors in user input
   const errors = validationResult(req);
@@ -640,8 +672,11 @@ exports.addUser = (req, res) => {
       allParsedErrors : allParsedErrors,
       first_name      : first_name,
       last_name       : last_name,
-      email           : email,
-      password        : password
+      city            : city,
+      state           : state,
+      zip             : zip,
+      county          : county,
+      email           : email
     })
   }
 
@@ -658,12 +693,15 @@ exports.addUser = (req, res) => {
                               message     : "An account with that email already exists",
                               first_name  : first_name,
                               last_name   : last_name,
-                              email       : email,
-                              password    : password});
+                              city        : city,
+                              state       : state,
+                              zip         : zip,
+                              county      : county,
+                              email       : email });
     // Create account
     } else {
       bcrypt.hash(password, saltRounds, (err, hash) => {
-        db.query("INSERT INTO user (first_name, last_name, email, password, member_since, status, admin) VALUES (?,?,?,?,?,?,?)", [first_name, last_name, email, hash, member_since, status, admin],
+        db.query("INSERT INTO user (first_name, last_name, city, state, zip, county, email, password, member_since, status, admin) VALUES (?,?,?,?,?,?,?,?,?,?,?)", [first_name, last_name, city, state, zip, county, email, hash, member_since, status, admin],
           async (err, results) => {
             if (!err) return res.render("add-user", {title: "Add User", user:req.user, type:"success", message:`A user account with an email of ${email} was created successfully.`});
             else console.log(err)

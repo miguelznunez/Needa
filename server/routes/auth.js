@@ -79,8 +79,8 @@ router.post("/settings",
   check("gender", "Gender must be 2 characters max.").isLength({max:2}),
   check("profession", "Profession must be 50 characters max.").isLength({max:50}),
   check("profession", "Profession must be only alphabetical characters.").isAlpha('en-US', {ignore: ' '}).optional({checkFalsy: true}),
-  check("specialty", "Specialty must be 255 characters max.").isLength({max:255}),
-  check("about", "About must be 1000 characters max.").isLength({max:1000}),
+  check("about", "About must be 255 characters max.").isLength({max:255}),
+  check("services", "Services must be 1000 characters max.").isLength({max:1000}),
   check("skills", "Skills must be 1000 characters max.").isLength({max:1000}),
   check("website", "Website URL must be 255 characters max.").isLength({max:255}),
   check("website", "Website URL must be valid.").isURL().optional({checkFalsy: true}),
@@ -139,10 +139,15 @@ router.post("/find-user", authController.isLoggedIn, authController.findUser);
 router.post("/add-user", [
   check("first_name", "First name field cannot be empty.").not().isEmpty(),
   check("first_name", "First name must be only alphabetical characters.").isAlpha(),
-  check("first_name", "First name must be between 1 - 30 characters long.").isLength({min:1, max:30}),
+  check("first_name", "First name must be between 1 - 30 characters.").isLength({min:1, max:30}),
   check("last_name", "Last name field cannot be empty.").not().isEmpty(),
   check("last_name", "Last name must be only alphabetical characters.").isAlpha(),
-  check("last_name", "Last name must be between 1 - 30 characters long.").isLength({min:1, max:30}), 
+  check("last_name", "Last name must be less than 30 characters long.").isLength({min:1, max:30}),
+  check("city", "City must be only alphabetical characters.").matches(/^[a-zA-Z][a-zA-Z\s]*$/),
+  check("city", "City must be 60 characters max.").isLength({max:60}),
+  check("state", "State must be 2 characters max.").isLength({max:2}),
+  check("zip", "Zip code must be 5 characters max.").isLength({max:5}),
+  check("zip", "Zip code must be valid.").isPostalCode("US"),
   check("email", "The email you entered is invalid, please try again.").isEmail().normalizeEmail(),
   check("email", "Email address must be between 4-100 characters long, please try again.").isLength({min:4, max:100}).normalizeEmail(),
   check("password_confirm", "Password confirm field cannot be empty.").not().isEmpty(), 
@@ -159,19 +164,7 @@ router.post("/add-user", [
 
 router.post("/update-user/:id", authController.isLoggedIn, authController.updateUser);
 
-router.post("/find-professionals", [
-  check("profession", "Profession must be only alphabetical characters.").isAlpha('en-US', {ignore: ' '}),
-  check("profession", "Profession field cannot be empty.").not().isEmpty(),
-  check("location", "City, State, or zip field cannot be empty.").not().isEmpty(),
-  check("location").custom( (value) => {
-    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value);
-    const isValidCityState = /^([a-zA-Z ]+)(?:,([ A-Za-z]{3}))$/.test(value);
-    if(isValidZip || isValidCityState)
-      return true;
-    else
-      throw new Error("Please enter a valid location.");
-  })
-], authController.isLoggedIn, authController.findProfessionals);
+router.post("/find-professionals", authController.isLoggedIn, authController.findProfessionals);
 
 router.post("/add-contact-form", authController.isLoggedIn, authController.addContactForm);
 
@@ -180,5 +173,9 @@ router.post("/delete-contact-form", authController.isLoggedIn, authController.de
 router.post("/delete-account", authController.isLoggedIn, authController.deleteAccount);
 
 router.post("/post", authController.isLoggedIn, authController.post);
+
+router.post("/contact-user", authController.isLoggedIn, authController.contactUser);
+
+router.post("/newsletter", authController.isLoggedIn, authController.newsletter);
 
 module.exports = router;

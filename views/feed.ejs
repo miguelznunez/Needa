@@ -1,10 +1,9 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
 <section id="feed-section">
 
   <div class="container">
-    <div class="subcontainer">
       <div class="feed-main-wrapper">
 
         <div class="feed-column">
@@ -89,9 +88,16 @@
               <div class="post flex-column-gap-20">
 
               <% if(rows[i].profile_photo) { %>
-                <div class="image"
-                  style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+
+                <div style="display:flex;justify-content:space-between;">
+                  <div class="image"
+                    style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                  </div>
+                  <% if(rows[i].id === user.id) { %>
+                  <i class="fa-solid fa-trash"></i>
+                  <% } %>
                 </div>
+
                 <div class="flex-row-gap-5" style="align-items: center;">
                   <h2>
                     <%= rows[i].first_name %>
@@ -102,9 +108,16 @@
                 </div>
 
               <% } else { %>
-                <div class="image">
-                  <i class="fas fa-user" id="fa-user"></i>
+
+                <div style="display:flex;justify-content:space-between;">
+                  <div class="image">
+                    <i class="fas fa-user" id="fa-user"></i>
+                  </div>
+                  <% if(rows[i].id===user.id) { %>
+                    <i class="fa-solid fa-trash"></i>
+                  <% } %>
                 </div>
+
                 <div class="flex-row-gap-5" style="align-items: center;">
                   <h2>
                     <%= rows[i].first_name %>
@@ -128,19 +141,21 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 
 </section>
 
 
-<script src="/js/script.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
 
-<% if (typeof user !="undefined" && user) { %>
-  <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
     </script>
-  <script src="/js/google-map.js"></script>
-<% } %>
+  <% } %>
 
 <%- include("partials/footer.ejs") %>

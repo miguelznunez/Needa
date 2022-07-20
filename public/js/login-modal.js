@@ -1,5 +1,5 @@
 const modal = document.querySelector(".overlay"),
-closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
+// closeLoginModalBtn = document.querySelector("#close-login-modal-btn"),
 showLoginModalBtn = document.querySelector("#show-login-modal-btn");
 
 setTimeout(function () {
@@ -13,8 +13,8 @@ showLoginModalBtn.addEventListener("click", () => {
   modal.style.zIndex = "1";
 })
 
-closeLoginModalBtn.addEventListener("click", () => {
-  modal.classList.remove("show-modal");
-  modal.classList.add("hide-modal");
-  modal.style.zIndex = "-1";
-})
+// closeLoginModalBtn.addEventListener("click", () => {
+//   modal.classList.remove("show-modal");
+//   modal.classList.add("hide-modal");
+//   modal.style.zIndex = "-1";
+// })

@@ -1,12 +1,13 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
   <section id="login-section">
     <div class="container"> 
       <div class="subcontainer"> 
         <form action="/auth/login" id="login-form" method="POST">
           <div class="form-title">
-            <h1>Log in</h1>
+            <h1>Login</h1>
             <i class="fa-solid fa-lock"></i>
           </div>
           <div class="input-group">
@@ -34,6 +35,8 @@
 
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
   <script src="/js/login-show-password.js"></script>
 
 <%- include("partials/footer.ejs") %>

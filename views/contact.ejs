@@ -1,0 +1,101 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
+
+  <!-- CAROUSEL -->
+
+  <section id="contact-showcase" class="fade">
+    <div class="contact-showcase-overlay">
+      <div class="container">
+        <div class="subcontainer">
+          <div class="contact-showcase-header flex-column-gap-15">
+            <div class="contact-showcase-header-box-1 flex-column-gap-10">
+              <h1>Our Contacts</h1>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id corrupti assumenda facere?</p>
+            </div>
+            <div class="scroll-down-wrap">
+              <div class="mousey">
+                <div class="scroller"></div>
+              </div>
+              <span>Scroll Down To Discover</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> <span>Contact</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumbs end -->
+
+  <section id="office-location">
+    <div class="container">
+      <div class="office-location flex-column-gap-20">
+        <div class="office-location-header flex-column-gap-10">
+          <h3>Office Location</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis ad id ducimus recusandae, minima molestias deleniti ex error maiores blanditiis!</p>
+        </div>
+        <div class="map-container">
+          <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q=San Francisco,CA&zoom=14"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="newsletter-section">
+    <div class="container">
+      <div class="newsletter">
+        <div class="newsletter-header flex-column-gap-10">
+          <p>NEWSLETTER</p>
+          <h3>Sign up for Newsletter and get the latest update</h3>
+        </div>
+        <form action="/newsletter" class="newsletter-input" method="POST" id="newsletter-form">
+          <input type="email" placeholder="Enter Your Email" id="email" name="email" maxlength="100" required>
+          <button>Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+  <script src="/js/newsletter.js"></script>
+  
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
+  <% } %>
+
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
+  </script>
+
+  <%- include("partials/footer.ejs") %>

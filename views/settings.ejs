@@ -1,21 +1,16 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
-<%- include("partials/location-modal.ejs") %>
-
+<%- include("partials/front-end-toast.ejs") %>
 
   <!-- CONNECT FLASH MESSAGE -->
 
   <% if(success !="" ) { %>
+
     <style>
-      .toast {
-        transform: translateX(0);
-        border-left: 8px solid #47d764;
-      }
-  
-      .fa-check-circle {
-        color: #47d764;
-      }
+      .toast { border-left: 8px solid #47d764; }
+      .fa-check-circle { color: #47d764; }
     </style>
+
     <section>
       <div class="toast-wrapper">
         <div class="toast">
@@ -32,21 +27,31 @@
         </div>
       </div>
     </section>
-    <% } %>
+  <% } %>
+
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs" style="margin-top: 80px;">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> Settings <i class="fa-solid fa-circle"></i> <span>Edit Profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <section id="settingsSection">
     <div class="container">
-      <div class="subcontainer">
     
       <div class="settings-wrapper">
 
 
-        <div class="settings-col-1">
-          <div class="settings-col-1-child-1">
+        <div class="settings-col-1" >
+          <div class="settings-col-1-child-1" >
             <h2>Settings</h2>
           </div>
-          <div class="settings-col-1-child-2">
+          <div class="settings-col-1-child-2" style="background-color: white;">
             <a href="/settings" style="color:#7449F5;">
               <div class="settings-col-1-link flex-row-gap-15" style="background-color: #f1f1f1;">
                 <i class="fas fa-user-circle"></i>
@@ -196,18 +201,18 @@
                   <!-- <div id="match-list"></div> -->
                 </div>
                 <div class="user-input">
-                  <label for="specialty">Experience</label>
-                  <textarea name="specialty" placeholder="I have over 10 years experience..."
-                    maxlength="255"><%= user.specialty %></textarea>
+                  <label for="about">About</label>
+                  <textarea name="about" placeholder="About me..." maxlength="255"><%= user.about %></textarea>
                 </div>
                 <div class="user-input">
-                  <label for="about">Core services</label>
-                  <textarea name="about" placeholder="I specialize in..." maxlength="1000"><%= user.about %></textarea>
+                  <label for="services">Services</label>
+                  <textarea name="services" placeholder="I offer the following services..."
+                    maxlength="1000"><%= user.services %></textarea>
                 </div>
                 <div class="user-input">
                   <label for="skills">Skills</label>
                   <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>"
-                    maxlength="1000">
+                    maxlength="500">
                 </div>
               </div>
           
@@ -249,8 +254,8 @@
           
                 <h3>Profile identity</h3>
                 <div class="user-input">
-                  <label for="phone">Phone</label>
-                  <input type="tel" name="phone" placeholder="E.g. 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
+                  <label for="phone">Phone (XXX-XXX-XXXX)</label>
+                  <input type="tel" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
                 </div>
                 <div>
                   <% if(user.display_phone==="Yes" ) { %>
@@ -297,26 +302,23 @@
             </div>
           
           </form>
-
-
         </div>
       </div>
-    </div>
-  </div>
-  </div>
     </div>
   </section>
 
   <script src="/js/script.js"></script>
-  <!-- <script src="/js/statesCounties.js"></script> -->
   <!-- <script src="/js/search-list.js"></script> -->
   <script src="/js/toast.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
   
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
   <script>  

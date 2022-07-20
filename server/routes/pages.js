@@ -172,6 +172,20 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
+router.get("/help", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers))
+    return res.render("help", { title:"Needa | Help", user:req.user} );
+  else
+    return res.redirect("/login");
+});
+
+router.get("/contact", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers))
+    return res.render("contact", {title: "Needa | Contact", user : req.user} );
+  else
+    return res.redirect("/login");
+});
+
 router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers) && req.user){
     db.query("SELECT * FROM user WHERE id = ?", [req.params.id], (err1, result1) => {

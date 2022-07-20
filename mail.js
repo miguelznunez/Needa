@@ -40,4 +40,17 @@ resetPasswordEmail = (email, id, token, cb) => {
   });
 }
 
-module.exports = {resetPasswordEmail, activateAccountEmail};
+contactEmail = (first_name, last_name, email, message, receiverEmail, cb) => {
+  const mailOptions = {
+    from: email,
+    to: receiverEmail,
+    subject: `Needa - ${first_name} ${last_name} just messaged you`,
+    text : `${message}`
+  };
+  transporter.sendMail(mailOptions, function(err, data) {
+    if (err) cb(err, null);
+    else cb(null, data);
+  });
+}
+
+module.exports = {resetPasswordEmail, activateAccountEmail, contactEmail};

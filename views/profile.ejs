@@ -1,312 +1,364 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
-  <!-- COVER SECTION -->
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs" style="margin-top: 80px;">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> <span>Profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumbs end -->
 
-  <% if(user.cover_photo) { %>
-    <section id="profileCoverSection"
-      style="background-image: url('http://localhost:5000/cover-photo/<%= user.id %>/<%= user.cover_photo%>');" class="lazy">
-    </section>
-  <% } else { %>
-    <section id="profileCoverSection" class="lazy"></section>
-  <% } %>
 
   <section id="profileSection">
     <div class="container">
-      <div class="subcontainer">
-        <div class="profile-wrapper">
+        <div class="profile-grid">
 
-
-          <div class="profile-col-1-wrapper">
+          <div class="profile-col-1">
             
-            <!-- PROFILE PHOTO, FULL NAME, PROFESSION, CITY, STATE -->
-
-            <div class="profile-col-1-box-1">
-
-              <% if(user.profile_photo) { %>
-                <div class="profile-photo" style="background-image: url('http://localhost:5000/profile-photo/<%= user.id %>/<%= user.profile_photo%>');"></div>
-              <% } else { %>
-                <div class="profile-photo">
-                  <i class="fas fa-user" id="fa-user"></i>
-                </div>
-              <% } %>
-              
-              <div class="profile-identity flex-column-gap-10">
-                <h1>
-                  <%= user.first_name%>
-                  <%= user.last_name%>
-                </h1>
-                <h2>
-                  <%= user.profession%>
-                </h2>
-                <% if(user.city && user.state) { %>
-                  <h3>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <%= user.city %>, <%= user.state%> <%= user.zip %>
-                  </h3>
-                <% } else if (user.city || user.state) { %>
-                  <h3>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <%= user.city %>
-                    <%= user.state%>
-                    <%= user.zip %>
-                  </h3>
-                <% } %>
-              </div>
-            </div>
-
-          <!-- CONTACT  -->
-
-          <div class="profile-col-1-box-2">
-            <h3>CONTACT</h3>
-            <% if(user.display_phone === "Yes") { %>
-              <div class="profile-phone flex-row-gap-20">
-                <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
-                <p>
-                  <%= user.phone %>
-                </p>
-              </div>
-            <% } %>
-            <% if(user.display_email === "Yes") { %>
-              <div class="profile-email flex-row-gap-20">
-                <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
-                <p>
-                  <%= user.email %>
-                </p>
-              </div>
-            <% } %>
-          </div>
-          
-
-          <!-- WEBSITE -->
-
-
-          <div class="profile-col-1-box-3">
-            <h3>WEBSITE</h3>
-            <% if(user.website) { %>
-              <div class="profile-website-link website">
-                <a href="<%= user.website %>" target="_blank">
-                  <div class="flex-row-gap-20">
-                    <i class="fas fa-desktop"></i>
-                    <p>
-                      <%= website %>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
-          </div>
-
-          <!-- SOCIAL MEDIA  -->
-
-
-          <div class="profile-col-1-box-4">
-            <h3>SOCIAL MEDIA</h3>
-
-            <% if(user.twitter) { %>
-              <div class="profile-social-link twitter">
-                <a href="<%= user.twitter %>" target="_blank">
-                  <div class="flex-row-gap-20">
-                    <i class="fab fa-twitter"></i>
-                      <p>
-                        <%= twitter %>
-                      </p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
-
-            <% if(user.instagram) { %>
-              <div class="profile-social-link instagram">
-                <a href="<%= user.instagram %>" target="_blank">
-                  <div class="flex-row-gap-20">
-                    <i class="fab fa-instagram"></i>
-                      <p>
-                        <%= instagram %>
-                      </p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
-
-            <% if(user.facebook) { %>
-              <div class="profile-social-link facebook">
-                <a href="<%= user.facebook %>" target="_blank">
-                  <div class="flex-row-gap-20">
-                    <i class="fab fa-facebook"></i>
-                    <p>
-                      <%= facebook %>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
-
-            <% if(user.linkedin) { %>
-              <div class="profile-social-link linkedin">
-                <a href="<%= user.linkedin %>" target="_blank">
-                  <div class="flex-row-gap-20">
-                    <i class="fab fa-linkedin"></i>
-                    <p>
-                      <%= linkedin %>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <% } %>
-          </div>
-         
-
-          <!-- TAGS -->
-
-
-          <div class="profile-col-1-box-5">
-            <h3>TAGS</h3>
-            <% if(user.tags) { %>
-              <div class="tags">
-                <% for(let tag in tags) { %>
-                  <div class="tag">
-                    <%= tags[tag] %>
-                  </div>
-                <% } %>
-              </div>
-            <% } %>
-          </div>
-        
-        </div>
-
-          <div class="profile-col-2-wrapper">
-
-            <div class="profile-col-2-box-1">
-              <div class="profile-services flex-column-gap-20">
-                <h3>EXPERIENCE</h3>
-              </div>
-            </div>
-
-            <div class="profile-col-2-box-2">  
-              <% if(user.specialty) { %>
-                <div class="profile-services flex-column-gap-20">
-                  <h3>SERVICES</h3>
-                  <p>
-                    <%= user.specialty %>
-                  </p>
-                </div>
-              <% } else { %>
-                <div class="profile-services">
-                  <h3>SERVICES</h3>
-                </div>
-              <% } %>
-            </div>
-
-            <div class="profile-col-2-box-3">
-              <% if(user.skills) { %>
-                <div class="profile-skills flex-column-gap-20">
-                  <h3>SKILLS</h3>
-                  <p>
-                    <%= user.skills %>
-                  </p>
-                </div>
-              <% } else { %>
-                <div class="profile-skills">
-                  <h3>SKILLS</h3>
-                </div>
-              <% } %>
-            </div>
-
-            <div class="profile-col-2-box-4">
-              <div class="profile-contacts flex-column-gap-20">
-                <% if(usersFollowing !== null) { %>
-                  <div class="profile-contacts-photos">
-                    <div>
-                      <h3>CONTACTS</h3>
-                    </div>
-                    <div id="controls-1">
-                      <button class="prev-1"><i class="fas fa-angle-left"></i></button>
-                      <button class="next-1"><i class="fas fa-angle-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="slider-1">
-                    <% for(let i=0;i < usersFollowing.length;i++) { %>
-                      <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
-                        <div class="contact-photo-wrapper">
-                          <div class="contact-photo"
-                            style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
-                          </div>
-                        </div>
-                      </a>
-                    <% } %>
+            <div>            
+              <div class="profile-images">
+                <% if(user.cover_photo) { %>
+                  <div class="cover-photo flex-row-gap-20"
+                    style="background-image: linear-gradient(to left, transparent 10%, rgba(0, 0, 0, 0.9)), url('http://localhost:5000/cover-photo/<%= user.id %>/<%= user.cover_photo%>');">
                   </div>
                 <% } else { %>
-                  <div class="profile-contacts">
-                    <h3>CONTACTS</h3>
-                  </div>
+                  <div class="cover-photo flex-row-gap-20"></div>
                 <% } %>
+
+                <div class="profile-photo-wrapper">
+                  <% if(user.profile_photo) { %>
+                    <div class="profile-photo" style="background-image: url('http://localhost:5000/profile-photo/<%= user.id %>/<%= user.profile_photo%>');"></div>
+                  <% } else { %>
+                    <div class="profile-photo">
+                      <i class="fas fa-user"></i>
+                    </div>
+                  <% } %>
+                  <div class="profile-photo-info">
+                    <h1>
+                      <%= user.first_name%>
+                        <%= user.last_name%>
+                    </h1>
+                    <h3 style="text-transform: uppercase;">
+                      <%= user.profession%>
+                    </h3>
+      
+                    <% if(user.city && user.state) { %>
+                      <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <%= user.city %>, <%= user.state%>
+                            <%= user.zip %>
+                      </p>
+                    <% } else if (user.city || user.state) { %>
+                      <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <%= user.city %>
+                        <%= user.state%>
+                        <%= user.zip %>
+                      </p>
+                    <% } %>
+                    <span></span>
+                    <div class="profile-edit">
+                      <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i>   Edit my profile</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-info-wrapper">
+                <div class="profile-col-2-box-1">
+                  <% if(user.about) { %>
+                    <div class="profile-services flex-column-gap-20">
+                      <h3>About</h3>
+                      <p>
+                        <%= user.about %>
+                      </p>
+                    </div>
+                  <% } else { %>
+                    <div class="profile-services flex-column-gap-20">
+                      <h3>About</h3>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero laboriosam blanditiis quia nulla soluta non facere nobis provident minus in veniam facilis cum quam temporibus accusamus, fugiat illo recusandae sunt.</p>
+                    </div>
+                  <% } %>
+                </div>
+                <div class="profile-col-2-box-2">
+                  <% if(user.services) { %>
+                    <div class="profile-services flex-column-gap-20">
+                      <h3>Services</h3>
+                      <p>
+                        <%= user.services %>
+                      </p>
+                    </div>
+                  <% } else { %>
+                    <div class="profile-services flex-column-gap-20">
+                      <h3>Services</h3>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ad provident fugiat, quidem quas optio non placeat illum, odio itaque minus sunt impedit explicabo quos corrupti, facilis quaerat autem earum!</p>
+                    </div>
+                  <% } %>
+                </div>
+                <div class="profile-col-2-box-3">
+                  <% if(user.skills) { %>
+                    <div class="profile-skills flex-column-gap-20">
+                      <h3>Skills</h3>
+                      <p>
+                        <%= user.skills %>
+                      </p>
+                    </div>
+                    <% } else { %>
+                      <div class="profile-skills flex-column-gap-20">
+                        <h3>Skills</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam deserunt necessitatibus consectetur qui! Sint corporis veniam quos quia porro. Debitis animi modi aut atque, enim omnis hic nesciunt ut deleniti!</p>
+                      </div>
+                    <% } %>
+                </div>
               </div>
             </div>
 
-            <div class="profile-col-2-box-5">
-              <div class="profile-showcase flex-column-gap-20">
-                <% if(showcasePhotos !==null) { %>
-                  <div class="profile-showcase-photos">
-                    <div>
-                      <h3>SHOWCASE</h3>
+            <div class="profile-info-wrapper">
+              <div class="profile-col-2-box-4">
+                <div class="profile-contacts flex-column-gap-20">
+                  <% if(usersFollowing !==null) { %>
+                    <div class="profile-contacts-photos">
+                      <div>
+                        <h3>Contacts</h3>
+                      </div>
+                      <div id="controls-1">
+                        <button class="prev-1"><i class="fas fa-angle-left"></i></button>
+                        <button class="next-1"><i class="fas fa-angle-right"></i></button>
+                      </div>
                     </div>
-                    <div id="controls-2">
-                      <button class="prev-2"><i class="fas fa-angle-left"></i></button>
-                      <button class="next-2"><i class="fas fa-angle-right"></i></button>
-                    </div>
-                  </div>
-
-                  <div style="overflow: hidden;height: 220px; width: 100%;">
-                    <div class="slider-2 showcase-container">
-                      <% for(let photo in showcasePhotos) { %>
-                        <div class="image"><span><img src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
-                        </div>
+                    <div class="slider-1">
+                      <% for(let i=0;i < usersFollowing.length;i++) { %>
+                        <% if(usersFollowing[i].profile_photo) { %>
+                          <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
+                            <div class="contact-photo-wrapper">
+                              <div class="contact-photo"
+                                style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                              </div>
+                            </div>
+                          </a>
+                        <% } else { %>
+                          <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
+                            <div class="contact-photo-wrapper">
+                              <div class="contact-photo">
+                                <i class="fas fa-user"></i>
+                              </div>
+                            </div>
+                          </a>
+                        <% } %>
                       <% } %>
                     </div>
-                  </div>
-
-
-                  <div class="preview-box">
-                    <div class="subcontainer flex-column-gap-20">
-                      <div class="details">
-                        <span class="title">
-                          <p class="current-img"></p>/<p class="total-img"></p>
-                        </span>
-                        <span class="icon fas fa-times"></span>
-                      </div>
-                      <div class="image-box">
-                        <div class="slide" id="prev"><i class="fas fa-angle-left"></i></div>
-                        <img src="" alt="image">
-                        <div class="slide" id="next"><i class="fas fa-angle-right"></i></div>
+                  <% } else { %>
+                    <div class="profile-contacts-photos">
+                      <div>
+                        <h3>Contacts</h3>
                       </div>
                     </div>
-                  </div>
-                  <div class="shadow"></div>
-                <% } else { %>
-                  <div class="profile-showcase-photos">
-                    <h3>SHOWCASE</h3>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="profile-info-wrapper">
+              <div class="profile-col-2-box-5">
+                <div class="profile-showcase flex-column-gap-20">
+                  <% if(showcasePhotos !==null) { %>
+                    <div class="profile-showcase-photos">
+                      <div>
+                        <h3>Showcase</h3>
+                      </div>
+                      <div id="controls-2">
+                        <button class="prev-2"><i class="fas fa-angle-left"></i></button>
+                        <button class="next-2"><i class="fas fa-angle-right"></i></button>
+                      </div>
+                    </div>
+                    <div style="overflow: hidden;height: 220px; width: 100%;">
+                      <div class="slider-2 showcase-container">
+                        <% for(let photo in showcasePhotos) { %>
+                          <div class="image"><span><img
+                                src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                          </div>
+                          <% } %>
+                      </div>
+                    </div>
+                    <div class="preview-box">
+                      <div class="subcontainer flex-column-gap-20">
+                        <div class="details">
+                          <span class="title">
+                            <p class="current-img"></p>/<p class="total-img"></p>
+                          </span>
+                          <span class="icon fas fa-times"></span>
+                        </div>
+                        <div class="image-box">
+                          <div class="slide" id="prev"><i class="fas fa-angle-left"></i></div>
+                          <img src="" alt="image">
+                          <div class="slide" id="next"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shadow"></div>
+                    <% } else { %>
+                      <div class="profile-showcase-photos">
+                        <h3>Showcase</h3>
+                      </div>
+                    <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-col-2">
+            <div class="profile-contact-info">
+
+              <div class="profile-header">
+                <h3>Contact</h3>
+              </div>
+
+              <div class="profile-info">
+                <div class="profile-col-1-box-2">
+                  <% if(user.display_phone==="Yes" ) { %>
+                    <div class="profile-phone flex-row-gap-20">
+                      <i class="fa-solid fa-phone-flip"></i>
+                      <p>
+                        <%= user.phone %>
+                      </p>
+                    </div>
+                  <% } %>
+                  <% if(user.display_email==="Yes" ) { %>
+                    <div class="profile-email flex-row-gap-20">
+                      <i class="fa-solid fa-envelope"></i>
+                      <p>
+                        <%= user.email %>
+                      </p>
+                    </div>
+                  <% } %>
+
+                  <% if(user.website) { %>
+                    <div class="profile-website-link website">
+                      <a href="<%= user.website %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fas fa-desktop"></i>
+                          <p>
+                            <%= website %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-contact-info">
+
+                <div class="profile-header">
+                  <h3>Social Media</h3>
+                </div>
+
+                <div class="profile-col-1-box-4">
+                  <% if(user.twitter) { %>
+                    <div class="profile-social-link twitter">
+                      <a href="<%= user.twitter %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fab fa-twitter"></i>
+                          <p>
+                            <%= twitter %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+
+                  <% if(user.instagram) { %>
+                    <div class="profile-social-link instagram">
+                      <a href="<%= user.instagram %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fab fa-instagram"></i>
+                          <p>
+                            <%= instagram %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+              
+                  <% if(user.facebook) { %>
+                    <div class="profile-social-link facebook">
+                      <a href="<%= user.facebook %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fab fa-facebook"></i>
+                          <p>
+                            <%= facebook %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+              
+                  <% if(user.linkedin) { %>
+                    <div class="profile-social-link linkedin">
+                      <a href="<%= user.linkedin %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fab fa-linkedin"></i>
+                          <p>
+                            <%= linkedin %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+                </div>
+            </div>
+             
+                
+            <div class="profile-contact-info">
+              <div class="profile-header">
+                <h3>Tags</h3>
+              </div>
+              <div class="profile-col-1-box-5">
+                <% if(user.tags) { %>
+                  <div class="tags">
+                    <% for(let tag in tags) { %>
+                      <div class="tag">
+                        <%= tags[tag] %>
+                      </div>
+                      <% } %>
                   </div>
                 <% } %>
               </div>
             </div>
 
-            <div class="profile-edit">
-              <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i> Edit my profile</button></a>
-            </div>
-
           </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <section>
-    
+  <section id="newsletter-section">
+    <div class="container">
+      <div class="newsletter">
+        <div class="newsletter-header flex-column-gap-10">
+          <p>NEWSLETTER</p>
+          <h3>Sign up for Newsletter and get the latest update</h3>
+        </div>
+        <form action="/newsletter" class="newsletter-input" method="POST" id="newsletter-form">
+          <input type="email" placeholder="Enter Your Email" id="email" name="email" maxlength="100" required>
+          <button>Subscribe</button>
+        </form>
+      </div>
+    </div>
   </section>
 
   <script src="/js/script.js"></script>
-
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+  <script src="/js/newsletter.js"></script>
+  
   <% if(showcasePhotos !==null) { %>
     <script src="/js/lightbox.js"></script>
   <% } %>
@@ -320,10 +372,11 @@
     <% } %>
 
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
 <%- include("partials/footer.ejs") %>

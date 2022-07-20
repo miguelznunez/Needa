@@ -1,658 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
-
-  <title> <%= title %> </title>
-</head>
-
-<body>
-
+  <%- include("partials/header.ejs") %>
   <%- include("partials/toast.ejs") %>
-  <%- include("partials/location-modal.ejs") %>
-
-  <section>
-    <div class="toast-wrapper-front-end">
-      <div class="toast-front-end">
-        <div class="icon-container-front-end"></div>
-        <div class="message-container-front-end flex-column-gap-5"></div>
-        <button id="close-toast-btn-front-end">&times;</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="cookies">
-    <div class="container">
-      <div class="subcontainer">
-        <div class="cookies">
-          <p>This website uses cookies to ensure you get the best experience on our website. <a href="" id="more-info-link">More info.</a></p>
-          <button id="cookies-btn" style="padding: 8px 12px 8px 12px;">That's fine</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <header id="home-header">
-    <div class="container">
-      <div class="subcontainer">
-        <nav>
-          <div class="navbar">
-            <a href="/" class="nav-branding">
-              <h1>Needa</h1>
-            </a>
-            
-            <ul class="nav-menu">
-
-              <% if (typeof user !="undefined" && user) { %>
-                <li class="nav-item">
-                  <i class="fa-solid fa-bell" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
-                </li>
-                <li class="nav-item">
-                  <i class="fa-solid fa-location-dot" id="location-show-modal-btn" style="color: white;font-size:2.5rem;cursor: pointer;"></i>
-                </li>
-                <li class="nav-item">
-                  <div class="dropdown" data-dropdown>
-                    <div class="user-icon link" data-dropdown-button>
-                      <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
-                        <style>
-                          .user-icon {
-                            background-image: url("http://localhost:5000/profile-photo/<%= user.id%>/<%= user.profile_photo %>");
-                          }
-                        </style>
-                      <% } else { %>
-                        <i class="fas fa-user link" data-dropdown-button></i>
-                      <% } %>
-                    </div>
-                    <div class="dropdown-menu">
-                      <a href="/profile">
-                        <div class="dropdown-links top-link">
-                          <div class="user-icon" data-dropdown-button>
-                            <% if(typeof user.profile_photo !="undefined" && user.profile_photo) { %>
-                              <style>
-                                .user-icon {
-                                  background-image: url("http://localhost:5000/profile-photo/<%= user.id%>/<%= user.profile_photo %>");
-                                }
-                              </style>
-                            <% } else { %>
-                              <i class="fas fa-user link" data-dropdown-button></i>
-                            <% } %>
-                          </div>
-                          <h3>
-                            <%= user.first_name %>
-                            <%= user.last_name%>
-                          </h3>
-                        </div>
-                      </a>
-                      <% if (typeof user !="undefined" && user.admin==="Yes" ) { %>
-                        <a href="/admin">
-                          <div class="dropdown-links">
-                            <i class="fa-solid fa-unlock"></i>
-                            <h3>Admin</h3>
-                          </div>
-                        </a>
-                      <% } %>
-                      <a href="/">
-                        <div class="dropdown-links">
-                          <i class="fas fa-home"></i>
-                          <h3>Home</h3>
-                        </div>
-                      </a>
-                      <a href="/profile">
-                        <div class="dropdown-links">
-                          <i class="fas fa-user-circle"></i>
-                          <h3>My Profile</h3>
-                        </div>
-                      </a>
-                      <a href="#">
-                        <div class="dropdown-links">
-                          <i class="fa-solid fa-message"></i>
-                          <h3>Messages</h3>
-                        </div>
-                      </a>
-                      <a href="/settings">
-                        <div class="dropdown-links">
-                          <i class="fa-solid fa-gear"></i>
-                          <h3>Settings</h3>
-                        </div>
-                      </a>
-                      <a href="/feed">
-                        <div class="dropdown-links">
-                          <i class="fa-solid fa-user-group"></i>
-                          <h3>Feed</h3>
-                        </div>
-                      </a>
-                      <a href="/auth/logout">
-                        <div class="dropdown-links bottom-link">
-                          <i class="fas fa-sign-out"></i>
-                          <h3>Logout</h3>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <% } else { %>
-                  <li class="nav-item">
-                    <a href="/login" class="nav-link">Log in</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/register" class="nav-link"><button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                        id="register-user-btn">Register</button></a>
-                  </li>
-                <% } %>
-            </ul>
-
-          </div>
-        </nav>
-      </div>
-    </div>
-  </header>
+  <%- include("partials/front-end-toast.ejs") %>
 
   <!-- CAROUSEL -->
 
-  <section id="carousel" class="fade lazy">
+  <section id="carousel" class="fade">
     <div class="carousel-overlay">
-      <div class="custom-shape-divider-bottom-1654062691">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            class="shape-fill"></path>
-        </svg>
-      </div>
-
       <div class="container">
         <div class="subcontainer">
           <div class="carousel-header flex-column-gap-15">
             <div class="carousel-header-box-1 flex-column-gap-10">
-              <h1>Needa connects you with working professionals in your area.</h1>
+              <h4>Services Searching Platform</h4>
+              <h1>Find Working Professionals in Your Area <br>
+              Using Our Platform</h1>
               <p>Need someone to build you a fence? Mow your lawn? Cut your hair? DJ at your party? Or maybe someone to walk your
                 dog? No problem. Search for professionals of any trade in your area today.
               </p>
             </div>
 
             <form action="/auth/find-professionals" method="POST" id="findProsForm" class="carousel-header-box-2">
-              <div id="needa-search">
-                <input type="text" name="profession" id="search" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
-                <div id="match-list"></div>
+              <div>
+                <input type="text" name="profession" id="home-search" placeholder="I needa..." pattern="[^\s][a-zA-Z ]+" required>
+                <div id="home-match-list"></div>
               </div>
               <div class="location">
-                <input type="text" name="location" id="location" placeholder="City, State or Zip" required>
+                <input type="text" name="location" id="home-location" placeholder="City, State or Zip" required>
               </div>
-              <button id="submitBtn">SEARCH</button>
+              <button id="home-submit-btn">SEARCH</button>
             </form>
+            <div class="scroll-down-wrap">
+              <div class="mousey">
+                <div class="scroller"></div>
+              </div>
+              <span>Scroll Down To Discover</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> <span>Home Image</span>
+        </div>
+        <div class="sharethis-inline-share-buttons" style="z-index: 0;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumbs end -->
 
   <!-- POPULAR SEARCHES -->
 
-  <section id="popularSearches">
+  <section id="popular-section">
     <div class="container">
-      <div class="subcontainer">
-        <div class="recommended">
-          <div class="controller-1">
-            <div>
-              <h3>Popular Searches</h3>
-            </div>
-            <div id="controls-1">
-              <button class="prev-1"><i class="fas fa-angle-left"></i></button>
-              <button class="next-1"><i class="fas fa-angle-right"></i></button>
-            </div>
-          </div>
+      <div class="popular-section-header flex-column-gap-10">
+        <h3 style="color: #7449F5;">BROWSE SERVICES</h3>
+        <h1>MOST POPULAR</h1>
+      </div>
+      <div class="grid-wrapper-popular-searches"></div>
 
-          <div style="overflow: hidden;height: 315px;width: 100%;">
-         
-            <div class="slider-1">
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="mechanics">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_1">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Mechanics</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="tutors">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_2">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Tutors</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="personal trainers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_3">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Personal Trainers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="landscapers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_4">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Landscapers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="movers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_5">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Movers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <input type="hidden" name="profession" value="carpenters">
-                <input type="hidden" name="location" class="my-location">
-                <div class="slide">
-                  <button class="slide-img img-1_6">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Carpenters</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="cleaners">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_7">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Cleaners</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="caterers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_8">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Caterers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="disc jockeys">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_9">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Disc Jockeys</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="plumbers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_10">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Plumbers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="barbers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_11">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Barbers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="security">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_12">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Security</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="web developers">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_13">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Web Developers</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-              <form action="/auth/find-professionals" method="POST" class="my-form">
-                <div class="slide">
-                  <input type="hidden" name="profession" value="painters">
-                  <input type="hidden" name="location" class="my-location">
-                  <button class="slide-img img-1_14">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <div>
-                    <h3>Painters</h3>
-                    <p>Needa <i class="far fa-check-circle"></i></p>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+      <div class="popular-section-footer">
+        <button>View All Professions</button>
       </div>
     </div>
   </section>
 
-  <!-- TOP RATED MEMBERS -->
 
-  <section id="topRatedMembers">
+  <section id="why-us-section">
     <div class="container">
-      <div class="subcontainer">
-        <div class="recommended">
-          <div class="controller-2">
-            <div>
-              <h3>Top Rated Members</h3>
-            </div>
-            <div id="controls-2">
-              <button class="prev-2"><i class="fas fa-angle-left"></i></button>
-              <button class="next-2"><i class="fas fa-angle-right"></i></button>
-            </div>
+      <div class="why-us-grid">
+        <div class="why-us-info">
+          <div>
+            <h1>What Needa Brings to the Table</h1>
+            <br>
+            <p>Got skills? Create an account and post your services today!</p>
           </div>
-
-          <div style="overflow: hidden;height: 315px;width: 100%;">
-          
-            <div class="slider-2">
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-2_1">
-                    <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-2">
-                    <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-3">
-                    <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-4">
-                      <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-5">
-                    <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide">
-                  <div class="slide-img img-6">
-                    <p>Learn More</p>
-                  </div>
-                  <div class="user">
-                    <div>
-                      <h3>Dirrel Smith</h3>
-                      <p>Electrician</p>
-                    </div>
-                    <div class="user-info">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Chicago, IL</p>
-                    </div>
-                  </div>
-                </div>
+          <div class="flex-column-gap-35">
+            <div class="why-us-box flex-row-gap-20">
+              <button><i class="fas fa-hand-holding-usd"></i></button>
+              <div style="width: 80%;">
+                <h3>Side Income</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat mollitia voluptatem quisquam rerum cum impedit!
+                </p>
               </div>
             </div>
-
+            <div class="why-us-box flex-row-gap-20">
+              <button><i class="fas fa-user-tie"></i></button>
+              <div style="width: 80%;">
+                <h3>Entrepreneurship</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat mollitia voluptatem quisquam rerum cum impedit!
+                </p>
+              </div>
+            </div>
+            <div class="why-us-box flex-row-gap-20">
+              <button><i class="fa-solid fa-desktop"></i></button>
+              <div style="width: 80%;">
+                <h3>Easy to use</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat mollitia voluptatem quisquam rerum cum impedit!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="why-us-img"></div>
       </div>
     </div>
   </section>
 
-  <section id="we-offer">
+
+  <section id="popular-searches-section">
+    <div class="slide-img flex-column-gap-15">
+      <h1>Available In All U.S Cities</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore tempora magni provident officiis sapiente ab.</p>
+    </div>
+    <div class="slide-img">
+      <img data-src="/images/chicago.jpg" class="lazy" alt="image" width="100%" height="100%">
+      <h2>Chicago, IL</h2>
+    </div>
+    <div class="slide-img">
+      <img data-src="/images/new_york.jpg" class="lazy" alt="image" width="100%" height="100%">
+      <h2>New York, NY</h2>
+    </div>
+    <div class="slide-img">
+      <img data-src="/images/los_angeles.jpg" class="lazy" alt="image" width="100%" height="100%">
+      <h2>Los Angeles, CA</h2>
+    </div>
+  </section>
+
+  <!-- section -->
+  <section id="testimonials-section">
     <div class="container">
-      <div class="subcontainer">
-
-        <div class="flex-column-gap-20" style="padding: 35px 0;">
-          <div class="we-offer-header flex-column-gap-10">
-            <h1>What Needa brings to the table</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sit, corporis officiis unde facilis rerum aut earum
-              aliquid at ex, recusandae repellat quis eum voluptatibus.</p>
-          </div>
-          <div class="we-offer-wrapper">
-            <div class="offer flex-column-gap-15">
-              <i class="fas fa-hand-holding-usd"></i>
-              <h2>CASH</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia optio accusantium sed blanditiis? Fuga sunt, natus
-                velit animi alias est!</p>
-            </div>
-            <div class="offer flex-column-gap-15">
-              <i class="fas fa-user-tie"></i>
-              <h2>ENTREPRENEURSHIP</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia optio accusantium sed blanditiis? Fuga sunt, natus velit animi alias est!</p>
-            </div>
-
-            <div class="offer flex-column-gap-15">
-              <i class="fas fa-building"></i>
-              <h2>JOBS</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia optio accusantium sed blanditiis? Fuga sunt, natus
-                velit animi alias est!</p>
-            </div>
-          </div>
-        </div>
+      <div class="testimonials-section-header flex-column-gap-10" style="text-align:center;">
+        <h3 style="color: #7449F5;">TOP RATED</h3>
+        <h1>MEET OUR PROFESSIONALS</h1>
+      </div>
+      <div class="grid-wrapper-testimonials-searches">    
       </div>
     </div>
   </section>
 
-  <section id="testimonials">
+
+  <section id="newsletter-section">
     <div class="container">
-      <div class="subcontainer">
-
-        <div class="testimonials-main-wrapper">
-
-          <div class="testimonials-header">
-            <h1>Testimonials</h1>
-          </div>
-
-
-          <div class="slider-3">
-            <div>
-              <div class="tslide flex-column-gap-25">
-                <div class="slide-img img-1"></div>
-                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
-                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
-                  <p>Michael Smith / CEO of Lorem</p>
-              </div>
-            </div>
-            <div>
-              <div class="tslide flex-column-gap-25">
-                <div class="slide-img"></div>
-                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
-                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
-                  <p>Cristal Pettis / CEO of Lorem</p>
-              </div>
-            </div>
-            <div>
-              <div class="tslide flex-column-gap-25">
-                <div class="slide-img"></div>
-                <h2>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi architecto ea porro, doloribus suscipit
-                  provident repellendus placeat officiis adipisci quo voluptates hic, quos, natus quae?"</h2>
-                  <p>Tyler Evans  / CEO of Lorem</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="controls-3">
-            <button class="prev-3"><i class="fas fa-angle-left"></i></button>
-            <button class="next-3"><i class="fas fa-angle-right"></i></button>
-          </div>
-          
+      <div class="newsletter">
+        <div class="newsletter-header flex-column-gap-10">
+          <p>NEWSLETTER</p>
+          <h3>Sign up for Newsletter and get the latest update</h3>
         </div>
-       
-
+        <form action="/newsletter" class="newsletter-input" method="POST" id="newsletter-form">
+          <input type="email" placeholder="Enter Your Email" id="email" name="email" maxlength="100" required>
+          <button>Subscribe</button>
+        </form>
       </div>
     </div>
   </section>
 
-  <section id="advertising" class="lazy">
-    <div class="container">
-      <div class="subcontainer">
-        <div class="header">
-          <h1>ARE YOU A PROFESSIONAL LOOKING FOR A SIDE JOB?</h1>
-          <a href="/register"><button>SIGN UP</button></a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/load-popular-searches.js"></script>
+  <script src="/js/load-our-testimonials.js"></script>
   <script src="/js/lazy-loading.js"></script>
   <script src="/js/carousel.js"></script>
-  <script src="/js/tiny-slider-auto.js"></script>
-  <script src="/js/search-list.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/toast-front-end.js"></script>
+  <script src="/js/home-search-list.js"></script>
+  <script src="/js/newsletter.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+  <script>
+    document.querySelector("#findProsForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const isValidProfession = /^[a-zA-Z][a-zA-Z\s]*$/.test(document.querySelector("#home-search").value);
+      const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(document.querySelector("#home-location").value);
+      const isValidCityState = /^([a-zA-Z ]+)(?:,([ A-Za-z]{3}))$/.test(document.querySelector("#home-location").value);
 
-  <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
-  <% } %>
+      if ((isValidProfession && isValidZip) || (isValidProfession && isValidCityState))
+        document.querySelector("#findProsForm").submit();
+      else
+        displayToast("error", "Please enter a valid profession and/or location");
+    });
+  </script>
+
 
   <% if(typeof user === "undefined") { %>
-    <script src="/js/user-location.js"></script>
+    <script>
+      const forms = document.querySelectorAll(".my-form");
+      forms.forEach(f => {
+          f.addEventListener("submit", (e) => {
+            e.preventDefault();
+            displayToast("warning", "Please register/login to use this feature or input profession, city, state, or zip manually.");
+          });
+      })
+    </script>
   <% } %>
 
-  <script>
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      let myLocation = document.querySelectorAll(".my-location");
+      document.querySelector("#home-location").value = `${userCity}, ${userState}`;
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+      myLocation.forEach(l => {
+        l.value = `${userCity}, ${userState}`;
+      })
+    </script>
+  <% } %>
+
+  <!-- <script>
     window.addEventListener("scroll", () => {
       const homeHeader = document.querySelector("#home-header");
       homeHeader.classList.toggle("sticky", window.scrollY > 0);
     });
-  </script>
+  </script> -->
 
 <%- include("partials/footer.ejs") %>

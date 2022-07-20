@@ -1,5 +1,16 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
+
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs" style="margin-top: 80px;">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> <span>Admin</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section id="adminSection">
     <div class="container">
@@ -60,12 +71,15 @@
   </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
   
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
   <%- include("partials/footer.ejs") %>

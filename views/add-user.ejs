@@ -1,19 +1,15 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/toast.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
-  <section id="addUserSection">
+  <section id="add-user-section">
     <div class="container">
       <div class="subcontainer">
 
-        <!-- BREAD CRUMBS -->
-        
-        <div class="breadcrumbs">
-          <a href="/admin">Admin</a> / <p>View User</p>
-        </div>
-
         <form action="/auth/add-user" id="add-user-form" method="POST">
           <div class="form-title">
-            <h1>Create User</h1>
+            <h1>Create user</h1>
+            <i class="fa-solid fa-user-plus"></i>
           </div>
           <div class="input-group one">
             <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
@@ -22,18 +18,22 @@
               value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
           </div>
           <div class="input-group two">
-            <input type="text" placeholder="City" name="city" maxlength="60" pattern="[A-Za-z]+"
+            <input type="text" placeholder="City" name="city" maxlength="60"
               value="<%= typeof city != 'undefined' ? city : '' %>" required>
-            <select name="state" id="state" required>
+            <select name="state" id="user-state" onchange="addCounties()" required>
               <option value="<%= typeof state != 'undefined' ? state : '' %>">
                 <%= typeof state !='undefined' ? state : 'State' %>
               </option>
             </select>
             <input type="text" placeholder="Zip" name="zip" maxlength="5" pattern="[0-9]{5}"
               value="<%= typeof zip != 'undefined' ? zip : '' %>" required>
-            <input type="hidden" name="county" id="county" value="<%= typeof county != 'undefined' ? county : '' %>">
           </div>
           <div class="input-group three">
+            <select name="county" id="county" required>
+              <option value="<%= typeof county != 'undefined' ? county : '' %>">
+                <%= typeof county !='undefined' ? county : 'County' %>
+              </option>
+            </select>
             <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
               value="<%= typeof email != 'undefined' ? email : '' %>" required>
           </div>
@@ -45,40 +45,8 @@
             <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
               required>
           </div>
-          <!-- <div class="input-group">
-            <input type="text" id="first-name" name="first_name" maxlength="30" pattern="[A-Za-z]+" placeholder="First name"
-              value="<%= typeof first_name != 'undefined' ? first_name : '' %>" onkeyup="validateFirstName()" required>
-            <span id="first-name-error"></span>
-          </div>
-          <div class="input-group">
-            <input type="text" id="last-name" name="last_name" maxlength="30" pattern="[A-Za-z]+" placeholder="Last name"
-              value="<%= typeof last_name != 'undefined' ? last_name : '' %>" onkeyup="validateLastName()" required>
-            <span id="last-name-error"></span>
-          </div>
-          <div class="input-group">
-            <input type="email" id="email" name="email" maxlength="100" placeholder="Email"
-              value="<%= typeof email != 'undefined' ? email : '' %>" onkeyup="validateEmail()" required>
-            <span id="email-error"></span>
-          </div>
-          <div class="input-group">
-            <input type="password" id="password" name="password" maxlength="60" placeholder="Password"
-              value="<%= typeof password != 'undefined' ? password : '' %>" onkeyup="validatePassword()" required>
-            <span id="password-error"></span>
-          </div>
-          <div class="input-group">
-            <input type="password" id="password-confirm" name="password_confirm" maxlength="60" placeholder="Confirm password"
-              onkeyup="validatePasswordConfirm()" required>
-            <span id="password-confirm-error"></span>
-          </div>
-          
-          <div id="show-password-container">
-            <div>
-              <input type="checkbox" id="show-password">
-              <label for="show-password">Show password</label>
-            </div>
-          </div> -->
           <div>
-            <button id="account-btn">Add User</button>
+            <button id="create-user-btn">Add User</button>
           </div>
         </form>
 
@@ -88,7 +56,18 @@
 
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+
   <script src="/js/register-show-password.js"></script>
+  <script src="/js/statesCounties.js"></script>
   <!-- <script src="/js/input-validation.js"></script> -->
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
+  <% } %>
   
 <%- include("partials/footer.ejs") %>

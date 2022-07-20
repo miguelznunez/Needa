@@ -1,265 +1,159 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
-
-  <section>
-    <div class="toast-wrapper">
-      <div class="toast">
-        <div class="icon-container"></div>
-        <div class="message-container flex-5"></div>
-        <button id="closeToast">&times;</button>
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs" style="margin-top: 80px;">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> <span>User Profile</span>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- COVER SECTION -->
-  
-  <% if(rows[0].cover_photo) { %>
-    <section id="profileCoverSection"
-      style="background-image: url('http://localhost:5000/cover-photo/<%= rows[0].id %>/<%= rows[0].cover_photo%>');">
-    </section>
-  <% } else { %>
-    <section id="profileCoverSection"></section>
-  <% } %>
-  
+
   <section id="profileSection">
     <div class="container">
-      <div class="subcontainer">
-        <div class="profile-wrapper">
-
-
-          <div class="profile-col-1-wrapper">
-
-            <!-- PROFILE PHOTO, FULL NAME, PROFESSION, CITY, STATE -->
-
-            <div class="profile-col-1-box-1">
-
-              <% if(rows[0].profile_photo) { %>
-                <div class="profile-photo"
-                  style="background-image: url('http://localhost:5000/profile-photo/<%= rows[0].id %>/<%= rows[0].profile_photo%>');">
+      <div class="profile-grid">
+  
+        <div class="profile-col-1">
+  
+          <div>
+            <div class="profile-images">
+              <% if(rows[0].cover_photo) { %>
+                <div class="cover-photo flex-row-gap-20"
+                  style="background-image: linear-gradient(to left, transparent 10%, rgba(0, 0, 0, 0.9)), url('http://localhost:5000/cover-photo/<%= rows[0].id %>/<%= rows[0].cover_photo%>');">
                 </div>
               <% } else { %>
-                <div class="profile-photo">
-                  <i class="fas fa-user" id="fa-user"></i>
-                </div>
+                <div class="cover-photo flex-row-gap-20"></div>
               <% } %>
-
-              <div class="profile-identity flex-column-gap-10">
-                <h1>
-                  <%= rows[0].first_name%>
-                  <%= rows[0].last_name%>
-                </h1>
-                <h2>
-                  <%= rows[0].profession%>
-                </h2>
-                <% if(rows[0].city && rows[0].state) { %>
-                  <h3>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <%= rows[0].city %>, <%= rows[0].state%> <%= rows[0].zip %>
+  
+              <div class="profile-photo-wrapper">
+                <% if(rows[0].profile_photo) { %>
+                  <div class="profile-photo"
+                    style="background-image: url('http://localhost:5000/profile-photo/<%= rows[0].id %>/<%= rows[0].profile_photo%>');">
+                  </div>
+                <% } else { %>
+                  <div class="profile-photo">
+                    <i class="fas fa-user"></i>
+                  </div>
+                <% } %>
+                <div class="profile-photo-info">
+                  <h1>
+                    <%= rows[0].first_name%>
+                    <%= rows[0].last_name%>
+                  </h1>
+                  <h3 style="text-transform: uppercase;">
+                    <%= rows[0].profession%>
                   </h3>
-                <% } else if (rows[0].city || rows[0].state) { %>
-                  <h3>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <%= rows[0].city %>
-                    <%= rows[0].state%>
-                    <%= rows[0].zip %>
-                  </h3>
-                <% } %>
-              </div>
-            </div>
-
-            <!-- CONTACT -->
-
-            <% if(typeof user !== "undefined") { %>
-              <div class="profile-col-1-box-5">
-                <h3>CONTACT</h3>
-
-                <% if(rows[0].display_phone === "Yes") { %>
-                  <div class="profile-phone flex-row-gap-20">
-                    <i class="fa-solid fa-phone" style="font-size: 1.4rem"></i>
+                  <% if(rows[0].city && rows[0].state) { %>
                     <p>
-                      <%= rows[0].phone %>
+                      <i class="fas fa-map-marker-alt"></i>
+                      <%= rows[0].city %>, <%= rows[0].state%>
+                          <%= rows[0].zip %>
                     </p>
-                  </div>
-                <% } %>
-
-                <% if(rows[0].display_email === "Yes") { %>
-                  <div class="profile-email flex-row-gap-20">
-                    <i class="fa-solid fa-envelope" style="font-size: 1.4rem"></i>
+                  <% } else if (rows[0].city || rows[0].state) { %>
                     <p>
-                      <%= rows[0].email %>
+                      <i class="fas fa-map-marker-alt"></i>
+                      <%= rows[0].city %>
+                      <%= rows[0].state%>
+                      <%= rows[0].zip %>
                     </p>
-                  </div>
-                <% } %>
-
-              </div>
-            <% } else { %>
-              <div class="profile-col-1-box-5 not-loggedIn">
-                <h3>CONTACT</h3>
-                <i class="fa-solid fa-lock"></i>
-              </div>
-            <% } %>
-      
-
-            <!-- WEBSITE -->
-
-            <% if(typeof user !=="undefined") { %>
-              <div class="profile-col-1-box-2">
-                <h3>WEBSITE</h3>
-                <% if(rows[0].website) { %>
-                  <div class="profile-website-link">
-                    <a href="<%= rows[0].website %>" target="_blank">
-                      <div class="flex-row-gap-20">
-                        <i class="fas fa-desktop"></i>
-                        <p>
-                          <%= website %>
-                        </p>
-                      </div>
-                    </a>
-                  </div>
                   <% } %>
+                  <span></span>
+
+                  <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
+                  
+                    <% if (!isFollowing) { %>
+                      <form id="add-contact-form" class="profile-edit">
+                        <input type="hidden" id="following-id" value="<%= rows[0].id%>">
+                        <button id="add-contact-btn"><i class="fa-solid fa-user-plus"></i> Add to my contacts</button>
+                      </form>
+                    <% } else { %>
+                      <form id="delete-contact-form" class="profile-edit">
+                        <input type="hidden" id="following-id" value="<%= rows[0].id%>">
+                        <button id="delete-contact-btn"><i class="fa-solid fa-user-minus"></i> Delete from my contacts</button>
+                      </form>
+                    <% } %>
+                  
+                  <% } else if(typeof user !=="undefined" && user.id ===rows[0].id) { %>
+                    <div class="profile-edit">
+                      <a href="/settings"><button id="profile-edit"><i class="far fa-edit"></i>   Edit my profile</button></a>
+                    </div>
+                   <% } else if(typeof user==="undefined" ) { %>
+                    <div class="profile-edit">
+                      <button id="show-login-modal-btn"><i class="fa-solid fa-user-plus"></i> Add to my contacts</button>
+                    </div>
+                  <% } %>
+                  
+                </div>
               </div>
-            <% } else { %>
-              <div class="profile-col-1-box-2 not-loggedIn">
-                <h3>WEBSITE</h3>
-                <i class="fa-solid fa-lock"></i>
-              </div>
-            <% } %>
-
-
-            <!-- SOCIAL MEDIA  -->
-
-          <% if(typeof user !=="undefined" ) { %>
-            <div class="profile-col-1-box-3">
-              <h3>SOCIAL MEDIA</h3>
-              <% if(twitter) { %>
-                <div class="profile-social-link twitter">
-                  <a href="<%= rows[0].twitter %>" target="_blank">
-                    <div class="flex-row-gap-20">
-                      <i class="fab fa-twitter"></i>
-                      <p>
-                        <%= twitter %>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              <% } %>
-              
-              <% if(instagram) { %>
-                <div class="profile-social-link instagram">
-                  <a href="<%= rows[0].instagram %>" target="_blank">
-                    <div class="flex-row-gap-20">
-                      <i class="fab fa-instagram"></i>
-                      <p>
-                        <%= instagram %>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              <% } %>
-      
-              <% if(facebook) { %>
-                <div class="profile-social-link facebook">
-                  <a href="<%= rows[0].facebook %>" target="_blank">
-                    <div class="flex-row-gap-20">
-                      <i class="fab fa-facebook"></i>
-                      <p>
-                        <%= facebook %>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              <% } %>
-      
-              <% if(linkedin) { %>
-                <div class="profile-social-link linkedin">
-                  <a href="<%= rows[0].linkedin %>" target="_blank">
-                    <div class="flex-row-gap-20">
-                      <i class="fab fa-linkedin"></i>
-                      <p>
-                        <%= linkedin %>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              <% } %>
-                          
             </div>
-          <% } else { %>
-            <div class="profile-col-1-box-3 not-loggedIn">
-              <h3>SOCIAL MEDIA</h3>
-              <i class="fa-solid fa-lock"></i>
-            </div>
-          <% } %>
-
-
-          <!-- TAGS -->
-
-          <div class="profile-col-1-box-5">
-            <h3>TAGS</h3>
-            <% if(tags) { %>
-              <div class="tags">
-                <% for(let tag in tags) { %>
-                  <div class="tag">
-                    #<%= tags[tag] %>
+  
+            <div class="profile-info-wrapper">
+              <div class="profile-col-2-box-1">
+                <% if(rows[0].about) { %>
+                  <div class="profile-services flex-column-gap-20">
+                    <h3>About</h3>
+                    <p>
+                      <%= rows[0].about %>
+                    </p>
+                  </div>
+                <% } else { %>
+                  <div class="profile-services flex-column-gap-20">
+                    <h3>About</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero laboriosam blanditiis quia nulla soluta non
+                      facere nobis provident minus in veniam facilis cum quam temporibus accusamus, fugiat illo recusandae sunt.</p>
                   </div>
                 <% } %>
               </div>
-            <% } %>
-          </div>
 
-        </div>
+              <div class="profile-col-2-box-2">
+                <% if(rows[0].services) { %>
+                  <div class="profile-services flex-column-gap-20">
+                    <h3>Services</h3>
+                    <p>
+                      <%= rows[0].services %>
+                    </p>
+                  </div>
+                <% } else { %>
+                  <div class="profile-services flex-column-gap-20">
+                    <h3>Services</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ad provident fugiat, quidem quas
+                      optio non placeat illum, odio itaque minus sunt impedit explicabo quos corrupti, facilis quaerat
+                      autem earum!</p>
+                  </div>
+                <% } %>
+              </div>
 
-          <div class="profile-col-2-wrapper">
-
-            <div class="profile-col-2-box-1">
-              <div class="profile-services flex-column-gap-20">
-                <h3>EXPERIENCE</h3>
+              <div class="profile-col-2-box-3">
+                <% if(rows[0].skills) { %>
+                  <div class="profile-skills flex-column-gap-20">
+                    <h3>Skills</h3>
+                    <p>
+                      <%= rows[0].skills %>
+                    </p>
+                  </div>
+                <% } else { %>
+                  <div class="profile-skills flex-column-gap-20">
+                    <h3>Skills</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam deserunt necessitatibus
+                      consectetur qui! Sint corporis veniam quos quia porro. Debitis animi modi aut atque, enim omnis
+                      hic nesciunt ut deleniti!</p>
+                  </div>
+                <% } %>
               </div>
             </div>
-
-            <div class="profile-col-2-box-2">
-              <% if(rows[0].specialty) { %>
-                <div class="profile-services flex-column-gap-20">
-                  <h3>SERVICES</h3>
-                  <p>
-                    <%= rows[0].specialty %>
-                  </p>
-                </div>
-              <% } else { %>
-                <div class="profile-services">
-                  <h3>SERVICES</h3>
-                  <p>
-                    <%= rows[0].specialty %>
-                  </p>
-                </div>
-              <% } %>
-            </div>
-
-            <div class="profile-col-2-box-3">
-              <% if(rows[0].skills) { %>
-                <div class="profile-skills flex-column-gap-20">
-                  <h3>SKILLS</h3>
-                  <p>
-                    <%= rows[0].skills %>
-                  </p>
-                </div>
-              <% } else { %>
-                <div class="profile-skills">
-                  <h3>SKILLS</h3>
-                  <p>
-                    <%= rows[0].skills %>
-                  </p>
-                </div>
-              <% } %>
-            </div>
-
+          </div>
+  
+          <div class="profile-info-wrapper">
             <div class="profile-col-2-box-4">
               <div class="profile-contacts flex-column-gap-20">
-                <% if(usersFollowing !== null) { %>
+                <% if(usersFollowing !==null) { %>
                   <div class="profile-contacts-photos">
                     <div>
-                      <h3>CONTACTS</h3>
+                      <h3>Contacts</h3>
                     </div>
                     <div id="controls-1">
                       <button class="prev-1"><i class="fas fa-angle-left"></i></button>
@@ -271,7 +165,8 @@
                       <% if(usersFollowing[i].profile_photo) { %>
                         <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
                           <div class="contact-photo-wrapper">
-                            <div class="contact-photo" style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                            <div class="contact-photo"
+                              style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
                             </div>
                           </div>
                         </a>
@@ -287,34 +182,40 @@
                     <% } %>
                   </div>
                 <% } else { %>
-                  <div class="profile-contacts">
-                    <h3>CONTACTS</h3>
+                  <div class="profile-contacts-photos">
+                    <div>
+                      <h3>Contacts</h3>
+                    </div>
                   </div>
                 <% } %>
               </div>
             </div>
-
+          </div>  
+  
+          <div class="profile-info-wrapper">
             <div class="profile-col-2-box-5">
               <div class="profile-showcase flex-column-gap-20">
                 <% if(showcasePhotos !==null) { %>
                   <div class="profile-showcase-photos">
                     <div>
-                      <h3>SHOWCASE</h3>
+                      <h3>Showcase</h3>
                     </div>
                     <div id="controls-2">
                       <button class="prev-2"><i class="fas fa-angle-left"></i></button>
                       <button class="next-2"><i class="fas fa-angle-right"></i></button>
                     </div>
                   </div>
-                  <div class="slider-2 showcase-container">
-                    <% for(let photo in showcasePhotos) { %>
-                      <div class="image"><span><img
-                          src="http://localhost:5000/showcase-photo/<%= rows[0].id %>/<%= showcasePhotos[photo] %>"></span>
-                      </div>
-                    <% } %>
+                  <div style="overflow: hidden;height: 220px; width: 100%;">
+                    <div class="slider-2 showcase-container">
+                      <% for(let photo in showcasePhotos) { %>
+                        <div class="image"><span><img
+                              src="http://localhost:5000/showcase-photo/<%= rows[0].id %>/<%= showcasePhotos[photo] %>"></span>
+                        </div>
+                        <% } %>
+                    </div>
                   </div>
                   <div class="preview-box">
-                    <div class="subcontainer">
+                    <div class="subcontainer flex-column-gap-20">
                       <div class="details">
                         <span class="title">
                           <p class="current-img"></p>/<p class="total-img"></p>
@@ -331,35 +232,180 @@
                   <div class="shadow"></div>
                 <% } else { %>
                   <div class="profile-showcase-photos">
-                    <h3>SHOWCASE</h3>
+                    <h3>Showcase</h3>
                   </div>
                 <% } %>
               </div>
             </div>
-
-            <% if(typeof user !=="undefined" && user.id !==rows[0].id) { %>
-
-              <% if (!isFollowing) { %>
-                <form class="profile-edit" id="add-contact-form">
-                  <input type="hidden" id="following-id" value="<%= rows[0].id%>">
-                  <button id="add-contact-btn">Add to my contacts</button>
-                </form>
-              <% } else { %>
-                <form class="profile-edit" id="delete-contact-form">
-                  <input type="hidden" id="following-id" value="<%= rows[0].id%>">
-                  <button id="delete-contact-btn">Delete from my contacts</button>
-                </form>
-              <% } %>
-
-
-            <% } else if(typeof user==="undefined") { %>
-              <div class="profile-edit">
-                <button id="show-login-modal-btn">Add to my contacts</button>
-              </div>
-            <% } %>
-
           </div>
         </div>
+  
+        <div class="profile-col-2">
+          <div class="profile-contact-info">
+  
+            <div class="profile-header">
+              <h3>Contact</h3>
+            </div>
+  
+            <% if(typeof user !=="undefined" ) { %>
+              <div class="profile-info">
+                <div class="profile-col-1-box-2">
+                  <% if(rows[0].display_phone==="Yes" ) { %>
+                    <div class="profile-phone flex-row-gap-20">
+                      <i class="fa-solid fa-phone-flip"></i>
+                      <p>
+                        <%= rows[0].phone %>
+                      </p>
+                    </div>
+                  <% } %>
+
+                  <% if(rows[0].display_email==="Yes" ) { %>
+                    <div class="profile-email flex-row-gap-20">
+                      <i class="fa-solid fa-envelope"></i>
+                      <p>
+                        <%= rows[0].email %>
+                      </p>
+                    </div>
+                  <% } %>
+    
+                  <% if(rows[0].website) { %>
+                    <div class="profile-website-link website">
+                      <a href="<%= rows[0].website %>" target="_blank">
+                        <div class="flex-row-gap-20">
+                          <i class="fas fa-desktop"></i>
+                          <p>
+                            <%= website %>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  <% } %>
+    
+                </div>
+              </div>
+            <% } else { %>
+              <div class="profile-col-1-box-5 not-loggedIn">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+            <% } %>
+          </div>
+  
+          <div class="profile-contact-info">
+  
+            <div class="profile-header">
+              <h3>Social Media</h3>
+            </div>
+  
+            <% if(typeof user !=="undefined" ) { %>
+              <div class="profile-col-1-box-4">
+                <% if(twitter) { %>
+                  <div class="profile-social-link twitter">
+                    <a href="<%= rows[0].twitter %>" target="_blank">
+                      <div class="flex-row-gap-20">
+                        <i class="fab fa-twitter"></i>
+                        <p>
+                          <%= twitter %>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                <% } %>
+    
+                <% if(instagram) { %>
+                  <div class="profile-social-link instagram">
+                    <a href="<%= rows[0].instagram %>" target="_blank">
+                      <div class="flex-row-gap-20">
+                        <i class="fab fa-instagram"></i>
+                        <p>
+                          <%= instagram %>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                <% } %>
+    
+                <% if(facebook) { %>
+                  <div class="profile-social-link facebook">
+                    <a href="<%= rows[0].facebook %>" target="_blank">
+                      <div class="flex-row-gap-20">
+                        <i class="fab fa-facebook"></i>
+                        <p>
+                          <%= facebook %>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                <% } %>
+    
+                <% if(linkedin) { %>
+                  <div class="profile-social-link linkedin">
+                    <a href="<%= rows[0].linkedin %>" target="_blank">
+                      <div class="flex-row-gap-20">
+                        <i class="fab fa-linkedin"></i>
+                        <p>
+                          <%= linkedin %>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="profile-col-1-box-3 not-loggedIn">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+          <% } %>
+  
+          <div class="profile-contact-info">
+            <div class="profile-header">
+              <h3>Tags</h3>
+            </div>
+            <div class="profile-col-1-box-5">
+              <% if(tags) { %>
+                <div class="tags">
+                  <% for(let tag in tags) { %>
+                    <div class="tag">
+                      <%= tags[tag] %>
+                    </div>
+                  <% } %>
+                </div>
+              <% } %>
+            </div>
+          </div>     
+  
+          <% if(typeof user !=="undefined" && user.id!==rows[0].id) { %>
+            <form id="contact-user-form">
+              <div class="profile-contact-info">
+                <div class="profile-header">
+                  <h3>Message</h3>
+                </div>
+                <div class="profile-col-1-box-5">
+                  <input type="hidden" id="userEmail" value="<%= rows[0].email %>">
+                  <textarea id="message" placeholder="Your message"></textarea>
+                  <button type="submit">Send</button>
+                </div>
+              </div>
+            </form>
+          <% } %>
+  
+  
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="newsletter-section">
+    <div class="container">
+      <div class="newsletter">
+        <div class="newsletter-header flex-column-gap-10">
+          <p>NEWSLETTER</p>
+          <h3>Sign up for Newsletter and get the latest update</h3>
+        </div>
+        <form action="/newsletter" class="newsletter-input" method="POST" id="newsletter-form">
+          <input type="email" placeholder="Enter Your Email" id="email" name="email" maxlength="100" required>
+          <button>Subscribe</button>
+        </form>
       </div>
     </div>
   </section>
@@ -387,6 +433,9 @@
   </div>
   
   <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+  <script src="/js/newsletter.js"></script>
 
   <% if (!isFollowing && typeof user !== "undefined") { %>
     <% if (user.id !==rows[0].id) { %>
@@ -404,10 +453,6 @@
     <script src="/js/login-modal.js"></script>
   <% } %>
 
-  <% if(typeof user !=="undefined") { %>
-    <script src="/js/toast-front-end.js"></script>
-  <% } %>
-
   <% if(showcasePhotos !==null) { %>
     <script src="/js/lightbox.js"></script>
   <% } %>
@@ -421,10 +466,42 @@
   <% } %>
 
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
+
+  <script>
+    const contactUserForm = document.querySelector("#contact-user-form");
+    if(contactUserForm){
+      document.querySelector("#contact-user-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const message = document.querySelector("#message").value;
+        const email = document.querySelector("#userEmail").value;
+
+        fetch("/auth/contact-user", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json, text/plain, */*",
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({ message: message, receiverEmail: email })
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            document.querySelector("#message").value = "";
+            displayToast("success", data.message);
+          } else {
+            displayToast("error", data.message);
+          }
+        });
+      });
+    }
+    
+  </script>
 <%- include("partials/footer.ejs") %>

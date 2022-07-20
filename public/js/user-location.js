@@ -62,6 +62,8 @@ function getLocation(bdcApi) {
         "city"       : titleCaseAll(data.city),
         "state"      : state[1].toUpperCase()
       }
+      document.querySelector("#home-location").value = `${locationObject.city}, ${locationObject.state}`;
+      document.querySelector("#header-location").value = `${locationObject.city}, ${locationObject.state}`;
       myLocation.forEach(l => {
         l.value = `${locationObject.city}, ${locationObject.state}`;
       })

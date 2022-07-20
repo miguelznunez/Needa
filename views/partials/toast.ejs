@@ -1,14 +1,10 @@
   <% if(typeof type !=="undefined" && type === "success") { %>
+
     <style>
-      .toast {
-        transform: translateX(0);
-        border-left: 8px solid #47d764;
-      }
-  
-      .fa-check-circle {
-        color: #47d764;
-      }
+      .toast { border-left: 8px solid #47d764; }
+      .fa-check-circle { color: #47d764; }
     </style>
+
     <section>
       <div class="toast-wrapper">
         <div class="toast">
@@ -28,15 +24,12 @@
   <% } %>
 
   <% if((typeof type !=="undefined" && type === "error") || (typeof token_success !="undefined" && !token_success)) { %>
+
     <style>
-      .toast {
-        transform: translateX(0);
-        border-left: 8px solid #ff2121;
-      }
-      .fa-times-circle {
-        color: #ff2121;
-      }
+      .toast { border-left: 8px solid #ff2121; }
+      .fa-times-circle { color: #ff2121; }
     </style>
+
     <section>
       <div class="toast-wrapper">
         <div class="toast">
@@ -56,16 +49,12 @@
   <% } %>
 
   <% if(typeof type !=="undefined" && type==="info" ) { %>
+
     <style>
-      .toast {
-        transform: translateX(0);
-        border-left: 8px solid #2F86EB;
-      }
-  
-      .fa-info-circle {
-        color: #2F86EB;
-      }
+      .toast { border-left: 8px solid #2F86EB; }
+      .fa-info-circle { color: #2F86EB; }
     </style>
+
     <section>
       <div class="toast-wrapper">
         <div class="toast">
@@ -85,15 +74,12 @@
   <% } %>
 
   <% if(typeof allParsedErrors !=="undefined" && allParsedErrors) { %>
+
     <style>
-      .toast {
-        transform: translateX(0);
-        border-left: 8px solid #ff2121;
-      }
-      .fa-times-circle {
-        color: #ff2121;
-      }
+      .toast { border-left: 8px solid #ff2121; }
+      .fa-times-circle { color: #ff2121; }
     </style>
+    
     <section>
       <div class="toast-wrapper">
         <div class="toast">

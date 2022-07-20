@@ -1,15 +1,16 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/location-modal.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
-  <section>
-    <div class="toast-wrapper-front-end">
-      <div class="toast-front-end">
-        <div class="icon-container-front-end"></div>
-        <div class="message-container-front-end flex-5"></div>
-        <button id="close-toast-btn-front-end">&times;</button>
+  <!-- breadcrumbs-->
+  <div class="breadcrumbs" style="margin-top: 80px;">
+    <div class="container">
+      <div class="breadcrumbs-wrapper">
+        <div class="breadcrumbs-list">
+          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> Settings <i class="fa-solid fa-circle"></i> <span>Upload Photos</span>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <section id="showcaseSection">
     <div class="container">
@@ -76,6 +77,8 @@
   <!-- <script src="/js/loader.js"></script> -->
   
   <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
 
   <script>
 
@@ -90,49 +93,49 @@
     showcasePhotos = JSON.parse('<%-JSON.stringify(showcasePhotos)%>'),
     length = (showcasePhotos === null) ? null : Object.keys(showcasePhotos).length;
 
-    const toastOptions = {
-      'success': { class: "fas fa-check-circle", color: "#47d764", header: "Success" },
-      'error': { class: "fas fa-times-circle", color: "#ff1616", header: "Error" },
-      'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
-      'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
-    },
-      toast = document.querySelector(".toast-front-end"),
-      iconContainer = document.querySelector(".icon-container-front-end"),
-      messageContainer = document.querySelector(".message-container-front-end"),
-      closeToastFrontEnd  = document.querySelector("#close-toast-btn-front-end");
-    let x;
+    // const toastOptions = {
+    //   'success': { class: "fas fa-check-circle", color: "#47d764", header: "Success" },
+    //   'error': { class: "fas fa-times-circle", color: "#ff1616", header: "Error" },
+    //   'info': { class: "fas fa-info-circle", color: "#2F86EB", header: "Info" },
+    //   'warning': { class: "fas fa-exclamation-circle", color: "#FFC021", header: "Warning" }
+    // },
+    //   toast = document.querySelector(".toast-front-end"),
+    //   iconContainer = document.querySelector(".icon-container-front-end"),
+    //   messageContainer = document.querySelector(".message-container-front-end"),
+    //   closeToastFrontEnd  = document.querySelector("#close-toast-btn-front-end");
+    // let x;
 
-    function displayToast(type, msg) {
-      clearTimeout(x);
-      toast.style.borderLeft = `8px solid ${toastOptions[type].color}`;
-      toast.style.transform = "translateX(0)";
+    // function displayToast(type, msg) {
+    //   clearTimeout(x);
+    //   toast.style.borderLeft = `8px solid ${toastOptions[type].color}`;
+    //   toast.style.transform = "translateX(0)";
 
-      const icon = document.createElement("i");
-      const header = document.createElement("p");
-      const message = document.createElement("p");
+    //   const icon = document.createElement("i");
+    //   const header = document.createElement("p");
+    //   const message = document.createElement("p");
 
-      icon.className = toastOptions[type].class;
-      icon.style.color = toastOptions[type].color;
-      header.textContent = toastOptions[type].header;
-      message.textContent = msg;
+    //   icon.className = toastOptions[type].class;
+    //   icon.style.color = toastOptions[type].color;
+    //   header.textContent = toastOptions[type].header;
+    //   message.textContent = msg;
 
-      iconContainer.innerHTML = "";
-      iconContainer.appendChild(icon);
+    //   iconContainer.innerHTML = "";
+    //   iconContainer.appendChild(icon);
 
-      messageContainer.innerHTML = "";
-      messageContainer.appendChild(header);
-      messageContainer.appendChild(message);
+    //   messageContainer.innerHTML = "";
+    //   messageContainer.appendChild(header);
+    //   messageContainer.appendChild(message);
 
-      x = setTimeout(() => {
-        toast.style.transform = "translateX(400px)";
-      }, 5000);
-    }
+    //   x = setTimeout(() => {
+    //     toast.style.transform = "translateX(400px)";
+    //   }, 5000);
+    // }
 
-    // TOAST FUNCTIONALITY
+    // // TOAST FUNCTIONALITY
 
-    closeToastFrontEnd.addEventListener("click", () => {
-      toast.style.transform = "translateX(400px)";
-    })
+    // closeToastFrontEnd.addEventListener("click", () => {
+    //   toast.style.transform = "translateX(400px)";
+    // })
 
     browse.addEventListener('click', () => input.click());
 
@@ -281,10 +284,11 @@
   </script>
 
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
 <%- include("partials/footer.ejs") %>

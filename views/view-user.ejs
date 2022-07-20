@@ -1,9 +1,9 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/front-end-toast.ejs") %>
 
   <section id="viewUserSection">
 
     <div class="container">
-      <div class="subcontainer">
 
         <!-- BREAD CRUMBS -->
 
@@ -239,19 +239,20 @@
         <div>
           
         </div>
-
-      </div>
     </div>
 
   </section>
 
   <script src="/js/script.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
   
   <% if (typeof user !="undefined" && user) { %>
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLVBTACqJtv8Od3WvXYZPV3kXZtDUwBrk&q&callback=getCoordinates">
-      </script>
-    <script src="/js/google-map.js"></script>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
   <% } %>
 
 
