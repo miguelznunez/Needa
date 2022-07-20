@@ -30,7 +30,6 @@ html{
   color: lightgray;
 }
 
-/* GLOBAL */
 
 body{
   overflow-x: hidden ;
@@ -139,6 +138,104 @@ iframe{
    font-style: italic; 
 }
 
+/* BREADCUMBS */
+
+.breadcrumbs {
+  color: #666;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0px 15px 10px -15px #eee;
+}
+
+.breadcrumbs-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 80px;
+}
+
+.breadcrumbs-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.breadcrumbs-list span {
+  color: var(--color);
+}
+
+.breadcrumbs-list .fa-circle {
+  font-size: 0.3rem;
+  color: var(--color);
+}
+
+.share-btn {
+  padding: 8px 30px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #eee;
+  color: var(--color);
+  font-weight: 600;
+  box-shadow: 0 15px 5px rgba(0, 0, 0, 0.03);
+  font-size: 12px;
+}
+
+/* END BREADCRUMBS */
+
+
+/* NEWSLETTER */
+
+#newsletter-section {
+  background: linear-gradient(to bottom,
+      #F7F9FB 0%,
+      #F7F9FB 50%,
+      white 50%,
+      white 100%);
+}
+
+.newsletter {
+  height: 250px;
+  color: white;
+  background-color: var(--color);
+  background-position: center;
+  background-size: cover;
+  background-image: linear-gradient(#7449f578, #7449f578), url(/images/city-bg.png);
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+}
+
+.newsletter-header h3,
+.newsletter-header p {
+  width: fit-content;
+  background-color: var(--color);
+}
+
+.newsletter-input {
+  position: relative;
+}
+
+.newsletter-input input {
+  padding: 18px;
+}
+
+.newsletter-input button {
+  padding: 12px;
+  position: absolute;
+  right: 1%;
+  top: 8%;
+  color: white;
+  background-color: var(--color);
+}
+
+/* END NEWSLETTER */
+
+
 /* LOADER */
 
 .loader-wrapper {
@@ -220,6 +317,8 @@ iframe{
     height: 0%;
   }
 }
+
+/* END LOADER */
 
 /* FLEX */
 
@@ -558,6 +657,7 @@ iframe{
   padding: 7px;
   border: 3px solid var(--color);
   background-color: var(--color);
+  font-size: 0.9rem;
 }
 
 .nav-menu{
@@ -771,7 +871,7 @@ iframe{
 }
 
 #carousel .carousel-header-box-2 input {
-  font-size: 1rem;
+  /* font-size: 1rem; */
   width: 430px;
   padding: 19px;
 }
@@ -841,7 +941,7 @@ iframe{
 #carousel #home-match-list .name {
   padding: 8px 5px;
   transition: 0.3s;
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
 }
 
 #carousel #home-match-list .name:hover {
@@ -854,12 +954,21 @@ iframe{
   padding: 19px;
 }
 
+#carousel .fa-magnifying-glass {
+  font-size: 1rem;
+}
+
 #carousel #home-submit-btn {
   border-radius: var(--border-radius);
   background-color: var(--color);
   border: 3px solid var(--color);
   padding: 16px;
   color: white;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
 }
 
 .fa-location-crosshairs {
@@ -959,261 +1068,6 @@ iframe{
     opacity: 0;
   }
 }
-
-
-
-/* HELP.EJS */
-#help-showcase {
-  height: 450px;
-  position: relative;
-  background-position: 50% 25%;
-  background-size: cover;
-  background-color: white;
-  background-image: url(https://images.pexels.com/photos/8867233/pexels-photo-8867233.jpeg?cs=srgb&dl=pexels-yan-krukov-8867233.jpg&fm=jpg);
-}
-
-.help-showcase-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  height: 450px;
-}
-
-#help-showcase .help-showcase-header {
-  width: 750px;
-  min-height: auto;
-  position: absolute;
-  top: 45%;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-}
-
-#help-showcase .help-showcase-header-box-1 h1 {
-  font-size: 2.5rem;
-}
-
-#help-showcase .help-showcase-header-box-1 p {
-  line-height: 1.5;
-}
-
-.faq-grid{
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 25px;
-  padding: 50px 0;
-}
-
-.faq-nav{
-  height: fit-content;
-  background-color: white;
-  border: 1px solid #eee;
-  border-radius: var(--border-radius);
-}
-
-.faq-nav-header {
-  padding: 50px 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  color: gray;
-}
-
-.faq-nav-header ul{
-  list-style: none;
-}
-
-.faq-nav-header a{
-  color: #262626;
-  text-decoration: none;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 0;
-  transition: 0.3s ease-in;
-  border-bottom: 1px solid rgba(211, 211, 211, 0.5);
-}
-
-.faq-nav-header a:hover{
-  color: #7449F5;
-}
-
-.faq-nav-header i{
-  color: var(--color);
-}
-
-.faq-accordions{
-  height: fit-content;
-  padding: 30px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  border-radius: var(--border-radius);
-  border: 1px solid #eee;
-}
-
-.faq-accordions h3{
-  color: gray;
-}
-
-.faq-accordions p{
-  color: #757575;
-}
-
-.faq-accordions button{
-  box-shadow: none;
-  background-color: #f9f9f9;
-}
-
-#payments,
-#suggestions,
-#recommendations,
-#booking,
-#listing{
-  display: flex;
-  flex-direction: column;
-  gap: 45px;
-}
-
-.accordion-container{
-  padding: 0 20px;
-}
-
-.accordion {
-  background-color: white;
-  color: #262626;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-
-}
-
-.active-accordion,
-.accordion:hover {
-  color: #7449F5;
-  background-color: #f1f1f1;
-}
-
-.accordion:after {
-  content: '\002B';
-  color: var(--color);
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-  font-size: 1.2rem;
-}
-
-.active-accordion:after {
-  content: "\2212";
-}
-
-.panel {
-  padding: 0 18px;
-  max-height: 0;
-  line-height: 1.5;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
-
-
-
-
-
-/* HELP.EJS */
-#contact-showcase {
-  height: 450px;
-  position: relative;
-  background-position: 50% 25%;
-  background-size: cover;
-  background-color: white;
-  background-image: url(https://images.pexels.com/photos/302831/pexels-photo-302831.jpeg?cs=srgb&dl=pexels-pixabay-302831.jpg&fm=jpg);
-}
-
-.contact-showcase-overlay {
-  background-color: rgba(0, 0, 0, 0.3);
-  height: 450px;
-}
-
-#contact-showcase .contact-showcase-header {
-  width: 750px;
-  min-height: auto;
-  position: absolute;
-  top: 45%;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-}
-
-#contact-showcase .contact-showcase-header-box-1 h1 {
-  font-size: 2.5rem;
-}
-
-#contact-showcase .contact-showcase-header-box-1 p {
-  line-height: 1.5;
-}
-
-#office-location{
-  padding: 50px 0;
-}
-
-.office-location{
-  display: grid;
-  grid-template-rows: 20% 1fr;
-  height: 350px;
-}
-
-
-
-
-
-.breadcrumbs{
-  color: #666;
-  background-color: white;
-  border-bottom: 1px solid #eee;
-  box-shadow: 0px 15px 10px -15px #eee;
-}
-
-.breadcrumbs-wrapper{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 80px;
-}
-
-.breadcrumbs-list{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.breadcrumbs-list span{
-  color: var(--color);
-}
-
-.breadcrumbs-list .fa-circle{
-  font-size: 0.3rem;
-  color: var(--color);
-}
-
-.share-btn {
-  padding: 8px 30px;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 2px;
-  border: 1px solid #eee;
-  color: var(--color);
-  font-weight: 600;
-  box-shadow: 0 15px 5px rgba(0, 0, 0, 0.03);
-  font-size: 12px;
-}
-
-
 
 
 
@@ -1360,9 +1214,22 @@ iframe{
 #popular-searches-section .slide-img{
   width: 100%;
   height: 550px;
+  overflow: hidden;
   background-position: center;
   background-size: cover;
   position: relative;
+}
+
+.slide-img:nth-child(2){
+  background-image: linear-gradient(to bottom, transparent 80%, rgba(0, 0, 0, 0.5)), url(/images/san_francisco.jpg);
+}
+
+.slide-img:nth-child(3){
+  background-image: linear-gradient(to bottom, transparent 80%, rgba(0, 0, 0, 0.5)), url(/images/new_york.jpg);
+}
+
+.slide-img:nth-child(4){
+  background-image: linear-gradient(to bottom, transparent 80%, rgba(0, 0, 0, 0.5)), url(/images/los_angeles.jpg);
 }
 
 #popular-searches-section .slide-img h2{
@@ -1393,7 +1260,7 @@ iframe{
 
 #testimonials-section{
   background-color: #F7F9FB;
-  padding: 50px 0;
+  padding: 50px 0 75px 0;
 }
 
 #testimonials-section .grid-wrapper-testimonials-searches {
@@ -1462,53 +1329,213 @@ iframe{
 
 
 
-
-#newsletter-section{
-  background: linear-gradient(to bottom,
-        #F7F9FB 0%,
-        #F7F9FB 50%,
-        white 50%,
-        white 100%);
-}
-
-.newsletter{
-  height: 250px;
-  color: white;
-  background-color: var(--color);
-  background-position: center;
-  background-size: cover;
-  background-image: linear-gradient(#7449f578, #7449f578), url(/images/city-bg.png);
-  border-radius: 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 60px;
-}
-
-.newsletter-header h3,
-.newsletter-header p{
-  width: fit-content;
-  background-color: var(--color);
-}
-
-.newsletter-input{
+/* FAQS */
+#help-showcase {
+  height: 450px;
   position: relative;
+  background-position: 50% 25%;
+  background-size: cover;
+  background-color: white;
+  background-image: url(https://images.pexels.com/photos/8867233/pexels-photo-8867233.jpeg?cs=srgb&dl=pexels-yan-krukov-8867233.jpg&fm=jpg);
 }
 
-.newsletter-input input{
-  padding: 18px;
+.help-showcase-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 450px;
 }
 
-.newsletter-input button{
-  padding: 12px;
+#help-showcase .help-showcase-header {
+  width: 750px;
+  min-height: auto;
   position: absolute;
-  right: 1%;
-  top: 8%;
+  top: 45%;
   color: white;
-  background-color: var(--color);
+  display: flex;
+  justify-content: space-between;
 }
 
+#help-showcase .help-showcase-header-box-1 h1 {
+  font-size: 2.5rem;
+}
+
+#help-showcase .help-showcase-header-box-1 p {
+  line-height: 1.5;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 25px;
+  padding: 50px 0;
+}
+
+.faq-nav {
+  height: fit-content;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: var(--border-radius);
+}
+
+.faq-nav-header {
+  padding: 50px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: gray;
+}
+
+.faq-nav-header ul {
+  list-style: none;
+}
+
+.faq-nav-header a {
+  color: #262626;
+  text-decoration: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  transition: 0.3s ease-in;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.5);
+}
+
+.faq-nav-header a:hover {
+  color: #7449F5;
+}
+
+.faq-nav-header i {
+  color: var(--color);
+}
+
+.faq-accordions {
+  height: fit-content;
+  padding: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  border-radius: var(--border-radius);
+  border: 1px solid #eee;
+}
+
+.faq-accordions h3 {
+  color: gray;
+}
+
+.faq-accordions p {
+  color: #757575;
+}
+
+.faq-accordions button {
+  box-shadow: none;
+  background-color: #f9f9f9;
+}
+
+#payments,
+#suggestions,
+#recommendations,
+#booking,
+#listing {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.accordion-container {
+  padding: 0 20px;
+}
+
+.accordion {
+  background-color: white;
+  color: #262626;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+
+}
+
+.active-accordion,
+.accordion:hover {
+  color: #7449F5;
+  background-color: #f1f1f1;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: var(--color);
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+  font-size: 1.2rem;
+}
+
+.active-accordion:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  max-height: 0;
+  line-height: 1.5;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+/* END FAQS */
+
+
+
+
+/* CONTACT.EJS */
+#contact-showcase {
+  height: 450px;
+  position: relative;
+  background-position: 50% 25%;
+  background-size: cover;
+  background-color: white;
+  background-image: url(https://images.pexels.com/photos/302831/pexels-photo-302831.jpeg?cs=srgb&dl=pexels-pixabay-302831.jpg&fm=jpg);
+}
+
+.contact-showcase-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 450px;
+}
+
+#contact-showcase .contact-showcase-header {
+  width: 750px;
+  min-height: auto;
+  position: absolute;
+  top: 45%;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+#contact-showcase .contact-showcase-header-box-1 h1 {
+  font-size: 2.5rem;
+}
+
+#contact-showcase .contact-showcase-header-box-1 p {
+  line-height: 1.5;
+}
+
+#office-location {
+  padding: 50px 0;
+}
+
+.office-location {
+  display: grid;
+  grid-template-rows: 20% 1fr;
+  height: 350px;
+}
+
+/* END CONTACT */
 
 
 
@@ -3310,6 +3337,14 @@ footer {
   .container,
   #profileSection .preview-box{
     width: 100%;
+  }
+}
+
+@media(max-width:1224px){
+  .container {
+    /* max-width: 1224px; */
+    width: 90%;
+    margin: 0 auto;
   }
 }
 
