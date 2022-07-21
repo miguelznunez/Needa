@@ -99,9 +99,9 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
     db.query("SELECT * FROM user WHERE id = ?", [req.params.id], async (err, results) => { 
       if((results != "") && (results[0].token != null) && (results[0].token_expires > Date.now()) ) {
         if (req.params.token === results[0].token.toString() )
-          return res.render("password-reset-update", {title: "Needa |  Password Reset Update", user : req.user, id: req.params.id, token: req.params.token, token_expires: results[0].token_expires, token_success: true} );
+          return res.render("password-reset-update", {title: "Needa | Password Reset Update", user : req.user, id: req.params.id, token: req.params.token, token_expires: results[0].token_expires, token_success: true} );
       } else{
-        return res.render("password-reset-update", {title: "Needa |  Password Link Expired", user : req.user, token_success: false, type:"error", message: "Password reset token is invalid or has expired."} );
+        return res.render("password-reset-update", {title: "Needa | Password Link Expired", user : req.user, token_success: false, type:"error", message: "Password reset token is invalid or has expired."} );
       } 
     });
   // Log the user out for security reasons

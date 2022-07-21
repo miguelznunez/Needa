@@ -1,10 +1,14 @@
 /* GLOBAL */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 :root {
   /* 1. Defining in Global Scope */
   --color: #7449F5;
-  --border-radius: 8px;
+  --border-radius: 8px;;
 }
 
 html{
@@ -33,7 +37,9 @@ html{
 
 body{
   overflow-x: hidden ;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Jost', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+    /* font-family: "Montserrat", sans-serif; */
   background-color: #F7F9FB;
   position: relative;
   min-height: 100%;
@@ -79,12 +85,12 @@ textarea:focus{
 
 button{
   border: none;
-  padding: 12px;
+  padding: 10px;
   border-radius: var(--border-radius);
   cursor: pointer;
   font-family: inherit;
   font-size: 1.1rem;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
 table {
@@ -125,7 +131,7 @@ iframe{
   border-bottom-right-radius: 8px;
 }
 
-::-webkit-input-placeholder {
+/* ::-webkit-input-placeholder {
    font-style: italic;
 }
 :-moz-placeholder {
@@ -136,7 +142,8 @@ iframe{
 }
 :-ms-input-placeholder {  
    font-style: italic; 
-}
+} */
+
 
 /* BREADCUMBS */
 
@@ -151,7 +158,7 @@ iframe{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .breadcrumbs-list {
@@ -255,10 +262,11 @@ iframe{
 
 .loader {
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   position: relative;
   border: 4px solid var(--color);
+  border-radius: 5px;
   animation: loader 2s infinite ease;
 }
 
@@ -518,6 +526,7 @@ iframe{
   border: 3px solid white;
   background-color: var(--color);
   color: white;
+    font-size: 0.9rem;
 }
 
 #more-info-link {
@@ -567,6 +576,10 @@ iframe{
 
 .nav-search #header-nav-search{
   width: 400px;
+}
+
+#find-professionals-form input{
+  padding: 8px;
 }
 
 .nav-search #header-search{
@@ -654,7 +667,8 @@ iframe{
 
 .nav-search #header-submit-btn{
   color: white;
-  padding: 7px;
+  width: 80px;
+  padding: 5px;
   border: 3px solid var(--color);
   background-color: var(--color);
   font-size: 0.9rem;
@@ -667,14 +681,17 @@ iframe{
   gap: 20px;
 }
 
-#register-user-btn{
-  color: white;
-  border: 3px solid var(--color);
-  background-color: var(--color);
+.nav-link{ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  transition: 0.7s ease;
 }
 
-.nav-link{ 
-  transition: 0.7s ease;
+.nav-link .fa-circle-user{
+  font-size: 1.5rem;
+  color: var(--color);
 }
 
 .nav-link:hover{ 
@@ -813,6 +830,29 @@ iframe{
   color: black;
 }
 
+#add-post-btn{
+  width: 150px;
+  height: 40px;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color);
+}
+
+.fa-bell{
+  font-size: 2rem;
+  color: var(--color);
+}
+
+.fa-plus{
+  padding: 6px 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 /* INDEX.EJS */
 
 
@@ -835,7 +875,7 @@ iframe{
 }
 
 #carousel .carousel-header {
-  width: 750px;
+  width: 800px;
   min-height: auto;
   position: absolute;
   top: calc(50% - 100px);
@@ -1336,7 +1376,7 @@ iframe{
   background-position: 50% 25%;
   background-size: cover;
   background-color: white;
-  background-image: url(https://images.pexels.com/photos/8867233/pexels-photo-8867233.jpeg?cs=srgb&dl=pexels-yan-krukov-8867233.jpg&fm=jpg);
+  background-image: url();
 }
 
 .help-showcase-overlay {
@@ -2919,42 +2959,150 @@ iframe{
   background-color: red;
 }
 
-/* LOGIN */
 
-#login-section{
-  margin-top: 70px;
-  min-height: 600px;
+
+
+
+
+/* LOGIN LAYOUT */
+
+#login-grid {
+  height: 100vh;
+  background-color: white;
+  border-radius: var(--border-radius);
+  display: grid;
+  grid-template-columns: 40% 60%;
+  position: relative;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+#login-grid form{
+  width: 90%;
+  margin:auto;
+}
+
+#login-grid a{
+  color: var(--color);
+    text-decoration: none;
+}
+
+#login-grid .form-title h2{
+  font-size: 2rem;
+}
+
+#login-grid .brand-grid {
+  display: grid;
+  grid-template-rows: 40% 60%;
+  background-color: var(--color);
+  color: white;
+}
+
+#login-grid .brand-header {
+  position: relative;
+  padding: 25px;
+
+}
+
+#login-grid .brand-header a {
+  color: white;
+}
+
+.mrb_dec,
+.mrb_dec2{
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  top: 80px;
+  left: -100px;
+}
+
+.mrb_dec2 {
+  left: auto;
+  right: -50px;
+  width: 150px;
+  height: 150px;
+  top: -90px;
+}
+
+#login-grid .brand-img {
+  background-position: center;
+  background-size: cover;
+  background-image: linear-gradient(0deg, transparent, #7449F5), url(/images/city-bg.png);
+}
+
+.mrb_pin {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background: #fff;
+  left: 100px;
+  bottom: 200px;
+}
+
+.mrb_pin.mrb_pin2 {
+  left: 400px;
+  bottom: 300px
+}
+
+.mrb_pin:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.4;
+  transform: scale(10.0);
+}
+
+.mrb_pin:before {
+  animation: puls 4.0s infinite ease-in-out;
+}
+
+.mrb_pin.mrb_pin2:before {
+  animation: puls 6.0s infinite ease-in-out;
+}
+
+@keyframes puls {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#login-grid .forms {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #666;
 }
 
-#login-section h1{
-  font-size: 2.5rem;
-}
-
-#login-form{
-  width: fit-content;
+#register-btn,
+#login-btn,
+#link-btn,
+#update-password,
+#create-user-btn {
+  width: 150px;
+  color: white;
+  background-color: var(--color);
   border-radius: var(--border-radius);
+  border: 1px solid var(--color);
+  transition: 0.3s ease-out;
+  font-size: 0.9rem;
 }
 
 
 /* REGISTER */
-
-#register-section{
-  margin-top: 70px;
-  min-height: 600px;
-  padding: 50px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-    color: #666;
-}
-
-#register-section h1 {
-  font-size: 2.5rem;
-}
 
 #register-form {
   width: 800px;
@@ -2984,91 +3132,6 @@ iframe{
   display: grid;
   grid-template-columns: 1fr 0.48fr 0.48fr;
   gap: 15px;
-}
-
-/* LOGIN/ REGISTER */
-
-#password-container{
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left;
-}
-
-#show-password-container{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  text-align: left;
-}
-
-#show-password-container label{
-  font-size: 1rem;
-}
-
-input[type="checkbox"]{
- width: auto;
-}
-
-#forgot-password a,
-#register a,
-#login a{
-  color: var(--color);
-  text-decoration: none;
-}
-
-#register-btn, 
-#login-btn,
-#link-btn,
-#update-password,
-#create-user-btn{
-  width: 375px;
-  color: white;
-  background-color: var(--color);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color);
-  transition: 0.3s ease-out;
-}
-
-#register-btn,
-#create-user-btn{
-  width: 392px;
-}
-
-#link-btn{
-  width: 100%;
-}
-
-/* PASSWORD-RESET.EJS */
-#password-reset-section{
-  margin-top: 70px;
-  min-height: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #666;
-}
-
-#password-reset-section a{
-  text-decoration: none;
-  color: var(--color);
-}
-
-#password-reset-form{
-  padding: 50px;
-  width: fit-content;
-
-}
-
-/* PASSWORD-RESET-UPDATE.EJS */
-#updatePassword{
-  margin-top: 70px;
-  min-height: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* ERROR.EJS */
@@ -3334,17 +3397,8 @@ footer {
 /* MEDIA QUERIES */
 
 @media(max-width:1700px){
-  .container,
   #profileSection .preview-box{
     width: 100%;
-  }
-}
-
-@media(max-width:1224px){
-  .container {
-    /* max-width: 1224px; */
-    width: 90%;
-    margin: 0 auto;
   }
 }
 

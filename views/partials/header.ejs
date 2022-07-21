@@ -31,8 +31,9 @@
 
 <body>
 
+  <% if(title !== "Needa | Login" && title !== "Needa | Register" && title !== "Needa | Password Reset" && title !== "Needa | Password Reset Update" && title !== "Needa | Password Link Expired") { %>
   <header id="header">
-    <div class="container">
+    <div style="width: 95%;margin:auto;">
       <nav>
         <div class="navbar flex-row-gap-15">
           <a href="/" class="nav-logo">
@@ -52,6 +53,9 @@
             <!-- IF USER IS LOGGED IN -->
 
             <% if (typeof user !="undefined" && user) { %>
+              <li>
+                <i class="fa-solid fa-bell"></i>
+              </li>
               <li class="nav-item">
                 <div class="dropdown" data-dropdown>
                   <div class="user-icon link" data-dropdown-button>
@@ -149,50 +153,21 @@
                     </a>
                   </div>
                 </div>
+
+              </li>
+              <li>
+                <button id="add-post-btn"><i class="fa-solid fa-plus"></i> Add Post</button>
               </li>
 
               <!-- ELSE USER IS NOT LOGGED IN -->
 
 
             <% } else { %>
-
-              <!-- IF USER IS IN LOGIN PAGE -->
-
-              <% if(title === "Needa | Login") { %>
-                <li class="nav-item">
-                  <a href="/register" class="nav-link">
-                    <button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                      id="register-user-btn">Register
-                    </button>
-                  </a>
-                </li>
-
-              <!-- ELSE IF USER IS IN REGISTER PAGE -->
-
-              <% } else if(title === "Needa | Register") { %>
-                <li class="nav-item">
-                  <a href="/login" class="nav-link">
-                    Login
-                  </a>
-                </li>
-
-              <!-- ELSE ANY OTHER PAGE -->
-
-              <% } else { %>
-                  <li class="nav-item">
-                    <a href="/login" class="nav-link">
-                      Login
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/register" class="nav-link">
-                      <button style="padding: 8px 12px 8px 12px;font-size: 1rem;"
-                        id="register-user-btn">Register
-                      </button>
-                    </a>
-                  </li>
-              <% } %>
-
+              <li class="nav-item">
+                <a href="/login" class="nav-link">
+                  <i class="fa-solid fa-circle-user"></i> Sign In
+                </a>
+              </li>
             <% } %>
 
           </ul>
@@ -200,6 +175,8 @@
       </nav>
     </div>
   </header>
+
+  <% } %>
 
   <section id="cookies">
     <div class="container">
@@ -211,4 +188,6 @@
     </div>
   </section>
 
-  <script src="/js/header-search-list.js"></script>
+    <% if(title !=="Needa | Login" && title !=="Needa | Register" && title !=="Needa | Password Reset" && title !== "Needa | Password Reset Update" && title !== "Needa | Password Link Expired") { %>
+      <script src="/js/header-search-list.js"></script>
+    <% } %>

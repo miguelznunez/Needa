@@ -88,7 +88,7 @@ exports.register = (req, res) => {
    // OUTPUT VALIDATION ERRORS IF ANY
   if(!errors.isEmpty()){
     return res.render("register", {
-      title: "Register | Loaves Fishes Computers",
+      title: "Needa | Register",
       allParsedErrors: allParsedErrors,
       first_name: first_name,
       last_name: last_name,
@@ -109,6 +109,10 @@ exports.register = (req, res) => {
                               message: "An account with that email already exists",
                               first_name : first_name,
                               last_name : last_name,
+                              city: city,
+                              state: state,
+                              zip: zip,
+                              county: county,
                               email: email,
                               password: password});
     // ELSE CREATE A NEW USER
@@ -216,8 +220,8 @@ exports.updatePassword = (req, res) => {
     bcrypt.hash(password, saltRounds, (err, hash) => {
       const data = { token: null, token_expires: null, password: hash};
       db.query("UPDATE user SET ? WHERE id = ?", [data, id], (err, result) => {
-        if(!err) return res.render("password-reset-update", {title: "Needa | Password Reset Success", type: "success", message: "Your new password has been saved. Please use your new credentials to login."});
-        else return res.render("password-reset-update", {title: "Needa | Password Reset Success", type: "error", message: err.message});
+        if(!err) return res.render("login", {title: "Needa | Login", type: "success", message: "Your new password has been saved. Please use your new credentials to login."});
+        else return res.render("password-reset-update", {title: "Needa | Password Reset Update", type: "error", message: err.message});
       });
     });
   } else {
