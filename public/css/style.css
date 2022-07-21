@@ -1373,10 +1373,10 @@ iframe{
 #help-showcase {
   height: 450px;
   position: relative;
-  background-position: 50% 25%;
+  background-position: center;
   background-size: cover;
   background-color: white;
-  background-image: url();
+  background-image: url(https://images.pexels.com/photos/7793163/pexels-photo-7793163.jpeg?cs=srgb&dl=pexels-yan-krukov-7793163.jpg&fm=jpg);
 }
 
 .help-showcase-overlay {
@@ -1565,8 +1565,84 @@ iframe{
   line-height: 1.5;
 }
 
+
+
+
+#company-info{
+  padding-top: 50px;
+  height: 360px;
+}
+
+.company-info{
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  gap: 40px;
+}
+
+.company-contact{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.company-contact-box{
+  padding: 40px 30px;
+  display: flex;
+  gap: 20px;
+  border: 1px solid #eee;
+  background-color: white;
+  border-radius: var(--border-radius);
+}
+
+.company-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.company-detail p:nth-child(3){
+  font-weight: 500;
+  color: var(--color);
+}
+
+.company-icon i{
+  font-size: 2rem;
+  color: var(--color);
+}
+
+.company-num{
+  color: var(--color);
+}
+
+.company-msg {
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+}
+
+.company-msg a{
+  color: var(--color);
+}
+
+.company-social{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-social i{
+  color: var(--color);
+}
+
+
+
+
+
+
+
 #office-location {
-  padding: 50px 0;
+  padding: 0 0 50px 0;
 }
 
 .office-location {
@@ -2221,7 +2297,7 @@ iframe{
 }
 
 #search-results-section .search-results-wrapper{
-  height: calc(100vh - 150px);
+  min-height: calc(100vh - 150px);
   overflow-y: scroll;
   overflow: hidden;
 }
@@ -2245,7 +2321,7 @@ iframe{
 
 #search-results-section .my-form {
   border-radius: var(--border-radius);
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid #eee;
   width: 100%;
   height: 460px;
   background-color: white;
@@ -2279,7 +2355,7 @@ iframe{
 }
 
 #search-results-section .results-box-info {
-  padding: 0 20px;
+  padding: 10px 20px;
   line-height: 1.5;
 }
 
@@ -2293,8 +2369,6 @@ iframe{
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-
-
 
 #search-results-section .border {
   border-bottom: 1px solid #eee;

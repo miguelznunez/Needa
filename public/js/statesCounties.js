@@ -1,7 +1,6 @@
 async function loadStates() {
-  let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
-  let response = await fetch(url);
-  let data = await response.json();
+  const res = await fetch("/data/states.json");
+  const data = await res.json();
   data.forEach(function (i) {
     var state = document.createElement("option");
     state.textContent = i.state;
@@ -26,6 +25,6 @@ async function addCounties() {
     county.value = c;
     document.querySelector("#county").appendChild(county);
   })
-  }
+}
 
 window.addEventListener("load", loadStates);

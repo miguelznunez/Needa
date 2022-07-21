@@ -26,4 +26,4 @@ document.querySelector("#newsletter-form").addEventListener("submit", (e) => {
     }
   });
   
-});
+})
