@@ -29,51 +29,33 @@
     </section>
   <% } %>
 
-  <!-- breadcrumbs-->
-  <div class="breadcrumbs" style="margin-top: 80px;">
-    <div class="container">
-      <div class="breadcrumbs-wrapper">
-        <div class="breadcrumbs-list">
-          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> Settings <i class="fa-solid fa-circle"></i> <span>Edit Profile</span>
+
+  <div class="app">
+  
+    <aside class="sidebar">
+      <h2>MAIN</h2>
+      <nav class="menu">
+        <a href="/dashboard" class="menu-item">Dashboard</a>
+        <a href="/settings" class="menu-item is-active">Edit profile</a>
+        <a href="/settings/showcase" class="menu-item">Upload images</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
+        <a href="#" class="menu-item">Feed</a>
+      </nav>
+    </aside>
+      
+    <main class="content">
+  
+      <div class="hamburger-container">
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-
-  <section id="settingsSection">
-    <div class="container">
-    
-      <div class="settings-wrapper">
-
-
-        <div class="settings-col-1" >
-          <div class="settings-col-1-child-1" >
-            <h2>Settings</h2>
-          </div>
-          <div class="settings-col-1-child-2" style="background-color: white;">
-            <a href="/settings" style="color:#7449F5;">
-              <div class="settings-col-1-link flex-row-gap-15" style="background-color: #f1f1f1;">
-                <i class="fas fa-user-circle"></i>
-                <p>EDIT PROFILE</p>
-              </div>
-            </a>
-            <a href="/settings/showcase">
-              <div class="settings-col-1-link flex-row-gap-10">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-                <p>UPLOAD PHOTOS</p>
-              </div>
-            </a>
-            <a href="/settings/account">
-              <div class="settings-col-1-link flex-row-gap-10">
-                <i class="fa-solid fa-user-minus"></i>
-                <p>DELETE ACCOUNT</p>
-              </div>
-            </a>
-          </div>
-        </div>
-
-
+  
+      <div id="settingsSection">
         <div class="forms-container">
 
           <form action="/auth/settings" method="POST" class="settings-col-2" enctype="multipart/form-data">
@@ -303,9 +285,11 @@
           
           </form>
         </div>
+
       </div>
-    </div>
-  </section>
+    </main>              
+  </div>
+
 
   <script src="/js/script.js"></script>
   <!-- <script src="/js/search-list.js"></script> -->
@@ -470,4 +454,6 @@
 
 </script>
 
-<%- include("partials/footer.ejs") %>
+</body>
+
+</html>

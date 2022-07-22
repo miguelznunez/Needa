@@ -2,46 +2,33 @@
 <%- include("partials/toast.ejs") %>
 <%- include("partials/front-end-toast.ejs") %>
 
-  <!-- breadcrumbs-->
-  <div class="breadcrumbs" style="margin-top: 80px;">
-    <div class="container">
-      <div class="breadcrumbs-wrapper">
-        <div class="breadcrumbs-list">
-          <a href="/">Home</a> <i class="fa-solid fa-circle"></i> Settings <i class="fa-solid fa-circle"></i> <span>Delete Account</span>
+  <div class="app">
+
+    <aside class="sidebar">
+      <h2>MAIN</h2>
+      <nav class="menu">
+        <a href="/dashboard" class="menu-item">Dashboard</a>
+        <a href="/settings" class="menu-item">Edit profile</a>
+        <a href="/settings/showcase" class="menu-item">Upload images</a>
+        <a href="/settings/account" class="menu-item is-active">Delete account</a>
+        <a href="#" class="menu-item">Feed</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+
+      <div class="hamburger-container">
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <section id="accountSection">
-    <div class="container">
-      <div class="subcontainer">
+      <div id="accountSection">
         <div class="account-wrapper">
-          <div class="account-col-1">
-            <div class="account-col-1-child-1">
-              <h2>Settings</h2>
-            </div>
-            <div class="account-col-1-child-2">
-              <a href="/settings">
-                <div class="account-col-1-link flex-row-gap-15">
-                  <i class="fas fa-user-circle"></i>
-                  <p>EDIT PROFILE</p>
-                </div>
-              </a>
-              <a href="/settings/showcase">
-                <div class="account-col-1-link flex-row-gap-10">
-                  <i class="fa-solid fa-cloud-arrow-up"></i>
-                  <p>UPLOAD PHOTOS</p>
-                </div>
-              </a>
-              <a href="/settings/account" style="color:#7449F5;">
-                <div class="account-col-1-link flex-row-gap-10" style="background-color: #f1f1f1;">
-                  <i class="fa-solid fa-user-minus"></i>
-                  <p>DELETE ACCOUNT</p>
-                </div>
-              </a>
-            </div>
-          </div>
           <div class="account-col-2">
             <form class="account-col-2-child flex-column-gap-15" action="/auth/delete-account" method="POST">
               <h2>Delete account</h2>
@@ -49,7 +36,6 @@
               restore the account or its data.</span> Complete your request by entering the password associated with your account.
               </p>
               <div class="user-input flex-column-gap-5">
-                <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Enter your password..." maxlength="60" required>
               </div>
               <button id="delete-account-btn">Delete my account</button>
@@ -57,8 +43,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </main>
+  </div>
 
   <script src="/js/script.js"></script>
   <script src="/js/toast.js"></script>
@@ -72,4 +58,6 @@
     </script>
   <% } %>
 
-<%- include("partials/footer.ejs") %>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<%- include("partials/header.ejs") %>
+
+  <div class="app">
+
+    <aside class="sidebar">
+      <h2>MAIN</h2>
+      <nav class="menu">
+        <a href="/dashboard" class="menu-item is-active">Dashboard</a>
+        <a href="/settings" class="menu-item">Edit profile</a>
+        <a href="/settings/showcase" class="menu-item">Upload images</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
+        <a href="#" class="menu-item">Feed</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+
+      <div class="hamburger-container">
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </div>
+
+      <h1>Welcome, <%= user.first_name %></h1>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate debitis cum expedita sequi ducimus.
+        Laudantium nesciunt minima facilis iste tenetur!</p>
+
+    </main>
+
+  </div>
+
+  <script src="/js/script.js"></script>
+  <% if (typeof user !="undefined" && user) { %>
+    <script>
+      const userCity = "<%= user.city %>";
+      const userState = "<%= user.state %>";
+      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+    </script>
+  <% } %>
+
+</body>
+
+</html>

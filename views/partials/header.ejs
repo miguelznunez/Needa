@@ -50,12 +50,35 @@
          
           <ul class="nav-menu">
 
+            <li class="nav-item">
+              <div class="dropdown" data-dropdown>
+                <button class="link" data-dropdown-button style="box-shadow:none;color:#666;">Pages <i class="fa-solid fa-caret-down"
+                    data-dropdown-button></i></button>
+                <div class="dropdown-menu">
+                  <a href="/">
+                    <div class="dropdown-links">
+                      <i class="fas fa-home"></i>
+                      <h3>Home</h3>
+                    </div>
+                  </a>
+                  <a href="/help">
+                    <div class="dropdown-links">
+                      <i class="fa-solid fa-circle-info"></i>
+                      <h3>Help</h3>
+                    </div>
+                  </a>
+                  <a href="/contact">
+                    <div class="dropdown-links">
+                      <i class="fa-solid fa-address-card"></i>
+                      <h3>Contact</h3>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </li>
             <!-- IF USER IS LOGGED IN -->
 
             <% if (typeof user !="undefined" && user) { %>
-              <li>
-                <i class="fa-solid fa-bell"></i>
-              </li>
               <li class="nav-item">
                 <div class="dropdown" data-dropdown>
                   <div class="user-icon link" data-dropdown-button>
@@ -103,10 +126,10 @@
                         </div>
                       </a>
                     <% } %>
-                    <a href="/">
+                    <a href="/dashboard">
                       <div class="dropdown-links">
-                        <i class="fas fa-home"></i>
-                        <h3>Home</h3>
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3>Dashboard</h3>
                       </div>
                     </a>
                     <a href="/profile">
@@ -115,28 +138,10 @@
                         <h3>Profile</h3>
                       </div>
                     </a>
-                    <a href="#">
-                      <div class="dropdown-links">
-                        <i class="fa-solid fa-message"></i>
-                        <h3>Messages</h3>
-                      </div>
-                    </a>
                     <a href="/feed">
                       <div class="dropdown-links">
                         <i class="fa-solid fa-user-group"></i>
                         <h3>Feed</h3>
-                      </div>
-                    </a>
-                    <a href="/help">
-                      <div class="dropdown-links">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <h3>Help</h3>
-                      </div>
-                    </a>
-                    <a href="/contact">
-                      <div class="dropdown-links">
-                        <i class="fa-solid fa-address-card"></i>
-                        <h3>Contact</h3>
                       </div>
                     </a>
                     <a href="/settings">

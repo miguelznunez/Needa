@@ -44,6 +44,20 @@ router.get("/", authController.isLoggedIn, (req, res) => {
     return res.render("unsupported", {title: "Needa | Home", user : req.user});
 });
 
+router.get("/help", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers))
+    return res.render("help", { title:"Needa | Help", user:req.user} );
+  else
+    return res.render("unsupported", {title: "Needa | Home", user : req.user});
+});
+
+router.get("/contact", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers))
+    return res.render("contact", {title: "Needa | Contact", user : req.user} );
+  else
+    return res.render("unsupported", {title: "Needa | Home", user : req.user});
+});
+
 router.get("/register", authController.isLoggedIn, (req, res) => {
   // If user IS NOT logged in show the page otherwise redirect to the home page
   if(!req.user && !checkBrowser(req.headers))
@@ -172,16 +186,9 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/help", authController.isLoggedIn, (req, res) => {
+router.get("/dashboard", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers))
-    return res.render("help", { title:"Needa | Help", user:req.user} );
-  else
-    return res.redirect("/login");
-});
-
-router.get("/contact", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers))
-    return res.render("contact", {title: "Needa | Contact", user : req.user} );
+    return res.render("dashboard", {title: "Needa | Dashboard", user : req.user} );
   else
     return res.redirect("/login");
 });

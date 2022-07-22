@@ -515,9 +515,10 @@ function queryLocation(req, res, profession, city, state, zip) {
   db.query("SELECT id, first_name, last_name, email, profile_photo, city, state, zip, profession, tags, about FROM user WHERE ((profession regexp ? || tags regexp ?) && (city = ? && state = ? || zip = ?) && (status != ?))", [profession +'?', profession + '?', city, state, zip, "Deleted"], (err, rows) => {
     if(!err) {
       const results = (rows[0] === undefined) ? null : rows;
-      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession: profession, city, state, zip});
+      console.log(profession);
+      return res.render("search-results", {title: "Needa | Search Results" , user : req.user, rows: results, profession, city, state, zip});
     } else {
-      return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message });
+      return res.render("index", { title:"Needa | Home" , user:req.user, type:"error", message:err.message});
     }
   });
 }
