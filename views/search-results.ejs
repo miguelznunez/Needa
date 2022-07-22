@@ -34,40 +34,37 @@
           <div class="search-results-header">
 
             <% if(typeof user==="undefined" && city) { %>
-              <h3>Results for : 
-                <span id="dynamic-location">
+              <h3>Results for <span class="dynamic-profession">
+                <%= profession %>
+              </span> in
+                <span class="dynamic-location">
                 <%= city %>, <%= state %>
                 </span> 
-                <span>
-                  <%= rows.length %>
-                </span>
               </h3>
             <% } else if(typeof user==="undefined" && zip) { %>
-              <h3>Results for : <span id="dynamic-location">
+              <h3>Results for <span class="dynamic-profession"><%= profession %></span> in <span class="dynamic-location">
                 <%= zip %>
                 </span> 
-                <span>
-                  <%= rows.length %>
-                </span>
               </h3>
             <% } else if(typeof user !=="undefined" && city) { %>
-              <h3>Results for :
-                <span id="dynamic-location">
+              <h3>Results for <span class="dynamic-profession">
+                <%= profession %>
+              </span> in
+                <span class="dynamic-location">
                   <%= city %>, <%= state %>
-                </span>
-                <span>
-                  <%= rows.length %>
                 </span>
               </h3>
             <% } else if(typeof user !=="undefined" && zip) { %>
-              <h3>Results for : <span id="dynamic-location">
+              <h3>Results for <span class="dynamic-profession">
+                <%= profession %>
+              </span> in <span class="dynamic-location">
                   <%= zip %>
-                </span>
-                <span>
-                  <%= rows.length %>
                 </span>
               </h3>
             <% } %>
+            <span>
+              <%= rows.length %>
+            </span>
           </div>
 
           <div class="search-results">

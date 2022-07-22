@@ -1133,6 +1133,7 @@ iframe{
   background-color: white;
   display: grid;
   grid-template-rows: 60% 30% 10%;
+  box-shadow: 0 0 5px lightgray;
 }
 
 #popular-section .popular-section-header{
@@ -1318,6 +1319,7 @@ iframe{
   background-color: white;
   display: grid;
   grid-template-rows: 60% 30% 10%;
+  box-shadow: 0 0 5px lightgray;
 }
 
 #testimonials-section .testimonials-section-header {
@@ -2303,10 +2305,13 @@ iframe{
 }
 
 #search-results-section .search-results-header{
+  display: flex;
+  justify-content: space-between;
   padding: 60px 20px;
 }
 
-#dynamic-location{
+.dynamic-location,
+.dynamic-profession{
   color: var(--color);
 }
 
@@ -2315,18 +2320,18 @@ iframe{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 0 20px;
+  padding: 5px 20px;
   overflow-x: hidden;
 }
 
 #search-results-section .my-form {
   border-radius: var(--border-radius);
-  border-bottom: 2px solid #eee;
   width: 100%;
   height: 460px;
   background-color: white;
   display: grid;
   grid-template-rows: 60% 30% 10%;
+  box-shadow: 0 0 5px lightgray;
 }
 
 #search-results-section .results-box-img {
@@ -2335,6 +2340,7 @@ iframe{
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #eee;
 }
 
 #search-results-section .results-box-img i{
