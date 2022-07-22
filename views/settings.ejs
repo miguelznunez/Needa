@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/toast.ejs") %>
-<%- include("partials/front-end-toast.ejs") %>
+<%- include("partials/backend-toast.ejs") %>
+<%- include("partials/frontend-toast.ejs") %>
 
   <!-- CONNECT FLASH MESSAGE -->
 
@@ -39,7 +39,9 @@
         <a href="/settings" class="menu-item is-active">Edit profile</a>
         <a href="/settings/showcase" class="menu-item">Upload images</a>
         <a href="/settings/account" class="menu-item">Delete account</a>
-        <a href="#" class="menu-item">Feed</a>
+        <a href="/feed" class="menu-item">Live feed</a>
+        <a href="/my-posts" class="menu-item">My Posts</a>
+        <a href="/add-new" class="menu-item">Add New</a>
       </nav>
     </aside>
       
@@ -55,7 +57,8 @@
         </div>
       </div>
   
-      <div id="settingsSection">
+      <div id="settingsSection" class="flex-column-gap-20">
+        <h2>Edit profile</h2>
         <div class="forms-container">
 
           <form action="/auth/settings" method="POST" class="settings-col-2" enctype="multipart/form-data">

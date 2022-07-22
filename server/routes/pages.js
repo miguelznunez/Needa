@@ -35,7 +35,8 @@ function checkBrowser(headers){
   else return false
 }
 
-// GET ROUTES ==============================================================
+
+// USER HAS ACCESS TO THESE ROUTES ANYTIME
 
 router.get("/", authController.isLoggedIn, (req, res) => {
   if(!checkBrowser(req.headers))
@@ -57,6 +58,87 @@ router.get("/contact", authController.isLoggedIn, (req, res) => {
   else
     return res.render("unsupported", {title: "Needa | Home", user : req.user});
 });
+
+router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers) && req.user){
+    db.query("SELECT * FROM user WHERE id = ?", [req.params.id], (err1, result1) => {
+      if(!err1) {
+        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
+          if(!err2) {
+            db.query("SELECT * FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
+              if(!err3){
+                const r2 = (result2[0].id === null) ? null : result2;
+                const r3 = (result3[0] === undefined) ? null : true;
+                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), usersFollowing:r2, isFollowing:r3});
+              } else {
+                return console.log(err3.message);
+              }
+           });
+          } else {
+            return console.log(err2.message);
+          }
+        })
+      } else {
+        return console.log(err1.message);
+      } 
+    })
+  } else if(!checkBrowser(req.headers) && !req.user) {
+    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err1, rows) => {
+      if(!err1 && rows[0] !== undefined) {
+        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
+          if(!err2) {
+            const r2 = (result2[0].id === null) ? null : result2;
+            return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos), usersFollowing:r2, isFollowing:false })
+          } else {
+            return console.log(err2.message);
+          }
+        })
+      } else if(rows[0] === undefined) {
+        return res.redirect("/");
+      } else { 
+        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err1.message} );
+      }
+    });
+  } else {
+    return res.redirect("/login");
+  }
+});
+
+router.get("/profile-photo/:id/:key", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.params.id, req.params.key);
+    readStream.pipe(res);
+  }else {
+    return res.redirect("/login");
+  }
+});
+
+router.get("/cover-photo/:id/:key", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.params.id, req.params.key);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
+
+router.get("/showcase-photo/:id/:key", authController.isLoggedIn, (req, res) => {
+  if(!checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.params.id, req.params.key);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
+
+router.get("/user-photo/:id/:key", (req, res) => {
+  if(!checkBrowser(req.headers)){
+    const readStream = s3.getImageStream(req.params.id, req.params.key);
+    readStream.pipe(res);
+  }else 
+    return res.redirect("/login");
+});
+
+
+// USER MUST NOT HAVE ACCESS TO THESE ROUTES WHEN THEY ARE LOGGED IN
 
 router.get("/register", authController.isLoggedIn, (req, res) => {
   // If user IS NOT logged in show the page otherwise redirect to the home page
@@ -128,7 +210,15 @@ router.get("/password-reset-update/:id/:token", authController.isLoggedIn, async
   }
 });
 
-// USER MUST BE LOGGED IN TO USE THESE ROUTES
+
+// USER MUST BE LOGGED IN TO ACCESS THESE ROUTES
+
+router.get("/dashboard", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers))
+    return res.render("dashboard", {title: "Needa | Dashboard", user : req.user} );
+  else
+    return res.redirect("/login");
+});
 
 router.get("/profile", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
@@ -142,20 +232,6 @@ router.get("/profile", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/feed", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers)) {
-    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
-      if(!err){
-        return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result} );
-      } else {
-        return res.render("feed", {title: "Needa | Feed", user : req.user, message:err.message} );
-      }
-    })
-  } else {
-    return res.redirect("/login");
-  }
-})
-
 router.get("/settings", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
   if(req.user && !checkBrowser(req.headers)) {
@@ -165,8 +241,6 @@ router.get("/settings", authController.isLoggedIn, (req, res) => {
   else 
     return res.redirect("/login");
 });
-
-
 
 router.get("/settings/account", authController.isLoggedIn, (req, res) => {
   // If user IS logged in show the page otherwise redirect to the home page
@@ -186,98 +260,72 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
   }
 });
 
-router.get("/dashboard", authController.isLoggedIn, (req, res) => {
-  if(req.user && !checkBrowser(req.headers))
-    return res.render("dashboard", {title: "Needa | Dashboard", user : req.user} );
-  else
-    return res.redirect("/login");
-});
-
-router.get("/search-results-user-profile/:id", authController.isLoggedIn, (req, res) => {
-  if(!checkBrowser(req.headers) && req.user){
-    db.query("SELECT * FROM user WHERE id = ?", [req.params.id], (err1, result1) => {
-      if(!err1) {
-        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
-          if(!err2) {
-            db.query("SELECT * FROM following WHERE id = ? AND following_id = ?", [req.user.id, req.params.id], (err3, result3) => { 
-              if(!err3){
-                const r2 = (result2[0].id === null) ? null : result2;
-                const r3 = (result3[0] === undefined) ? null : true;
-                return res.render("user-profile", {title: "Needa | View User", user:req.user, rows: result1, website:cropWebURL(result1[0].website), twitter:cropSocialURL(result1[0].twitter), instagram:cropSocialURL(result1[0].instagram), facebook:cropSocialURL(result1[0].facebook), linkedin:cropSocialURL(result1[0].linkedin), tags:JSON.parse(result1[0].tags), showcasePhotos:JSON.parse(result1[0].showcase_photos), usersFollowing:r2, isFollowing:r3});
-              } else {
-                return console.log(err3.message);
-              }
-           });
-          } else {
-            return console.log(err2.message);
-          }
-        })
+router.get("/feed", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)) {
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
+      if(!err){
+        return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result} );
       } else {
-        return console.log(err1.message);
-      } 
-    })
-  } else if(!checkBrowser(req.headers) && !req.user) {
-    db.query("SELECT * FROM user WHERE id = ?",[req.params.id], (err1, rows) => {
-      if(!err1 && rows[0] !== undefined) {
-        db.query("SELECT u2.profile_photo, u2.id FROM user u1 LEFT JOIN following ON u1.id = following.id LEFT JOIN user u2 ON u2.id=following.following_id WHERE u1.id = ?", [req.params.id], (err2, result2) => {
-          if(!err2) {
-            const r2 = (result2[0].id === null) ? null : result2;
-            return res.render("user-profile", {title: "Needa | View User", rows: rows, tags:JSON.parse(rows[0].tags), showcasePhotos:JSON.parse(rows[0].showcase_photos), usersFollowing:r2, isFollowing:false })
-          } else {
-            return console.log(err2.message);
-          }
-        })
-      } else if(rows[0] === undefined) {
-        return res.redirect("/");
-      } else { 
-        return res.render("index", {title: "Needa |Login", user : req.user, type:"error", message: err1.message} );
+        return res.render("feed", {title: "Needa | Feed", user : req.user, message:err.message} );
       }
-    });
+    })
   } else {
     return res.redirect("/login");
   }
 });
 
-
-// PHOTO ROUTES
-
-router.get("/profile-photo/:id/:key", authController.isLoggedIn, (req, res) => {
-  if(!checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.params.id, req.params.key);
-    readStream.pipe(res);
-  }else {
+router.get("/add-new", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)) {
+    const flashSuccess = req.flash("success");
+    const flashError = req.flash("error");
+    return res.render("add-new", {title: "Needa | Add New", user : req.user, flashSuccess, flashError} );
+  } else {
     return res.redirect("/login");
   }
 });
 
-router.get("/cover-photo/:id/:key", authController.isLoggedIn, (req, res) => {
-  if(!checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.params.id, req.params.key);
-    readStream.pipe(res);
-  }else 
+router.get("/my-posts", authController.isLoggedIn, (req, res) => {
+  if(req.user && !checkBrowser(req.headers)) {
+    db.query("SELECT * FROM postings WHERE id = ?", [req.user.id], (err, result) => {
+      if(!err){
+        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, rows:result} );
+      } else {
+        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, message:err.message} );
+      }
+    })
+  } else {
     return res.redirect("/login");
+  }
 });
 
-router.get("/showcase-photo/:id/:key", authController.isLoggedIn, (req, res) => {
-  if(!checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.params.id, req.params.key);
-    readStream.pipe(res);
-  }else 
-    return res.redirect("/login");
+router.get("/updatePosts", async (req, res) => {
+  let sql;
+  let sqlParams;
+  let data = { title:req.query.title, post:req.query.message};
+  switch (req.query.action) {
+   case "add": sql = "UPDATE postings SET ? WHERE postId = ?";
+               sqlParams = [data, req.query.postId];
+               break;
+   case "delete": sql = "DELETE FROM postings WHERE postId = ?";
+               sqlParams = [req.query.text];
+               break;
+ }//switch
+  let rows = await executeSQL(sql, sqlParams);
+  res.send(rows.affectedRows.toString());
 });
 
-router.get("/user-photo/:id/:key", (req, res) => {
-  if(!checkBrowser(req.headers)){
-    const readStream = s3.getImageStream(req.params.id, req.params.key);
-    readStream.pipe(res);
-  }else 
-    return res.redirect("/login");
-});
+// Execute mysql query
+async function executeSQL(sql, params){
+ return new Promise (function (resolve, reject) {
+   db.query(sql, params, function (err, rows, fields) {
+     if (err) throw err;
+     resolve(rows);
+  });
+ });
+}
 
 
-// ADMIN CRUD SYSTEM =======================================================================
-
-// USER MUST BE LOGGED IN AND BE AN ADMIN TO USE THESE ROUTES
+// USER MUST BE LOGGED IN AND BE AN ADMIN TO ACCESS THESE ROUTES
 
 router.get("/admin", authController.isLoggedIn, (req, res) => {
   if(req.user.admin === "Yes" && !checkBrowser(req.headers)) {

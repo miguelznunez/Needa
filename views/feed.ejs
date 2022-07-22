@@ -1,149 +1,113 @@
 <%- include("partials/header.ejs") %>
-<%- include("partials/front-end-toast.ejs") %>
+<%- include("partials/frontend-toast.ejs") %>
 
-<section id="feed-section">
+  <div class="app">
 
-  <div class="container">
-      <div class="feed-main-wrapper">
+    <aside class="sidebar">
+      <h2>MAIN</h2>
+      <nav class="menu">
+        <a href="/dashboard" class="menu-item">Dashboard</a>
+        <a href="/settings" class="menu-item">Edit profile</a>
+        <a href="/settings/showcase" class="menu-item">Upload images</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
+        <a href="/feed" class="menu-item is-active">Live feed</a>
+        <a href="/my-posts" class="menu-item">My Posts</a>
+        <a href="/add-new" class="menu-item">Add New</a>
+      </nav>
+    </aside>
 
-        <div class="feed-column">
-          <div class="feed-col-1-box-1">
-           
+    <main class="content">
 
-            <% if(user.profile_photo) { %>
-              <div class="profile-photo"
-                style="background-image: url('http://localhost:5000/profile-photo/<%= user.id %>/<%= user.profile_photo%>');">
-              </div>
-            <% } else { %>
-              <div class="profile-photo">
-                <i class="fas fa-user" id="fa-user"></i>
-              </div>
-            <% } %>
-          
-            <div class="profile-identity flex-column-gap-10">
-              <h1>
-                <%= user.first_name%>
-                  <%= user.last_name%>
-              </h1>
-              <h2>
-                <%= user.profession%>
-              </h2>
-              <% if(user.city && user.state) { %>
-                <h3>
-                  <i class="fas fa-map-marker-alt"></i>
-                  <%= user.city %>, <%= user.state%>
-                      <%= user.zip %>
-                </h3>
-              <% } else if (user.city || user.state) { %>
-                <h3>
-                  <i class="fas fa-map-marker-alt"></i>
-                  <%= user.city %>
-                  <%= user.state%>
-                  <%= user.zip %>
-                </h3>
-              <% } %>
-            </div>
-          </div>
-        </div>
-
-        <div class="feed-column">
-          <div class="post flex-column-gap-20">
-            <h1>Create a post</h1>
-
-            <div class="flex-row-gap-20">
-              <% if(user.profile_photo) { %>
-                <div class="image"
-                  style="background-image: url('http://localhost:5000/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
-                </div>
-              <% } else { %>
-                <div class="image">          
-                  <i class="fas fa-user" id="fa-user"></i>
-                </div>
-              <% } %>
-
-              <div class="flex-row-gap-5" style="align-items: center;">
-                <h2>
-                  <%= user.first_name %>
-                </h2>
-                <h2>
-                  <%= user.last_name %>
-                </h2>
-              </div>
-            </div>
-
-            <form action="/auth/post" method="POST">
-              <textarea name="post" id="post" placeholder="Share what you need help with..."></textarea>
-              <div class="post-footer">
-                <div class="flex-row-gap-15">
-                  <i class="fa-solid fa-image"></i>
-                  <i class="fa-brands fa-youtube"></i>
-                </div>
-                <button id="post-btn" type="submit">Post</button>
-              </div>
-            </form>
-          </div>
-
-          <% if(rows) { %>
-            <% for(let i = 0;i < rows.length;i++) { %>
-              <div class="post flex-column-gap-20">
-
-              <% if(rows[i].profile_photo) { %>
-
-                <div style="display:flex;justify-content:space-between;">
-                  <div class="image"
-                    style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
-                  </div>
-                  <% if(rows[i].id === user.id) { %>
-                  <i class="fa-solid fa-trash"></i>
-                  <% } %>
-                </div>
-
-                <div class="flex-row-gap-5" style="align-items: center;">
-                  <h2>
-                    <%= rows[i].first_name %>
-                  </h2>
-                  <h2>
-                    <%= rows[i].last_name %>
-                  </h2>
-                </div>
-
-              <% } else { %>
-
-                <div style="display:flex;justify-content:space-between;">
-                  <div class="image">
-                    <i class="fas fa-user" id="fa-user"></i>
-                  </div>
-                  <% if(rows[i].id===user.id) { %>
-                    <i class="fa-solid fa-trash"></i>
-                  <% } %>
-                </div>
-
-                <div class="flex-row-gap-5" style="align-items: center;">
-                  <h2>
-                    <%= rows[i].first_name %>
-                  </h2>
-                  <h2>
-                    <%= rows[i].last_name %>
-                  </h2>
-                </div>
-              <% } %>
-                <p><%= rows[i].city%>, <%= rows[i].state %></p>
-                <p><%= rows[i].date %></p>
-                <p><%= rows[i].post %></p>
-              </div>
-            <% } %>
-          <% } %>
-
-        </div>
-        <div class="feed-column">
-          <div style="height: 300px;background-color: whitesmoke;border-radius:5px;box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);">
-
+      <div class="hamburger-container">
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
           </div>
         </div>
       </div>
-  </div>
 
-</section>
+
+      <div id="feed-section">
+        <div class="feed-main flex-column-gap-20">
+
+          <div class="feed-header">
+            <h2>Live feed</h2>
+            <p>Location: <span><%= user.county %></span></p>
+          </div>
+          
+          <div class="feed-wrapper">
+            <div class="feed-column">
+              <% if(rows) { %>
+                <% for(let i=0;i < rows.length;i++) { %>
+                  <div class="post flex-column-gap-20">
+        
+                    <% if(rows[i].profile_photo) { %>
+        
+                      <div style="display:flex;justify-content:space-between;">
+                        <div class="image"
+                          style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                        </div>
+                        <% if(rows[i].id===user.id) { %>
+                          <i class="fa-solid fa-trash"></i>
+                        <% } %>
+                      </div>
+        
+                      <div class="flex-row-gap-5" style="align-items: center;">
+                        <h3>
+                          <%= rows[i].first_name %>
+                        </h3>
+                        <h3>
+                          <%= rows[i].last_name %>
+                        </h3>
+                      </div>
+        
+                      <% } else { %>
+        
+                        <div style="display:flex;justify-content:space-between;">
+                          <div class="image">
+                            <i class="fas fa-user" id="fa-user"></i>
+                          </div>
+                          <% if(rows[i].id===user.id) { %>
+                            <i class="fa-solid fa-trash"></i>
+                          <% } %>
+                        </div>
+        
+                        <div class="flex-row-gap-5" style="align-items: center;">
+                          <h3>
+                            <%= rows[i].first_name %>
+                          </h3>
+                          <h3>
+                            <%= rows[i].last_name %>
+                          </h3>
+                        </div>
+                        <% } %>
+                          <p>
+                            <%= rows[i].city%>, <%= rows[i].state %>
+                          </p>
+                          <p>
+                            <%= rows[i].date %>
+                          </p>
+                          <p>
+                            <%= rows[i].post %>
+                          </p>
+                  </div>
+                  <% } %>
+                    <% } %>
+        
+            </div>
+            <div class="feed-column">
+              <div
+                style="height: 300px;background-color: white;border-radius:5px;box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);">
+        
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
 
   <script src="/js/script.js"></script>
@@ -158,4 +122,6 @@
     </script>
   <% } %>
 
-<%- include("partials/footer.ejs") %>
+</body>
+
+</html>

@@ -50,6 +50,7 @@ CREATE TABLE `postings` (
  `postId` INT UNSIGNED AUTO_INCREMENT,
  `id` INT UNSIGNED NOT NULL,
  `date` TINYTEXT NOT NULL,
+ `title`  VARCHAR(100) NOT NULL,
  `post` TEXT NOT NULL,
  `county` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`postId`),

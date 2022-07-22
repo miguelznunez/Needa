@@ -1,0 +1,226 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/backend-toast.ejs") %>
+<%- include("partials/frontend-toast.ejs") %>
+
+  <div class="app">
+
+    <aside class="sidebar">
+      <h2>MAIN</h2>
+      <nav class="menu">
+        <a href="/dashboard" class="menu-item">Dashboard</a>
+        <a href="/settings" class="menu-item">Edit profile</a>
+        <a href="/settings/showcase" class="menu-item">Upload images</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
+        <a href="/feed" class="menu-item">Live feed</a>
+        <a href="/my-posts" class="menu-item is-active">My Posts</a>
+        <a href="/add-new" class="menu-item">Add New</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+
+      <div class="hamburger-container">
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="my-posts-section">
+        <div class="flex-column-gap-20">
+          <h2>My posts</h2>
+
+          <% if(rows) { %>
+            <% for(let i=0;i < rows.length;i++) { %>
+              <div class="post flex-column-gap-10">
+                <div class="post-date">
+                    <p>
+                      <%= rows[i].date %>
+                    </p>
+                    <div class="post-data flex-row-gap-10">
+
+                      <input type="hidden" value="<%= rows[i].postId %>">
+
+                      
+                      <div class="dropdown" data-dropdown>
+
+                          <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
+                          <div class="dropdown-menu">
+
+                            <div class="delUpdate">
+                              <div class="delete-post dropdown-links">
+                                <button><i class="fa-solid fa-trash"></i>
+                                  <p>Delete</p>
+                                </button>
+                              </div>
+                              <div class="update-post dropdown-links">
+                                <button><i class="fa-solid fa-pencil"></i>
+                                  <p>Update</p>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div class="saveCancel">
+                              <div class="save-post dropdown-links">
+                                <button><i class="fa-solid fa-floppy-disk"></i>
+                                  <p>Save</p>
+                                </button>
+                              </div>
+                              <div class="cancel-post dropdown-links">
+                                <button><i class="fa-solid fa-xmark"></i>
+                                  <p>Cancel</p>
+                                </button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                      <!-- <div class="delUpdate">
+                        <div class="delete-post flex-row-center-gap-10">
+                          <button><i class="fa-solid fa-trash"></i>
+                            <p>Delete</p>
+                          </button>
+                        </div>
+                        <div class="update-post flex-row-center-gap-10">
+                          <button><i class="fa-solid fa-pencil"></i>
+                            <p>Update</p>
+                          </button>
+                        </div>
+                      </div> -->
+
+                      <!-- <div class="saveCancel">
+                        <div class="save-post flex-row-center-gap-10">
+                          <button><i class="fa-solid fa-floppy-disk"></i>
+                            <p>Save</p>
+                          </button>
+                        </div>
+                        <div class="cancel-post flex-row-center-gap-10">
+                          <button><i class="fa-solid fa-xmark"></i>
+                            <p>Cancel</p>
+                          </button>
+                        </div>
+                      </div>   -->
+                    </div>
+                </div>
+
+                <div class="post-inputs flex-column-gap-10">
+                  <input type="text" value="<%= rows[i].title %>" disabled>
+                  <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
+                </div>
+
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/toast-front-end.js"></script>
+  <script src="/js/header-form-authentication.js"></script>
+
+  <script>
+    const userCity = "<%= user.city %>";
+    const userState = "<%= user.state %>";
+    document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+  </script>
+
+  <script>
+
+    // TITLES AND MESSAGES FROM DB
+    const rows = JSON.parse('<%-JSON.stringify(rows)%>');
+    let title = [];
+    let message = [];
+    rows.forEach(r => {
+      title.push(r.title);
+      message.push(r.post);
+    });
+
+    // ACCESS ALL SAVE/CANCEL and DELETE/UPDATE
+    const saveCancel = document.querySelectorAll(".saveCancel");
+    const delUpdate = document.querySelectorAll(".delUpdate");
+
+    // ACCESS ALL HIDDEN INPUTS AND TEXTAREAS 
+    const titleInput = document.querySelectorAll(".post-inputs input");
+    const messageInput = document.querySelectorAll(".post-inputs textarea");
+
+    // SHOW SAVE/CANCEL BUTTONS WHEN THE USER CLICKS THE UPDATE BUTTON
+    const updateButton = document.querySelectorAll(".update-post button");
+
+    updateButton.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        saveCancel[i].style.display = "block";
+        delUpdate[i].style.display = "none";
+        titleInput[i].disabled = false;
+        titleInput[i].style.border = "1px dotted lightgray";
+        titleInput[i].style.backgroundColor = "#F7F9FB";
+        messageInput[i].disabled = false;
+        messageInput[i].style.border = "1px dotted lightgray";
+        messageInput[i].style.backgroundColor = "#F7F9FB";
+      });
+    });
+
+    // SHOW DELETE/UPDATE BUTTONS WHEN THE USER CLICKS THE CANCEL BUTTON
+    const cancelButton = document.querySelectorAll(".cancel-post button");
+
+    cancelButton.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        saveCancel[i].style.display = "none";
+        delUpdate[i].style.display = "block";
+        titleInput[i].disabled = true;
+        titleInput[i].style.border = "none";
+        titleInput[i].style.backgroundColor = "white";
+        messageInput[i].disabled = true;
+        messageInput[i].style.border = "none";
+        messageInput[i].style.backgroundColor = "white";
+        titleInput[i].value = title[i];
+        messageInput[i].value = message[i];
+      });
+    });
+
+    // DELETE A POST
+    const postId = document.querySelectorAll(".post-data input");
+    const delButtons = document.querySelectorAll(".delete-post button");
+
+    delButtons.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        deletePost("delete", postId[i].value);
+      });
+    });
+
+    async function deletePost(action, postId) {
+      let url = `/updatePosts?action=${action}&text=${postId}`;
+      await fetch(url);
+      location.reload();
+    }
+
+    // UPDATE A POST
+    const saveButtons = document.querySelectorAll(".save-post button");
+    saveButtons.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        if(titleInput[i].value && messageInput[i].value)
+          updatePost("add", postId[i].value, titleInput[i].value, messageInput[i].value);
+        else
+          displayToast("error", "Fields cannot be empty.")
+
+      });
+    });
+
+    async function updatePost(action, postId, title, message) {
+      let url = `/updatePosts?action=${action}&postId=${postId}&title=${title}&message=${message}`;
+      await fetch(url);
+      location.reload();
+    }
+
+  </script>
+
+</body>
+
+</html>
