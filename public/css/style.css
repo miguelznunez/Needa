@@ -2842,7 +2842,7 @@ iframe{
 
 #my-posts-section .dropdown-links{
   width: 100%;
-  padding: 0 5px;
+  padding: 10px 5px;
   z-index: 5;
   border-radius: none;
 }
@@ -2888,9 +2888,26 @@ iframe{
   display: none;
 }
 
+#my-posts-section .image{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+}
+  
+#my-posts-section .image i {
+  color: black;
+  font-size: 1rem;
+}
+
 /* ADD NEW */
 
-#add-new-section .image {
+/* #add-new-section .image {
   height: 80px;
   width: 80px;
   border-radius: 50%;
@@ -2946,7 +2963,7 @@ iframe{
   width: 150px;
   color: white;
   background-color: var(--color);
-}
+} */
 /* FEED */
 
 #feed-section .feed-header{

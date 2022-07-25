@@ -12,7 +12,6 @@
         <a href="/settings/account" class="menu-item">Delete account</a>
         <a href="/feed" class="menu-item is-active">Live feed</a>
         <a href="/my-posts" class="menu-item">My Posts</a>
-        <a href="/add-new" class="menu-item">Add New</a>
       </nav>
     </aside>
 
@@ -39,15 +38,32 @@
           
           <div class="feed-wrapper">
             <div class="feed-column">
+              <div id="add-new-section">
+                <div class="feed-column">
+                  <div class="post flex-column-gap-20">
+                    <h2>Add new post</h2>
+                    <form action="/auth/add-new" method="POST">
+                      <input type="text" name="title" placeholder="Title" maxlength="100" required>
+                      <textarea name="post" id="post" placeholder="Tell users what you need help with..." maxlength="1000"
+                        required></textarea>
+                      <div class="post-footer">
+                        <button id="post-btn" type="submit">Post</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+
               <% if(rows) { %>
                 <% for(let i=0;i < rows.length;i++) { %>
                   <div class="post flex-column-gap-20">
-        
                     <% if(rows[i].profile_photo) { %>
         
                       <div style="display:flex;justify-content:space-between;">
                         <div class="image"
-                          style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                          style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
                         </div>
                         <% if(rows[i].id===user.id) { %>
                           <i class="fa-solid fa-trash"></i>
@@ -63,38 +79,41 @@
                         </h3>
                       </div>
         
-                      <% } else { %>
-        
-                        <div style="display:flex;justify-content:space-between;">
-                          <div class="image">
-                            <i class="fas fa-user" id="fa-user"></i>
-                          </div>
-                          <% if(rows[i].id===user.id) { %>
-                            <i class="fa-solid fa-trash"></i>
-                          <% } %>
+                    <% } else { %>
+                      <div style="display:flex;justify-content:space-between;">
+                        <div class="image">
+                          <i class="fas fa-user" id="fa-user"></i>
                         </div>
-        
-                        <div class="flex-row-gap-5" style="align-items: center;">
-                          <h3>
-                            <%= rows[i].first_name %>
-                          </h3>
-                          <h3>
-                            <%= rows[i].last_name %>
-                          </h3>
-                        </div>
+                        <% if(rows[i].id===user.id) { %>
+                          <i class="fa-solid fa-trash"></i>
                         <% } %>
-                          <p>
-                            <%= rows[i].city%>, <%= rows[i].state %>
-                          </p>
-                          <p>
-                            <%= rows[i].date %>
-                          </p>
-                          <p>
-                            <%= rows[i].post %>
-                          </p>
-                  </div>
-                  <% } %>
+                      </div>
+                      <div class="flex-row-gap-5" style="align-items: center;">
+                        <h3>
+                          <%= rows[i].first_name %>
+                        </h3>
+                        <h3>
+                          <%= rows[i].last_name %>
+                        </h3>
+                      </div>
                     <% } %>
+
+
+                    <p>
+                      <%= rows[i].city%>, <%= rows[i].state %>
+                    </p>
+                    <p>
+                      <%= rows[i].date %>
+                    </p>
+                    <h4>
+                      <%= rows[i].title %>
+                    </h4>
+                    <p>
+                      <%= rows[i].post %>
+                    </p>
+                  </div>
+              <% } %>
+            <% } %>
         
             </div>
             <div class="feed-column">

@@ -13,7 +13,6 @@
         <a href="/settings/account" class="menu-item">Delete account</a>
         <a href="/feed" class="menu-item">Live feed</a>
         <a href="/my-posts" class="menu-item is-active">My Posts</a>
-        <a href="/add-new" class="menu-item">Add New</a>
       </nav>
     </aside>
 
@@ -36,76 +35,85 @@
           <% if(rows) { %>
             <% for(let i=0;i < rows.length;i++) { %>
               <div class="post flex-column-gap-10">
-                <div class="post-date">
-                    <p>
-                      <%= rows[i].date %>
-                    </p>
-                    <div class="post-data flex-row-gap-10">
 
-                      <input type="hidden" value="<%= rows[i].postId %>">
-
-                      
-                      <div class="dropdown" data-dropdown>
-
-                          <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
-                          <div class="dropdown-menu">
-
-                            <div class="delUpdate">
-                              <div class="delete-post dropdown-links">
-                                <button><i class="fa-solid fa-trash"></i>
-                                  <p>Delete</p>
-                                </button>
-                              </div>
-                              <div class="update-post dropdown-links">
-                                <button><i class="fa-solid fa-pencil"></i>
-                                  <p>Update</p>
-                                </button>
-                              </div>
-                            </div>
-
-                            <div class="saveCancel">
-                              <div class="save-post dropdown-links">
-                                <button><i class="fa-solid fa-floppy-disk"></i>
-                                  <p>Save</p>
-                                </button>
-                              </div>
-                              <div class="cancel-post dropdown-links">
-                                <button><i class="fa-solid fa-xmark"></i>
-                                  <p>Cancel</p>
-                                </button>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-
-                      <!-- <div class="delUpdate">
-                        <div class="delete-post flex-row-center-gap-10">
-                          <button><i class="fa-solid fa-trash"></i>
-                            <p>Delete</p>
-                          </button>
-                        </div>
-                        <div class="update-post flex-row-center-gap-10">
-                          <button><i class="fa-solid fa-pencil"></i>
-                            <p>Update</p>
-                          </button>
-                        </div>
-                      </div> -->
-
-                      <!-- <div class="saveCancel">
-                        <div class="save-post flex-row-center-gap-10">
-                          <button><i class="fa-solid fa-floppy-disk"></i>
-                            <p>Save</p>
-                          </button>
-                        </div>
-                        <div class="cancel-post flex-row-center-gap-10">
-                          <button><i class="fa-solid fa-xmark"></i>
-                            <p>Cancel</p>
-                          </button>
-                        </div>
-                      </div>   -->
+                <% if(rows[i].profile_photo) { %>
+      
+                  
+                  <div style="display: flex;justify-content:space-between;">
+                    <div class="image"
+                      style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
                     </div>
+
+                    <div class="post-data flex-row-gap-10">
+                    
+                      <input type="hidden" value="<%= rows[i].postId %>">
+                    
+                    
+                      <div class="dropdown" data-dropdown>
+                    
+                        <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
+                        <div class="dropdown-menu">
+                    
+                          <div class="delUpdate">
+                            <div class="update-post dropdown-links">
+                              <button><i class="fa-solid fa-pencil"></i>
+                                <p>Edit</p>
+                              </button>
+                            </div>
+                            <div class="delete-post dropdown-links">
+                              <button><i class="fa-solid fa-trash"></i>
+                                <p>Delete</p>
+                              </button>
+                            </div>
+                          </div>
+                    
+                          <div class="saveCancel">
+                            <div class="save-post dropdown-links">
+                              <button><i class="fa-solid fa-floppy-disk"></i>
+                                <p>Save</p>
+                              </button>
+                            </div>
+                            <div class="cancel-post dropdown-links">
+                              <button><i class="fa-solid fa-xmark"></i>
+                                <p>Cancel</p>
+                              </button>
+                            </div>
+                          </div>
+                    
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="flex-row-gap-5" style="align-items: center;">
+                    <h3>
+                      <%= rows[i].first_name %>
+                    </h3>
+                    <h3>
+                      <%= rows[i].last_name %>
+                    </h3>
+                  </div>
+                <% } else { %>
+                    <div class="image">
+                      <i class="fas fa-user" id="fa-user"></i>
+                    </div>
+                    <div class="flex-row-gap-5" style="align-items: center;">
+                      <h3>
+                        <%= rows[i].first_name %>
+                      </h3>
+                      <h3>
+                        <%= rows[i].last_name %>
+                      </h3>
+                    </div>
+                <% } %>
+
+
+
+
+                <div class="post-date">
+                  <p>
+                    <%= rows[i].date %>
+                  </p>
                 </div>
 
                 <div class="post-inputs flex-column-gap-10">

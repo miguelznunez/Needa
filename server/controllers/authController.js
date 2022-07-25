@@ -483,23 +483,11 @@ exports.isLoggedIn = async (req, res, next) => {
 
 exports.findProfessionals = (req, res) => {
   const profession = req.body.profession;
-  location = req.body.location;
-
-  // GRAB ANY ERRORS FROM EXPRESS VALIDATOR
-  const errors = validationResult(req),
-  allErrors = JSON.stringify(errors),
-  allParsedErrors = JSON.parse(allErrors);
-   // OUTPUT VALIDATION ERRORS IF ANY
-  if(!errors.isEmpty()){
-    return res.render("search-results", {
-      title: "Needa | Search Results",
-      allParsedErrors: allParsedErrors
-    })
-  }
+  location = req.body.location.trim().replace(/\s+/g, '');
 
   if(location.includes(",")) {
     const arrLocation = location.split(',');
-    queryLocation(req, res, profession, arrLocation[0], arrLocation[1].replace(/\s/g, ''), "");
+    queryLocation(req, res, profession, arrLocation[0], arrLocation[1], "");
   } else {
     queryLocation(req, res, profession, "", "", location);
   }
@@ -574,10 +562,10 @@ exports.addNew = (req, res) => {
    db.query("INSERT INTO postings (id, date, title, post, county) VALUES (?,?,?,?,?)", [req.user.id, date, title, post, req.user.county], async (err, results) => {
     if(!err){
       req.flash("success", "Post was added successfully.");
-      return res.redirect("/add-new"); 
+      return res.redirect("/feed"); 
     } else {
       req.flash("error", err.message);
-      return res.redirect("/add-new");
+      return res.redirect("/feed");
     }
   });
 }

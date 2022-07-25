@@ -262,7 +262,7 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
 
 router.get("/feed", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
-    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
       if(!err){
         return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result} );
       } else {
@@ -286,7 +286,7 @@ router.get("/add-new", authController.isLoggedIn, (req, res) => {
 
 router.get("/my-posts", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
-    db.query("SELECT * FROM postings WHERE id = ?", [req.user.id], (err, result) => {
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.postId, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.id = ?", [req.user.id], (err, result) => {
       if(!err){
         return res.render("my-posts", {title: "Needa | My Posts", user : req.user, rows:result} );
       } else {
