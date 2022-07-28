@@ -44,11 +44,11 @@
                 <% if(rows[i].profile_photo) { %>
 
                   <div class="flex-row-gap-15" style="align-items:center;">
-                    <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image"
+                    <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>" class="image"
                       style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
                     </a>
                     <div class="flex-column-gap-5" style="gap: 0;">
-                      <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                      <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>">
                         <h4>
                           <%= rows[i].first_name %>
                             <%= rows[i].last_name %>
@@ -66,11 +66,11 @@
                 <% } else { %>
 
                   <div class="flex-row-gap-15">
-                    <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image">
+                    <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>" class="image">
                       <i class="fas fa-user" id="fa-user"></i>
                     </a>
                     <div class="flex-column-gap-5" style="gap: 0;">
-                      <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                      <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>">
                         <h4>
                           <%= rows[i].first_name %>
                             <%= rows[i].last_name %>
