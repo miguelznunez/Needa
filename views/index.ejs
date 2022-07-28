@@ -172,13 +172,11 @@
       e.preventDefault();
       const isValidProfession = /^[a-zA-Z][a-zA-Z\s]*$/.test(document.querySelector("#home-search").value);
       const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(document.querySelector("#home-location").value);
-      
-      const isValidCityState = /^[A-Za-z]+,[ ]?[A-Za-z]{0,2}$/.test(document.querySelector("#home-location").value);
-
+      const isValidCityState = /^[a-zA-Z\s]+,[ ]?[a-zA-Z]{0,2}$/.test(document.querySelector("#home-location").value);
       if ((isValidProfession && isValidZip) || (isValidProfession && isValidCityState))
         document.querySelector("#findProsForm").submit();
       else
-        displayToast("error", "Please enter a valid profession and/or location");
+        displayToast("error", "Please enter a valid profession and location");
     });
   </script>
 

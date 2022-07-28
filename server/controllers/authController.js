@@ -483,11 +483,10 @@ exports.isLoggedIn = async (req, res, next) => {
 
 exports.findProfessionals = (req, res) => {
   const profession = req.body.profession;
-  location = req.body.location.trim().replace(/\s+/g, '');
-
-  if(location.includes(",")) {
+  let location = req.body.location;
+  if(location.includes(",")){
     const arrLocation = location.split(',');
-    queryLocation(req, res, profession, arrLocation[0], arrLocation[1], "");
+    queryLocation(req, res, profession, arrLocation[0], arrLocation[1].replace(/\s+/g, ''), "");
   } else {
     queryLocation(req, res, profession, "", "", location);
   }
