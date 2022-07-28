@@ -58,235 +58,229 @@
   
       <div id="settingsSection" class="flex-column-gap-20">
         <h2>Edit profile</h2>
-        <div class="forms-container">
+          
+          <form action="/auth/settings" method="POST" enctype="multipart/form-data" class="settings-wrapper">
+            <div class="settings-wrapper-child-1">
 
-          <form action="/auth/settings" method="POST" class="settings-col-2" enctype="multipart/form-data">
-          
-            <div class="settings-col-2-wrapper">
-              <div class="settings-col-2-child">
-
-                <!-- BASIC INFO  -->
-          
-                <h3>Basic Info</h3>
-          
-                <!-- PROFILE PHOTO UPLOAD -->
-          
-                <div class="user-input">
-          
-                  <div class="flex-4">
-                    <label>Profile Photo</label>
-                    <i class="far fa-trash-alt" id="trashProfilePhoto"></i>
-                    <input type="hidden" name="deleteProfilePhoto" id="delProPhoto">
-                  </div>
-          
-                  <div class="profile-photo-container flex-2">
-                    <i class="fas fa-cloud-upload" id="uploadCloudPro"></i>
-                    <input type="file" id="profilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-          
+              <!-- BASIC INFO  -->
+        
+              <h3>Basic Info</h3>
+        
+              <!-- PROFILE PHOTO UPLOAD -->
+        
+              <div class="user-input">
+        
+                <div class="flex-4">
+                  <label>Profile Photo</label>
+                  <i class="far fa-trash-alt" id="trashProfilePhoto"></i>
+                  <input type="hidden" name="deleteProfilePhoto" id="delProPhoto">
                 </div>
-          
-                <!-- COVER PHOTO UPLOAD -->
-          
-                <div class="user-input">
-          
-                  <div class="flex-4">
-                    <label>Cover Photo</label>
-                    <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
-                    <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
-                  </div>
-          
-                  <div class="cover-photo-container flex-2">
-                    <i class="fas fa-cloud-upload" id="uploadCloudCov"></i>
-                    <input type="file" id="coverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
-                  </div>
-          
+        
+                <div class="profile-photo-container flex-2">
+                  <i class="fas fa-cloud-upload" id="uploadCloudPro"></i>
+                  <input type="file" id="profilePhoto" name="profile_photo" accept="image/jpeg, image/png, image/jpg">
                 </div>
-          
-                <!-- BASIC INFO  -->
-          
-                <div class="user-input">
-                  <label for="first_name">First name</label>
-                  <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"
-                    value="<%= user.first_name %>" maxlength="30" pattern="[A-Za-z]+" required>
-                </div>
-                <div class="user-input">
-                  <label for="last_name">Last name</label>
-                  <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>"
-                  maxlength="30" pattern="[A-Za-z]+" required>
-                </div>
-                <div class="user-input">
-                  <label for="city">City</label>
-                  <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
-                </div>
-                <div class="user-input">
-                  <label for="state">State</label>
-                  <select name="state" id="user-state" onchange="addCounties()">
-                    <option value="<%= user.state %>">
-                      <%= user.state %>
-                    </option>
-                  </select>
-                </div>
-                <div class="user-input">
-                  <Label for="zip_code">ZIP Code</Label>
-                  <input type="text" name="zip" maxlength="5" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>">
-                </div>
-                <div class="user-input">
-                  <Label for="county">County</Label>
-                  <select name="county" id="county" required>
-                    <option value="<%= user.county %>">
-                      <%= user.county %>
-                    </option>
-                  </select>
-                </div>
-                <div class="user-input">
-                  <% if(user.gender==="M" ) { %>
-                    <label for="gender">Gender</label>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
-                      <input type="radio" name="gender" value="M" checked>
-                      <label for="M">Male</label>
-                    </div>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
-                      <input type="radio" name="gender" value="F">
-                      <label for="F">Female</label>
-                    </div>
-                  <% } else if (user.gender==="F" ) { %>
-                    <label for="gender">Gender</label>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
-                      <input type="radio" name="gender" value="M">
-                      <label for="M">Male</label>
-                    </div>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
-                      <input type="radio" name="gender" value="F" checked>
-                      <label for="F">Female</label>
-                    </div>
-                  <% } else { %>
-                    <label for="gender">Gender</label>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 60px;">
-                      <input type="radio" name="gender" value="M">
-                      <label for="M">Male</label>
-                    </div>
-                    <div class="flex-row-aligncenter-gap-10" style="width: 78px;">
-                      <input type="radio" name="gender" value="F">
-                      <label for="F">Female</label>
-                    </div>
-                  <% } %>
-                </div>
-          
-          
-                <!-- ABOUT YOU  -->
-
-                <br>
-                <h3>About You</h3>
-                <div class="user-input" id="needa-search">
-                  <label for="profession">Profession / Occupation</label>
-                  <input type="text" name="profession" placeholder="E.g. Electrician" value="<%= user.profession %>"
-                    maxlength="50" pattern="[^\s][a-zA-Z ]+">
-                  <!-- <div id="match-list"></div> -->
-                </div>
-                <div class="user-input">
-                  <label for="about">About</label>
-                  <textarea name="about" placeholder="About me..." maxlength="255"><%= user.about %></textarea>
-                </div>
-                <div class="user-input">
-                  <label for="services">Services</label>
-                  <textarea name="services" placeholder="I offer the following services..."
-                    maxlength="1000"><%= user.services %></textarea>
-                </div>
-                <div class="user-input">
-                  <label for="skills">Skills</label>
-                  <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>"
-                    maxlength="500">
-                </div>
+        
               </div>
-          
-          
-              <!-- SOCIAL  -->
-          
-          
-              <div class="settings-col-2-child">
-                <h3>Social</h3>
-                <div class="user-input">
-                  <label for="website">Website</label>
-                  <input type="url" name="website" placeholder="https://johndoe.com" value="<%= user.website %>" maxlength="255">
+        
+              <!-- COVER PHOTO UPLOAD -->
+        
+              <div class="user-input">
+        
+                <div class="flex-4">
+                  <label>Cover Photo</label>
+                  <i class="far fa-trash-alt" id="trashCoverPhoto"></i>
+                  <input type="hidden" name="deleteCoverPhoto" id="delCovPhoto">
                 </div>
-                <div class="user-input">
-                  <label for="twitter">Twitter</label>
-                  <input type="url" name="twitter" placeholder="https://twitter.com/johndoe" value="<%= user.twitter %>"
-                    maxlength="39">
+        
+                <div class="cover-photo-container flex-2">
+                  <i class="fas fa-cloud-upload" id="uploadCloudCov"></i>
+                  <input type="file" id="coverPhoto" name="cover_photo" accept="image/jpeg, image/png, image/jpg">
                 </div>
-                <div class="user-input">
-                  <label for="instagram">Instagram</label>
-                  <input type="url" name="instagram" placeholder="https://instagram.com/johndoe" value="<%= user.instagram %>"
-                    maxlength="56">
-                </div>
-                <div class="user-input">
-                  <label for="facebook">Facebook</label>
-                  <input type="url" name="facebook" placeholder="https://facebook.com/johndoe" value="<%= user.facebook %>"
-                    maxlength="75">
-                </div>
-                <div class="user-input">
-                  <label for="linkedin">LinkedIn</label>
-                  <input type="url" name="linkedin" placeholder="https://www.linkedin.com/in/johndoe"
-                    value="<%= user.linkedin %>" maxlength="255">
-                </div>
-          
-          
-                <!-- PROFILE IDENTITY  -->
-          
-                <br>
-          
-                <h3>Profile identity</h3>
-                <div class="user-input">
-                  <label for="phone">Phone (XXX-XXX-XXXX)</label>
-                  <input type="tel" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
-                </div>
-                <div>
-                  <% if(user.display_phone==="Yes" ) { %>
-                    <input type="checkbox" value="Yes" name="display_phone" checked>
-                    <label for="display_phone">Display my phone number on profile page</label>
-                  <% } else { %>
-                      <input type="checkbox" value="Yes" name="display_phone">
-                      <label for="display_phone">Display my phone number on profile page</label>
-                  <% } %>
-                </div>
-                <div class="user-input">
-                  <label for="email">Email</label>
-                  <input type="email" name="email" placeholder="<%= user.email %>" disabled>
-                </div>
-                <div>
-                  <% if(user.display_email==="Yes" ) { %>
-                    <input type="checkbox" value="Yes" name="display_email" checked>
-                    <label for="display_email">Display my email on profile page</label>
-                  <% } else { %>
-                    <input type="checkbox" value="Yes" name="display_email">
-                    <label for="display_email">Display my email on profile page</label>
-                  <% } %>
-                </div>
-
-
-                <!-- TAGS -->
-
-                <br>
-                
-                <h3>Tags</h3>
-                <div class="user-input" style="z-index: 0;">
-                  <label for="tags">Enter up to 4 tags to help users find your profile</label>
-                  <div class="tags-container">
-                    <input name="tags" id="tags"></input>
+        
+              </div>
+        
+              <!-- BASIC INFO  -->
+        
+              <div class="user-input">
+                <label for="first_name">First name</label>
+                <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"
+                  value="<%= user.first_name %>" maxlength="30" pattern="[A-Za-z]+" required>
+              </div>
+              <div class="user-input">
+                <label for="last_name">Last name</label>
+                <input type="text" name="last_name" placeholder="Enter your last name" value="<%= user.last_name %>"
+                maxlength="30" pattern="[A-Za-z]+" required>
+              </div>
+              <div class="user-input">
+                <label for="city">City</label>
+                <input type="text" name="city" placeholder="Enter your city" value="<%= user.city %>" maxlength="60">
+              </div>
+              <div class="user-input">
+                <label for="state">State</label>
+                <select name="state" id="user-state" onchange="addCounties()">
+                  <option value="<%= user.state %>">
+                    <%= user.state %>
+                  </option>
+                </select>
+              </div>
+              <div class="user-input">
+                <Label for="zip_code">ZIP Code</Label>
+                <input type="text" name="zip" maxlength="5" pattern="[0-9]{5}" placeholder="Enter your zip code" value="<%= user.zip %>">
+              </div>
+              <div class="user-input">
+                <Label for="county">County</Label>
+                <select name="county" id="county" required>
+                  <option value="<%= user.county %>">
+                    <%= user.county %>
+                  </option>
+                </select>
+              </div>
+              <div class="user-input">
+                <% if(user.gender==="M" ) { %>
+                  <label for="gender">Gender</label>
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="M" checked>
+                    <label for="M">Male</label>
                   </div>
-                  
-                </div>                
-          
-                <div>
-                  <button type="submit" id="update-profile-btn">Update my profile</button>
-                </div>
-          
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="F">
+                    <label for="F">Female</label>
+                  </div>
+                <% } else if (user.gender==="F" ) { %>
+                  <label for="gender">Gender</label>
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="M">
+                    <label for="M">Male</label>
+                  </div>
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="F" checked>
+                    <label for="F">Female</label>
+                  </div>
+                <% } else { %>
+                  <label for="gender">Gender</label>
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="M">
+                    <label for="M">Male</label>
+                  </div>
+                  <div class="gender-radios flex-row-center-gap-10">
+                    <input type="radio" name="gender" value="F">
+                    <label for="F">Female</label>
+                  </div>
+                <% } %>
+              </div>
+        
+        
+              <!-- ABOUT YOU  -->
+
+              <br>
+              <h3>About You</h3>
+              <div class="user-input" id="needa-search">
+                <label for="profession">Profession / Occupation</label>
+                <input type="text" name="profession" placeholder="E.g. Electrician" value="<%= user.profession %>"
+                  maxlength="50" pattern="[^\s][a-zA-Z ]+">
+                <!-- <div id="match-list"></div> -->
+              </div>
+              <div class="user-input">
+                <label for="about">About</label>
+                <textarea name="about" placeholder="About me..." maxlength="255"><%= user.about %></textarea>
+              </div>
+              <div class="user-input">
+                <label for="services">Services</label>
+                <textarea name="services" placeholder="I offer the following services..."
+                  maxlength="1000"><%= user.services %></textarea>
+              </div>
+              <div class="user-input">
+                <label for="skills">Skills</label>
+                <input type="text" name="skills" placeholder="Carpentry, Electrical, Plumbing..." value="<%= user.skills %>"
+                  maxlength="500">
               </div>
             </div>
-          
+        
+        
+            <!-- SOCIAL  -->
+        
+        
+            <div class="settings-wrapper-child-2">
+              <h3>Social</h3>
+              <div class="user-input">
+                <label for="website">Website</label>
+                <input type="url" name="website" placeholder="https://johndoe.com" value="<%= user.website %>" maxlength="255">
+              </div>
+              <div class="user-input">
+                <label for="twitter">Twitter</label>
+                <input type="url" name="twitter" placeholder="https://twitter.com/johndoe" value="<%= user.twitter %>"
+                  maxlength="39">
+              </div>
+              <div class="user-input">
+                <label for="instagram">Instagram</label>
+                <input type="url" name="instagram" placeholder="https://instagram.com/johndoe" value="<%= user.instagram %>"
+                  maxlength="56">
+              </div>
+              <div class="user-input">
+                <label for="facebook">Facebook</label>
+                <input type="url" name="facebook" placeholder="https://facebook.com/johndoe" value="<%= user.facebook %>"
+                  maxlength="75">
+              </div>
+              <div class="user-input">
+                <label for="linkedin">LinkedIn</label>
+                <input type="url" name="linkedin" placeholder="https://www.linkedin.com/in/johndoe"
+                  value="<%= user.linkedin %>" maxlength="255">
+              </div>
+        
+        
+              <!-- PROFILE IDENTITY  -->
+        
+              <br>
+        
+              <h3>Profile identity</h3>
+              <div class="user-input">
+                <label for="phone">Phone (XXX-XXX-XXXX)</label>
+                <input type="tel" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= user.phone %>" maxlength="12">
+              </div>
+              <div>
+                <% if(user.display_phone==="Yes" ) { %>
+                  <input type="checkbox" value="Yes" name="display_phone" checked>
+                  <label for="display_phone">Display my phone number on profile page</label>
+                <% } else { %>
+                  <input type="checkbox" value="Yes" name="display_phone">
+                  <label for="display_phone">Display my phone number on profile page</label>
+                <% } %>
+              </div>
+              <div class="user-input">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="<%= user.email %>" disabled>
+              </div>
+              <div>
+                <% if(user.display_email==="Yes" ) { %>
+                  <input type="checkbox" value="Yes" name="display_email" checked>
+                  <label for="display_email">Display my email on profile page</label>
+                <% } else { %>
+                  <input type="checkbox" value="Yes" name="display_email">
+                  <label for="display_email">Display my email on profile page</label>
+                <% } %>
+              </div>
+
+
+              <!-- TAGS -->
+
+              <br>
+              
+              <h3>Tags</h3>
+              <div class="user-input" style="z-index: 0;">
+                <label for="tags">Enter up to 4 tags to help users find your profile</label>
+                <div class="tags-container">
+                  <input name="tags" id="tags"></input>
+                </div>
+                
+              </div>                
+        
+              <div>
+                <button type="submit" id="update-profile-btn">Update my profile</button>
+              </div>
+        
+            </div>
           </form>
-        </div>
 
       </div>
     </main>              
@@ -299,13 +293,11 @@
   <script src="/js/toast-front-end.js"></script>
   <script src="/js/header-form-authentication.js"></script>
   
-  <% if (typeof user !="undefined" && user) { %>
-    <script>
-      const userCity = "<%= user.city %>";
-      const userState = "<%= user.state %>";
-      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
-    </script>
-  <% } %>
+  <script>
+    const userCity = "<%= user.city %>";
+    const userState = "<%= user.state %>";
+    document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+  </script>
 
   <script>  
 

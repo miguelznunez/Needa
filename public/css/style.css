@@ -845,11 +845,6 @@ iframe{
 
 /* INDEX.EJS */
 
-
-/* #home-header.sticky {
-  background-color: white;
-} */
-
 #carousel {
   height: 650px;
   position: relative;
@@ -901,7 +896,6 @@ iframe{
 }
 
 #carousel .carousel-header-box-2 input {
-  /* font-size: 1rem; */
   width: 430px;
   padding: 19px;
 }
@@ -1520,8 +1514,6 @@ iframe{
 }
 
 /* END FAQS */
-
-
 
 
 /* CONTACT.EJS */
@@ -2483,27 +2475,18 @@ iframe{
   width: 100%;
 }
 
-#settingsSection .forms-container{
-  display: flex;
-  gap: 20px;
-  flex-direction: column;
-}
-
-#settingsSection .settings-col-2{
+#settingsSection form{
   width: 100%;
-  margin: auto;
-  border-radius: var(--border-radius);
-  /* padding: 20px 0; */
 }
 
-#settingsSection .settings-col-2-wrapper{
+#settingsSection .settings-wrapper{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
 }
 
-#settingsSection .settings-col-2-child {
-  /* padding: 18px; */
+#settingsSection .settings-wrapper-child-1,
+#settingsSection .settings-wrapper-child-2 {
   text-align: left;
   border-radius: var(--border-radius);
   display: flex;
@@ -2521,6 +2504,10 @@ iframe{
 #settingsSection .user-input select,
 #settingsSection .user-input textarea{
   width: 100%;
+}
+
+#settingsSection input[type="checkbox"]{
+  width: fit-content;
 }
 
 #settingsSection .user-input textarea{
@@ -2585,6 +2572,10 @@ iframe{
 
 #settingsSection .fa-cloud-upload{ 
   font-size: 1.4rem;
+}
+
+#settingsSection .gender-radios{
+  width: fit-content;
 }
 
 #settingsSection input[type=range] {
@@ -2668,9 +2659,7 @@ iframe{
 #settingsSection .tags-container{
   width: 100%;
   background-color: white;
-
 }
-
 
 /* SHOWCASE.EJS */
 
