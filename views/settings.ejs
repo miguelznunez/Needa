@@ -292,6 +292,7 @@
   <script src="/js/toast.js"></script>
   <script src="/js/toast-front-end.js"></script>
   <script src="/js/header-form-authentication.js"></script>
+  <script src="/js/statesCounties.js"></script>
   
   <script>
     const userCity = "<%= user.city %>";
@@ -301,152 +302,99 @@
 
   <script>  
 
-  // TAGS ==========================================
+    // TAGS ==========================================
 
-  const myTags = JSON.parse('<%-JSON.stringify(tags)%>');
-  const tags = document.querySelector("#tags");
-  let myTagsArray = [];
+    const myTags = JSON.parse('<%-JSON.stringify(tags)%>');
+    const tags = document.querySelector("#tags");
+    let myTagsArray = [];
 
-  for (let tag in myTags)
-    myTagsArray.push(myTags[tag]);
+    for (let tag in myTags)
+      myTagsArray.push(myTags[tag]);
 
-  const tagify = new Tagify(tags, {
-    maxTags: 4,
-    texts: {
-      duplicate: "Duplicates are not allowed"
-    }
-  });
-
-  tagify.addTags(myTagsArray);
-
-  // PROFILE PHOTO ==================================
-
-  const profilePhoto = document.querySelector("#profilePhoto"),
-  profilePhotoContainer = document.querySelector(".profile-photo-container"),
-  profile = "<%= user.profile_photo %>",
-  id = "<%= user.id %>";
-  uploadCloudPro = document.querySelector("#uploadCloudPro");
-
-  // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
-
-  if(profile) {
-    uploadCloudPro.style.opacity = "0";
-    profilePhoto.style.visibility = "hidden";
-    profilePhotoContainer.style.backgroundImage = `url(https://needa.online/profile-photo/${id}/${profile})`;
-  }
-
-  // IF THE USER DELETES THEIR PROFILE PHOTO DO THIS
-
-  document.querySelector("#trashProfilePhoto").addEventListener("click", () => {
-    profilePhoto.value = "";
-    profilePhoto.style.visibility = "visible";
-    profilePhotoContainer.style.backgroundImage = "none";
-    uploadCloudPro.style.opacity = "1";
-    document.querySelector("#delProPhoto").value = "delete";
-  })
-
-  // IF THE USER UPLOADS A NEW PHOTO DO THIS
-
-  profilePhoto.addEventListener('change', function () {
-    uploadCloudPro.style.opacity = "0";
-    profilePhoto.style.visibility = "hidden";
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      profilePhotoContainer.style.backgroundImage = `url(${reader.result})`;
-    });
-    reader.readAsDataURL(this.files[0]);
-  });
-
-  // COVER PHOTO ==================================
-
-  const coverPhoto = document.querySelector("#coverPhoto"),
-  coverPhotoContainer = document.querySelector(".cover-photo-container"),
-  cover = "<%= user.cover_photo %>",
-  uploadCloudCov = document.querySelector("#uploadCloudCov");
-
-  // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
-
-  if (cover) {
-    uploadCloudCov.style.opacity = "0";
-    coverPhoto.style.visibility = "hidden";
-    coverPhotoContainer.style.backgroundImage = `url(https://needa.online/cover-photo/${id}/${cover})`;
-  }
-
-  // IF THE USER DELETES THEIR COVER PHOTO DO THIS
-
-  document.querySelector("#trashCoverPhoto").addEventListener("click", () => {
-    coverPhoto.value = "";
-    coverPhoto.style.visibility = "visible";
-    coverPhotoContainer.style.backgroundImage = "none";
-    uploadCloudCov.style.opacity = "1";
-    document.querySelector("#delCovPhoto").value = "delete";
-  })
-
-  // IF THE USER UPLOADS A NEW PHOTO DO THIS
-
-  coverPhoto.addEventListener('change', function () {
-    uploadCloudCov.style.opacity = "0";
-    coverPhoto.style.visibility = "hidden";
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      coverPhotoContainer.style.backgroundImage = `url(${reader.result})`;
-    });
-    reader.readAsDataURL(this.files[0]);
-  });
-</script>
-
-<script>
-
-  // const userState = document.querySelector("#user-state");
-
-  async function loadStates() {
-      let url = "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php";
-      let response = await fetch(url);
-      let data = await response.json();
-      data.forEach(function (i) {
-        var state = document.createElement("option");
-        state.textContent = i.state;
-        state.value = i.usps;
-        document.querySelector("#user-state").appendChild(state);
-      });
-    };
-
-    async function addCounties() {
-        const state = document.querySelector("#user-state").value;
-        const res = await fetch("/data/counties.json");
-        const counties = await res.json();
-
-        document.querySelector("#county").innerHTML = "";
-        var county = document.createElement("option");
-        county.textContent = "County";
-        county.value = "";
-        document.querySelector("#county").appendChild(county);
-
-        counties[state].forEach(c => {
-          var county = document.createElement("option");
-          county.textContent = c;
-          county.value = c;
-          document.querySelector("#county").appendChild(county);
-        })
+    const tagify = new Tagify(tags, {
+      maxTags: 4,
+      texts: {
+        duplicate: "Duplicates are not allowed"
       }
+    });
 
-    async function initCounties() {
-      const state = document.querySelector("#user-state").value;
-      const res = await fetch("/data/counties.json");
-      const counties = await res.json();
+    tagify.addTags(myTagsArray);
 
-      counties[state].forEach(c => {
-        var county = document.createElement("option");
-        county.textContent = c;
-        county.value = c;
-        document.querySelector("#county").appendChild(county);
-      })
+    // PROFILE PHOTO ==================================
+
+    const profilePhoto = document.querySelector("#profilePhoto"),
+    profilePhotoContainer = document.querySelector(".profile-photo-container"),
+    profile = "<%= user.profile_photo %>",
+    id = "<%= user.id %>";
+    uploadCloudPro = document.querySelector("#uploadCloudPro");
+
+    // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
+
+    if(profile) {
+      uploadCloudPro.style.opacity = "0";
+      profilePhoto.style.visibility = "hidden";
+      profilePhotoContainer.style.backgroundImage = `url(https://needa.online/profile-photo/${id}/${profile})`;
     }
 
-    window.addEventListener("load", loadStates);
-    window.addEventListener("load", initCounties);
+    // IF THE USER DELETES THEIR PROFILE PHOTO DO THIS
 
-</script>
+    document.querySelector("#trashProfilePhoto").addEventListener("click", () => {
+      profilePhoto.value = "";
+      profilePhoto.style.visibility = "visible";
+      profilePhotoContainer.style.backgroundImage = "none";
+      uploadCloudPro.style.opacity = "1";
+      document.querySelector("#delProPhoto").value = "delete";
+    })
+
+    // IF THE USER UPLOADS A NEW PHOTO DO THIS
+
+    profilePhoto.addEventListener('change', function () {
+      uploadCloudPro.style.opacity = "0";
+      profilePhoto.style.visibility = "hidden";
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        profilePhotoContainer.style.backgroundImage = `url(${reader.result})`;
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+
+    // COVER PHOTO ==================================
+
+    const coverPhoto = document.querySelector("#coverPhoto"),
+    coverPhotoContainer = document.querySelector(".cover-photo-container"),
+    cover = "<%= user.cover_photo %>",
+    uploadCloudCov = document.querySelector("#uploadCloudCov");
+
+    // IF USER HAS A PHOTO IN AWS DO THIS ON PAGE LOAD
+
+    if (cover) {
+      uploadCloudCov.style.opacity = "0";
+      coverPhoto.style.visibility = "hidden";
+      coverPhotoContainer.style.backgroundImage = `url(https://needa.online/cover-photo/${id}/${cover})`;
+    }
+
+    // IF THE USER DELETES THEIR COVER PHOTO DO THIS
+
+    document.querySelector("#trashCoverPhoto").addEventListener("click", () => {
+      coverPhoto.value = "";
+      coverPhoto.style.visibility = "visible";
+      coverPhotoContainer.style.backgroundImage = "none";
+      uploadCloudCov.style.opacity = "1";
+      document.querySelector("#delCovPhoto").value = "delete";
+    })
+
+    // IF THE USER UPLOADS A NEW PHOTO DO THIS
+
+    coverPhoto.addEventListener('change', function () {
+      uploadCloudCov.style.opacity = "0";
+      coverPhoto.style.visibility = "hidden";
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        coverPhotoContainer.style.backgroundImage = `url(${reader.result})`;
+      });
+      reader.readAsDataURL(this.files[0]);
+    });
+  </script>
 
 </body>
 
