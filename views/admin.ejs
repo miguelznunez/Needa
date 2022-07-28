@@ -74,12 +74,10 @@
   <script src="/js/toast-front-end.js"></script>
   <script src="/js/header-form-authentication.js"></script>
   
-  <% if (typeof user !="undefined" && user) { %>
-    <script>
-      const userCity = "<%= user.city %>";
-      const userState = "<%= user.state %>";
-      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
-    </script>
-  <% } %>
+  <script>
+    const userCity = "<%= user.city %>";
+    const userState = "<%= user.state %>";
+    document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+  </script>
 
   <%- include("partials/footer.ejs") %>

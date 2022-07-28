@@ -117,7 +117,7 @@
     if (length) {
       const forLoop = async _ => {
         for (let i = 0; i < length; i++) {
-          let image_url = `https://code-foxx.com/showcase-photo/${userId}/${showcasePhotos[i]}`;
+          let image_url = `https://needa.online/showcase-photo/${userId}/${showcasePhotos[i]}`;
           let response = await fetch(image_url);
           let blob = await response.blob();
           let file = new File([blob], showcasePhotos[i], { type: blob.type });
@@ -135,7 +135,7 @@
       let images = '';
       for(let i = 0;i < length;i++) {
         images += `<div class="image">
-                    <img src="https://code-foxx.com/showcase-photo/${userId}/${showcasePhotos[i]}" alt="image">
+                    <img src="https://needa.online/showcase-photo/${userId}/${showcasePhotos[i]}" alt="image">
                     <span onclick="delImage(${i})" class="span--hidden">&times;</span>
                   </div>`;
       }

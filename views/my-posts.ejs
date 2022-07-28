@@ -40,15 +40,14 @@
             <% for(let i=0;i < rows.length;i++) { %>
               <div class="post flex-column-gap-20">
              
-                <!-- <div style="display: flex;justify-content:space-between;"> -->
                 <% if(rows[i].profile_photo) { %>
 
                   <div class="flex-row-gap-15" style="align-items:center;">
-                    <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>" class="image"
-                      style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                    <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>" class="image"
+                      style="background-image: url('https://needa.online/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
                     </a>
                     <div class="flex-column-gap-5" style="gap: 0;">
-                      <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>">
+                      <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>">
                         <h4>
                           <%= rows[i].first_name %>
                             <%= rows[i].last_name %>
@@ -66,11 +65,11 @@
                 <% } else { %>
 
                   <div class="flex-row-gap-15">
-                    <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>" class="image">
+                    <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>" class="image">
                       <i class="fas fa-user" id="fa-user"></i>
                     </a>
                     <div class="flex-column-gap-5" style="gap: 0;">
-                      <a href="https://code-foxx.com/search-results-user-profile/<%= rows[i].id %>">
+                      <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>">
                         <h4>
                           <%= rows[i].first_name %>
                             <%= rows[i].last_name %>
@@ -122,7 +121,6 @@
                     </div> 
                   </div>
                 </div>
-                <!-- </div> -->
               
                 <div class="post-inputs flex-column-gap-10">
                   <input type="text" value="<%= rows[i].title %>" disabled>

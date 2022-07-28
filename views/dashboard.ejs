@@ -33,13 +33,12 @@
   </div>
 
   <script src="/js/script.js"></script>
-  <% if (typeof user !="undefined" && user) { %>
-    <script>
-      const userCity = "<%= user.city %>";
-      const userState = "<%= user.state %>";
-      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
-    </script>
-  <% } %>
+
+  <script>
+    const userCity = "<%= user.city %>";
+    const userState = "<%= user.state %>";
+    document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+  </script>
 
 </body>
 
