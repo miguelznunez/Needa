@@ -2666,9 +2666,11 @@ iframe{
 }
 
 #settingsSection .tags-container{
+  width: 100%;
   background-color: white;
 
 }
+
 
 /* SHOWCASE.EJS */
 
@@ -2808,104 +2810,6 @@ iframe{
   font-size: 0.9rem;
 }
 
-/* MY POSTS */
-
-#my-posts-section .post{
-  width: 100%;
-  height: auto;
-  padding: 20px;
-  border-radius: var(--border-radius);
-  background-color: white;
-  border: 1px dotted lightgray;
-}
-
-#my-posts-section .post-date{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#my-posts-section .fa-ellipsis-vertical{
-  color: var(--color);
-  font-size: 1rem;
-  width: 30px;
-  text-align: right;
-  z-index: 5;
-}
-
-#my-posts-section .dropdown-menu{
-  width: 200px;
-  z-index: 5;
-  border-radius: none;
-}
-
-#my-posts-section .dropdown-links{
-  width: 100%;
-  padding: 10px 5px;
-  z-index: 5;
-  border-radius: none;
-}
-
-#my-posts-section .dropdown-links:hover{
-  background-color: #f5f5f5;
-}
-
-#my-posts-section input{
-  width: 100%;
-  border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0;
-}
-
-#my-posts-section textarea{
-  width: 100%;
-  border: none;
-  font-size: 1rem;
-  resize: none;
-  padding: 0px;
-}
-
-#my-posts-section .delete-post button,
-#my-posts-section .update-post button,
-#my-posts-section .save-post button,
-#my-posts-section .cancel-post button{
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 0.9rem;
-  background-color: transparent;
-  border: none;
-  color: var(--color);
-  box-shadow: none;
-  border-radius: none;
-}
-
-#my-posts-section .saveCancel{
-  display: none;
-}
-
-#my-posts-section .image{
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
-}
-  
-#my-posts-section .image i {
-  color: black;
-  font-size: 1rem;
-}
-
-
 /* FEED */
 
 #feed-section .feed-header{
@@ -2935,6 +2839,11 @@ iframe{
 }
 
 #feed-section .post {
+  position: relative;
+}
+
+#feed-section .post-editor,
+#feed-section .post {
   height: fit-content;
   padding: 20px;
   background-color: white;
@@ -2942,9 +2851,19 @@ iframe{
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
 }
 
+#feed-section .post-editor a,
+#feed-section .post a {
+  color: black;
+}
+
+#feed-section .post-editor a:hover,
+#feed-section .post a:hover{
+  text-decoration: underline;
+}
+
 #feed-section .image {
-  height: 50px;
-  width: 50px;
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
   background-position: center;
   background-size: cover;
@@ -2954,25 +2873,35 @@ iframe{
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
+#feed-section h5,
+#feed-section h6{
+  font-weight: 400;
+}
+
 #feed-section .image i {
   color: black;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 #feed-section form {
   width: 100%;
 }
 
-#feed-section input {
+#feed-section input,
+#feed-section .post-editor input {
   width: 100%;
+  border: 1px dotted lightgray;
+  padding: 8px 18px;
+  font-size: 1rem;
 }
 
-#feed-section .post textarea {
+#feed-section .post-editor textarea{
   width: 100%;
-  height: 225px;
+  height: 175px;
   resize: none;
   padding: 20px;
-  background-color: white;
+  font-size: 0.9rem;
+  border: 1px dotted lightgray ;
 }
 
 #feed-section .post-footer {
@@ -2985,6 +2914,191 @@ iframe{
   background-color: var(--color);
 }
 
+#feed-section .post-data{
+  position: absolute;
+  right: 3%;
+}
+
+#feed-section .fa-ellipsis-vertical {
+  color: var(--color);
+  font-size: 1rem;
+  width: 30px;
+  text-align: right;
+  z-index: 0;
+}
+
+#feed-section .dropdown-menu {
+  width: 200px;
+  z-index: 0;
+  border-radius: none;
+}
+
+#feed-section .dropdown-links {
+  width: 100%;
+  padding: 10px 5px;
+  z-index: 5;
+  border-radius: none;
+}
+
+#feed-section .dropdown-links:hover {
+  background-color: #f5f5f5;
+}
+
+#feed-section input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0;
+}
+
+#feed-section textarea {
+  width: 100%;
+  border: none;
+  font-size: 0.9rem;
+  resize: none;
+  padding: 0px;
+}
+
+#feed-section .delete-post button,
+#feed-section .update-post button,
+#feed-section .save-post button,
+#feed-section .cancel-post button {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.9rem;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+#feed-section .saveCancel {
+  display: none;
+}
+
+/* MY POSTS */
+
+#my-posts-section .post {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background-color: white;
+  border: 1px dotted lightgray;
+  position: relative;
+}
+
+#my-posts-section .post a{
+  color: black;
+}
+
+#my-posts-section .post a:hover{
+  text-decoration: underline;
+}
+
+#my-posts-section .post-data {
+  position: absolute;
+  right: 2%;
+}
+
+#my-posts-section .fa-ellipsis-vertical {
+  color: var(--color);
+  font-size: 1rem;
+  width: 30px;
+  text-align: right;
+  z-index: 5;
+}
+
+#my-posts-section .dropdown-menu {
+  width: 200px;
+  z-index: 0;
+  border-radius: none;
+}
+
+#my-posts-section .dropdown-links {
+  width: 100%;
+  padding: 10px 5px;
+  z-index: 5;
+  border-radius: none;
+}
+
+#my-posts-section .dropdown-links:hover {
+  background-color: #f5f5f5;
+}
+
+#my-posts-section input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0;
+}
+
+#my-posts-section textarea {
+  width: 100%;
+  border: none;
+  font-size: 0.9rem;
+  resize: none;
+  padding: 0px;
+}
+
+#my-posts-section #delete-all-post-btn{
+  background-color: var(--color);
+  color: white;
+  width: 120px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+#my-posts-section .delete-post button,
+#my-posts-section .update-post button,
+#my-posts-section .save-post button,
+#my-posts-section .cancel-post button {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.9rem;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+#my-posts-section .saveCancel {
+  display: none;
+}
+
+#my-posts-section .image {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+
+#my-posts-section h5,
+#my-posts-section h6 {
+  font-weight: 400;
+}
+
+#my-posts-section .image i {
+  color: black;
+  font-size: 1rem;
+}
 
 /* LOGIN LAYOUT */
 

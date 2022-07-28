@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const moment = require("moment");
 const db = require("../../db.js");
 const s3 = require("../../s3.js");
 const authController = require("../controllers/authController");
@@ -262,11 +263,15 @@ router.get("/settings/showcase", authController.isLoggedIn, (req, res) => {
 
 router.get("/feed", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
-    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = ?", [req.user.county], (err, result) => {
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, user.county, postings.postId, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.county = (?) ORDER BY postings.postId", [req.user.county], (err, result) => {
       if(!err){
-        return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result} );
+        let dates = [];
+        result.forEach((r,i) => {
+          dates.push(moment(result[i].date).fromNow())
+        });
+        return res.render("feed", {title: "Needa | Feed", user : req.user, rows:result, dates:dates} );
       } else {
-        return res.render("feed", {title: "Needa | Feed", user : req.user, message:err.message} );
+        return res.render("feed", {title: "Needa | Feed", user : req.user, message:err.message, dates:dates} );
       }
     })
   } else {
@@ -286,11 +291,15 @@ router.get("/add-new", authController.isLoggedIn, (req, res) => {
 
 router.get("/my-posts", authController.isLoggedIn, (req, res) => {
   if(req.user && !checkBrowser(req.headers)) {
-    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.postId, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.id = ?", [req.user.id], (err, result) => {
+    db.query("SELECT user.id, user.first_name, user.last_name, user.profile_photo, user.city, user.state, postings.postId, postings.id, postings.date, postings.title, postings.post FROM user JOIN postings ON user.id = postings.id WHERE user.id = ?", [req.user.id], (err, result) => {
       if(!err){
-        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, rows:result} );
+        let dates = [];
+        result.forEach((r,i) => {
+          dates.push(moment(result[i].date).fromNow())
+        });
+        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, rows:result, dates:dates} );
       } else {
-        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, message:err.message} );
+        return res.render("my-posts", {title: "Needa | My Posts", user : req.user, message:err.message, dates:dates} );
       }
     })
   } else {
@@ -301,14 +310,26 @@ router.get("/my-posts", authController.isLoggedIn, (req, res) => {
 router.get("/updatePosts", async (req, res) => {
   let sql;
   let sqlParams;
-  let data = { title:req.query.title, post:req.query.message};
+
   switch (req.query.action) {
-   case "add": sql = "UPDATE postings SET ? WHERE postId = ?";
-               sqlParams = [data, req.query.postId];
-               break;
-   case "delete": sql = "DELETE FROM postings WHERE postId = ?";
-               sqlParams = [req.query.text];
-               break;
+   case "add": 
+      let date = moment().format('YYYY-MM-DD HH:mm:ss');
+      sql = "INSERT INTO postings (id, date, title, post, county) VALUES (?,?,?,?,?)";
+      sqlParams = [req.query.id, date, req.query.title, req.query.message, req.query.county];
+      break;
+   case "edit": 
+      let data = { title:req.query.title, post:req.query.message};
+      sql = "UPDATE postings SET ? WHERE postId = ?";
+      sqlParams = [data, req.query.postId];
+      break;
+   case "delete": 
+      sql = "DELETE FROM postings WHERE postId = ?";
+      sqlParams = [req.query.text];
+      break;
+   case "delete-all": 
+      sql = "DELETE FROM postings WHERE id = ?";
+      sqlParams = [req.query.text];
+      break;
  }//switch
   let rows = await executeSQL(sql, sqlParams);
   res.send(rows.affectedRows.toString());

@@ -542,33 +542,33 @@ exports.post = (req, res) => {
   });
 }
 
-exports.addNew = (req, res) => {
-  const {title, post} = req.body;
+// exports.addNew = (req, res) => {
+//   const {title, post} = req.body;
 
-  const errors = validationResult(req),
-  allErrors = JSON.stringify(errors),
-  allParsedErrors = JSON.parse(allErrors);
-   // OUTPUT VALIDATION ERRORS IF ANY
-  if(!errors.isEmpty()){
-    let err = "";
-    for(let i = 0;i < allParsedErrors.errors.length;i++){
-      err += allParsedErrors.errors[i].msg + " ";
-    }
-    req.flash("error", err);
-    return res.redirect("/add-new"); 
-  }
+//   const errors = validationResult(req),
+//   allErrors = JSON.stringify(errors),
+//   allParsedErrors = JSON.parse(allErrors);
+//    // OUTPUT VALIDATION ERRORS IF ANY
+//   if(!errors.isEmpty()){
+//     let err = "";
+//     for(let i = 0;i < allParsedErrors.errors.length;i++){
+//       err += allParsedErrors.errors[i].msg + " ";
+//     }
+//     req.flash("error", err);
+//     return res.redirect("/add-new"); 
+//   }
 
-  const date = new Date();
-   db.query("INSERT INTO postings (id, date, title, post, county) VALUES (?,?,?,?,?)", [req.user.id, date, title, post, req.user.county], async (err, results) => {
-    if(!err){
-      req.flash("success", "Post was added successfully.");
-      return res.redirect("/feed"); 
-    } else {
-      req.flash("error", err.message);
-      return res.redirect("/feed");
-    }
-  });
-}
+//   const date = new Date();
+//    db.query("INSERT INTO postings (id, date, title, post, county) VALUES (?,?,?,?,?)", [req.user.id, date, title, post, req.user.county], async (err, results) => {
+//     if(!err){
+//       req.flash("success", "Post was added successfully.");
+//       return res.redirect("/feed"); 
+//     } else {
+//       req.flash("error", err.message);
+//       return res.redirect("/feed");
+//     }
+//   });
+// }
 
 
 // DELETE ACCOUNT ------------------------------------------------------------------------

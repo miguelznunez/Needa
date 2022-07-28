@@ -30,92 +30,100 @@
 
       <div id="my-posts-section">
         <div class="flex-column-gap-20">
-          <h2>My posts</h2>
 
+          <div class="flex-space-between">
+            <h2>My posts</h2>
+            <button id="delete-all-post-btn"><i class="fa-solid fa-trash"></i> Delete All</button>
+          </div>
+  
           <% if(rows) { %>
             <% for(let i=0;i < rows.length;i++) { %>
-              <div class="post flex-column-gap-10">
-
+              <div class="post flex-column-gap-20">
+             
+                <!-- <div style="display: flex;justify-content:space-between;"> -->
                 <% if(rows[i].profile_photo) { %>
-      
-                  
-                  <div style="display: flex;justify-content:space-between;">
-                    <div class="image"
-                      style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
-                    </div>
 
-                    <div class="post-data flex-row-gap-10">
-                    
-                      <input type="hidden" value="<%= rows[i].postId %>">
-                    
-                    
-                      <div class="dropdown" data-dropdown>
-                    
-                        <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
-                        <div class="dropdown-menu">
-                    
-                          <div class="delUpdate">
-                            <div class="update-post dropdown-links">
-                              <button><i class="fa-solid fa-pencil"></i>
-                                <p>Edit</p>
-                              </button>
-                            </div>
-                            <div class="delete-post dropdown-links">
-                              <button><i class="fa-solid fa-trash"></i>
-                                <p>Delete</p>
-                              </button>
-                            </div>
-                          </div>
-                    
-                          <div class="saveCancel">
-                            <div class="save-post dropdown-links">
-                              <button><i class="fa-solid fa-floppy-disk"></i>
-                                <p>Save</p>
-                              </button>
-                            </div>
-                            <div class="cancel-post dropdown-links">
-                              <button><i class="fa-solid fa-xmark"></i>
-                                <p>Cancel</p>
-                              </button>
-                            </div>
-                          </div>
-                    
-                        </div>
-                      </div>
+                  <div class="flex-row-gap-15" style="align-items:center;">
+                    <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image"
+                      style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                    </a>
+                    <div class="flex-column-gap-5" style="gap: 0;">
+                      <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                        <h4>
+                          <%= rows[i].first_name %>
+                            <%= rows[i].last_name %>
+                        </h4>
+                      </a>
+                      <h5>
+                        <%= rows[i].city%>, <%= rows[i].state%>
+                      </h5>
+                      <h6>
+                        <%= dates[i] %>
+                      </h6>
                     </div>
                   </div>
-                
-                  <div class="flex-row-gap-5" style="align-items: center;">
-                    <h3>
-                      <%= rows[i].first_name %>
-                    </h3>
-                    <h3>
-                      <%= rows[i].last_name %>
-                    </h3>
-                  </div>
+
                 <% } else { %>
-                    <div class="image">
+
+                  <div class="flex-row-gap-15">
+                    <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image">
                       <i class="fas fa-user" id="fa-user"></i>
+                    </a>
+                    <div class="flex-column-gap-5" style="gap: 0;">
+                      <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                        <h4>
+                          <%= rows[i].first_name %>
+                            <%= rows[i].last_name %>
+                        </h4>
+                      </a>
+                      <h5>
+                        <%= rows[i].city%>, <%= rows[i].state%>
+                      </h5>
+                      <h6>
+                        <%= dates[i] %>
+                      </h6>
                     </div>
-                    <div class="flex-row-gap-5" style="align-items: center;">
-                      <h3>
-                        <%= rows[i].first_name %>
-                      </h3>
-                      <h3>
-                        <%= rows[i].last_name %>
-                      </h3>
-                    </div>
+                  </div>
                 <% } %>
 
+                <div class="post-data flex-row-gap-10">
 
+                  <input type="hidden" value="<%= rows[i].postId %>">
 
-
-                <div class="post-date">
-                  <p>
-                    <%= rows[i].date %>
-                  </p>
+                  <div class="dropdown" data-dropdown>
+                    <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
+                    <div class="dropdown-menu">
+                
+                      <div class="delUpdate">
+                        <div class="update-post dropdown-links">
+                          <button><i class="fa-solid fa-pencil"></i>
+                            <p>Edit</p>
+                          </button>
+                        </div>
+                        <div class="delete-post dropdown-links">
+                          <button><i class="fa-solid fa-trash"></i>
+                            <p>Delete</p>
+                          </button>
+                        </div>
+                      </div>
+                
+                      <div class="saveCancel">
+                        <div class="save-post dropdown-links">
+                          <button><i class="fa-solid fa-floppy-disk"></i>
+                            <p>Save</p>
+                          </button>
+                        </div>
+                        <div class="cancel-post dropdown-links">
+                          <button><i class="fa-solid fa-xmark"></i>
+                            <p>Cancel</p>
+                          </button>
+                        </div>
+                      </div>
+                    </div> 
+                  </div>
                 </div>
-
+                <!-- </div> -->
+              
                 <div class="post-inputs flex-column-gap-10">
                   <input type="text" value="<%= rows[i].title %>" disabled>
                   <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
@@ -142,6 +150,7 @@
 
   <script>
 
+    const userId = "<%= user.id %>";
     // TITLES AND MESSAGES FROM DB
     const rows = JSON.parse('<%-JSON.stringify(rows)%>');
     let title = [];
@@ -193,6 +202,22 @@
       });
     });
 
+    // DELETE ALL POSTS
+    const delAllButton = document.querySelector("#delete-all-post-btn");
+
+    delAllButton.addEventListener("click", () => {
+      if(rows[0])
+        deleteAllPosts("delete-all", userId)
+      else  
+        displayToast("error", "There's nothing to delete.")
+    });
+
+    async function deleteAllPosts(action, userId) {
+      let url = `/updatePosts?action=${action}&text=${userId}`;
+      await fetch(url);
+      location.reload();
+    }
+
     // DELETE A POST
     const postId = document.querySelectorAll(".post-data input");
     const delButtons = document.querySelectorAll(".delete-post button");
@@ -209,14 +234,14 @@
       location.reload();
     }
 
-    // UPDATE A POST
+    // EDIT A POST
     const saveButtons = document.querySelectorAll(".save-post button");
     saveButtons.forEach((b, i) => {
       b.addEventListener("click", () => {
         if(titleInput[i].value && messageInput[i].value)
-          updatePost("add", postId[i].value, titleInput[i].value, messageInput[i].value);
+          updatePost("edit", postId[i].value, titleInput[i].value, messageInput[i].value);
         else
-          displayToast("error", "Fields cannot be empty.")
+          displayToast("warning", "Fields cannot be empty.")
 
       });
     });

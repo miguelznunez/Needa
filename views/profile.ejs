@@ -24,7 +24,7 @@
               <div class="profile-images">
                 <% if(user.cover_photo) { %>
                   <div class="cover-photo flex-row-gap-20"
-                    style="background-image: linear-gradient(to left, transparent 10%, rgba(0, 0, 0, 0.9)), url('https://code-foxx.com/cover-photo/<%= user.id %>/<%= user.cover_photo%>');">
+                    style="background-image: linear-gradient(to left, transparent 10%, rgba(0, 0, 0, 0.9)), url('http://localhost:5000/cover-photo/<%= user.id %>/<%= user.cover_photo%>');">
                   </div>
                 <% } else { %>
                   <div class="cover-photo flex-row-gap-20"></div>
@@ -32,7 +32,7 @@
 
                 <div class="profile-photo-wrapper">
                   <% if(user.profile_photo) { %>
-                    <div class="profile-photo" style="background-image: url('https://code-foxx.com/profile-photo/<%= user.id %>/<%= user.profile_photo%>');"></div>
+                    <div class="profile-photo" style="background-image: url('http://localhost:5000/profile-photo/<%= user.id %>/<%= user.profile_photo%>');"></div>
                   <% } else { %>
                     <div class="profile-photo">
                       <i class="fas fa-user"></i>
@@ -134,15 +134,15 @@
                     <div class="slider-1">
                       <% for(let i=0;i < usersFollowing.length;i++) { %>
                         <% if(usersFollowing[i].profile_photo) { %>
-                          <a href="https://code-foxx.com/search-results-user-profile/<%= usersFollowing[i].id %>">
+                          <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
                             <div class="contact-photo-wrapper">
                               <div class="contact-photo"
-                                style="background-image: url('https://code-foxx.com/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
+                                style="background-image: url('http://localhost:5000/user-photo/<%= usersFollowing[i].id %>/<%= usersFollowing[i].profile_photo%>');">
                               </div>
                             </div>
                           </a>
                         <% } else { %>
-                          <a href="https://code-foxx.com/search-results-user-profile/<%= usersFollowing[i].id %>">
+                          <a href="http://localhost:5000/search-results-user-profile/<%= usersFollowing[i].id %>">
                             <div class="contact-photo-wrapper">
                               <div class="contact-photo">
                                 <i class="fas fa-user"></i>
@@ -181,7 +181,7 @@
                       <div class="slider-2 showcase-container">
                         <% for(let photo in showcasePhotos) { %>
                           <div class="image"><span><img
-                                src="https://code-foxx.com/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
+                                src="http://localhost:5000/showcase-photo/<%= user.id %>/<%= showcasePhotos[photo] %>"></span>
                           </div>
                           <% } %>
                       </div>

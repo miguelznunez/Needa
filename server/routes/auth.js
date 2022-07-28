@@ -174,14 +174,6 @@ router.post("/delete-account", authController.isLoggedIn, authController.deleteA
 
 router.post("/post", authController.isLoggedIn, authController.post);
 
-router.post("/add-new", 
-[
-  check("title", "Title field cannot be empty.").not().isEmpty(),
-  check("title", "Title must be between 1 - 100 characters.").isLength({min:1, max:100}),
-  check("post", "Post field cannot be empty.").not().isEmpty(),
-  check("post", "Post must be between 1 - 1000 characters.").isLength({min:1, max:1000})
-], authController.isLoggedIn, authController.addNew);
-
 router.post("/contact-user", authController.isLoggedIn, authController.contactUser);
 
 router.post("/newsletter", authController.isLoggedIn, authController.newsletter);

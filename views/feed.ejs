@@ -32,98 +32,182 @@
         <div class="feed-main flex-column-gap-20">
 
           <div class="feed-header">
-            <h2>Live feed</h2>
+            <h3>Live feed</h3>
             <p>Location: <span><%= user.county %></span></p>
           </div>
           
           <div class="feed-wrapper">
             <div class="feed-column">
-              <div id="add-new-section">
-                <div class="feed-column">
-                  <div class="post flex-column-gap-20">
-                    <h2>Add new post</h2>
-                    <form action="/auth/add-new" method="POST">
-                      <input type="text" name="title" placeholder="Title" maxlength="100" required>
-                      <textarea name="post" id="post" placeholder="Tell users what you need help with..." maxlength="1000"
-                        required></textarea>
-                      <div class="post-footer">
-                        <button id="post-btn" type="submit">Post</button>
-                      </div>
-                    </form>
+          
+              <div class="post-editor flex-column-gap-20">
+
+                <h3>Create post</h3>
+
+                <% if(user.profile_photo) { %>
+                  <div class="flex-row-gap-15">
+                    <a href="http://localhost:5000/search-results-user-profile/<%= user.id %>" class="image"
+                      style="background-image: url('http://localhost:5000/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
+                    </a>
+                    <div class="flex-column-gap-5" style="gap: 0;">
+                      <a href="http://localhost:5000/search-results-user-profile/<%= user.id %>">
+                        <h4>
+                          <%= user.first_name %>
+                            <%= user.last_name %>
+                        </h4>
+                      </a>
+                      <h5>
+                        <%= user.city%>, <%= user.state%>
+                      </h5>
+                    </div>
                   </div>
-                </div>
+                <% } else { %>
+                  <div class="flex-row-gap-15">
+                    <a href="http://localhost:5000/search-results-user-profile/<%= user.id %>" class="image">
+                      <i class="fas fa-user" id="fa-user"></i>
+                    </a>
+                    <div class="flex-column-gap-5" style="gap: 0;">
+                      <a href="http://localhost:5000/search-results-user-profile/<%= user.id %>">
+                        <h4>
+                          <%= user.first_name %>
+                            <%= user.last_name %>
+                        </h4>
+                      </a>
+                      <h5>
+                        <%= user.city%>, <%= user.state%>
+                      </h5>
+                    </div>
+                  </div>
+                <% } %>
+                
+                <input type="text" name="title" placeholder="Title" maxlength="100" required>
+                <textarea name="post" id="post" placeholder="Tell users what you need help with..." maxlength="1000"
+                  required></textarea>
+                <button id="post-btn" type="submit">Create</button>
               </div>
-
-
+      
 
               <% if(rows) { %>
                 <% for(let i=0;i < rows.length;i++) { %>
                   <div class="post flex-column-gap-20">
+
                     <% if(rows[i].profile_photo) { %>
-        
-                      <div style="display:flex;justify-content:space-between;">
-                        <div class="image"
-                          style="background-image: url('https://code-foxx.com/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                      <div class="flex-row-gap-15">
+                        <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image"
+                          style="background-image: url('http://localhost:5000/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
+                        </a>
+                        <div class="flex-column-gap-5" style="gap: 0;">
+                          <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                            <h4>
+                              <%= rows[i].first_name %>
+                                <%= rows[i].last_name %>
+                            </h4>
+                          </a>
+                          <h5>
+                            <%= rows[i].city%>, <%= rows[i].state%>
+                          </h5>
+                          <h6>
+                            <%= dates[i] %>
+                          </h6>
                         </div>
-                        <% if(rows[i].id===user.id) { %>
-                          <i class="fa-solid fa-trash"></i>
-                        <% } %>
                       </div>
-        
-                      <div class="flex-row-gap-5" style="align-items: center;">
-                        <h3>
-                          <%= rows[i].first_name %>
-                        </h3>
-                        <h3>
-                          <%= rows[i].last_name %>
-                        </h3>
-                      </div>
-        
                     <% } else { %>
-                      <div style="display:flex;justify-content:space-between;">
-                        <div class="image">
+                      <div class="flex-row-gap-15">
+                        <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>" class="image">
                           <i class="fas fa-user" id="fa-user"></i>
+                        </a>
+                        <div class="flex-column-gap-5" style="gap: 0;">
+                          <a href="http://localhost:5000/search-results-user-profile/<%= rows[i].id %>">
+                            <h4>
+                              <%= rows[i].first_name %>
+                                <%= rows[i].last_name %>
+                            </h4>
+                          </a>
+                          <h5>
+                            <%= rows[i].city%>, <%= rows[i].state%>
+                          </h5>
+                          <h6>
+                            <%= dates[i] %>
+                          </h6>
                         </div>
-                        <% if(rows[i].id===user.id) { %>
-                          <i class="fa-solid fa-trash"></i>
-                        <% } %>
-                      </div>
-                      <div class="flex-row-gap-5" style="align-items: center;">
-                        <h3>
-                          <%= rows[i].first_name %>
-                        </h3>
-                        <h3>
-                          <%= rows[i].last_name %>
-                        </h3>
                       </div>
                     <% } %>
 
+                    <!-- ALL OF THE POSTS ARE WITHIN THIS POST-DATA CLASS -->
+                    <div class="post-data flex-row-gap-10">
 
-                    <p>
-                      <%= rows[i].city%>, <%= rows[i].state %>
-                    </p>
-                    <p>
-                      <%= rows[i].date %>
-                    </p>
-                    <h4>
-                      <%= rows[i].title %>
-                    </h4>
-                    <p>
-                      <%= rows[i].post %>
-                    </p>
+                      <!-- GRAB THE ID OF THIS POST -->
+                      <% if(rows[i].id===user.id) { %>
+                        <input type="hidden" value="<%= rows[i].postId %>">
+                      <% } %>
+
+                      <% if(rows[i].id===user.id) { %>
+                        <!-- DROP DOWN FOR POST -->
+                        <div class="dropdown" data-dropdown>
+                          <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
+                          <div class="dropdown-menu">
+                            <div class="delUpdate">
+                              <div class="update-post dropdown-links">
+                                <button><i class="fa-solid fa-pencil"></i>
+                                  <p>Edit</p>
+                                </button>
+                              </div>
+                              <div class="delete-post dropdown-links">
+                                <button><i class="fa-solid fa-trash"></i>
+                                  <p>Delete</p>
+                                </button>
+                              </div>
+                            </div>
+                        
+                            <div class="saveCancel">
+                              <div class="save-post dropdown-links">
+                                <button><i class="fa-solid fa-floppy-disk"></i>
+                                  <p>Save</p>
+                                </button>
+                              </div>
+                              <div class="cancel-post dropdown-links">
+                                <button><i class="fa-solid fa-xmark"></i>
+                                  <p>Cancel</p>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% } else { %>
+                        <div class="dropdown" data-dropdown>
+                          <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
+                        </div>
+                      <% } %>
+                    </div>
+
+
+                    <!-- HIDDEN INPUT AND TEXTARE FOR THIS POST (FOR EDIT PURPOSES) -->
+                    <% if(rows[i].id===user.id) { %>
+                      <div class="my-post-inputs flex-column-gap-10">
+                        <input type="text" value="<%= rows[i].title %>" disabled>
+                        <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
+                      </div>
+                    <% } else { %>
+                      <div class="user-post-inputs flex-column-gap-10">
+                        <input type="text" value="<%= rows[i].title %>" disabled>
+                        <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
+                      </div>
+                    <% } %>
+
                   </div>
+                <% } %>
               <% } %>
-            <% } %>
+
+
         
             </div>
             <div class="feed-column">
               <div
                 style="height: 300px;background-color: white;border-radius:5px;box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);">
-        
               </div>
             </div>
+
           </div>
-        </div>
+        </div> 
       </div>
     </main>
   </div>
@@ -133,13 +217,127 @@
   <script src="/js/toast-front-end.js"></script>
   <script src="/js/header-form-authentication.js"></script>
 
-  <% if (typeof user !="undefined" && user) { %>
-    <script>
-      const userCity = "<%= user.city %>";
-      const userState = "<%= user.state %>";
-      document.querySelector("#header-location").value = `${userCity}, ${userState}`;
-    </script>
-  <% } %>
+  <script>
+    const userCity = "<%= user.city %>";
+    const userState = "<%= user.state %>";
+    document.querySelector("#header-location").value = `${userCity}, ${userState}`;
+  </script>
+
+  <script>
+
+    let userId = "<%= user.id %>";
+    const userCounty = "<%= user.county %>";
+
+    // TITLES AND MESSAGES FROM DB
+    const rows = JSON.parse('<%-JSON.stringify(rows)%>');
+    let title = [];
+    let message = [];
+
+    rows.forEach(r => {
+      if(r.id === parseInt(userId)){
+        title.push(r.title);
+        message.push(r.post);
+      }
+    });
+
+    // ACCESS ALL SAVE/CANCEL and DELETE/UPDATE
+    const saveCancel = document.querySelectorAll(".saveCancel");
+    const delUpdate = document.querySelectorAll(".delUpdate");
+
+    // ACCESS ALL OTHER HIDDEN INPUTS AND TEXTAREAS 
+    const titleInput = document.querySelectorAll(".my-post-inputs input");
+    const messageInput = document.querySelectorAll(".my-post-inputs textarea");
+
+    // SHOW SAVE/CANCEL BUTTONS WHEN THE USER CLICKS THE EDIT BUTTON
+    const editButton = document.querySelectorAll(".update-post button");
+
+    editButton.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        saveCancel[i].style.display = "block";
+        delUpdate[i].style.display = "none";
+        titleInput[i].disabled = false;
+        titleInput[i].style.border = "1px dotted lightgray";
+        titleInput[i].style.backgroundColor = "#F7F9FB";
+        messageInput[i].disabled = false;
+        messageInput[i].style.border = "1px dotted lightgray";
+        messageInput[i].style.backgroundColor = "#F7F9FB";
+      });
+    });
+
+    // SHOW DELETE/UPDATE BUTTONS WHEN THE USER CLICKS THE CANCEL BUTTON
+    const cancelButton = document.querySelectorAll(".cancel-post button");
+
+    cancelButton.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        saveCancel[i].style.display = "none";
+        delUpdate[i].style.display = "block";
+
+        titleInput[i].disabled = true;
+        titleInput[i].style.border = "none";
+        titleInput[i].style.backgroundColor = "white";
+
+        messageInput[i].disabled = true;
+        messageInput[i].style.border = "none";
+        messageInput[i].style.backgroundColor = "white";
+
+        titleInput[i].value = title[i];
+        messageInput[i].value = message[i];
+      });
+    });
+
+
+    // ADD A POST
+    const titleInputEditor = document.querySelector(".post-editor input");
+    const messageInputEditor = document.querySelector(".post-editor textarea");
+    const postButton = document.querySelector("#post-btn");
+
+    postButton.addEventListener("click", () => {
+      if (titleInputEditor.value && messageInputEditor.value)
+        addPost("add", userId, titleInputEditor.value, messageInputEditor.value, userCounty);
+      else
+        displayToast("error", "Fields cannot be empty.");
+    });
+
+    async function addPost(action, userId, title, message, userCounty) {
+      let url = `/updatePosts?action=${action}&id=${userId}&title=${title}&message=${message}&county=${userCounty}`;
+      await fetch(url);
+      location.reload();
+    }
+
+    // DELETE A POST
+    const postId = document.querySelectorAll(".post-data input");
+    const delButtons = document.querySelectorAll(".delete-post button");
+
+    delButtons.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        deletePost("delete", postId[i].value);
+      });
+    });
+
+    async function deletePost(action, postId) {
+      let url = `/updatePosts?action=${action}&text=${postId}`;
+      await fetch(url);
+      location.reload();
+    }
+
+    // EDIT A POST
+    const saveButtons = document.querySelectorAll(".save-post button");
+    saveButtons.forEach((b, i) => {
+      b.addEventListener("click", () => {
+        if (titleInput[i].value && messageInput[i].value)
+          editPost("edit", postId[i].value, titleInput[i].value, messageInput[i].value);
+        else
+          displayToast("error", "Fields cannot be empty.");
+      });
+    });
+
+    async function editPost(action, postId, title, message) {
+      let url = `/updatePosts?action=${action}&postId=${postId}&title=${title}&message=${message}`;
+      await fetch(url);
+      location.reload();
+    }
+
+  </script>
 
 </body>
 
