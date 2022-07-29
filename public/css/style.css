@@ -1767,7 +1767,7 @@ iframe{
 .fa-edit,
 .fa-user-minus,
 .fa-user-plus{
-  color: var(--color);
+  color: white;
 }
 
 #profileSection .profile-edit,
@@ -1827,8 +1827,8 @@ iframe{
 }
 
 #profileSection .contact-photo-wrapper{
-  height: 115px;
-  width: 115px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
@@ -2157,8 +2157,8 @@ iframe{
 }
 
 .modal {
-  max-width: 600px;
-  height: 300px;
+  max-width: 500px;
+  height: 215px;
   margin: auto;
   position: absolute;
   top: 0;
@@ -2168,29 +2168,16 @@ iframe{
   border-radius: var(--border-radius);
   background-color: white;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .modal-contents{
-  height: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 50px;
+  padding: 25px 25px 25px 25px;
   line-height: 1.5;
-}
-
-.modal-contents .flex-row-gap-10{
-  width: 100%;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.modal-contents p{
-  font-size: 1.2rem;
+  position: relative;
 }
 
 .modal-contents #login,
@@ -2207,6 +2194,14 @@ iframe{
   border: 3px solid var(--color);
   background-color: white;
   color: var(--color);
+}
+
+.modal-contents .fa-xmark{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 7%;
+  right: 4%;
+  cursor: pointer;
 }
 
 .show-modal {

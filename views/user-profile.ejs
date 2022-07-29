@@ -215,7 +215,7 @@
                     </div>
                   </div>
                   <div class="preview-box">
-                    <div class="subcontainer flex-column-gap-20">
+                    <div class="container flex-column-gap-20">
                       <div class="details">
                         <span class="title">
                           <p class="current-img"></p>/<p class="total-img"></p>
@@ -413,14 +413,9 @@
   
   <div class="overlay">
     <div class="modal">
-      <div class="modal-contents flex-column-gap-25">
-        <div class="form-title">
-          <h1>Log in</h1>
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <div>
-          <p>Please login to view this users full profile. Don't have an account? Register with us today!</p>
-        </div>
+      <div class="modal-contents flex-column-gap-15">
+        <h1>Oops!</h1>
+        <p>Please sign in to view this users full profile and unlock all features. No account yet? Register with us today!</p>
         <div class="flex-row-gap-10">
           <a href="/login">
             <button id="login">Login</button>
@@ -429,10 +424,11 @@
             <button id="register">Register</button>
           </a>
         </div>
+        <i class="fa-solid fa-xmark" id="close-login-modal-btn"></i>
       </div>
     </div>
   </div>
-  
+
   <script src="/js/script.js"></script>
   <script src="/js/toast-front-end.js"></script>
   <script src="/js/header-form-authentication.js"></script>
