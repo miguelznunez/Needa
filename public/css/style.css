@@ -3439,6 +3439,13 @@ footer {
   justify-content: center;
 }
 
+#footer a,
+#footer p{
+  color: #666;
+  font-weight: 300;
+  text-decoration: none;
+}
+
 #footer .footer-wrapper {
   color: white;
   display: flex;
@@ -3472,11 +3479,6 @@ footer {
   color: #666;
 }
 
-#footer .info a {
-  color: #666;
-  text-decoration: none;
-}
-
 #footer .info span {
   color: var(--color);
 }
@@ -3503,15 +3505,16 @@ footer {
   line-height: 2;
 }
 
+#footer .fb2 h4,
+#footer .fb3 h4,
+#footer .fb4 h4,
+#footer .fb5 h4{
+  color: #666;
+}
+
 #footer .social-media {
   display: flex;
   gap: 20px;
-}
-
-#footer .social-media a {
-  color: white;
-  text-decoration: none;
-  transition: 0.3s ease-out;
 }
 
 /* MEDIA QUERIES */
