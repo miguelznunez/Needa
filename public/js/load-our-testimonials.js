@@ -51,7 +51,7 @@ function initializeTestimonials(){
                           <h3>${tObject[testimonial].name}</h3>
                           <p>${tObject[testimonial].profession}</p>
                         </div>
-                        <p>${tObject[testimonial].slogan}</p>
+                        <p style="font-weight:100;">${tObject[testimonial].slogan}</p>
                         <span class="border"></span>
                       </div>
                       <div class="testimonials-box-user">
