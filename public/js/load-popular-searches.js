@@ -82,7 +82,7 @@ function initializePopularSearch(){
                       </div>
                       <div class="popular-box-info flex-column-gap-10">
                         <h3>${pObject[profession].h3}</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, rerum?</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero laboriosam blanditiis quia</p>
                         <span class="border"></span>
                       </div>
                       <div class="popular-box-user"></div>
