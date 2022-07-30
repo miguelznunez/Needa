@@ -10,9 +10,9 @@
         <a href="/dashboard" class="menu-item">Dashboard</a>
         <a href="/settings" class="menu-item">Edit profile</a>
         <a href="/settings/showcase" class="menu-item">Upload images</a>
-        <a href="/settings/account" class="menu-item">Delete account</a>
         <a href="/feed" class="menu-item">Live feed</a>
         <a href="/my-posts" class="menu-item is-active">My Posts</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
       </nav>
     </aside>
 
@@ -149,14 +149,6 @@
   <script>
 
     const userId = "<%= user.id %>";
-    // TITLES AND MESSAGES FROM DB
-    const rows = JSON.parse('<%-JSON.stringify(rows)%>');
-    let title = [];
-    let message = [];
-    rows.forEach(r => {
-      title.push(r.title);
-      message.push(r.post);
-    });
 
     // ACCESS ALL SAVE/CANCEL and DELETE/UPDATE
     const saveCancel = document.querySelectorAll(".saveCancel");
@@ -165,6 +157,14 @@
     // ACCESS ALL HIDDEN INPUTS AND TEXTAREAS 
     const titleInput = document.querySelectorAll(".post-inputs input");
     const messageInput = document.querySelectorAll(".post-inputs textarea");
+    let titles = [];
+    let messages = [];
+    titleInput.forEach(t => {
+      titles.push(t.value)
+    });
+    messageInput.forEach(m => {
+      messages.push(m.value)
+    });
 
     // SHOW SAVE/CANCEL BUTTONS WHEN THE USER CLICKS THE UPDATE BUTTON
     const updateButton = document.querySelectorAll(".update-post button");
@@ -195,8 +195,8 @@
         messageInput[i].disabled = true;
         messageInput[i].style.border = "none";
         messageInput[i].style.backgroundColor = "white";
-        titleInput[i].value = title[i];
-        messageInput[i].value = message[i];
+        titleInput[i].value = titles[i];
+        messageInput[i].value = messages[i];
       });
     });
 

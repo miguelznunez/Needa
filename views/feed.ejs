@@ -9,9 +9,9 @@
         <a href="/dashboard" class="menu-item">Dashboard</a>
         <a href="/settings" class="menu-item">Edit profile</a>
         <a href="/settings/showcase" class="menu-item">Upload images</a>
-        <a href="/settings/account" class="menu-item">Delete account</a>
         <a href="/feed" class="menu-item is-active">Live feed</a>
         <a href="/my-posts" class="menu-item">My Posts</a>
+        <a href="/settings/account" class="menu-item">Delete account</a>
       </nav>
     </aside>
 
@@ -90,7 +90,7 @@
                 <% for(let i=0;i < rows.length;i++) { %>
                   <div class="post flex-column-gap-20">
 
-                    <% if(rows[i].profile_photo) { %>
+                    <% if(typeof rows !== "undefined" && rows[i].profile_photo) { %>
                       <div class="flex-row-gap-15">
                         <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>" class="image"
                           style="background-image: url('https://needa.online/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
@@ -136,11 +136,11 @@
                     <div class="post-data flex-row-gap-10">
 
                       <!-- GRAB THE ID OF THIS POST -->
-                      <% if(rows[i].id===user.id) { %>
+                      <% if(typeof rows !== "undefined" && rows[i].id===user.id) { %>
                         <input type="hidden" value="<%= rows[i].postId %>">
                       <% } %>
 
-                      <% if(rows[i].id===user.id) { %>
+                      <% if(typeof rows !== "undefined" && rows[i].id===user.id) { %>
                         <!-- DROP DOWN FOR POST -->
                         <div class="dropdown" data-dropdown>
                           <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
@@ -181,7 +181,7 @@
 
 
                     <!-- HIDDEN INPUT AND TEXTARE FOR THIS POST (FOR EDIT PURPOSES) -->
-                    <% if(rows[i].id===user.id) { %>
+                    <% if(typeof rows !== "undefined" && rows[i].id===user.id) { %>
                       <div class="my-post-inputs flex-column-gap-10">
                         <input type="text" value="<%= rows[i].title %>" disabled>
                         <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
@@ -233,17 +233,28 @@
     // ACCESS ALL OTHER HIDDEN INPUTS AND TEXTAREAS 
     const titleInput = document.querySelectorAll(".my-post-inputs input");
     const messageInput = document.querySelectorAll(".my-post-inputs textarea");
+    let titles = [];
+    let messages = [];
+    titleInput.forEach(t => {
+      titles.push(t.value)
+    });
+    messageInput.forEach(m => {
+      messages.push(m.value)
+    });
 
     // SHOW SAVE/CANCEL BUTTONS WHEN THE USER CLICKS THE EDIT BUTTON
     const editButton = document.querySelectorAll(".update-post button");
 
     editButton.forEach((b, i) => {
       b.addEventListener("click", () => {
-        saveCancel[i].style.display = "block";
+        
         delUpdate[i].style.display = "none";
+        saveCancel[i].style.display = "block";
+
         titleInput[i].disabled = false;
         titleInput[i].style.border = "1px dotted lightgray";
         titleInput[i].style.backgroundColor = "#F7F9FB";
+
         messageInput[i].disabled = false;
         messageInput[i].style.border = "1px dotted lightgray";
         messageInput[i].style.backgroundColor = "#F7F9FB";
@@ -255,20 +266,20 @@
 
     cancelButton.forEach((b, i) => {
       b.addEventListener("click", () => {
-        location.reload();
-        // saveCancel[i].style.display = "none";
-        // delUpdate[i].style.display = "block";
 
-        // titleInput[i].disabled = true;
-        // titleInput[i].style.border = "none";
-        // titleInput[i].style.backgroundColor = "white";
+        saveCancel[i].style.display = "none";
+        delUpdate[i].style.display = "block";
 
-        // messageInput[i].disabled = true;
-        // messageInput[i].style.border = "none";
-        // messageInput[i].style.backgroundColor = "white";
+        titleInput[i].disabled = true;
+        titleInput[i].style.border = "none";
+        titleInput[i].style.backgroundColor = "white";
 
-        // titleInput[i].value = title[i].value;
-        // messageInput[i].value = message[i].value;
+        messageInput[i].disabled = true;
+        messageInput[i].style.border = "none";
+        messageInput[i].style.backgroundColor = "white";
+
+        titleInput[i].value = titles[i];
+        messageInput[i].value = messages[i];
       });
     });
 

@@ -20,7 +20,7 @@ let tObject = [
     "userId" : "4"
   },
   {
-    "img": "images/personal_trainer.jpg",
+    "img": "images/pt.jpg",
     "name" : "Jason Corsa",
     "profession" : "Personal Trainer",
     "userId" : "5"
