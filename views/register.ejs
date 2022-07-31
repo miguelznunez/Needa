@@ -26,7 +26,7 @@
           value="<%= typeof last_name != 'undefined' ? last_name : '' %>" required>
       </div>
       <div class="input-group two">
-        <input type="text" placeholder="City" name="city" maxlength="60" pattern="[A-Za-z]+"
+        <input type="text" placeholder="City" name="city" maxlength="60" pattern="[A-Za-z\s]+"
           value="<%= typeof city != 'undefined' ? city : '' %>" required>
         <select name="state" id="user-state" onchange="addCounties()" required>
           <option value="<%= typeof state != 'undefined' ? state : '' %>">

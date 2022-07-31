@@ -83,6 +83,7 @@
                 <textarea name="post" id="post" placeholder="Tell users what you need help with..." maxlength="1000"
                   required></textarea>
                 <button id="post-btn" type="submit">Create</button>
+
               </div>
       
 
@@ -90,7 +91,7 @@
                 <% for(let i=0;i < rows.length;i++) { %>
                   <div class="post flex-column-gap-20">
 
-                    <% if(typeof rows !== "undefined" && rows[i].profile_photo) { %>
+                    <% if(rows[i].profile_photo) { %>
                       <div class="flex-row-gap-15">
                         <a href="https://needa.online/search-results-user-profile/<%= rows[i].id %>" class="image"
                           style="background-image: url('https://needa.online/user-photo/<%= rows[i].id %>/<%= rows[i].profile_photo%>');">
@@ -136,11 +137,11 @@
                     <div class="post-data flex-row-gap-10">
 
                       <!-- GRAB THE ID OF THIS POST -->
-                      <% if(typeof rows !== "undefined" && rows[i].id===user.id) { %>
+                      <% if(rows[i].id===user.id) { %>
                         <input type="hidden" value="<%= rows[i].postId %>">
                       <% } %>
 
-                      <% if(typeof rows !== "undefined" && rows[i].id===user.id) { %>
+                      <% if(rows[i].id===user.id) { %>
                         <!-- DROP DOWN FOR POST -->
                         <div class="dropdown" data-dropdown>
                           <i class="fa-solid fa-ellipsis-vertical link" data-dropdown-button></i>
@@ -187,10 +188,44 @@
                         <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
                       </div>
                     <% } else { %>
-                      <div class="user-post-inputs flex-column-gap-10">
-                        <input type="text" value="<%= rows[i].title %>" disabled>
-                        <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
+                      <div style="display: flex;flex-direction:column;gap:0;">
+                        <div class="user-post-inputs flex-column-gap-10">
+                          <span>REPLY</span>
+                          <input type="text" value="<%= rows[i].title %>" disabled>
+                          <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
+                        </div>
+
+
+
+                        <div class="user-reply-input flex-row-gap-15">
+                          <% if(user.profile_photo) { %>
+                            <div>
+                              <a href="https://needa.online/search-results-user-profile/<%= user.id %>" class="image"
+                                style="background-image: url('https://needa.online/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
+                              </a>
+                            </div>
+                          <% } else { %>
+                            <div>
+                              <a href="https://needa.online/search-results-user-profile/<%= user.id %>" class="image">
+                                <i class="fas fa-user" id="fa-user"></i>
+                              </a>
+                            </div>
+                          <% } %>
+                          
+                       
+                            <input type="text" placeholder="Add a reply...">
+                          
+                        </div>
+
+
+
+
+
+
+
+
                       </div>
+    
                     <% } %>
 
                   </div>

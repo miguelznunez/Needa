@@ -2982,6 +2982,34 @@ iframe {
   display: none;
 }
 
+#feed-section .user-reply-input{
+  align-items: center;
+  width: 100%;
+}
+
+#feed-section .user-reply-input .image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+#feed-section .user-reply-input input {
+  border-radius: 0px;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+#feed-section .user-reply-input input:focus{
+  box-shadow: none;
+  
+}
+
 /* MY POSTS */
 
 #my-posts-section .post {
