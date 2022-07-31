@@ -188,44 +188,16 @@
                         <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
                       </div>
                     <% } else { %>
-                      <div style="display: flex;flex-direction:column;gap:0;">
+                      <!-- <div style="display: flex;flex-direction:column;gap:0;">
                         <div class="user-post-inputs flex-column-gap-10">
-                          <span>REPLY</span>
+                          <span>REPLY</span> -->
                           <input type="text" value="<%= rows[i].title %>" disabled>
                           <textarea type="text" value="<%= rows[i].post %>" disabled><%= rows[i].post %></textarea>
-                        </div>
+                        <!-- </div> -->
 
 
 
-                        <div class="user-reply-input flex-row-gap-15">
-                          <% if(user.profile_photo) { %>
-                            <div>
-                              <a href="https://needa.online/search-results-user-profile/<%= user.id %>" class="image"
-                                style="background-image: url('https://needa.online/user-photo/<%= user.id %>/<%= user.profile_photo%>');">
-                              </a>
-                            </div>
-                          <% } else { %>
-                            <div>
-                              <a href="https://needa.online/search-results-user-profile/<%= user.id %>" class="image">
-                                <i class="fas fa-user" id="fa-user"></i>
-                              </a>
-                            </div>
-                          <% } %>
-                          
-                       
-                            <input type="text" placeholder="Add a reply...">
-                          
-                        </div>
-
-
-
-
-
-
-
-
-                      </div>
-    
+                      
                     <% } %>
 
                   </div>
